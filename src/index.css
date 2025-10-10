@@ -1,0 +1,112 @@
+/* ==================== Fonts - Must be first! ==================== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* ==================== Tailwind Directives ==================== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== Tailwind Theme Configuration ==================== */
+:root {
+  --font-display: "Poppins", "sans-serif";
+  --breakpoint-3xl: 1920px;
+  --color-primary: #1368ec;
+  --color-secondary: #ff6b6b;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-display);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #fcfbfc;
+    overflow-x: hidden;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Reset default styles */
+  ul, ol {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+
+  }
+
+  input, textarea, select {
+    font-family: inherit;
+  }
+}
+
+/* ==================== Components Layer ==================== */
+@layer components {
+  /* Add your custom component classes here */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply bg-[var(--color-primary)] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300;
+  }
+}
+
+/* ==================== Utilities Layer ==================== */
+@layer utilities {
+  /* Add your custom utility classes here */
+  .text-gradient {
+    @apply bg-gradient-to-r from-[var(--color-primary)] to-blue-600 bg-clip-text text-transparent;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
