@@ -6,21 +6,19 @@ function App() {
 
   return (
     <>
-      <div>
+      <div  className='h-screen'>
+
+        <h1 className='text-4xl font-bold'>Vite + React</h1>
+        <div className="card">
+          <button className='btn-primary' onClick={() => setCount((count) => count + 1)}>
+            count is {count}
+          </button>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test HMR
+          </p>
+        </div>
 
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button className='btn-primary' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
