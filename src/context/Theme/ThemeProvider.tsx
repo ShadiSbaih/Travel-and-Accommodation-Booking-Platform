@@ -13,10 +13,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
+    console.log("Theme changed:", theme);
     const root = document.documentElement;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDarkMode = theme === 'dark' || (theme === 'system' && prefersDark);
-
+  
     setIsDark(isDarkMode);
     root.classList.toggle('dark', isDarkMode);
     localStorage.setItem('theme', theme);
