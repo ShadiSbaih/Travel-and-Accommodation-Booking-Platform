@@ -1,18 +1,16 @@
 import Button from '@/components/common/Button';
 import Form from '@/components/common/Form';
 import Input from '@/components/common/Input';
-import api from '@/services/api/axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ThemeToggle from '@/components/common/ThemeToggle';
+import { useLogin } from '@/hooks/api/useAuth';
 
 function LoginPage() {
-  const navigate = useNavigate();
-  const [error, setError] = useState('');
+  const loginMutation = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
   const validationSchema = Yup.object({
@@ -31,27 +29,13 @@ function LoginPage() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      try {
-        const response = await api.post('/auth/authenticate', values);
-        console.log('Login successful:', response.data);
-
-        localStorage.setItem('token', response.data.authentication);
-        localStorage.setItem('user', JSON.stringify({ role: response.data.userType.toLowerCase() }));
-
-        if (response.data.userType === 'Admin') {
-          navigate('/admin/hotels');
-        } else {
-          navigate('/home');
-        }
-      } catch (error: unknown) {
-        console.error('Login failed:', error);
-        const errorMessage = error instanceof Error && 'response' in error
-            ? ((error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Invalid username or password')
-            : 'Invalid username or password';
-        setError(errorMessage);
-      }
+      loginMutation.mutate(values);
     },
   });
+
+  const errorMessage = loginMutation.error instanceof Error && 'response' in loginMutation.error
+    ? ((loginMutation.error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Invalid username or password')
+    : loginMutation.error ? 'Invalid username or password' : '';
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
@@ -62,7 +46,7 @@ function LoginPage() {
         onSubmit={formik.handleSubmit}
         title="Login"
         subtitle="Welcome back! Please login to your account."
-        error={error}
+        error={errorMessage}
         footer={
           <>
             <Button
@@ -70,9 +54,9 @@ function LoginPage() {
               variant="solid"
               size="lg"
               className="w-full"
-              disabled={formik.isSubmitting}
+              disabled={loginMutation.isPending}
             >
-              {formik.isSubmitting ? 'Logging in...' : 'Login'}
+              {loginMutation.isPending ? 'Logging in...' : 'Login'}
             </Button>
 
           </>
