@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,7 +20,7 @@ import FTSLogo from '@/assets/FTS.png';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const pages = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/home' },
     { name: 'Search', path: '/search-results' }
 ];
 
@@ -63,11 +63,6 @@ function Navbar() {
         setAnchorElUser(null);
     };
 
-    const handleNavigation = (path: string) => {
-        navigate(path);
-        handleCloseNavMenu();
-    };
-
     const handleCartClick = () => {
         navigate('/checkout'); // Navigate to checkout/cart page
     };
@@ -77,14 +72,17 @@ function Navbar() {
     };
 
     const isActivePage = (path: string) => {
-        return location.pathname === path;
+        if (path === '/') {
+            return location.pathname === '/' || location.pathname === '/home';
+        }
+        return location.pathname === path || location.pathname.startsWith(`${path}/`);
     };
 
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/home')}>
                         <img
                             src={FTSLogo}
                             alt="FTS Logo"
@@ -97,7 +95,7 @@ function Navbar() {
                     <Typography
                         variant="h6"
                         noWrap
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/home')}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -143,16 +141,28 @@ function Navbar() {
                             sx={{ display: { xs: 'block', md: 'none' } }}
                         >
                             {pages.map((page) => (
-                                <MenuItem 
-                                    key={page.name} 
-                                    onClick={() => handleNavigation(page.path)}
+                                <MenuItem
+                                    key={page.name}
+                                    component={NavLink}
+                                    to={page.path}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{
+                                        '&:hover': {
+                                            backgroundColor: 'grey.600',
+                                            color: 'common.white'
+                                        },
+                                        '&.active': {
+                                            color: 'common.white',
+                                            backgroundColor: 'grey.700'
+                                        }
+                                    }}
                                 >
                                     <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
+                    <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/home')}>
                         <img
                             src={FTSLogo}
                             alt="FTS Logo"
@@ -165,7 +175,7 @@ function Navbar() {
                     <Typography
                         variant="h5"
                         noWrap
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/home')}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -187,14 +197,25 @@ function Navbar() {
                         {pages.map((page) => (
                             <Button
                                 key={page.name}
-                                onClick={() => handleNavigation(page.path)}
+                                component={NavLink}
+                                to={page.path}
                                 sx={{ 
                                     my: 2, 
-                                    color: isActivePage(page.path) ? 'primary.main' : 'white', 
+                                    color: isActivePage(page.path) ? 'common.white' : 'white',
                                     display: 'block',
                                     fontWeight: isActivePage(page.path) ? 'bold' : 'normal',
-                                    borderBottom: isActivePage(page.path) ? '2px solid' : 'none',
-                                    borderRadius: 0
+                                    backgroundColor: isActivePage(page.path) ? 'grey.700' : 'transparent',
+                                    borderRadius: 1,
+                                    transition: 'all 0.2s ease-in-out',
+                                    '&:hover': {
+                                        backgroundColor: 'grey.600',
+                                        color: 'common.white'
+                                    },
+                                    '&.active': {
+                                        color: 'common.white',
+                                        fontWeight: 'bold',
+                                        backgroundColor: 'grey.700'
+                                    }
                                 }}
                             >
                                 {page.name}
