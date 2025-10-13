@@ -1,8 +1,11 @@
-import React from 'react'
+import Navbar from '@/components/Navbar'
 
 function HotelDetailsPage() {
   return (
+    <>
+      <Navbar />
     <div>HotelDetailsPage</div>
+    </>
   )
 }
 
