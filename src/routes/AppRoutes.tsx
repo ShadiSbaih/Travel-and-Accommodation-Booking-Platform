@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from '@/pages/UserPages/LoginPage';
+import Login from '@/pages/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from './AdminProtectedRoute';
 
