@@ -30,52 +30,34 @@ function Navbar() {
     const navigate = useNavigate();
     const location = useLocation();
     const logoutMutation = useLogout();
-
-    // Get user information
     const { fullName } = useUserInfo();
-    
-    // Mock cart items count - replace with actual cart state
+
     const cartItemsCount = 3; // This should come from your cart context/state
 
-    // Helper function to get initials from name
     const getInitials = (name: string): string => {
-        if (!name) return 'U';
-        const words = name.trim().split(' ');
-        if (words.length === 1) {
-            return words[0].charAt(0).toUpperCase();
-        }
-        // Return first letter of first name + first letter of last name
-        return (words[0].charAt(0) + words[words.length - 1].charAt(0)).toUpperCase();
+        const words = name.trim().split(' ').filter(Boolean);
+        return words.length > 1
+            ? (words[0][0] + words[words.length - 1][0]).toUpperCase()
+            : (words[0]?.[0] || 'U').toUpperCase();
     };
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
-    const handleCartClick = () => {
-        navigate('/checkout'); // Navigate to checkout/cart page
-    };
-
-    const handleLogout = () => {
-        logoutMutation.mutate();
-    };
+    const handleCloseNavMenu = () => setAnchorElNav(null);
+    const handleCloseUserMenu = () => setAnchorElUser(null);
+    const handleCartClick = () => navigate('/checkout');
+    const handleLogout = () => logoutMutation.mutate();
 
     const isActivePage = (path: string) => {
-        if (path === '/') {
-            return location.pathname === '/' || location.pathname === '/home';
-        }
-        return location.pathname === path || location.pathname.startsWith(`${path}/`);
+        return path === '/home'
+            ? location.pathname === '/' || location.pathname === '/home'
+            : location.pathname === path || location.pathname.startsWith(`${path}/`);
     };
 
     return (
@@ -83,14 +65,7 @@ function Navbar() {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/home')}>
-                        <img
-                            src={FTSLogo}
-                            alt="FTS Logo"
-                            style={{
-                                height: 50,
-                                width: 'auto'
-                            }}
-                        />
+                        <img src={FTSLogo} alt="FTS Logo" style={{ height: 50, width: 'auto' }} />
                     </Box>
                     <Typography
                         variant="h6"
@@ -105,9 +80,7 @@ function Navbar() {
                             color: 'inherit',
                             textDecoration: 'none',
                             cursor: 'pointer',
-                            '&:hover': {
-                                opacity: 0.8
-                            }
+                            '&:hover': { opacity: 0.8 }
                         }}
                     >
                         FTS
@@ -127,15 +100,9 @@ function Navbar() {
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                             keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
+                            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{ display: { xs: 'block', md: 'none' } }}
@@ -147,14 +114,8 @@ function Navbar() {
                                     to={page.path}
                                     onClick={handleCloseNavMenu}
                                     sx={{
-                                        '&:hover': {
-                                            backgroundColor: 'grey.600',
-                                            color: 'common.white'
-                                        },
-                                        '&.active': {
-                                            color: 'common.white',
-                                            backgroundColor: 'grey.700'
-                                        }
+                                        '&:hover': { backgroundColor: 'grey.600', color: 'common.white' },
+                                        '&.active': { color: 'common.white', backgroundColor: 'grey.700' }
                                     }}
                                 >
                                     <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
@@ -163,14 +124,7 @@ function Navbar() {
                         </Menu>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/home')}>
-                        <img
-                            src={FTSLogo}
-                            alt="FTS Logo"
-                            style={{
-                                height: 32,
-                                width: 'auto'
-                            }}
-                        />
+                        <img src={FTSLogo} alt="FTS Logo" style={{ height: 32, width: 'auto' }} />
                     </Box>
                     <Typography
                         variant="h5"
@@ -186,9 +140,7 @@ function Navbar() {
                             color: 'inherit',
                             textDecoration: 'none',
                             cursor: 'pointer',
-                            '&:hover': {
-                                opacity: 0.8
-                            }
+                            '&:hover': { opacity: 0.8 }
                         }}
                     >
                         FTS
@@ -199,35 +151,27 @@ function Navbar() {
                                 key={page.name}
                                 component={NavLink}
                                 to={page.path}
-                                sx={{ 
-                                    my: 2, 
+                                sx={{
+                                    my: 2,
                                     color: isActivePage(page.path) ? 'common.white' : 'white',
                                     display: 'block',
                                     fontWeight: isActivePage(page.path) ? 'bold' : 'normal',
                                     backgroundColor: isActivePage(page.path) ? 'grey.700' : 'transparent',
                                     borderRadius: 1,
                                     transition: 'all 0.2s ease-in-out',
-                                    '&:hover': {
-                                        backgroundColor: 'grey.600',
-                                        color: 'common.white'
-                                    },
-                                    '&.active': {
-                                        color: 'common.white',
-                                        fontWeight: 'bold',
-                                        backgroundColor: 'grey.700'
-                                    }
+                                    '&:hover': { backgroundColor: 'grey.600', color: 'common.white' },
+                                    '&.active': { color: 'common.white', fontWeight: 'bold', backgroundColor: 'grey.700' }
                                 }}
                             >
                                 {page.name}
                             </Button>
                         ))}
                     </Box>
-                    
-                    {/* Shopping Cart Icon with Badge */}
+
                     <Tooltip title="View Cart">
                         <IconButton
                             onClick={handleCartClick}
-                            sx={{ 
+                            sx={{
                                 mr: 2,
                                 color: 'white',
                                 '&:hover': {
@@ -246,34 +190,23 @@ function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={fullName}>
-                                    {getInitials(`${fullName}`)}
-                                </Avatar>
+                                <Avatar alt={fullName}>{getInitials(fullName || '')}</Avatar>
                             </IconButton>
-
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
+                            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                             keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
+                            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem key={1} onClick={handleLogout}>
-                                <Button variant="contained" color="error" >
-                                    Logout
-                                </Button>
+                            <MenuItem onClick={handleLogout}>
+                                <Button variant="contained" color="error">Logout</Button>
                             </MenuItem>
-                            <MenuItem key={2} >
+                            <MenuItem>
                                 <ThemeToggle />
                             </MenuItem>
                         </Menu>
