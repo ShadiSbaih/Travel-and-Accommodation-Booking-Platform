@@ -27,7 +27,7 @@ const AppRoutes = () => {
             {/* Protected User Routes */}
             <Route element={<ProtectedRoute />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/search-result" element={<SearchResult />} />
+                <Route path="/search-results" element={<SearchResult />} />
                 <Route path="/hotels/:id" element={<HotelDetails />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/confirmation" element={<Confirmation />} />
