@@ -37,9 +37,22 @@ function LoginPage() {
     ? ((loginMutation.error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Invalid username or password')
     : loginMutation.error ? 'Invalid username or password' : '';
 
+  // Test ErrorBoundary - will be handled at a higher level
+
+  // throw new Error('Testing ErrorBoundary - Error thrown from LoginPage');
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="text-red-600 border-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+        >
+          Test Error
+        </Button>
         <ThemeToggle />
       </div>
       <Form
