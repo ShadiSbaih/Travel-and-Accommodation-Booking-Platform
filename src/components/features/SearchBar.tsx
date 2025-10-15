@@ -104,16 +104,16 @@ function SearchBar() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          padding: 3, 
+      <Paper
+        elevation={3}
+        sx={{
+          padding: 3,
           borderRadius: 2,
           maxWidth: 1000,
           margin: '0 auto'
         }}
       >
-        
+
         {/* Search Input */}
         <Box sx={{ marginBottom: 2 }}>
           <TextField
@@ -133,9 +133,9 @@ function SearchBar() {
         </Box>
 
         {/* Dates Row */}
-        <Box sx={{ 
-          display: 'flex', 
-          gap: 2, 
+        <Box sx={{
+          display: 'flex',
+          gap: 2,
           marginBottom: 2,
           flexDirection: { xs: 'column', sm: 'row' }
         }}>
@@ -144,8 +144,8 @@ function SearchBar() {
             value={searchData.checkIn}
             onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkIn: newValue }))}
             minDate={today}
-            slotProps={{ 
-              textField: { 
+            slotProps={{
+              textField: {
                 fullWidth: true,
                 InputProps: {
                   startAdornment: (
@@ -154,7 +154,7 @@ function SearchBar() {
                     </InputAdornment>
                   ),
                 }
-              } 
+              }
             }}
           />
           <DatePicker
@@ -162,8 +162,8 @@ function SearchBar() {
             value={searchData.checkOut}
             onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkOut: newValue }))}
             minDate={searchData.checkIn}
-            slotProps={{ 
-              textField: { 
+            slotProps={{
+              textField: {
                 fullWidth: true,
                 InputProps: {
                   startAdornment: (
@@ -172,14 +172,14 @@ function SearchBar() {
                     </InputAdornment>
                   ),
                 }
-              } 
+              }
             }}
           />
         </Box>
 
         {/* Guests and Search Row */}
-        <Box sx={{ 
-          display: 'flex', 
+        <Box sx={{
+          display: 'flex',
           gap: 2,
           flexDirection: { xs: 'column', sm: 'row' }
         }}>
@@ -188,7 +188,7 @@ function SearchBar() {
             variant="outlined"
             onClick={openGuestSelector}
             startIcon={<PersonIcon />}
-            sx={{ 
+            sx={{
               flex: 1,
               height: 56,
               justifyContent: 'flex-start',
@@ -205,13 +205,13 @@ function SearchBar() {
             size="large"
             onClick={handleSearch}
             startIcon={<SearchIcon />}
-            sx={{ 
+            sx={{
               minWidth: 140,
               height: 56,
               textTransform: 'none'
             }}
           >
-            Search 
+            Search
           </Button>
         </Box>
 
@@ -220,9 +220,9 @@ function SearchBar() {
           open={isGuestOpen}
           anchorEl={guestButton}
           onClose={closeGuestSelector}
-          anchorOrigin={{ 
-            vertical: 'bottom', 
-            horizontal: 'left' 
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
           }}
           transformOrigin={{
             vertical: 'top',
@@ -230,17 +230,17 @@ function SearchBar() {
           }}
         >
           <Box sx={{ padding: 3, minWidth: 280 }}>
-            
+
             <Typography variant="h6" sx={{ marginBottom: 2 }}>
               Guests & Rooms
             </Typography>
 
             {/* Adults Section */}
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              marginBottom: 2 
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 2
             }}>
               <Box>
                 <Typography variant="body1">Adults</Typography>
@@ -255,8 +255,8 @@ function SearchBar() {
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography sx={{ 
-                  minWidth: 40, 
+                <Typography sx={{
+                  minWidth: 40,
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
@@ -275,11 +275,11 @@ function SearchBar() {
             <Divider sx={{ marginY: 1 }} />
 
             {/* Children Section */}
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              marginBottom: 2 
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 2
             }}>
               <Box>
                 <Typography variant="body1">Children</Typography>
@@ -293,8 +293,8 @@ function SearchBar() {
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography sx={{ 
-                  minWidth: 40, 
+                <Typography sx={{
+                  minWidth: 40,
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
@@ -313,11 +313,11 @@ function SearchBar() {
             <Divider sx={{ marginY: 1 }} />
 
             {/* Rooms Section */}
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              marginBottom: 3 
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 3
             }}>
               <Box>
                 <Typography variant="body1">Rooms</Typography>
@@ -331,8 +331,8 @@ function SearchBar() {
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography sx={{ 
-                  minWidth: 40, 
+                <Typography sx={{
+                  minWidth: 40,
                   textAlign: 'center',
                   fontWeight: 'bold'
                 }}>
