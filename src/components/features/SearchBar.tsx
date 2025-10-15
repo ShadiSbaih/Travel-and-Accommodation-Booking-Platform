@@ -30,10 +30,10 @@ function SearchBar() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   // Get search data from Redux store
   const reduxSearchData: SearchData = useSelector((state: RootState) => state.search);
-  
+
   // Create default dates
   const today = new Date();
   const tomorrow = new Date();
@@ -109,7 +109,16 @@ function SearchBar() {
 
     console.log('Search Data in form search bar component:', searchData);
     dispatch(setSearchData(searchData));
-    navigate('/search-results');
+
+    // Navigate with URL parameters directly
+    const searchParams = new URLSearchParams({
+      query: searchData.query,
+      adults: searchData.adults.toString(),
+      children: searchData.children.toString(),
+      rooms: searchData.rooms.toString(),
+    });
+
+    navigate(`/search-results?${searchParams.toString()}`);
   };
 
   const handleClear = () => {
@@ -117,10 +126,10 @@ function SearchBar() {
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
-    
-      
+
+
     setLocalSearchData(defaultSearchData);
- 
+
   };
 
   // Computed values

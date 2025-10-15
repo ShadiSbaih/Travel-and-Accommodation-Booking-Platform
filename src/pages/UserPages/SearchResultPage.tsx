@@ -13,14 +13,15 @@ function SearchResultPage() {
   const searchData: SearchData = useSelector((state: RootState) => state.search);
 
   // Get search parameters directly from URL (for shared URLs)
-  const query = searchParams.get('query') || 'New York';
-  const adults = parseInt(searchParams.get('adults') || '2');
-  const children = parseInt(searchParams.get('children') || '0');
-  const rooms = parseInt(searchParams.get('rooms') || '1');
+  const query = searchParams.get('query') || searchData?.query || 'New York';
+  const adults = parseInt(searchParams.get('adults') || searchData?.adults?.toString() || '2');
+  const children = parseInt(searchParams.get('children') || searchData?.children?.toString() || '0');
+  const rooms = parseInt(searchParams.get('rooms') || searchData?.rooms?.toString() || '1');
 
   // Update URL when Redux state changes (for new searches from SearchBar)
+  // Use replace instead of setting new params to avoid creating new history entry
   useEffect(() => {
-    if (searchData?.query) {
+    if (searchData?.query && !searchParams.has('query')) {
       const newParams = new URLSearchParams({
         query: searchData.query,
         adults: searchData.adults?.toString() || "2",
@@ -28,9 +29,10 @@ function SearchResultPage() {
         rooms: searchData.rooms?.toString() || "1",
       });
       
-      setSearchParams(newParams);
+      // Use replace: true to replace current history entry instead of adding new one
+      setSearchParams(newParams, { replace: true });
     }
-  }, [searchData, setSearchParams]);
+  }, [searchData, setSearchParams, searchParams]);
 
   // Use URL parameters for API call (works for both shared URLs and new searches)
   const { data, isLoading } = useQuery({
