@@ -121,7 +121,7 @@ function SearchBar() {
       
     setLocalSearchData(defaultSearchData);
     // Also clear from Redux store
-    dispatch(setSearchData(defaultSearchData));
+ 
   };
 
   // Computed values
