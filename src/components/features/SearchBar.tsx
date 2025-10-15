@@ -211,7 +211,7 @@ function SearchBar() {
               textTransform: 'none'
             }}
           >
-            Search Hotels
+            Search 
           </Button>
         </Box>
 
