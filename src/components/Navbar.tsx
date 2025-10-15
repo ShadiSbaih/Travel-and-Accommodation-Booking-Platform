@@ -177,7 +177,8 @@ function Navbar() {
                                     '&.active': { 
                                         fontWeight: 'bold', 
                                         backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                        borderBottom: '2px solid white'
+                                        borderBottom: '2px solid white',
+                                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.4)'
                                     }
                                 }}
                             >
