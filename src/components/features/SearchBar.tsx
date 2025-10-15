@@ -120,7 +120,6 @@ function SearchBar() {
     
       
     setLocalSearchData(defaultSearchData);
-    // Also clear from Redux store
  
   };
 
