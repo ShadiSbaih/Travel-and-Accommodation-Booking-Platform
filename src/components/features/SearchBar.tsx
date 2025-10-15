@@ -4,12 +4,13 @@ import {
   TextField,
   Button,
   Paper,
-  Grid,
+  Stack,
   InputAdornment,
   IconButton,
   Popover,
   Typography,
   Divider,
+  Chip,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -18,6 +19,7 @@ import {
   Hotel as HotelIcon,
   Add as AddIcon,
   Remove as RemoveIcon,
+  LocationOn as LocationIcon,
 } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -31,6 +33,59 @@ interface SearchParams {
   children: number;
   rooms: number;
 }
+
+interface GuestControlProps {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  minValue?: number;
+}
+
+const GuestControl = ({ icon, label, value, onIncrement, onDecrement, minValue = 0 }: GuestControlProps) => (
+  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 1 }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      {icon}
+      <Typography variant="body1">{label}</Typography>
+    </Box>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <IconButton
+        size="small"
+        onClick={onDecrement}
+        disabled={value <= minValue}
+        sx={{ 
+          border: '1px solid',
+          borderColor: 'divider',
+          '&:hover': { backgroundColor: 'action.hover' }
+        }}
+      >
+        <RemoveIcon fontSize="small" />
+      </IconButton>
+      <Typography 
+        variant="body1" 
+        sx={{ 
+          minWidth: 40, 
+          textAlign: 'center',
+          fontWeight: 'medium'
+        }}
+      >
+        {value}
+      </Typography>
+      <IconButton
+        size="small"
+        onClick={onIncrement}
+        sx={{ 
+          border: '1px solid',
+          borderColor: 'divider',
+          '&:hover': { backgroundColor: 'action.hover' }
+        }}
+      >
+        <AddIcon fontSize="small" />
+      </IconButton>
+    </Box>
+  </Box>
+);
 
 function SearchBar() {
   const today = new Date();
@@ -46,9 +101,9 @@ function SearchBar() {
     rooms: 1,
   });
 
-  const [guestAnchor, setGuestAnchor] = useState<HTMLButtonElement | null>(null);
+  const [guestAnchor, setGuestAnchor] = useState<HTMLElement | null>(null);
 
-  const handleGuestClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleGuestClick = (event: React.MouseEvent<HTMLElement>) => {
     setGuestAnchor(event.currentTarget);
   };
 
@@ -56,68 +111,125 @@ function SearchBar() {
     setGuestAnchor(null);
   };
 
-  const updateGuests = (field: 'adults' | 'children' | 'rooms', increment: boolean) => {
-    setSearch((prev) => ({
-      ...prev,
-      [field]: increment ? prev[field] + 1 : Math.max(field === 'adults' || field === 'rooms' ? 1 : 0, prev[field] - 1),
-    }));
+  const updateGuests = (field: keyof Pick<SearchParams, 'adults' | 'children' | 'rooms'>, increment: boolean) => {
+    setSearch((prev) => {
+      const minValue = field === 'adults' || field === 'rooms' ? 1 : 0;
+      const newValue = increment ? prev[field] + 1 : Math.max(minValue, prev[field] - 1);
+      return { ...prev, [field]: newValue };
+    });
   };
 
   const handleSearch = () => {
+    // Validate search params
+    if (!search.query.trim()) {
+      alert('Please enter a destination');
+      return;
+    }
+    
+    if (search.checkOut <= search.checkIn) {
+      alert('Check-out date must be after check-in date');
+      return;
+    }
+
     console.log('Search params:', search);
     // Add your search logic here
   };
 
+  const handleDateChange = (field: 'checkIn' | 'checkOut', newValue: Date | null) => {
+    if (!newValue) return;
+    
+    if (field === 'checkIn' && newValue >= search.checkOut) {
+      const nextDay = new Date(newValue);
+      nextDay.setDate(nextDay.getDate() + 1);
+      setSearch(prev => ({ ...prev, checkIn: newValue, checkOut: nextDay }));
+    } else {
+      setSearch(prev => ({ ...prev, [field]: newValue }));
+    }
+  };
+
   const guestOpen = Boolean(guestAnchor);
+  const totalGuests = search.adults + search.children;
+  
+  const formatGuestText = () => {
+    const guestText = totalGuests === 1 ? '1 Guest' : `${totalGuests} Guests`;
+    const roomText = search.rooms === 1 ? '1 Room' : `${search.rooms} Rooms`;
+    return `${guestText}, ${roomText}`;
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
-        <Grid container spacing={2} alignItems="center">
+      <Paper 
+        elevation={3} 
+        sx={{ 
+          p: { xs: 2, md: 3 }, 
+          borderRadius: 3,
+          background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+          border: '1px solid',
+          borderColor: 'divider'
+        }}
+      >
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={2}
+          alignItems="stretch"
+        >
           {/* Search Input */}
-          <Grid item xs={12} md={3}>
+          <Box sx={{ flex: { md: 3 } }}>
             <TextField
               fullWidth
               placeholder="Search for hotels, cities..."
               value={search.query}
-              onChange={(e) => setSearch({ ...search, query: e.target.value })}
+              onChange={(e) => setSearch(prev => ({ ...prev, query: e.target.value }))}
+              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon color="action" />
+                    <LocationIcon color="primary" />
                   </InputAdornment>
                 ),
               }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  height: 56,
+                  borderRadius: 2,
+                }
+              }}
             />
-          </Grid>
+          </Box>
 
-          {/* Check-in Date */}
-          <Grid item xs={12} md={2.5}>
+          {/* Date Inputs */}
+          <Box sx={{ flex: { md: 2 } }}>
             <DatePicker
               label="Check-in"
               value={search.checkIn}
-              onChange={(newValue) => newValue && setSearch({ ...search, checkIn: newValue })}
+              onChange={(newValue) => handleDateChange('checkIn', newValue)}
+              minDate={today}
               slotProps={{
                 textField: {
                   fullWidth: true,
                   InputProps: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <CalendarIcon color="action" />
+                        <CalendarIcon color="primary" />
                       </InputAdornment>
                     ),
                   },
+                  sx: {
+                    '& .MuiOutlinedInput-root': {
+                      height: 56,
+                      borderRadius: 2,
+                    }
+                  }
                 },
               }}
             />
-          </Grid>
+          </Box>
 
-          {/* Check-out Date */}
-          <Grid item xs={12} md={2.5}>
+          <Box sx={{ flex: { md: 2 } }}>
             <DatePicker
               label="Check-out"
               value={search.checkOut}
-              onChange={(newValue) => newValue && setSearch({ ...search, checkOut: newValue })}
+              onChange={(newValue) => handleDateChange('checkOut', newValue)}
               minDate={search.checkIn}
               slotProps={{
                 textField: {
@@ -125,42 +237,71 @@ function SearchBar() {
                   InputProps: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <CalendarIcon color="action" />
+                        <CalendarIcon color="primary" />
                       </InputAdornment>
                     ),
                   },
+                  sx: {
+                    '& .MuiOutlinedInput-root': {
+                      height: 56,
+                      borderRadius: 2,
+                    }
+                  }
                 },
               }}
             />
-          </Grid>
+          </Box>
 
-          {/* Guests & Rooms */}
-          <Grid item xs={12} md={2.5}>
+          {/* Guests & Rooms Selector */}
+          <Box sx={{ flex: { md: 2.5 } }}>
             <Button
               fullWidth
               variant="outlined"
               onClick={handleGuestClick}
               startIcon={<PersonIcon />}
-              sx={{ height: '56px', justifyContent: 'flex-start', textTransform: 'none' }}
+              sx={{ 
+                height: 56,
+                justifyContent: 'flex-start', 
+                textTransform: 'none',
+                borderRadius: 2,
+                color: 'text.primary',
+                borderColor: 'divider',
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'action.hover'
+                }
+              }}
             >
-              {search.adults + search.children} Guests, {search.rooms} Room{search.rooms > 1 ? 's' : ''}
+              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                {formatGuestText()}
+              </Typography>
             </Button>
-          </Grid>
+          </Box>
 
           {/* Search Button */}
-          <Grid item xs={12} md={1.5}>
+          <Box sx={{ flex: { md: 1.5 } }}>
             <Button
               fullWidth
               variant="contained"
-              color="primary"
               size="large"
               onClick={handleSearch}
-              sx={{ height: '56px' }}
+              startIcon={<SearchIcon />}
+              sx={{ 
+                height: 56,
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 'bold',
+                background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #1976D2 30%, #1E88E5 90%)',
+                }
+              }}
             >
               Search
             </Button>
-          </Grid>
-        </Grid>
+          </Box>
+        </Stack>
 
         {/* Guest Selector Popover */}
         <Popover
@@ -175,82 +316,72 @@ function SearchBar() {
             vertical: 'top',
             horizontal: 'left',
           }}
+          PaperProps={{
+            sx: {
+              borderRadius: 2,
+              mt: 1,
+              boxShadow: '0 8px 40px rgba(0,0,0,0.12)',
+            }
+          }}
         >
-          <Box sx={{ p: 3, minWidth: 300 }}>
-            {/* Adults */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <PersonIcon color="action" />
-                <Typography>Adults</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <IconButton
-                  size="small"
-                  onClick={() => updateGuests('adults', false)}
-                  disabled={search.adults <= 1}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <Typography sx={{ minWidth: 30, textAlign: 'center' }}>{search.adults}</Typography>
-                <IconButton size="small" onClick={() => updateGuests('adults', true)}>
-                  <AddIcon />
-                </IconButton>
-              </Box>
-            </Box>
+          <Box sx={{ p: 3, minWidth: 320 }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+              Guests & Rooms
+            </Typography>
+            
+            <GuestControl
+              icon={<PersonIcon color="primary" />}
+              label="Adults"
+              value={search.adults}
+              onIncrement={() => updateGuests('adults', true)}
+              onDecrement={() => updateGuests('adults', false)}
+              minValue={1}
+            />
 
             <Divider sx={{ my: 2 }} />
 
-            {/* Children */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <PersonIcon color="action" fontSize="small" />
-                <Typography>Children</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <IconButton
-                  size="small"
-                  onClick={() => updateGuests('children', false)}
-                  disabled={search.children <= 0}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <Typography sx={{ minWidth: 30, textAlign: 'center' }}>{search.children}</Typography>
-                <IconButton size="small" onClick={() => updateGuests('children', true)}>
-                  <AddIcon />
-                </IconButton>
-              </Box>
-            </Box>
+            <GuestControl
+              icon={<PersonIcon color="primary" fontSize="small" />}
+              label="Children"
+              value={search.children}
+              onIncrement={() => updateGuests('children', true)}
+              onDecrement={() => updateGuests('children', false)}
+              minValue={0}
+            />
 
             <Divider sx={{ my: 2 }} />
 
-            {/* Rooms */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <HotelIcon color="action" />
-                <Typography>Rooms</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <IconButton
-                  size="small"
-                  onClick={() => updateGuests('rooms', false)}
-                  disabled={search.rooms <= 1}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <Typography sx={{ minWidth: 30, textAlign: 'center' }}>{search.rooms}</Typography>
-                <IconButton size="small" onClick={() => updateGuests('rooms', true)}>
-                  <AddIcon />
-                </IconButton>
-              </Box>
+            <GuestControl
+              icon={<HotelIcon color="primary" />}
+              label="Rooms"
+              value={search.rooms}
+              onIncrement={() => updateGuests('rooms', true)}
+              onDecrement={() => updateGuests('rooms', false)}
+              minValue={1}
+            />
+
+            <Box sx={{ mt: 3, display: 'flex', gap: 1 }}>
+              <Chip 
+                label={`${totalGuests} Guest${totalGuests !== 1 ? 's' : ''}`} 
+                size="small" 
+                color="primary"
+                variant="outlined"
+              />
+              <Chip 
+                label={`${search.rooms} Room${search.rooms !== 1 ? 's' : ''}`} 
+                size="small" 
+                color="primary"
+                variant="outlined"
+              />
             </Box>
 
             <Button
               fullWidth
               variant="contained"
               onClick={handleGuestClose}
-              sx={{ mt: 2 }}
+              sx={{ mt: 3, borderRadius: 2 }}
             >
-              Done
+              Apply
             </Button>
           </Box>
         </Popover>
