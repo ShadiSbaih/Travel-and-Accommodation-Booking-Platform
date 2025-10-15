@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,11 +13,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLogout } from '@/hooks/api/useAuth';
 import ThemeToggle from './common/ThemeToggle';
 import { useUserInfo } from '@/hooks/api/useUserInfo';
 import FTSLogo from '@/assets/FTS.png';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const pages = [
     { name: 'Home', path: '/home' },
@@ -28,7 +28,6 @@ function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const navigate = useNavigate();
-    const location = useLocation();
     const logoutMutation = useLogout();
     const { fullName } = useUserInfo();
 
@@ -54,17 +53,15 @@ function Navbar() {
     const handleCartClick = () => navigate('/checkout');
     const handleLogout = () => logoutMutation.mutate();
 
-    const isActivePage = (path: string) => {
-        return path === '/home'
-            ? location.pathname === '/' || location.pathname === '/home'
-            : location.pathname === path || location.pathname.startsWith(`${path}/`);
-    };
-
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/home')}>
+                    {/* Desktop Logo */}
+                    <Box 
+                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }} 
+                        onClick={() => navigate('/home')}
+                    >
                         <img src={FTSLogo} alt="FTS Logo" style={{ height: 50, width: 'auto' }} />
                     </Box>
                     <Typography
@@ -86,10 +83,11 @@ function Navbar() {
                         FTS
                     </Typography>
 
+                    {/* Mobile Menu */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
-                            aria-label="account of current user"
+                            aria-label="menu"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
@@ -114,16 +112,30 @@ function Navbar() {
                                     to={page.path}
                                     onClick={handleCloseNavMenu}
                                     sx={{
-                                        '&:hover': { backgroundColor: 'grey.600', color: 'common.white' },
-                                        '&.active': { color: 'common.white', backgroundColor: 'grey.700' }
+                                        '&:hover': { 
+                                            backgroundColor: 'grey.600', 
+                                            color: 'common.white' 
+                                        },
+                                        '&.active': { 
+                                            color: 'primary.main', 
+                                            backgroundColor: 'action.selected',
+                                            fontWeight: 'bold'
+                                        }
                                     }}
                                 >
-                                    <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
+                                    <Typography sx={{ textAlign: 'center' }}>
+                                        {page.name}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }} onClick={() => navigate('/home')}>
+
+                    {/* Mobile Logo */}
+                    <Box 
+                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }} 
+                        onClick={() => navigate('/home')}
+                    >
                         <img src={FTSLogo} alt="FTS Logo" style={{ height: 32, width: 'auto' }} />
                     </Box>
                     <Typography
@@ -145,6 +157,8 @@ function Navbar() {
                     >
                         FTS
                     </Typography>
+
+                    {/* Desktop Navigation */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
@@ -153,14 +167,18 @@ function Navbar() {
                                 to={page.path}
                                 sx={{
                                     my: 2,
-                                    color: isActivePage(page.path) ? 'common.white' : 'white',
+                                    color: 'white',
                                     display: 'block',
-                                    fontWeight: isActivePage(page.path) ? 'bold' : 'normal',
-                                    backgroundColor: isActivePage(page.path) ? 'grey.700' : 'transparent',
                                     borderRadius: 1,
                                     transition: 'all 0.2s ease-in-out',
-                                    '&:hover': { backgroundColor: 'grey.600', color: 'common.white' },
-                                    '&.active': { color: 'common.white', fontWeight: 'bold', backgroundColor: 'grey.700' }
+                                    '&:hover': { 
+                                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                    },
+                                    '&.active': { 
+                                        fontWeight: 'bold', 
+                                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                        borderBottom: '2px solid white'
+                                    }
                                 }}
                             >
                                 {page.name}
@@ -168,6 +186,7 @@ function Navbar() {
                         ))}
                     </Box>
 
+                    {/* Cart Button */}
                     <Tooltip title="View Cart">
                         <IconButton
                             onClick={handleCartClick}
@@ -187,15 +206,18 @@ function Navbar() {
                         </IconButton>
                     </Tooltip>
 
+                    {/* User Menu */}
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={fullName}>{getInitials(fullName || '')}</Avatar>
+                                <Avatar alt={fullName}>
+                                    {getInitials(fullName || '')}
+                                </Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
-                            id="menu-appbar"
+                            id="user-menu"
                             anchorEl={anchorElUser}
                             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                             keepMounted
@@ -204,7 +226,9 @@ function Navbar() {
                             onClose={handleCloseUserMenu}
                         >
                             <MenuItem onClick={handleLogout}>
-                                <Button variant="contained" color="error">Logout</Button>
+                                <Button variant="contained" color="error" fullWidth>
+                                    Logout
+                                </Button>
                             </MenuItem>
                             <MenuItem>
                                 <ThemeToggle />
@@ -216,4 +240,5 @@ function Navbar() {
         </AppBar>
     );
 }
+
 export default Navbar;
