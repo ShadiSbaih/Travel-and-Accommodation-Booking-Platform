@@ -31,6 +31,9 @@ interface SearchData {
 }
 
 function SearchBar() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // Create default dates
   const today = new Date();
   const tomorrow = new Date();
@@ -95,7 +98,8 @@ function SearchBar() {
     }
 
     console.log('Search Data:', searchData);
-    // Here you would typically call your search API
+    dispatch(setSearchData(searchData));
+    navigate('/results');
   };
 
   // Computed values
@@ -122,12 +126,14 @@ function SearchBar() {
             placeholder="Search for hotels, cities..."
             value={searchData.query}
             onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon color="action" />
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon color="action" />
+                  </InputAdornment>
+                ),
+              }
             }}
           />
         </Box>
@@ -147,12 +153,14 @@ function SearchBar() {
             slotProps={{
               textField: {
                 fullWidth: true,
-                InputProps: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CalendarIcon color="action" />
-                    </InputAdornment>
-                  ),
+                slotProps: {
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <CalendarIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }
                 }
               }
             }}
@@ -165,17 +173,20 @@ function SearchBar() {
             slotProps={{
               textField: {
                 fullWidth: true,
-                InputProps: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CalendarIcon color="action" />
-                    </InputAdornment>
-                  ),
+                slotProps: {
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <CalendarIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }
                 }
               }
             }}
           />
         </Box>
+
 
         {/* Guests and Search Row */}
         <Box sx={{
