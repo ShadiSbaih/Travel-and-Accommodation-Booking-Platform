@@ -1,78 +1,52 @@
 import Navbar from '@/components/Navbar'
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../../store';
-import type { SearchData } from '../../store/searchSlice';
-import { setSearchData } from '../../store/searchSlice'; // Import the action
 import SearchBar from '@/components/features/SearchBar';
 import { useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import searchApi from '@/services/api/search.api';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store';
+import type { SearchData } from '../../store/searchSlice';
+import { useEffect } from 'react';
 
 function SearchResultPage() {
-  const dispatch = useDispatch();
-  
-  // Get search data from Redux store
-  const searchData: SearchData = useSelector((state: RootState) => state.search);
-  
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchData: SearchData = useSelector((state: RootState) => state.search);
 
-  // Initialize Redux state from URL parameters on component mount
-  useEffect(() => {
-    const queryParam = searchParams.get('query');
-    const adultsParam = searchParams.get('adults');
-    const childrenParam = searchParams.get('children');
-    const roomsParam = searchParams.get('rooms');
+  // Get search parameters directly from URL (for shared URLs)
+  const query = searchParams.get('query') || 'New York';
+  const adults = parseInt(searchParams.get('adults') || '2');
+  const children = parseInt(searchParams.get('children') || '0');
+  const rooms = parseInt(searchParams.get('rooms') || '1');
 
-    // If URL has parameters but Redux state is empty/different, update Redux
-    if (queryParam && (!searchData?.query || 
-        searchData.query !== queryParam ||
-        searchData.adults?.toString() !== adultsParam ||
-        searchData.children?.toString() !== childrenParam ||
-        searchData.rooms?.toString() !== roomsParam)) {
-      
-      dispatch(setSearchData({
-        query: queryParam,
-        adults: parseInt(adultsParam || "2"),
-        children: parseInt(childrenParam || "0"),
-        rooms: parseInt(roomsParam || "1"),
-      }));
-    }
-  }, [searchParams, searchData, dispatch]);
-
-  // Update URL when Redux state changes (existing functionality)
+  // Update URL when Redux state changes (for new searches from SearchBar)
   useEffect(() => {
     if (searchData?.query) {
-      const currentParams = new URLSearchParams(searchParams);
       const newParams = new URLSearchParams({
         query: searchData.query,
         adults: searchData.adults?.toString() || "2",
         children: searchData.children?.toString() || "0",
         rooms: searchData.rooms?.toString() || "1",
       });
-
-      // Only update if parameters are different
-      if (currentParams.toString() !== newParams.toString()) {
-        setSearchParams(newParams);
-      }
+      
+      setSearchParams(newParams);
     }
   }, [searchData, setSearchParams]);
 
+  // Use URL parameters for API call (works for both shared URLs and new searches)
   const { data, isLoading } = useQuery({
-    queryKey: ['searchResults', searchData],
+    queryKey: ['searchResults', query, adults, children, rooms],
     queryFn: async () => {
-      const response = searchApi.searchHotels({
-        city: searchData?.query || searchParams.get('query') || "New York",
-        adults: searchData?.adults || parseInt(searchParams.get('adults') || "2"),
-        children: searchData?.children || parseInt(searchParams.get('children') || "0"),
-        numberOfRooms: searchData?.rooms || parseInt(searchParams.get('rooms') || "1")
+      return searchApi.searchHotels({
+        city: query,
+        adults: adults,
+        children: children,
+        numberOfRooms: rooms
       });
-      return response;
     },
-    enabled: !!(searchData?.query || searchParams.get('query')) // Run if we have query from either source
+    enabled: !!query // Only run if we have a query
   });
 
-  console.log("search data from result search page:", searchData);
+  console.log("search data from URL:", { query, adults, children, rooms });
   
   if (isLoading) {
     return <div>Loading...</div>;
@@ -85,18 +59,17 @@ function SearchResultPage() {
       <div style={{ padding: '20px' }}>
         <h1>Search Results</h1>
 
-        {/* Display Redux State Values */}
         <div style={{
           background: '#f5f5f5',
           padding: '20px',
           borderRadius: '8px',
           marginBottom: '20px'
         }}>
-          <h2>Redux State Values:</h2>
-          <div><strong>Query:</strong> {searchParams.get('query')}</div>
-          <div><strong>Adults:</strong> {searchParams.get('adults')}</div>
-          <div><strong>Children:</strong> {searchParams.get('children')}</div>
-          <div><strong>Rooms:</strong> {searchParams.get('rooms')}</div>
+          <h2>Search Parameters:</h2>
+          <div><strong>Query:</strong> {query}</div>
+          <div><strong>Adults:</strong> {adults}</div>
+          <div><strong>Children:</strong> {children}</div>
+          <div><strong>Rooms:</strong> {rooms}</div>
           <br />
           <div><strong>Data from API:</strong> {JSON.stringify(data) ?? <span>No data available</span>}</div>
         </div>
