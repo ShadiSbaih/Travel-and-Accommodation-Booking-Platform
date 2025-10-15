@@ -118,18 +118,10 @@ function SearchBar() {
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
     
-    const resetData: SearchData = {
-      query: '',
-      checkIn: today,
-      checkOut: tomorrow,
-      adults: 2,
-      children: 0,
-      rooms: 1,
-    };
-    
-    setLocalSearchData(resetData);
+      
+    setLocalSearchData(defaultSearchData);
     // Also clear from Redux store
-    dispatch(setSearchData(resetData));
+    dispatch(setSearchData(defaultSearchData));
   };
 
   // Computed values

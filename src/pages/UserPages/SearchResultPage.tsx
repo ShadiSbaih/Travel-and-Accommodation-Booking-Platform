@@ -43,6 +43,7 @@ function SearchResultPage() {
       setSearchParams(url);
     }
   }, [searchData, setSearchParams]);
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
