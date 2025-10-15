@@ -21,48 +21,57 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setSearchData, type SearchData } from '../../store/searchSlice';
-import type { RootState } from '../../store';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
+
+interface SearchFormData {
+  query: string;
+  checkIn: Date;
+  checkOut: Date;
+  adults: number;
+  children: number;
+  rooms: number;
+}
 
 function SearchBar() {
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  // Get search data from Redux store
-  const reduxSearchData: SearchData = useSelector((state: RootState) => state.search);
-
-  // Create default dates
-  const today = new Date();
-  const tomorrow = new Date();
-  tomorrow.setDate(today.getDate() + 1);
-
-  // Default search data
-  const defaultSearchData: SearchData = {
-    query: '',
-    checkIn: today,
-    checkOut: tomorrow,
-    adults: 2,
-    children: 0,
-    rooms: 1,
+  // Helper to create default dates
+  const getDefaultDates = () => {
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    return { today, tomorrow };
   };
 
-  // All search form states in one object
-  const [searchData, setLocalSearchData] = useState<SearchData>(defaultSearchData);
+  // Initialize state from URL params or defaults
+  const getInitialState = (): SearchFormData => {
+    const { today, tomorrow } = getDefaultDates();
+    
+    return {
+      query: searchParams.get('query') || '',
+      checkIn: searchParams.get('checkIn') 
+        ? parseISO(searchParams.get('checkIn')!) 
+        : today,
+      checkOut: searchParams.get('checkOut') 
+        ? parseISO(searchParams.get('checkOut')!) 
+        : tomorrow,
+      adults: parseInt(searchParams.get('adults') || '2'),
+      children: parseInt(searchParams.get('children') || '0'),
+      rooms: parseInt(searchParams.get('rooms') || '1'),
+    };
+  };
 
-  // Update local state when Redux state changes (e.g., when navigating to search results page)
-  useEffect(() => {
-    if (reduxSearchData && reduxSearchData.query) {
-      setLocalSearchData(reduxSearchData);
-    }
-  }, [reduxSearchData]);
-
-  // Popover control
+  const [searchData, setSearchData] = useState<SearchFormData>(getInitialState);
   const [guestButton, setGuestButton] = useState<HTMLElement | null>(null);
 
-  // Helper functions
+  // Sync state with URL when searchParams change (e.g., browser back/forward)
+  useEffect(() => {
+    setSearchData(getInitialState());
+  }, [searchParams]);
+
+  // Guest selector handlers
   const openGuestSelector = (event: React.MouseEvent<HTMLElement>) => {
     setGuestButton(event.currentTarget);
   };
@@ -71,32 +80,16 @@ function SearchBar() {
     setGuestButton(null);
   };
 
-  const increaseAdults = () => {
-    setLocalSearchData(prev => ({ ...prev, adults: prev.adults + 1 }));
-  };
-
-  const decreaseAdults = () => {
-    setLocalSearchData(prev => ({ ...prev, adults: Math.max(1, prev.adults - 1) }));
-  };
-
-  const increaseChildren = () => {
-    setLocalSearchData(prev => ({ ...prev, children: prev.children + 1 }));
-  };
-
-  const decreaseChildren = () => {
-    setLocalSearchData(prev => ({ ...prev, children: Math.max(0, prev.children - 1) }));
-  };
-
-  const increaseRooms = () => {
-    setLocalSearchData(prev => ({ ...prev, rooms: prev.rooms + 1 }));
-  };
-
-  const decreaseRooms = () => {
-    setLocalSearchData(prev => ({ ...prev, rooms: Math.max(1, prev.rooms - 1) }));
+  const updateGuestCount = (field: 'adults' | 'children' | 'rooms', delta: number) => {
+    setSearchData(prev => {
+      const newValue = prev[field] + delta;
+      const min = field === 'children' ? 0 : 1;
+      return { ...prev, [field]: Math.max(min, newValue) };
+    });
   };
 
   const handleSearch = () => {
-    // Basic validation
+    // Validation
     if (!searchData.query.trim()) {
       alert('Please enter a destination');
       return;
@@ -107,34 +100,33 @@ function SearchBar() {
       return;
     }
 
-    console.log('Search Data in form search bar component:', searchData);
-    dispatch(setSearchData(searchData));
-
-    // Navigate with URL parameters directly
-    const searchParams = new URLSearchParams({
+    // Build URL with all search parameters
+    const params = new URLSearchParams({
       query: searchData.query,
+      checkIn: format(searchData.checkIn, 'yyyy-MM-dd'),
+      checkOut: format(searchData.checkOut, 'yyyy-MM-dd'),
       adults: searchData.adults.toString(),
       children: searchData.children.toString(),
       rooms: searchData.rooms.toString(),
     });
 
-    navigate(`/search-results?${searchParams.toString()}`);
+    navigate(`/search-results?${params.toString()}`);
   };
 
   const handleClear = () => {
-    // Reset to default values
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-
-
-    setLocalSearchData(defaultSearchData);
-
+    const { today, tomorrow } = getDefaultDates();
+    setSearchData({
+      query: '',
+      checkIn: today,
+      checkOut: tomorrow,
+      adults: 2,
+      children: 0,
+      rooms: 1,
+    });
   };
 
-  // Computed values
-  const isGuestOpen = Boolean(guestButton);
   const totalGuests = searchData.adults + searchData.children;
+  const isGuestOpen = Boolean(guestButton);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -147,7 +139,6 @@ function SearchBar() {
           margin: '0 auto'
         }}
       >
-
         {/* Search Input */}
         <Box sx={{ marginBottom: 2 }}>
           <TextField
@@ -155,7 +146,7 @@ function SearchBar() {
             label="Destination"
             placeholder="Search for hotels, cities..."
             value={searchData.query}
-            onChange={(e) => setLocalSearchData(prev => ({ ...prev, query: e.target.value }))}
+            onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
             slotProps={{
               input: {
                 startAdornment: (
@@ -178,8 +169,8 @@ function SearchBar() {
           <DatePicker
             label="Check-in Date"
             value={searchData.checkIn}
-            onChange={(newValue) => newValue && setLocalSearchData(prev => ({ ...prev, checkIn: newValue }))}
-            minDate={today}
+            onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkIn: newValue }))}
+            minDate={new Date()}
             slotProps={{
               textField: {
                 fullWidth: true,
@@ -198,7 +189,7 @@ function SearchBar() {
           <DatePicker
             label="Check-out Date"
             value={searchData.checkOut}
-            onChange={(newValue) => newValue && setLocalSearchData(prev => ({ ...prev, checkOut: newValue }))}
+            onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkOut: newValue }))}
             minDate={searchData.checkIn}
             slotProps={{
               textField: {
@@ -217,14 +208,12 @@ function SearchBar() {
           />
         </Box>
 
-
         {/* Guests and Search Row */}
         <Box sx={{
           display: 'flex',
           gap: 2,
           flexDirection: { xs: 'column', sm: 'row' }
         }}>
-          {/* Guests Button */}
           <Button
             variant="outlined"
             onClick={openGuestSelector}
@@ -239,7 +228,6 @@ function SearchBar() {
             {totalGuests} Guest{totalGuests !== 1 ? 's' : ''}, {searchData.rooms} Room{searchData.rooms > 1 ? 's' : ''}
           </Button>
 
-          {/* Clear Button */}
           <Button
             variant="outlined"
             color="secondary"
@@ -255,7 +243,6 @@ function SearchBar() {
             Clear
           </Button>
 
-          {/* Search Button */}
           <Button
             variant="contained"
             color="primary"
@@ -272,56 +259,37 @@ function SearchBar() {
           </Button>
         </Box>
 
-        {/* Guest Selector Popup */}
+        {/* Guest Selector Popover */}
         <Popover
           open={isGuestOpen}
           anchorEl={guestButton}
           onClose={closeGuestSelector}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left'
-          }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         >
           <Box sx={{ padding: 3, minWidth: 280 }}>
-
             <Typography variant="h6" sx={{ marginBottom: 2 }}>
               Guests & Rooms
             </Typography>
 
-            {/* Adults Section */}
-            <Box sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 2
-            }}>
-              <Box>
-                <Typography variant="body1">Adults</Typography>
-
-              </Box>
+            {/* Adults */}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+              <Typography variant="body1">Adults</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <IconButton
                   size="small"
-                  onClick={decreaseAdults}
+                  onClick={() => updateGuestCount('adults', -1)}
                   disabled={searchData.adults <= 1}
                   sx={{ border: '1px solid #e0e0e0' }}
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography sx={{
-                  minWidth: 40,
-                  textAlign: 'center',
-                  fontWeight: 'bold'
-                }}>
+                <Typography sx={{ minWidth: 40, textAlign: 'center', fontWeight: 'bold' }}>
                   {searchData.adults}
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={increaseAdults}
+                  onClick={() => updateGuestCount('adults', 1)}
                   sx={{ border: '1px solid #e0e0e0' }}
                 >
                   <AddIcon />
@@ -331,35 +299,24 @@ function SearchBar() {
 
             <Divider sx={{ marginY: 1 }} />
 
-            {/* Children Section */}
-            <Box sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 2
-            }}>
-              <Box>
-                <Typography variant="body1">Children</Typography>
-              </Box>
+            {/* Children */}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+              <Typography variant="body1">Children</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <IconButton
                   size="small"
-                  onClick={decreaseChildren}
+                  onClick={() => updateGuestCount('children', -1)}
                   disabled={searchData.children <= 0}
                   sx={{ border: '1px solid #e0e0e0' }}
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography sx={{
-                  minWidth: 40,
-                  textAlign: 'center',
-                  fontWeight: 'bold'
-                }}>
+                <Typography sx={{ minWidth: 40, textAlign: 'center', fontWeight: 'bold' }}>
                   {searchData.children}
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={increaseChildren}
+                  onClick={() => updateGuestCount('children', 1)}
                   sx={{ border: '1px solid #e0e0e0' }}
                 >
                   <AddIcon />
@@ -369,35 +326,24 @@ function SearchBar() {
 
             <Divider sx={{ marginY: 1 }} />
 
-            {/* Rooms Section */}
-            <Box sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: 3
-            }}>
-              <Box>
-                <Typography variant="body1">Rooms</Typography>
-              </Box>
+            {/* Rooms */}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3 }}>
+              <Typography variant="body1">Rooms</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <IconButton
                   size="small"
-                  onClick={decreaseRooms}
+                  onClick={() => updateGuestCount('rooms', -1)}
                   disabled={searchData.rooms <= 1}
                   sx={{ border: '1px solid #e0e0e0' }}
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography sx={{
-                  minWidth: 40,
-                  textAlign: 'center',
-                  fontWeight: 'bold'
-                }}>
+                <Typography sx={{ minWidth: 40, textAlign: 'center', fontWeight: 'bold' }}>
                   {searchData.rooms}
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={increaseRooms}
+                  onClick={() => updateGuestCount('rooms', 1)}
                   sx={{ border: '1px solid #e0e0e0' }}
                 >
                   <AddIcon />
@@ -405,7 +351,6 @@ function SearchBar() {
               </Box>
             </Box>
 
-            {/* Apply Button */}
             <Button
               fullWidth
               variant="contained"
