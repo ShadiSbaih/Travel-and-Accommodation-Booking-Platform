@@ -15,15 +15,15 @@ import { Provider } from 'react-redux';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppErrorBoundary>
-      <ThemeProvider>
-          <Provider store={store}>
+      <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
+          <ThemeProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </ThemeProvider>
         </QueryClientProvider>
-        </Provider>
-      </ThemeProvider>
+      </Provider>
     </AppErrorBoundary>
-  </StrictMode>,
+  </StrictMode>
 )
