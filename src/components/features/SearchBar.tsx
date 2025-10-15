@@ -34,7 +34,7 @@ interface SearchParams {
   rooms: number;
 }
 
-interface GuestControlProps {
+interface SteperControlProps {
   icon: React.ReactNode;
   label: string;
   value: number;
@@ -43,7 +43,7 @@ interface GuestControlProps {
   minValue?: number;
 }
 
-const GuestControl = ({ icon, label, value, onIncrement, onDecrement, minValue = 0 }: GuestControlProps) => (
+const SteperControl = ({ icon, label, value, onIncrement, onDecrement, minValue = 0 }: SteperControlProps) => (
   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 1 }}>
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       {icon}
@@ -329,7 +329,7 @@ function SearchBar() {
               Guests & Rooms
             </Typography>
 
-            <GuestControl
+            <SteperControl
               icon={<PersonIcon color="primary" />}
               label="Adults"
               value={search.adults}
@@ -340,7 +340,7 @@ function SearchBar() {
 
             <Divider sx={{ my: 2 }} />
 
-            <GuestControl
+            <SteperControl
               icon={<PersonIcon color="primary" fontSize="small" />}
               label="Children"
               value={search.children}
@@ -351,7 +351,7 @@ function SearchBar() {
 
             <Divider sx={{ my: 2 }} />
 
-            <GuestControl
+            <SteperControl
               icon={<HotelIcon color="primary" />}
               label="Rooms"
               value={search.rooms}
