@@ -1,7 +1,12 @@
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { ProductFilters } from '@/api/products';
+ type ProductFilters = {
+  category?: 'first' | 'second' | 'third';
+  maxPrice?: number;
+  search?: string;
+};
+
 
 export function useProductFilters() {
   const [searchParams, setSearchParams] = useSearchParams();

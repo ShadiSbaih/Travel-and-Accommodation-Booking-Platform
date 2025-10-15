@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   TextField,
@@ -16,38 +16,48 @@ import {
   Person as PersonIcon,
   Add as AddIcon,
   Remove as RemoveIcon,
+  Clear as ClearIcon,
 } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-
-interface SearchData {
-  query: string;
-  checkIn: Date;
-  checkOut: Date;
-  adults: number;
-  children: number;
-  rooms: number;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setSearchData, type SearchData } from '../../store/searchSlice';
+import type { RootState } from '../../store';
 
 function SearchBar() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  // Get search data from Redux store
+  const reduxSearchData: SearchData = useSelector((state: RootState) => state.search);
+  
   // Create default dates
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
 
-  // All search form states in one object
-  const [searchData, setSearchData] = useState<SearchData>({
+  // Default search data
+  const defaultSearchData: SearchData = {
     query: '',
     checkIn: today,
     checkOut: tomorrow,
     adults: 2,
     children: 0,
     rooms: 1,
-  });
+  };
+
+  // All search form states in one object
+  const [searchData, setLocalSearchData] = useState<SearchData>(defaultSearchData);
+
+  // Update local state when Redux state changes (e.g., when navigating to search results page)
+  useEffect(() => {
+    if (reduxSearchData && reduxSearchData.query) {
+      setLocalSearchData(reduxSearchData);
+    }
+  }, [reduxSearchData]);
 
   // Popover control
   const [guestButton, setGuestButton] = useState<HTMLElement | null>(null);
@@ -62,27 +72,27 @@ function SearchBar() {
   };
 
   const increaseAdults = () => {
-    setSearchData(prev => ({ ...prev, adults: prev.adults + 1 }));
+    setLocalSearchData(prev => ({ ...prev, adults: prev.adults + 1 }));
   };
 
   const decreaseAdults = () => {
-    setSearchData(prev => ({ ...prev, adults: Math.max(1, prev.adults - 1) }));
+    setLocalSearchData(prev => ({ ...prev, adults: Math.max(1, prev.adults - 1) }));
   };
 
   const increaseChildren = () => {
-    setSearchData(prev => ({ ...prev, children: prev.children + 1 }));
+    setLocalSearchData(prev => ({ ...prev, children: prev.children + 1 }));
   };
 
   const decreaseChildren = () => {
-    setSearchData(prev => ({ ...prev, children: Math.max(0, prev.children - 1) }));
+    setLocalSearchData(prev => ({ ...prev, children: Math.max(0, prev.children - 1) }));
   };
 
   const increaseRooms = () => {
-    setSearchData(prev => ({ ...prev, rooms: prev.rooms + 1 }));
+    setLocalSearchData(prev => ({ ...prev, rooms: prev.rooms + 1 }));
   };
 
   const decreaseRooms = () => {
-    setSearchData(prev => ({ ...prev, rooms: Math.max(1, prev.rooms - 1) }));
+    setLocalSearchData(prev => ({ ...prev, rooms: Math.max(1, prev.rooms - 1) }));
   };
 
   const handleSearch = () => {
@@ -97,9 +107,29 @@ function SearchBar() {
       return;
     }
 
-    console.log('Search Data:', searchData);
+    console.log('Search Data in form search bar component:', searchData);
     dispatch(setSearchData(searchData));
-    navigate('/results');
+    navigate('/search-results');
+  };
+
+  const handleClear = () => {
+    // Reset to default values
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    
+    const resetData: SearchData = {
+      query: '',
+      checkIn: today,
+      checkOut: tomorrow,
+      adults: 2,
+      children: 0,
+      rooms: 1,
+    };
+    
+    setLocalSearchData(resetData);
+    // Also clear from Redux store
+    dispatch(setSearchData(resetData));
   };
 
   // Computed values
@@ -125,7 +155,7 @@ function SearchBar() {
             label="Destination"
             placeholder="Search for hotels, cities..."
             value={searchData.query}
-            onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
+            onChange={(e) => setLocalSearchData(prev => ({ ...prev, query: e.target.value }))}
             slotProps={{
               input: {
                 startAdornment: (
@@ -148,7 +178,7 @@ function SearchBar() {
           <DatePicker
             label="Check-in Date"
             value={searchData.checkIn}
-            onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkIn: newValue }))}
+            onChange={(newValue) => newValue && setLocalSearchData(prev => ({ ...prev, checkIn: newValue }))}
             minDate={today}
             slotProps={{
               textField: {
@@ -168,7 +198,7 @@ function SearchBar() {
           <DatePicker
             label="Check-out Date"
             value={searchData.checkOut}
-            onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkOut: newValue }))}
+            onChange={(newValue) => newValue && setLocalSearchData(prev => ({ ...prev, checkOut: newValue }))}
             minDate={searchData.checkIn}
             slotProps={{
               textField: {
@@ -207,6 +237,22 @@ function SearchBar() {
             }}
           >
             {totalGuests} Guest{totalGuests !== 1 ? 's' : ''}, {searchData.rooms} Room{searchData.rooms > 1 ? 's' : ''}
+          </Button>
+
+          {/* Clear Button */}
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="large"
+            onClick={handleClear}
+            startIcon={<ClearIcon />}
+            sx={{
+              minWidth: 120,
+              height: 56,
+              textTransform: 'none'
+            }}
+          >
+            Clear
           </Button>
 
           {/* Search Button */}
