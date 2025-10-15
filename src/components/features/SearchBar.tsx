@@ -54,7 +54,7 @@ const GuestControl = ({ icon, label, value, onIncrement, onDecrement, minValue =
         size="small"
         onClick={onDecrement}
         disabled={value <= minValue}
-        sx={{ 
+        sx={{
           border: '1px solid',
           borderColor: 'divider',
           '&:hover': { backgroundColor: 'action.hover' }
@@ -62,10 +62,10 @@ const GuestControl = ({ icon, label, value, onIncrement, onDecrement, minValue =
       >
         <RemoveIcon fontSize="small" />
       </IconButton>
-      <Typography 
-        variant="body1" 
-        sx={{ 
-          minWidth: 40, 
+      <Typography
+        variant="body1"
+        sx={{
+          minWidth: 40,
           textAlign: 'center',
           fontWeight: 'medium'
         }}
@@ -75,7 +75,7 @@ const GuestControl = ({ icon, label, value, onIncrement, onDecrement, minValue =
       <IconButton
         size="small"
         onClick={onIncrement}
-        sx={{ 
+        sx={{
           border: '1px solid',
           borderColor: 'divider',
           '&:hover': { backgroundColor: 'action.hover' }
@@ -125,7 +125,7 @@ function SearchBar() {
       alert('Please enter a destination');
       return;
     }
-    
+
     if (search.checkOut <= search.checkIn) {
       alert('Check-out date must be after check-in date');
       return;
@@ -137,7 +137,7 @@ function SearchBar() {
 
   const handleDateChange = (field: 'checkIn' | 'checkOut', newValue: Date | null) => {
     if (!newValue) return;
-    
+
     if (field === 'checkIn' && newValue >= search.checkOut) {
       const nextDay = new Date(newValue);
       nextDay.setDate(nextDay.getDate() + 1);
@@ -149,7 +149,7 @@ function SearchBar() {
 
   const guestOpen = Boolean(guestAnchor);
   const totalGuests = search.adults + search.children;
-  
+
   const formatGuestText = () => {
     const guestText = totalGuests === 1 ? '1 Guest' : `${totalGuests} Guests`;
     const roomText = search.rooms === 1 ? '1 Room' : `${search.rooms} Rooms`;
@@ -158,10 +158,10 @@ function SearchBar() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          p: { xs: 2, md: 3 }, 
+      <Paper
+        elevation={3}
+        sx={{
+          p: { xs: 2, md: 3 },
           borderRadius: 3,
           background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
           border: '1px solid',
@@ -259,9 +259,9 @@ function SearchBar() {
               variant="outlined"
               onClick={handleGuestClick}
               startIcon={<PersonIcon />}
-              sx={{ 
+              sx={{
                 height: 56,
-                justifyContent: 'flex-start', 
+                justifyContent: 'flex-start',
                 textTransform: 'none',
                 borderRadius: 2,
                 color: 'text.primary',
@@ -286,7 +286,7 @@ function SearchBar() {
               size="large"
               onClick={handleSearch}
               startIcon={<SearchIcon />}
-              sx={{ 
+              sx={{
                 height: 56,
                 borderRadius: 2,
                 textTransform: 'none',
@@ -328,7 +328,7 @@ function SearchBar() {
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
               Guests & Rooms
             </Typography>
-            
+
             <GuestControl
               icon={<PersonIcon color="primary" />}
               label="Adults"
@@ -361,15 +361,15 @@ function SearchBar() {
             />
 
             <Box sx={{ mt: 3, display: 'flex', gap: 1 }}>
-              <Chip 
-                label={`${totalGuests} Guest${totalGuests !== 1 ? 's' : ''}`} 
-                size="small" 
+              <Chip
+                label={`${totalGuests} Guest${totalGuests !== 1 ? 's' : ''}`}
+                size="small"
                 color="primary"
                 variant="outlined"
               />
-              <Chip 
-                label={`${search.rooms} Room${search.rooms !== 1 ? 's' : ''}`} 
-                size="small" 
+              <Chip
+                label={`${search.rooms} Room${search.rooms !== 1 ? 's' : ''}`}
+                size="small"
                 color="primary"
                 variant="outlined"
               />
