@@ -244,9 +244,7 @@ function SearchBar() {
             }}>
               <Box>
                 <Typography variant="body1">Adults</Typography>
-                <Typography variant="caption" color="text.secondary">
-                  Ages 13+
-                </Typography>
+
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <IconButton
@@ -285,9 +283,6 @@ function SearchBar() {
             }}>
               <Box>
                 <Typography variant="body1">Children</Typography>
-                <Typography variant="caption" color="text.secondary">
-                  Ages 0-12
-                </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <IconButton
