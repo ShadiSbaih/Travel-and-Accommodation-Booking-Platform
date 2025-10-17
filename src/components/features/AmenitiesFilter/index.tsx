@@ -1,91 +1,170 @@
 import React from 'react';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CircularProgress,
+  Box,
+  Alert,
+  Divider,
+} from '@mui/material';
+import { Clear, Hotel, ErrorOutline } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import amenitiesApi from '@/services/api/amenities.api';
 import type { Amenity } from '@/types/api/amenities';
 import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
-import FilterModeSwitch from '@/components/common/FilterModeSwitch';
-import AmenitiesList from '@/components/features/AmenitiesList';
+import FilterModeSwitch from '../../common/FilterModeSwitch';
+import AmenitiesList from '../AmenitiesList';
 
 /**
- * Complete Amenities Filter Component  
+ * Complete Amenities Filter Component with MUI
  * Uses context to manage state, eliminating prop drilling
  */
 const AmenitiesFilter: React.FC = () => {
-    const { selectedAmenities, clearAllAmenities } = useAmenitiesFilter();
+  const { selectedAmenities, clearAllAmenities } = useAmenitiesFilter();
 
-    // Fetch amenities from API
-    const { data: amenities, isLoading, error } = useQuery<Amenity[]>({
-        queryKey: ['amenities'],
-        queryFn: amenitiesApi.getAmenities,
-    });
+  // Fetch amenities from API
+  const { data: amenities, isLoading, error } = useQuery<Amenity[]>({
+    queryKey: ['amenities'],
+    queryFn: amenitiesApi.getAmenities,
+  });
 
-    // Loading state
-    if (isLoading) {
-        return (
-            <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-                <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Amenities</h3>
-                    <div className="text-center py-8">
-                        <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                        <p className="text-sm text-gray-600 mt-2">Loading amenities...</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    // Error state
-    if (error) {
-        return (
-            <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-                <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Amenities</h3>
-                    <div className="text-center py-8">
-                        <p className="text-sm text-red-600">Failed to load amenities</p>
-                        <p className="text-xs text-gray-500 mt-1">Please try again later</p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    // No amenities state
-    if (!amenities?.length) {
-        return (
-            <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-                <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Amenities</h3>
-                    <p className="text-sm text-gray-600 text-center py-8">No amenities available</p>
-                </div>
-            </div>
-        );
-    }
-
-    // Main render
+  // Loading state
+  if (isLoading) {
     return (
-        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-            <div className="p-6 pb-4">
-                {/* Header with clear button */}
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Amenities</h3>
-                    {selectedAmenities.length > 0 && (
-                        <button
-                            onClick={clearAllAmenities}
-                            className="text-sm text-blue-600 hover:underline transition-colors"
-                        >
-                            Clear All ({selectedAmenities.length})
-                        </button>
-                    )}
-                </div>
-
-                {/* Filter Mode Switch - Always visible */}
-                <FilterModeSwitch />
-
-                {/* Scrollable Amenities List */}
-                <AmenitiesList amenities={amenities} />
-            </div>
-        </div>
+      <Card elevation={1} sx={{ overflow: 'hidden' }}>
+        <CardContent sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <Hotel sx={{ mr: 1, color: 'primary.main' }} />
+            <Typography variant="h6" fontWeight={600}>
+              Amenities
+            </Typography>
+          </Box>
+          
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4 }}>
+            <CircularProgress size={24} sx={{ mb: 2 }} />
+            <Typography variant="body2" color="text.secondary">
+              Loading amenities...
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
     );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <Card elevation={1} sx={{ overflow: 'hidden' }}>
+        <CardContent sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <Hotel sx={{ mr: 1, color: 'primary.main' }} />
+            <Typography variant="h6" fontWeight={600}>
+              Amenities
+            </Typography>
+          </Box>
+          
+          <Alert severity="error" icon={<ErrorOutline />}>
+            <Typography variant="body2">Failed to load amenities</Typography>
+            <Typography variant="caption" color="text.secondary">
+              Please try refreshing the page
+            </Typography>
+          </Alert>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // No amenities state
+  if (!amenities?.length) {
+    return (
+      <Card elevation={1} sx={{ overflow: 'hidden' }}>
+        <CardContent sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <Hotel sx={{ mr: 1, color: 'primary.main' }} />
+            <Typography variant="h6" fontWeight={600}>
+              Amenities
+            </Typography>
+          </Box>
+          
+          <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ py: 4 }}>
+            No amenities available
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Main render
+  return (
+    <Card 
+      elevation={2} 
+      sx={{ 
+        overflow: 'hidden', 
+        position: 'sticky', 
+        top: 24,
+        borderRadius: 2,
+        border: '1px solid',
+        borderColor: 'divider',
+        transition: 'box-shadow 0.2s ease',
+        '&:hover': {
+          boxShadow: 3,
+        },
+      }}
+    >
+      <CardContent sx={{ p: 0 }}>
+        {/* Header with clear button */}
+        <Box sx={{ p: 3, pb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Hotel sx={{ mr: 1.5, color: 'primary.main', fontSize: 24 }} />
+              <Typography variant="h6" fontWeight={600} color="text.primary">
+                Amenities
+              </Typography>
+            </Box>
+            
+            {selectedAmenities.length > 0 && (
+              <Button
+                size="small"
+                onClick={clearAllAmenities}
+                startIcon={<Clear />}
+                color="error"
+                variant="outlined"
+                sx={{ 
+                  minWidth: 'auto',
+                  fontSize: '0.75rem',
+                  px: 1.5,
+                  py: 0.5,
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 500,
+                  '&:hover': {
+                    backgroundColor: 'error.light',
+                    color: 'error.contrastText',
+                  },
+                }}
+              >
+                Clear ({selectedAmenities.length})
+              </Button>
+            )}
+          </Box>
+        </Box>
+
+        <Divider sx={{ mx: 2 }} />
+
+        <Box sx={{ p: 3, pt: 2.5 }}>
+          {/* Filter Mode Switch */}
+          <FilterModeSwitch />
+          
+          {/* Scrollable Amenities List */}
+          <Box sx={{ mt: 1 }}>
+            <AmenitiesList amenities={amenities} />
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
+  );
 };
 
 export default AmenitiesFilter;

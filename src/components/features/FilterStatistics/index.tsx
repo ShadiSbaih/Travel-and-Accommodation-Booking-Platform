@@ -1,57 +1,98 @@
 import React from 'react';
+import {
+  Alert,
+  Box,
+  Chip,
+  Typography,
+  Stack,
+  Fade,
+} from '@mui/material';
+import { Search, Hotel, FilterList } from '@mui/icons-material';
 import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
 
 interface FilterStatisticsProps {
-    filteredCount: number;
-    totalCount: number;
+  filteredCount: number;
+  totalCount: number;
 }
 
 /**
- * Filter Statistics Component
+ * Filter Statistics Component with MUI
  * Displays filtering results and selected amenities as tags
  * Uses context for amenities state
  */
 const FilterStatistics: React.FC<FilterStatisticsProps> = ({
-    filteredCount,
-    totalCount,
+  filteredCount,
+  totalCount,
 }) => {
-    const { selectedAmenities, filterMode } = useAmenitiesFilter();
+  const { selectedAmenities, filterMode } = useAmenitiesFilter();
 
-    // Don't render if no filters are active
-    if (selectedAmenities.length === 0) return null;
+  // Don't render if no filters are active
+  if (selectedAmenities.length === 0) return null;
 
-    return (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <div className="flex items-start justify-between">
-                <div>
-                    <p className="text-blue-800 text-sm">
-                        🔍 Found <strong>{filteredCount}</strong> hotel{filteredCount !== 1 ? 's' : ''}
-                        out of <strong>{totalCount}</strong> total hotel{totalCount !== 1 ? 's' : ''}
-                        {selectedAmenities.length > 1 && (
-                            <span className="ml-1">
-                                with <strong>{filterMode === 'any' ? 'any' : 'all'}</strong> of the selected amenities
-                            </span>
-                        )}
-                        {selectedAmenities.length === 1 && (
-                            <span className="ml-1">with the selected amenity</span>
-                        )}
-                    </p>
+  return (
+    <Fade in={true}>
+      <Alert
+        severity="info"
+        icon={<Search />}
+        sx={{
+          mb: 3,
+          borderRadius: 2,
+          backgroundColor: 'info.light',
+          '& .MuiAlert-message': {
+            width: '100%',
+          },
+        }}
+      >
+        <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
+            <Hotel sx={{ fontSize: 18, color: 'info.main' }} />
+            <Typography variant="body2" component="span" fontWeight={600}>
+              Found <Box component="span" fontWeight="bold">{filteredCount}</Box> hotel
+              {filteredCount !== 1 ? 's' : ''} out of{' '}
+              <Box component="span" fontWeight="bold">{totalCount}</Box> total
+            </Typography>
+            
+            {selectedAmenities.length > 1 && (
+              <Typography variant="body2" component="span">
+                with <Box component="span" fontWeight="bold" color="primary.main">
+                  {filterMode === 'any' ? 'any' : 'all'}
+                </Box> of the selected amenities
+              </Typography>
+            )}
+            
+            {selectedAmenities.length === 1 && (
+              <Typography variant="body2" component="span">
+                with the selected amenity
+              </Typography>
+            )}
+          </Box>
 
-                    {/* Selected amenities tags */}
-                    <div className="flex flex-wrap gap-1 mt-2">
-                        {selectedAmenities.map(amenity => (
-                            <span
-                                key={amenity}
-                                className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800"
-                            >
-                                {amenity}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+          {/* Selected amenities chips */}
+          <Stack direction="row" spacing={0.5} flexWrap="wrap" sx={{ mt: 2, gap: 0.5 }}>
+            <FilterList sx={{ fontSize: 16, color: 'text.secondary', alignSelf: 'center', mr: 0.5 }} />
+            {selectedAmenities.map((amenity) => (
+              <Chip
+                key={amenity}
+                label={amenity}
+                size="small"
+                variant="filled"
+                color="info"
+                sx={{
+                  fontSize: '0.75rem',
+                  height: 24,
+                  backgroundColor: 'info.main',
+                  color: 'info.contrastText',
+                  '&:hover': {
+                    backgroundColor: 'info.dark',
+                  },
+                }}
+              />
+            ))}
+          </Stack>
+        </Box>
+      </Alert>
+    </Fade>
+  );
 };
 
 export default FilterStatistics;
