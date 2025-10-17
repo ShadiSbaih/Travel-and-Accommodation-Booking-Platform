@@ -7,11 +7,11 @@ import type { AmenitiesFilterContextType } from './types';
  * Must be used within AmenitiesFilterProvider
  */
 export const useAmenitiesFilter = (): AmenitiesFilterContextType => {
-  const context = useContext(AmenitiesFilterContext);
-  
-  if (context === undefined) {
-    throw new Error('useAmenitiesFilter must be used within an AmenitiesFilterProvider');
-  }
-  
-  return context;
+    const context = useContext(AmenitiesFilterContext);
+
+    if (context === undefined) {
+        throw new Error('useAmenitiesFilter must be used within an AmenitiesFilterProvider');
+    }
+
+    return context;
 };

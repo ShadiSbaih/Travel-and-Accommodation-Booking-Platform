@@ -1,4 +1,4 @@
 export interface FilterStatisticsProps {
-  filteredCount: number;
-  totalCount: number;
+    filteredCount: number;
+    totalCount: number;
 }

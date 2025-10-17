@@ -37,11 +37,11 @@ const SearchResultsContent: React.FC = () => {
       const names = hotel.amenities?.map((a) => a.name?.toLowerCase().trim()) || [];
       return filterMode === 'all'
         ? selectedAmenities.every((a) =>
-            names.some((n) => n?.includes(a.toLowerCase()))
-          )
+          names.some((n) => n?.includes(a.toLowerCase()))
+        )
         : selectedAmenities.some((a) =>
-            names.some((n) => n?.includes(a.toLowerCase()))
-          );
+          names.some((n) => n?.includes(a.toLowerCase()))
+        );
     });
   }, [rawHotels, selectedAmenities, filterMode]);
 
