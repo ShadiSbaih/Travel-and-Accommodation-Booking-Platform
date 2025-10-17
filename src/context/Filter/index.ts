@@ -4,9 +4,9 @@ export { FilterProvider } from './FilterProvider';
 export { filterReducer, initialFilterState } from './reducer';
 export { filterHotelsByAmenities, hasActiveFilters } from './utils';
 export { 
-  useFilter, 
-  useFilterActions, 
-  useFilterState, 
+  useFilterAmenities, 
+  useFilterAmenitiesActions, 
+  useFilterAmenitiesState, 
   useHotelFiltering 
 } from './hooks';
 export { 

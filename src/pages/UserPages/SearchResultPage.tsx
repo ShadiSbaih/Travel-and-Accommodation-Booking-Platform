@@ -9,7 +9,7 @@ import searchApi from '@/services/api/search.api';
 import type { SearchResultDTO } from '@/types/api/hotel.types';
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { useFilter } from '@/context/Filter';
+import { useFilterAmenities } from '@/context/Filter';
 import { useMemo } from 'react';
 // import { parseISO } from 'date-fns';
 function SearchResultPageContent() {
@@ -20,7 +20,7 @@ function SearchResultPageContent() {
   const rooms = parseInt(searchParams.get("rooms") || "1");
 
   // Use Context API for filtering
-  const { filterHotels, hasActiveFilters } = useFilter();
+  const { filterHotels, hasActiveFilters } = useFilterAmenities();
 
   const { data: rawData, isLoading, error } = useQuery<SearchResultDTO[]>({
     queryKey: ["searchResults", query, adults, children, rooms],

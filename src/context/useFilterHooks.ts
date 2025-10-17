@@ -2,17 +2,17 @@ import { useContext } from 'react';
 import { FilterContext } from './Filter';
 
 // Custom hook
-export function useFilter() {
+export function useFilterAmenities() {
   const context = useContext(FilterContext);
   if (context === undefined) {
-    throw new Error('useFilter must be used within a FilterProvider');
+    throw new Error('useFilterAmenities must be used within a FilterProvider');
   }
   return context;
 }
 
 // Helper hooks for specific actions
-export function useFilterActions() {
-  const context = useFilter();
+export function useFilterAmenitiesActions() {
+  const context = useFilterAmenities();
   const { dispatch } = context;
   
   return {

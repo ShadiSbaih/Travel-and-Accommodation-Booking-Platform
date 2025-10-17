@@ -7,10 +7,10 @@ import type { FilterMode } from './types';
  * Custom hook to access filter context
  * @throws Error if used outside FilterProvider
  */
-export function useFilter() {
+export function useFilterAmenities() {
   const context = useContext(FilterContext);
   if (context === undefined) {
-    throw new Error('useFilter must be used within a FilterProvider');
+    throw new Error('useFilterAmenities must be used within a FilterProvider');
   }
   return context;
 }
@@ -18,8 +18,8 @@ export function useFilter() {
 /**
  * Helper hooks for specific filter actions
  */
-export function useFilterActions() {
-  const context = useFilter();
+export function useFilterAmenitiesActions() {
+  const context = useFilterAmenities();
   const { dispatch } = context;
   
   return {
@@ -56,8 +56,8 @@ export function useFilterActions() {
 /**
  * Hook to get filter state values
  */
-export function useFilterState() {
-  const { state, hasActiveFilters } = useFilter();
+export function useFilterAmenitiesState() {
+  const { state, hasActiveFilters } = useFilterAmenities();
   
   return {
     selectedAmenities: state.selectedAmenities,
@@ -70,7 +70,7 @@ export function useFilterState() {
  * Hook specifically for hotel filtering functionality
  */
 export function useHotelFiltering() {
-  const { filterHotels } = useFilter();
+  const { filterHotels } = useFilterAmenities();
   
   return {
     filterHotels
