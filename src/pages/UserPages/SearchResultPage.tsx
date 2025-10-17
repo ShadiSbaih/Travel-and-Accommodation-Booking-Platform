@@ -1,31 +1,48 @@
 import Navbar from '@/components/Navbar';
 import SearchBar from '@/components/features/SearchBar';
 import HotelCard from '@/components/common/HotelCard';
+import AmenitiesFilter from '@/components/features/AmenitiesFilter';
+import { FilterProvider } from '@/context/FilterContext';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import searchApi from '@/services/api/search.api';
 import type { SearchResultDTO } from '@/types/api/hotel.types';
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { useFilter } from '@/context/useFilterHooks';
+import { useMemo } from 'react';
 // import { parseISO } from 'date-fns';
-function SearchResultPage() {
+function SearchResultPageContent() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
   const adults = parseInt(searchParams.get("adults") || "2");
   const children = parseInt(searchParams.get("children") || "0");
   const rooms = parseInt(searchParams.get("rooms") || "1");
 
-  const { data, isLoading, error } = useQuery<SearchResultDTO[]>({
+  // استخدام Context API للفلتر
+  const { filterHotels, hasActiveFilters } = useFilter();
+
+  const { data: rawData, isLoading, error } = useQuery<SearchResultDTO[]>({
     queryKey: ["searchResults", query, adults, children, rooms],
-    queryFn: () =>
-      searchApi.searchHotels({
+    queryFn: async () => {
+      const result = await searchApi.searchHotels({
         city: query,
         adults,
         children,
         numberOfRooms: rooms,
-      }),
+      });
+      console.log('Search API Response:', result);
+      console.log('Search query was:', query);
+      return result;
+    },
     enabled: !!query,
   });
+
+  // Apply amenities filtering
+  const filteredData = useMemo(() => {
+    if (!rawData) return rawData;
+    return filterHotels(rawData);
+  }, [rawData, filterHotels]);
 
   return (
     <>
@@ -44,19 +61,52 @@ function SearchResultPage() {
           </div>
         </div>
 
-        <SearchResultsSection data={data} isLoading={isLoading} error={error} />
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Sidebar with filters */}
+          <div className="lg:w-80 flex-shrink-0">
+            <AmenitiesFilter />
+          </div>
+
+          {/* Main content */}
+          <div className="flex-1">
+            <SearchResultsSection 
+              data={filteredData} 
+              rawData={rawData}
+              isLoading={isLoading} 
+              error={error}
+              hasActiveFilters={hasActiveFilters}
+            />
+          </div>
+        </div>
       </div>
     </>
   );
 }
 
 
+// المكون الرئيسي مع FilterProvider
+function SearchResultPage() {
+  return (
+    <FilterProvider>
+      <SearchResultPageContent />
+    </FilterProvider>
+  );
+}
+
 export default SearchResultPage;
 
-function SearchResultsSection({ data, isLoading, error }: {
+function SearchResultsSection({ 
+  data, 
+  rawData,
+  isLoading, 
+  error, 
+  hasActiveFilters 
+}: {
   data?: SearchResultDTO[];
+  rawData?: SearchResultDTO[];
   isLoading: boolean;
   error: unknown;
+  hasActiveFilters: boolean;
 }) {
   if (isLoading) {
     return (
@@ -76,7 +126,7 @@ function SearchResultsSection({ data, isLoading, error }: {
     );
   }
 
-  if (!data || data.length === 0) {
+  if (!rawData || rawData.length === 0) {
     return (
       <div className="text-center py-12 text-gray-600">
         <p className="text-lg">No hotels found for your search.</p>
@@ -84,20 +134,44 @@ function SearchResultsSection({ data, isLoading, error }: {
     );
   }
 
+  if (hasActiveFilters && (!data || data.length === 0)) {
+    return (
+      <div className="text-center py-12 text-gray-600">
+        <div className="mb-4">
+          <ErrorOutlineIcon className="w-12 h-12 mx-auto text-gray-400 mb-2" />
+          <p className="text-lg">No hotels match your selected filters.</p>
+          <p className="text-sm text-gray-500 mt-2">
+            Try removing some filters to see more results.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const resultCount = data?.length || 0;
+  const totalCount = rawData?.length || 0;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">Search Results</h2>
-        <p className="text-gray-600">{data.length} hotels found</p>
+        <div className="text-right">
+          <p className="text-gray-600">
+            {resultCount} hotel{resultCount !== 1 ? 's' : ''} 
+            {hasActiveFilters && totalCount !== resultCount && (
+              <span className="text-sm text-gray-500 block">
+                of {totalCount} total
+              </span>
+            )}
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data.map((hotel) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {data?.map((hotel) => (
           <HotelCard key={hotel.hotelId} hotel={hotel} />
         ))}
       </div>
     </div>
   );
 }
-
-
