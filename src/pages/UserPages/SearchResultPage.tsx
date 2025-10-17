@@ -19,7 +19,7 @@ function SearchResultPageContent() {
   const children = parseInt(searchParams.get("children") || "0");
   const rooms = parseInt(searchParams.get("rooms") || "1");
 
-  // استخدام Context API للفلتر
+  // Use Context API for filtering
   const { filterHotels, hasActiveFilters } = useFilter();
 
   const { data: rawData, isLoading, error } = useQuery<SearchResultDTO[]>({
@@ -84,7 +84,7 @@ function SearchResultPageContent() {
 }
 
 
-// المكون الرئيسي مع FilterProvider
+// Main component with FilterProvider wrapper
 function SearchResultPage() {
   return (
     <FilterProvider>

@@ -4,7 +4,7 @@ import type { Amenity } from '@/types/api/amenities';
 import { useFilter, useFilterActions } from '@/context/useFilterHooks';
 
 export default function AmenitiesFilter() {
-  // استخدام Context API
+  // Use Context API for filter management
   const { state, hasActiveFilters } = useFilter();
   const { toggleAmenity, clearFilters, setFilterMode } = useFilterActions();
   
@@ -59,7 +59,7 @@ export default function AmenitiesFilter() {
         )}
       </div>
       
-      <div className="space-y-3 max-h-80 overflow-y-auto">
+      <div className="space-y-3 max-h-80 overflow-y-auto ">
         {amenities.map((amenity) => (
           <label 
             key={amenity.id}
