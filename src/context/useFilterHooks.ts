@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FilterContext } from './FilterContext';
+import { FilterContext } from './Filter';
 
 // Custom hook
 export function useFilter() {

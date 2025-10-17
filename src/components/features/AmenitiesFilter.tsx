@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import amenitiesApi from "@/services/api/amenities.api";
 import type { Amenity } from '@/types/api/amenities';
-import { useFilter, useFilterActions } from '@/context/useFilterHooks';
+import { useFilter, useFilterActions } from '@/context/Filter';
 
 export default function AmenitiesFilter() {
   // Use Context API for filter management

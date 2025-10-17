@@ -2,14 +2,14 @@ import Navbar from '@/components/Navbar';
 import SearchBar from '@/components/features/SearchBar';
 import HotelCard from '@/components/common/HotelCard';
 import AmenitiesFilter from '@/components/features/AmenitiesFilter';
-import { FilterProvider } from '@/context/FilterContext';
+import { FilterProvider } from '@/context/Filter';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import searchApi from '@/services/api/search.api';
 import type { SearchResultDTO } from '@/types/api/hotel.types';
 import CircularProgress from "@mui/material/CircularProgress";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { useFilter } from '@/context/useFilterHooks';
+import { useFilter } from '@/context/Filter';
 import { useMemo } from 'react';
 // import { parseISO } from 'date-fns';
 function SearchResultPageContent() {
