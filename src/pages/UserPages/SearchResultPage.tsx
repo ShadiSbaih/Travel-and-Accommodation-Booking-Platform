@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import Navbar from '../../components/Navbar';
 import SearchBar from '../../components/features/SearchBar';
-import SearchParametersDisplay from '../../components/features/SearchParametersDisplay';
 import SearchResultsSection from '../../components/features/SearchResultsSection';
 import AmenitiesFilter from '../../components/features/AmenitiesFilter';
 import FilterStatistics from '../../components/features/FilterStatistics';
@@ -53,7 +52,6 @@ const SearchResultsContent: React.FC = () => {
       <div className="container mx-auto px-4 py-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Search Results</h1>
 
-        <SearchParametersDisplay query={query} adults={adults} children={children} rooms={rooms} />
 
         <FilterStatistics
           filteredCount={filteredHotels.length}
