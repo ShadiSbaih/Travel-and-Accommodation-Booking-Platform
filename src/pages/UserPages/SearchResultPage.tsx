@@ -9,8 +9,8 @@ import SearchResultsSection from '@/components/features/SearchResultsSection';
 import searchApi from '@/services/api/search.api';
 import type { SearchResultDTO } from '@/types/api/hotel.types';
 
-//  Simple Amenities Filter Component
-function SimpleAmenitiesFilter({ 
+//   Amenities Filter Component
+function AmenitiesFilter({ 
   selectedAmenities, 
   onAmenitiesChange 
 }: {
@@ -76,7 +76,7 @@ function SimpleAmenitiesFilter({
   );
 }
 
-//  Main Search Results Page - SIMPLE VERSION
+//  Main Search Results Page -  VERSION
 function SearchResultPage() {
   const [searchParams] = useSearchParams();
   
@@ -86,7 +86,7 @@ function SearchResultPage() {
   const children = parseInt(searchParams.get("children") || "0");  
   const rooms = parseInt(searchParams.get("rooms") || "1");
 
-  //  Filter state - very simple!
+  //  Filter state - very !
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
 
   //  Fetch hotels data from API
@@ -105,7 +105,7 @@ function SearchResultPage() {
     enabled: !!query,
   });
 
-  //  Filter hotels - simple and clear logic!
+  //  Filter hotels -  and clear logic!
   const filteredHotels = useMemo(() => {
     // If no hotels, return empty array
     if (!rawHotels || rawHotels.length === 0) {
@@ -176,7 +176,7 @@ function SearchResultPage() {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters - sidebar */}
           <div className="lg:w-80 flex-shrink-0">
-            <SimpleAmenitiesFilter 
+            <AmenitiesFilter 
               selectedAmenities={selectedAmenities}
               onAmenitiesChange={setSelectedAmenities}
             />
