@@ -9,7 +9,7 @@ import SearchResultsSection from '@/components/features/SearchResultsSection';
 import searchApi from '@/services/api/search.api';
 import type { SearchResultDTO } from '@/types/api/hotel.types';
 
-// 🏠 Simple Amenities Filter Component
+//  Simple Amenities Filter Component
 function SimpleAmenitiesFilter({ 
   selectedAmenities, 
   onAmenitiesChange 
@@ -17,7 +17,7 @@ function SimpleAmenitiesFilter({
   selectedAmenities: string[];
   onAmenitiesChange: (amenities: string[]) => void;
 }) {
-  // قائمة المرافق الشائعة
+  // List of common amenities
   const commonAmenities = [
     'Free WiFi',
     'Swimming Pool', 
@@ -33,10 +33,10 @@ function SimpleAmenitiesFilter({
 
   const handleAmenityToggle = (amenity: string) => {
     if (selectedAmenities.includes(amenity)) {
-      // إزالة المرفق
+      // Remove amenity
       onAmenitiesChange(selectedAmenities.filter(a => a !== amenity));
     } else {
-      // إضافة المرفق  
+      // Add amenity  
       onAmenitiesChange([...selectedAmenities, amenity]);
     }
   };
@@ -48,13 +48,13 @@ function SimpleAmenitiesFilter({
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">المرافق</h3>
+        <h3 className="text-lg font-semibold">Amenities</h3>
         {selectedAmenities.length > 0 && (
           <button 
             onClick={clearAllFilters}
             className="text-sm text-blue-600 hover:underline"
           >
-            مسح الكل ({selectedAmenities.length})
+            Clear All ({selectedAmenities.length})
           </button>
         )}
       </div>
@@ -76,20 +76,20 @@ function SimpleAmenitiesFilter({
   );
 }
 
-// 🏠 Main Search Results Page - SIMPLE VERSION
+//  Main Search Results Page - SIMPLE VERSION
 function SearchResultPage() {
   const [searchParams] = useSearchParams();
   
-  // 📍 استخراج معاملات البحث من الـ URL
+  //  Extract search parameters from URL
   const query = searchParams.get("query") || "";
   const adults = parseInt(searchParams.get("adults") || "2");
   const children = parseInt(searchParams.get("children") || "0");  
   const rooms = parseInt(searchParams.get("rooms") || "1");
 
-  // 📍 حالة الفلاتر - بسيطة جداً!
+  //  Filter state - very simple!
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
 
-  // 📍 جلب بيانات الفنادق من الـ API
+  //  Fetch hotels data from API
   const { data: rawHotels, isLoading, error } = useQuery<SearchResultDTO[]>({
     queryKey: ["searchResults", query, adults, children, rooms],
     queryFn: async () => {
@@ -105,31 +105,31 @@ function SearchResultPage() {
     enabled: !!query,
   });
 
-  // 📍 فلترة الفنادق - منطق بسيط وواضح!
+  //  Filter hotels - simple and clear logic!
   const filteredHotels = useMemo(() => {
-    // إذا مافيه فنادق، ارجع مصفوفة فاضية
+    // If no hotels, return empty array
     if (!rawHotels || rawHotels.length === 0) {
       return [];
     }
 
-    // إذا مافيه فلاتر مختارة، ارجع كل الفنادق
+    // If no filters selected, return all hotels
     if (selectedAmenities.length === 0) {
       return rawHotels;
     }
 
-    // فلترة الفنادق اللي عندها المرافق المطلوبة
+    // Filter hotels that have the required amenities
     const filtered = rawHotels.filter(hotel => {
-      // تأكد إن الفندق عنده مرافق
+      // Make sure hotel has amenities
       if (!hotel.amenities || !Array.isArray(hotel.amenities)) {
         return false;
       }
 
-      // أسماء مرافق الفندق
+      // Hotel amenity names
       const hotelAmenityNames = hotel.amenities.map(amenity => 
         amenity.name?.toLowerCase().trim()
       );
 
-      // تحقق إذا الفندق عنده أي مرفق من المرافق المختارة
+      // Check if hotel has any of the selected amenities
       return selectedAmenities.some(selectedAmenity =>
         hotelAmenityNames.some(hotelAmenity =>
           hotelAmenity?.includes(selectedAmenity.toLowerCase())
@@ -141,7 +141,7 @@ function SearchResultPage() {
     return filtered;
   }, [rawHotels, selectedAmenities]);
 
-  // 📍 معلومات إضافية
+  //  Additional information
   const hasActiveFilters = selectedAmenities.length > 0;
   const totalHotels = rawHotels?.length || 0;
   const filteredCount = filteredHotels.length;
@@ -152,9 +152,9 @@ function SearchResultPage() {
       <SearchBar />
       
       <div className="container mx-auto px-4 py-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">نتائج البحث</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Search Results</h1>
 
-        {/* عرض معاملات البحث */}
+        {/* Display search parameters */}
         <SearchParametersDisplay 
           query={query}
           adults={adults}
@@ -162,19 +162,19 @@ function SearchResultPage() {
           rooms={rooms}
         />
 
-        {/* عرض إحصائيات الفلترة */}
+        {/* Display filtering statistics */}
         {hasActiveFilters && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <p className="text-blue-800 text-sm">
-              🔍 تم العثور على <strong>{filteredCount}</strong> فندق 
-              من أصل <strong>{totalHotels}</strong> فندق
-              باستخدام المرافق المحددة
+              🔍 Found <strong>{filteredCount}</strong> hotel{filteredCount !== 1 ? 's' : ''} 
+              out of <strong>{totalHotels}</strong> total hotel{totalHotels !== 1 ? 's' : ''}
+              using selected amenities
             </p>
           </div>
         )}
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* الفلاتر - في الجانب */}
+          {/* Filters - sidebar */}
           <div className="lg:w-80 flex-shrink-0">
             <SimpleAmenitiesFilter 
               selectedAmenities={selectedAmenities}
@@ -182,7 +182,7 @@ function SearchResultPage() {
             />
           </div>
 
-          {/* النتائج - في المحتوى الرئيسي */}
+          {/* Results - main content */}
           <div className="flex-1">
             <SearchResultsSection 
               data={filteredHotels}
