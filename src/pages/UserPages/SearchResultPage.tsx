@@ -1,27 +1,26 @@
-import { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import Navbar from '@/components/Navbar';
-import SearchBar from '@/components/features/SearchBar';
-import SearchParametersDisplay from '@/components/features/SearchParametersDisplay';
-import SearchResultsSection from '@/components/features/SearchResultsSection';
-import AmenitiesFilter from '@/components/features/AmenitiesFilter';
+import Navbar from '../../components/Navbar';
+import SearchBar from '../../components/features/SearchBar';
+import SearchParametersDisplay from '../../components/features/SearchParametersDisplay';
+import SearchResultsSection from '../../components/features/SearchResultsSection';
+import AmenitiesFilter from '../../components/features/AmenitiesFilter';
 import FilterStatistics from '../../components/features/FilterStatistics';
-import searchApi from '@/services/api/search.api';
-import type { SearchResultDTO } from '@/types/api/hotel.types';
+import { AmenitiesFilterProvider, useAmenitiesFilter } from '../../context/AmenitiesFilter';
+import searchApi from '../../services/api/search.api';
+import type { SearchResultDTO } from '../../types/api/hotel.types';
 
-
-// 🧭 Main Search Results Page
-function SearchResultPage() {
+// Inner component that uses the context
+const SearchResultsContent: React.FC = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
   const adults = Number(searchParams.get('adults')) || 2;
   const children = Number(searchParams.get('children')) || 0;
   const rooms = Number(searchParams.get('rooms')) || 1;
 
-  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
-  const [filterMode, setFilterMode] = useState<'any' | 'all'>('any');
+  const { selectedAmenities, filterMode } = useAmenitiesFilter();
 
   const { data: rawHotels, isLoading, error } = useQuery<SearchResultDTO[]>({
     queryKey: ['searchResults', query, adults, children, rooms],
@@ -57,22 +56,14 @@ function SearchResultPage() {
         <SearchParametersDisplay query={query} adults={adults} children={children} rooms={rooms} />
 
         <FilterStatistics
-          selectedAmenities={selectedAmenities}
           filteredCount={filteredHotels.length}
           totalCount={rawHotels?.length || 0}
-          filterMode={filterMode}
-          hasActiveFilters={selectedAmenities.length > 0}
         />
 
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="lg:w-80 flex-shrink-0">
             <div className="sticky top-6">
-              <AmenitiesFilter
-                selectedAmenities={selectedAmenities}
-                onAmenitiesChange={setSelectedAmenities}
-                filterMode={filterMode}
-                onFilterModeChange={setFilterMode}
-              />
+              <AmenitiesFilter />
             </div>
           </div>
 
@@ -89,6 +80,15 @@ function SearchResultPage() {
       </div>
     </>
   );
-}
+};
+
+// 🧭 Main Search Results Page with Context Provider
+const SearchResultPage: React.FC = () => {
+  return (
+    <AmenitiesFilterProvider>
+      <SearchResultsContent />
+    </AmenitiesFilterProvider>
+  );
+};
 
 export default SearchResultPage;

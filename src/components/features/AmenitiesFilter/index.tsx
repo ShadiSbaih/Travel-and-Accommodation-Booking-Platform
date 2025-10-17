@@ -1,50 +1,23 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import amenitiesApi from '@/services/api/amenities.api';
 import type { Amenity } from '@/types/api/amenities';
+import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
 import FilterModeSwitch from '@/components/common/FilterModeSwitch';
 import AmenitiesList from '@/components/features/AmenitiesList';
-import type { AmenitiesFilterProps } from './types';
 
 /**
- * Complete Amenities Filter Component
- * Includes API data fetching, filter mode switch, and scrollable amenities list
+ * Complete Amenities Filter Component  
+ * Uses context to manage state, eliminating prop drilling
  */
-const AmenitiesFilter: React.FC<AmenitiesFilterProps> = ({
-  selectedAmenities,
-  onAmenitiesChange,
-  filterMode,
-  onFilterModeChange,
-}) => {
+const AmenitiesFilter: React.FC = () => {
+  const { selectedAmenities, clearAllAmenities } = useAmenitiesFilter();
+
   // Fetch amenities from API
   const { data: amenities, isLoading, error } = useQuery<Amenity[]>({
     queryKey: ['amenities'],
     queryFn: amenitiesApi.getAmenities,
   });
-
-  // Handle amenity toggle with smart filter mode reset
-  const handleAmenityToggle = useCallback(
-    (amenityName: string) => {
-      const newAmenities = selectedAmenities.includes(amenityName)
-        ? selectedAmenities.filter((a) => a !== amenityName)
-        : [...selectedAmenities, amenityName];
-
-      onAmenitiesChange(newAmenities);
-      
-      // Reset to 'any' mode when no amenities remain or only one amenity
-      // (all mode doesn't make sense with ≤1 amenities)
-      if (newAmenities.length <= 1 && filterMode === 'all') {
-        onFilterModeChange('any');
-      }
-    },
-    [selectedAmenities, onAmenitiesChange, filterMode, onFilterModeChange]
-  );
-
-  // Clear all filters
-  const clearAllFilters = useCallback(() => {
-    onAmenitiesChange([]);
-    onFilterModeChange('any'); // Reset to any mode when clearing
-  }, [onAmenitiesChange, onFilterModeChange]);
 
   // Loading state
   if (isLoading) {
@@ -52,9 +25,9 @@ const AmenitiesFilter: React.FC<AmenitiesFilterProps> = ({
       <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         <div className="p-6">
           <h3 className="text-lg font-semibold mb-4">Amenities</h3>
-          <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-sm text-gray-600">Loading amenities...</span>
+          <div className="text-center py-8">
+            <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+            <p className="text-sm text-gray-600 mt-2">Loading amenities...</p>
           </div>
         </div>
       </div>
@@ -69,7 +42,7 @@ const AmenitiesFilter: React.FC<AmenitiesFilterProps> = ({
           <h3 className="text-lg font-semibold mb-4">Amenities</h3>
           <div className="text-center py-8">
             <p className="text-sm text-red-600">Failed to load amenities</p>
-            <p className="text-xs text-gray-500 mt-1">Please try refreshing the page</p>
+            <p className="text-xs text-gray-500 mt-1">Please try again later</p>
           </div>
         </div>
       </div>
@@ -77,7 +50,7 @@ const AmenitiesFilter: React.FC<AmenitiesFilterProps> = ({
   }
 
   // No amenities state
-  if (!amenities || amenities.length === 0) {
+  if (!amenities?.length) {
     return (
       <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         <div className="p-6">
@@ -97,7 +70,7 @@ const AmenitiesFilter: React.FC<AmenitiesFilterProps> = ({
           <h3 className="text-lg font-semibold">Amenities</h3>
           {selectedAmenities.length > 0 && (
             <button
-              onClick={clearAllFilters}
+              onClick={clearAllAmenities}
               className="text-sm text-blue-600 hover:underline transition-colors"
             >
               Clear All ({selectedAmenities.length})
@@ -106,18 +79,10 @@ const AmenitiesFilter: React.FC<AmenitiesFilterProps> = ({
         </div>
 
         {/* Filter Mode Switch - Always visible */}
-        <FilterModeSwitch
-          filterMode={filterMode}
-          onFilterModeChange={onFilterModeChange}
-          disabled={selectedAmenities.length === 0}
-        />
+        <FilterModeSwitch />
 
         {/* Scrollable Amenities List */}
-        <AmenitiesList
-          amenities={amenities}
-          selectedAmenities={selectedAmenities}
-          onAmenityToggle={handleAmenityToggle}
-        />
+        <AmenitiesList amenities={amenities} />
       </div>
     </div>
   );

@@ -1,19 +1,24 @@
 import React from 'react';
-import type { FilterStatisticsProps } from './types';
+import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
+
+interface FilterStatisticsProps {
+  filteredCount: number;
+  totalCount: number;
+}
 
 /**
  * Filter Statistics Component
  * Displays filtering results and selected amenities as tags
+ * Uses context for amenities state
  */
 const FilterStatistics: React.FC<FilterStatisticsProps> = ({
   filteredCount,
   totalCount,
-  selectedAmenities,
-  filterMode,
-  hasActiveFilters
 }) => {
+  const { selectedAmenities, filterMode } = useAmenitiesFilter();
+  
   // Don't render if no filters are active
-  if (!hasActiveFilters) return null;
+  if (selectedAmenities.length === 0) return null;
 
   return (
     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">

@@ -1,15 +1,14 @@
 import React from 'react';
+import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
 import type { AmenitiesListProps } from './types';
 
 /**
  * Scrollable Amenities List Component
  * Displays a list of amenities with checkboxes in a scrollable container
+ * Uses context for selection state
  */
-const AmenitiesList: React.FC<AmenitiesListProps> = ({
-  amenities,
-  selectedAmenities,
-  onAmenityToggle
-}) => {
+const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
+  const { selectedAmenities, toggleAmenity } = useAmenitiesFilter();
   return (
     <div className="relative">
       <div 
@@ -28,7 +27,7 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({
             <input
               type="checkbox"
               checked={selectedAmenities.includes(amenity.name)}
-              onChange={() => onAmenityToggle(amenity.name)}
+              onChange={() => toggleAmenity(amenity.name)}
               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 flex-shrink-0"
             />
             <div className="flex-1">

@@ -1,21 +1,21 @@
 import React from 'react';
-import type { FilterModeSwitchProps } from './types';
+import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
 
 /**
  * Filter Mode Switch Component
  * Toggles between "Any Match" and "All Match" filtering modes
+ * Uses context to avoid prop drilling
  */
-const FilterModeSwitch: React.FC<FilterModeSwitchProps> = ({
-  filterMode,
-  onFilterModeChange,
-  disabled = false
-}) => {
+const FilterModeSwitch: React.FC = () => {
+  const { filterMode, setFilterMode, selectedAmenities } = useAmenitiesFilter();
+  const disabled = selectedAmenities.length === 0;
+
   return (
     <div className="mb-4 p-3 bg-gray-50 rounded-lg">
       <p className="text-sm text-gray-600 mb-2">Match Mode:</p>
       <div className="flex space-x-1 bg-white rounded-md p-1 border">
         <button
-          onClick={() => onFilterModeChange('any')}
+          onClick={() => setFilterMode('any')}
           disabled={disabled}
           className={`px-3 py-1 text-sm rounded transition-all ${
             filterMode === 'any'
@@ -26,7 +26,7 @@ const FilterModeSwitch: React.FC<FilterModeSwitchProps> = ({
           Any Match
         </button>
         <button
-          onClick={() => onFilterModeChange('all')}
+          onClick={() => setFilterMode('all')}
           disabled={disabled}
           className={`px-3 py-1 text-sm rounded transition-all ${
             filterMode === 'all'
@@ -38,10 +38,9 @@ const FilterModeSwitch: React.FC<FilterModeSwitchProps> = ({
         </button>
       </div>
       <p className="text-xs text-gray-500 mt-2">
-        {filterMode === 'any' 
-          ? 'Hotels with at least one selected amenity' 
-          : 'Hotels with all selected amenities'
-        }
+        {filterMode === 'any'
+          ? 'Hotels with at least one selected amenity'
+          : 'Hotels with all selected amenities'}
       </p>
     </div>
   );
