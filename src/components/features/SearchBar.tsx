@@ -48,14 +48,14 @@ function SearchBar() {
   // Initialize state from URL params or defaults
   const getInitialState = (): SearchFormData => {
     const { today, tomorrow } = getDefaultDates();
-    
+
     return {
       query: searchParams.get('query') || '',
-      checkIn: searchParams.get('checkIn') 
-        ? parseISO(searchParams.get('checkIn')!) 
+      checkIn: searchParams.get('checkIn')
+        ? parseISO(searchParams.get('checkIn')!)
         : today,
-      checkOut: searchParams.get('checkOut') 
-        ? parseISO(searchParams.get('checkOut')!) 
+      checkOut: searchParams.get('checkOut')
+        ? parseISO(searchParams.get('checkOut')!)
         : tomorrow,
       adults: parseInt(searchParams.get('adults') || '2'),
       children: parseInt(searchParams.get('children') || '0'),
@@ -69,20 +69,20 @@ function SearchBar() {
   // Sync state with URL when searchParams change (e.g., browser back/forward)
   useEffect(() => {
     const { today, tomorrow } = getDefaultDates();
-    
+
     const newState: SearchFormData = {
       query: searchParams.get('query') || '',
-      checkIn: searchParams.get('checkIn') 
-        ? parseISO(searchParams.get('checkIn')!) 
+      checkIn: searchParams.get('checkIn')
+        ? parseISO(searchParams.get('checkIn')!)
         : today,
-      checkOut: searchParams.get('checkOut') 
-        ? parseISO(searchParams.get('checkOut')!) 
+      checkOut: searchParams.get('checkOut')
+        ? parseISO(searchParams.get('checkOut')!)
         : tomorrow,
       adults: parseInt(searchParams.get('adults') || '2'),
       children: parseInt(searchParams.get('children') || '0'),
       rooms: parseInt(searchParams.get('rooms') || '1'),
     };
-    
+
     setSearchData(newState);
   }, [searchParams]);
 
@@ -148,22 +148,28 @@ function SearchBar() {
       <Paper
         elevation={3}
         sx={{
-          padding: { xs: 2, sm: 3 },
+          padding: { xs: 2, sm: 2.5, md: 3 },
           borderRadius: 2,
-          maxWidth: 1200,
+          maxWidth: 1400,
           margin: '0 auto',
-          backgroundColor: 'background.paper'
+          backgroundColor: 'background.paper',
+          width: '100%'
         }}
       >
-        {/* Responsive Row Layout */}
-        <Box sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', lg: 'row' },
-          gap: { xs: 2, sm: 2, lg: 1 },
-          alignItems: 'stretch'
-        }}>
-          {/* Destination Input */}
-          <Box sx={{ flex: { lg: 5 } }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', lg: 'row' },
+            alignItems: 'stretch',
+            gap: { xs: 2, md: 1.5 },
+            width: '100%'
+          }}
+        >
+          {/* Destination */}
+          <Box sx={{ 
+            flex: { lg: '1 1 35%' },
+            minWidth: { lg: 0 }
+          }}>
             <TextField
               fullWidth
               size="medium"
@@ -171,7 +177,11 @@ function SearchBar() {
               placeholder="Search for hotels, cities..."
               value={searchData.query}
               onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
-              sx={{ height: 56 }}
+              sx={{
+                '& .MuiInputBase-root': {
+                  height: 56
+                }
+              }}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -179,18 +189,21 @@ function SearchBar() {
                       <SearchIcon color="action" />
                     </InputAdornment>
                   ),
-                }
+                },
               }}
             />
           </Box>
 
-          {/* Dates Container */}
-          <Box sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
-            gap: { xs: 2, sm: 1 },
-            flex: { lg: 1.5 }
-          }}>
+          {/* Dates */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 2, md: 1.5 },
+              flex: { lg: '1 1 28%' },
+              minWidth: { lg: 0 }
+            }}
+          >
             <DatePicker
               label="Check-in"
               value={searchData.checkIn}
@@ -200,19 +213,24 @@ function SearchBar() {
                 textField: {
                   fullWidth: true,
                   size: 'medium',
-                  sx: { height: 56 },
+                  sx: {
+                    '& .MuiInputBase-root': {
+                      height: 56
+                    }
+                  },
                   slotProps: {
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
-                          <CalendarIcon color="action" />
+                          <CalendarIcon color="action" sx={{ fontSize: '1.25rem' }} />
                         </InputAdornment>
                       ),
-                    }
-                  }
-                }
+                    },
+                  },
+                },
               }}
             />
+
             <DatePicker
               label="Check-out"
               value={searchData.checkOut}
@@ -222,23 +240,30 @@ function SearchBar() {
                 textField: {
                   fullWidth: true,
                   size: 'medium',
-                  sx: { height: 56 },
+                  sx: {
+                    '& .MuiInputBase-root': {
+                      height: 56
+                    }
+                  },
                   slotProps: {
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
-                          <CalendarIcon color="action" />
+                          <CalendarIcon color="action" sx={{ fontSize: '1.25rem' }} />
                         </InputAdornment>
                       ),
-                    }
-                  }
-                }
+                    },
+                  },
+                },
               }}
             />
           </Box>
 
-          {/* Guests Button */}
-          <Box sx={{ flex: { lg: 1.5 } }}>
+          {/* Guests */}
+          <Box sx={{ 
+            flex: { lg: '1 1 20%' },
+            minWidth: { lg: 0 }
+          }}>
             <Button
               fullWidth
               variant="outlined"
@@ -248,28 +273,34 @@ function SearchBar() {
                 height: 56,
                 justifyContent: 'flex-start',
                 textTransform: 'none',
-                fontSize: { xs: '0.875rem', sm: '1rem' },
-                px: 2
+                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                px: 2,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                '& .MuiButton-startIcon': {
+                  marginRight: 1
+                }
               }}
             >
-              <Box component="span" sx={{ 
-                textAlign: 'left',
+              <Box component="span" sx={{
                 overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
+                textOverflow: 'ellipsis'
               }}>
                 {totalGuests} Guest{totalGuests !== 1 ? 's' : ''}, {searchData.rooms} Room{searchData.rooms > 1 ? 's' : ''}
               </Box>
             </Button>
           </Box>
 
-          {/* Action Buttons */}
-          <Box sx={{
-            display: 'flex',
-            gap: 1,
-            flex: { lg: 1 },
-            flexDirection: { xs: 'row', lg: 'row' }
-          }}>
+          {/* Buttons */}
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 1,
+              flex: { lg: '0 0 17%' },
+              flexDirection: { xs: 'row', lg: 'row' },
+              minWidth: { lg: 0 }
+            }}
+          >
             <Button
               variant="outlined"
               color="secondary"
@@ -277,13 +308,14 @@ function SearchBar() {
               startIcon={<ClearIcon />}
               sx={{
                 flex: { xs: 1, lg: 'none' },
-                minWidth: { xs: 'auto', lg: 100 },
                 height: 56,
                 textTransform: 'none',
-                fontSize: { xs: '0.875rem', sm: '1rem' }
+                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                minWidth: { lg: 80 },
+                px: { xs: 1, md: 2 }
               }}
             >
-              <Box component="span" sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
                 Clear
               </Box>
             </Button>
@@ -294,12 +326,13 @@ function SearchBar() {
               onClick={handleSearch}
               startIcon={<SearchIcon />}
               sx={{
-                flex: { xs: 2, lg: 'none' },
-                minWidth: { xs: 'auto', lg: 120 },
+                flex: { xs: 2, lg: 1 },
                 height: 56,
                 textTransform: 'none',
-                fontSize: { xs: '0.875rem', sm: '1rem' },
-                fontWeight: 600
+                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                fontWeight: 600,
+                minWidth: { lg: 100 },
+                px: { xs: 2, md: 2.5 }
               }}
             >
               Search
