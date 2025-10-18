@@ -174,7 +174,7 @@ function SearchBar() {
               fullWidth
               size="medium"
               label="Destination"
-              placeholder="Search for hotels, cities..."
+              placeholder="Wehere are you going?"
               value={searchData.query}
               onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
               sx={{
