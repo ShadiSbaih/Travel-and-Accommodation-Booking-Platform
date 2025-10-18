@@ -16,4 +16,3 @@ export {
 } from './hooks/useHotels';
 
 export * from './types/hotel.types';
-export * from './types/amenities';
