@@ -10,6 +10,7 @@ import FilterStatistics from '../../components/features/FilterStatistics';
 import { AmenitiesFilterProvider, useAmenitiesFilter } from '../../context/AmenitiesFilter';
 import searchApi from '../../services/api/search.api';
 import type { SearchResultDTO } from '../../types/api/hotel.types';
+import { Typography } from '@mui/material';
 
 // Inner component that uses the context
 const SearchResultsContent: React.FC = () => {
@@ -47,10 +48,22 @@ const SearchResultsContent: React.FC = () => {
   return (
     <>
       <Navbar />
+      <Typography
+        variant="h3"
+        component="h1"
+        sx={{
+          fontWeight: 700,
+          color: 'text.primary',
+          my: 2,
+          textAlign: 'center',
+          letterSpacing: '-0.02em'
+        }}
+      >
+        Discover Your Perfect Stay
+      </Typography>
       <SearchBar />
 
       <div className="container mx-auto px-4 py-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Search Results</h1>
 
 
         <FilterStatistics
