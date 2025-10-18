@@ -1,75 +1,92 @@
-import Navbar from '@/components/Navbar';
-import SearchBar from '@/components/features/SearchBar';
+import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import searchApi from '@/services/api/search.api';
-// import { parseISO } from 'date-fns';
 
-function SearchResultPage() {
+import Navbar from '../../components/Navbar';
+import SearchBar from '../../components/features/SearchBar';
+import SearchResultsSection from '../../components/features/SearchResultsSection';
+import AmenitiesFilter from '../../components/features/AmenitiesFilter';
+import FilterStatistics from '../../components/features/FilterStatistics';
+import { AmenitiesFilterProvider, useAmenitiesFilter } from '../../context/AmenitiesFilter';
+import searchApi from '../../services/api/search.api';
+import type { SearchResultDTO } from '../../types/api/hotel.types';
+
+// Inner component that uses the context
+const SearchResultsContent: React.FC = () => {
   const [searchParams] = useSearchParams();
-
-  // Parse all parameters from URL (single source of truth)
   const query = searchParams.get('query') || '';
-  const adults = parseInt(searchParams.get('adults') || '2');
-  const children = parseInt(searchParams.get('children') || '0');
-  const rooms = parseInt(searchParams.get('rooms') || '1');
+  const adults = Number(searchParams.get('adults')) || 2;
+  const children = Number(searchParams.get('children')) || 0;
+  const rooms = Number(searchParams.get('rooms')) || 1;
 
-  // Fetch search results
-  const { data, isLoading, error } = useQuery({
+  const { selectedAmenities, filterMode } = useAmenitiesFilter();
+
+  const { data: rawHotels, isLoading, error } = useQuery<SearchResultDTO[]>({
     queryKey: ['searchResults', query, adults, children, rooms],
-    queryFn: async () => {
-      return searchApi.searchHotels({
-        city: query,
-
-        adults: adults,
-        children: children,
-        numberOfRooms: rooms
-      });
-    },
-    enabled: !!query, // Only fetch if we have a query
+    queryFn: () =>
+      searchApi.searchHotels({ city: query, adults, children, numberOfRooms: rooms }),
+    enabled: !!query,
   });
+
+  const filteredHotels = useMemo(() => {
+    if (!rawHotels?.length) return [];
+    if (!selectedAmenities.length) return rawHotels;
+
+    return rawHotels.filter((hotel) => {
+      const names = hotel.amenities?.map((a) => a.name?.toLowerCase().trim()) || [];
+      return filterMode === 'all'
+        ? selectedAmenities.every((a) =>
+          names.some((n) => n?.includes(a.toLowerCase()))
+        )
+        : selectedAmenities.some((a) =>
+          names.some((n) => n?.includes(a.toLowerCase()))
+        );
+    });
+  }, [rawHotels, selectedAmenities, filterMode]);
 
   return (
     <>
       <Navbar />
       <SearchBar />
-      <div style={{ padding: '20px' }}>
-        <h1>Search Results</h1>
 
-        <div style={{
-          background: '#f5f5f5',
-          padding: '20px',
-          borderRadius: '8px',
-          marginBottom: '20px'
-        }}>
-          <h2>Search Parameters:</h2>
-          <div><strong>Query:</strong> {query || 'No query'}</div>
-          <div><strong>Adults:</strong> {adults}</div>
-          <div><strong>Children:</strong> {children}</div>
-          <div><strong>Rooms:</strong> {rooms}</div>
+      <div className="container mx-auto px-4 py-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Search Results</h1>
+
+
+        <FilterStatistics
+          filteredCount={filteredHotels.length}
+          totalCount={rawHotels?.length || 0}
+        />
+
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="lg:w-80 flex-shrink-0">
+            <div className="sticky top-6">
+              <AmenitiesFilter />
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <SearchResultsSection
+              data={filteredHotels}
+              rawData={rawHotels}
+              isLoading={isLoading}
+              error={error}
+              hasActiveFilters={!!selectedAmenities.length}
+            />
+          </div>
         </div>
-
-        {isLoading && <div>Loading results...</div>}
-
-        {error && (
-          <div style={{ color: 'red', padding: '20px', background: '#fee' }}>
-            Error loading results: {(error as Error).message}
-          </div>
-        )}
-
-        {data && (
-          <div style={{
-            background: '#fff',
-            padding: '20px',
-            borderRadius: '8px'
-          }}>
-            <h2>Results:</h2>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          </div>
-        )}
       </div>
     </>
   );
-}
+};
+
+// 🧭 Main Search Results Page with Context Provider
+const SearchResultPage: React.FC = () => {
+  return (
+    <AmenitiesFilterProvider>
+      <SearchResultsContent />
+    </AmenitiesFilterProvider>
+  );
+};
 
 export default SearchResultPage;

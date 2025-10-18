@@ -48,14 +48,14 @@ function SearchBar() {
   // Initialize state from URL params or defaults
   const getInitialState = (): SearchFormData => {
     const { today, tomorrow } = getDefaultDates();
-    
+
     return {
       query: searchParams.get('query') || '',
-      checkIn: searchParams.get('checkIn') 
-        ? parseISO(searchParams.get('checkIn')!) 
+      checkIn: searchParams.get('checkIn')
+        ? parseISO(searchParams.get('checkIn')!)
         : today,
-      checkOut: searchParams.get('checkOut') 
-        ? parseISO(searchParams.get('checkOut')!) 
+      checkOut: searchParams.get('checkOut')
+        ? parseISO(searchParams.get('checkOut')!)
         : tomorrow,
       adults: parseInt(searchParams.get('adults') || '2'),
       children: parseInt(searchParams.get('children') || '0'),
@@ -68,7 +68,22 @@ function SearchBar() {
 
   // Sync state with URL when searchParams change (e.g., browser back/forward)
   useEffect(() => {
-    setSearchData(getInitialState());
+    const { today, tomorrow } = getDefaultDates();
+
+    const newState: SearchFormData = {
+      query: searchParams.get('query') || '',
+      checkIn: searchParams.get('checkIn')
+        ? parseISO(searchParams.get('checkIn')!)
+        : today,
+      checkOut: searchParams.get('checkOut')
+        ? parseISO(searchParams.get('checkOut')!)
+        : tomorrow,
+      adults: parseInt(searchParams.get('adults') || '2'),
+      children: parseInt(searchParams.get('children') || '0'),
+      rooms: parseInt(searchParams.get('rooms') || '1'),
+    };
+
+    setSearchData(newState);
   }, [searchParams]);
 
   // Guest selector handlers
@@ -133,130 +148,196 @@ function SearchBar() {
       <Paper
         elevation={3}
         sx={{
-          padding: 3,
+          padding: { xs: 2, sm: 2.5, md: 3 },
           borderRadius: 2,
-          maxWidth: 1000,
-          margin: '0 auto'
+          maxWidth: 1400,
+          margin: '0 auto',
+          backgroundColor: 'background.paper',
+          width: '100%'
         }}
       >
-        {/* Search Input */}
-        <Box sx={{ marginBottom: 2 }}>
-          <TextField
-            fullWidth
-            label="Destination"
-            placeholder="Search for hotels, cities..."
-            value={searchData.query}
-            onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="action" />
-                  </InputAdornment>
-                ),
-              }
-            }}
-          />
-        </Box>
-
-        {/* Dates Row */}
-        <Box sx={{
-          display: 'flex',
-          gap: 2,
-          marginBottom: 2,
-          flexDirection: { xs: 'column', sm: 'row' }
-        }}>
-          <DatePicker
-            label="Check-in Date"
-            value={searchData.checkIn}
-            onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkIn: newValue }))}
-            minDate={new Date()}
-            slotProps={{
-              textField: {
-                fullWidth: true,
-                slotProps: {
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <CalendarIcon color="action" />
-                      </InputAdornment>
-                    ),
-                  }
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', lg: 'row' },
+            alignItems: 'stretch',
+            gap: { xs: 2, md: 1.5 },
+            width: '100%'
+          }}
+        >
+          {/* Destination */}
+          <Box sx={{ 
+            flex: { lg: '1 1 35%' },
+            minWidth: { lg: 0 }
+          }}>
+            <TextField
+              fullWidth
+              size="medium"
+              label="Destination"
+              placeholder="Wehere are you going?"
+              value={searchData.query}
+              onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
+              sx={{
+                '& .MuiInputBase-root': {
+                  height: 56
                 }
-              }
+              }}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon color="action" />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+          </Box>
+
+          {/* Dates */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 2, md: 1.5 },
+              flex: { lg: '1 1 28%' },
+              minWidth: { lg: 0 }
             }}
-          />
-          <DatePicker
-            label="Check-out Date"
-            value={searchData.checkOut}
-            onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkOut: newValue }))}
-            minDate={searchData.checkIn}
-            slotProps={{
-              textField: {
-                fullWidth: true,
-                slotProps: {
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <CalendarIcon color="action" />
-                      </InputAdornment>
-                    ),
-                  }
+          >
+            <DatePicker
+              label="Check-in"
+              value={searchData.checkIn}
+              onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkIn: newValue }))}
+              minDate={new Date()}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  size: 'medium',
+                  sx: {
+                    '& .MuiInputBase-root': {
+                      height: 56
+                    }
+                  },
+                  slotProps: {
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <CalendarIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                        </InputAdornment>
+                      ),
+                    },
+                  },
+                },
+              }}
+            />
+
+            <DatePicker
+              label="Check-out"
+              value={searchData.checkOut}
+              onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkOut: newValue }))}
+              minDate={searchData.checkIn}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  size: 'medium',
+                  sx: {
+                    '& .MuiInputBase-root': {
+                      height: 56
+                    }
+                  },
+                  slotProps: {
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <CalendarIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                        </InputAdornment>
+                      ),
+                    },
+                  },
+                },
+              }}
+            />
+          </Box>
+
+          {/* Guests */}
+          <Box sx={{ 
+            flex: { lg: '1 1 20%' },
+            minWidth: { lg: 0 }
+          }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={openGuestSelector}
+              startIcon={<PersonIcon />}
+              sx={{
+                height: 56,
+                justifyContent: 'flex-start',
+                textTransform: 'none',
+                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                px: 2,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                '& .MuiButton-startIcon': {
+                  marginRight: 1
                 }
-              }
-            }}
-          />
-        </Box>
+              }}
+            >
+              <Box component="span" sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
+                {totalGuests} Guest{totalGuests !== 1 ? 's' : ''}, {searchData.rooms} Room{searchData.rooms > 1 ? 's' : ''}
+              </Box>
+            </Button>
+          </Box>
 
-        {/* Guests and Search Row */}
-        <Box sx={{
-          display: 'flex',
-          gap: 2,
-          flexDirection: { xs: 'column', sm: 'row' }
-        }}>
-          <Button
-            variant="outlined"
-            onClick={openGuestSelector}
-            startIcon={<PersonIcon />}
+          {/* Buttons */}
+          <Box
             sx={{
-              flex: 1,
-              height: 56,
-              justifyContent: 'flex-start',
-              textTransform: 'none'
+              display: 'flex',
+              gap: 1,
+              flex: { lg: '0 0 17%' },
+              flexDirection: { xs: 'row', lg: 'row' },
+              minWidth: { lg: 0 }
             }}
           >
-            {totalGuests} Guest{totalGuests !== 1 ? 's' : ''}, {searchData.rooms} Room{searchData.rooms > 1 ? 's' : ''}
-          </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleClear}
+              startIcon={<ClearIcon />}
+              sx={{
+                flex: { xs: 1, lg: 'none' },
+                height: 56,
+                textTransform: 'none',
+                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                minWidth: { lg: 80 },
+                px: { xs: 1, md: 2 }
+              }}
+            >
+              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                Clear
+              </Box>
+            </Button>
 
-          <Button
-            variant="outlined"
-            color="secondary"
-            size="large"
-            onClick={handleClear}
-            startIcon={<ClearIcon />}
-            sx={{
-              minWidth: 120,
-              height: 56,
-              textTransform: 'none'
-            }}
-          >
-            Clear
-          </Button>
-
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={handleSearch}
-            startIcon={<SearchIcon />}
-            sx={{
-              minWidth: 140,
-              height: 56,
-              textTransform: 'none'
-            }}
-          >
-            Search
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSearch}
+              startIcon={<SearchIcon />}
+              sx={{
+                flex: { xs: 2, lg: 1 },
+                height: 56,
+                textTransform: 'none',
+                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                fontWeight: 600,
+                minWidth: { lg: 100 },
+                px: { xs: 2, md: 2.5 }
+              }}
+            >
+              Search
+            </Button>
+          </Box>
         </Box>
 
         {/* Guest Selector Popover */}
@@ -266,6 +347,15 @@ function SearchBar() {
           onClose={closeGuestSelector}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+          slotProps={{
+            paper: {
+              sx: {
+                mt: 1,
+                minWidth: { xs: 280, sm: 320 },
+                maxWidth: { xs: '90vw', sm: 400 }
+              }
+            }
+          }}
         >
           <Box sx={{ padding: 3, minWidth: 280 }}>
             <Typography variant="h6" sx={{ marginBottom: 2 }}>
