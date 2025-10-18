@@ -4,9 +4,9 @@ import {
   ToggleButton,
   Tooltip
 } from '@mui/material';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { setMode } from '@/features/filters';
-import type { FilterMode } from '@/features/filters';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { setMode } from '@/store/slices/filterSlice';
+import type { FilterMode } from '@/store/slices/filterSlice.types';
 
 /**
  * Filter Mode Switch Component with MUI

@@ -5,8 +5,8 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { FilterState, FilterMode } from './types';
-import { DEFAULT_FILTER_CONFIG } from './constants';
+import type { FilterState, FilterMode } from './filterSlice.types';
+import { DEFAULT_FILTER_CONFIG } from './filterSlice.constants';
 
 /**
  * Initial state for the filter slice

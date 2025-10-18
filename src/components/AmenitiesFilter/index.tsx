@@ -11,12 +11,12 @@ import {
 } from '@mui/material';
 import { Clear, Hotel, ErrorOutline } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
-import amenitiesApi from '@/services/api/amenities.api';
+import amenitiesApi from '@/api/amenities.api';
 import type { Amenity } from '@/types/api/amenities';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { clearFilters } from '@/features/filters';
-import FilterModeSwitch from '../../common/FilterModeSwitch';
-import AmenitiesList from '../AmenitiesList';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { clearFilters } from '@/store/slices/filterSlice';
+import FilterModeSwitch from '@/components/FilterModeSwitch';
+import AmenitiesList from '@/components/AmenitiesList';
 
 /**
  * Complete Amenities Filter Component with MUI

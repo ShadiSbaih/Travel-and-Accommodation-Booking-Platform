@@ -1,5 +1,5 @@
-import api from "./axios";
-import type { Amenity } from "../../types/api/amenities";
+import api from "@/api/axios";
+import type { Amenity } from "@/types/api/amenities";
 
 const amenitiesApi = {
     getAmenities: async (): Promise<Amenity[]> => {

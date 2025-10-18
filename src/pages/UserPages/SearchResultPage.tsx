@@ -2,14 +2,14 @@ import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import Navbar from '../../components/Navbar';
-import SearchBar from '../../components/features/SearchBar';
-import SearchResultsSection from '../../components/features/SearchResultsSection';
-import AmenitiesFilter from '../../components/features/AmenitiesFilter';
-import FilterStatistics from '../../components/features/FilterStatistics';
-import { useAppSelector } from '../../app/hooks';
-import searchApi from '../../services/api/search.api';
-import type { SearchResultDTO } from '../../types/api/hotel.types';
+import Navbar from '@/components/Navbar';
+import SearchBar from '@/components/SearchBar';
+import SearchResultsSection from '@/components/SearchResultsSection';
+import AmenitiesFilter from '@/components/AmenitiesFilter';
+import FilterStatistics from '@/components/FilterStatistics';
+import { useAppSelector } from '@/store/hooks';
+import searchApi from '@/api/search.api';
+import type { SearchResultDTO } from '@/types/api/hotel.types';
 import { Typography } from '@mui/material';
 
 // Main Search Results Page component using Redux

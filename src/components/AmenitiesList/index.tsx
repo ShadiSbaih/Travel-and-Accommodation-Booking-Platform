@@ -9,8 +9,8 @@ import {
   Tooltip,
   Fade
 } from '@mui/material';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
-import { toggleAmenity } from '@/features/filters';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { toggleAmenity } from '@/store/slices/filterSlice';
 import type { AmenitiesListProps } from './types';
 
 /**

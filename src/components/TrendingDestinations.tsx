@@ -1,4 +1,4 @@
-import homePageApi from "@/services/api/home-page.api";
+import homePageApi from "@/api/home-page.api";
 import { useQuery } from "@tanstack/react-query";
 
 export interface TrendingDestinationDto {

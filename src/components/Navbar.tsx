@@ -14,9 +14,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useLogout } from '@/hooks/api/useAuth';
-import ThemeToggle from './common/ThemeToggle';
-import { useUserInfo } from '@/hooks/api/useUserInfo';
+import { useLogout } from '@/hooks/useAuth';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useUserInfo } from '@/hooks/useUserInfo';
 import FTSLogo from '@/assets/FTS.png';
 
 const pages = [

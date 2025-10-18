@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { hotelsApi } from '@/services/api/hotels.api';
+import { hotelsApi } from '@/api/hotels.api';
 import { queryKeys } from '@/constants/queryKeys';
 import type { Hotel, HotelFilters } from '@/types/api/hotel.types';
 

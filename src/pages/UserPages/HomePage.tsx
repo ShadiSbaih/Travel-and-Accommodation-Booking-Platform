@@ -1,9 +1,9 @@
-import FeaturedDeals from "@/components/features/FeaturedDeals";
-import RecentlyVisitedHotels from "@/components/features/RecentlyVisitedHotels";
-import SearchBar from "@/components/features/SearchBar";
-import TrendingDestinations from "@/components/features/TrendingDestinations";
+import FeaturedDeals from "@/components/FeaturedDeals";
+import RecentlyVisitedHotels from "@/components/RecentlyVisitedHotels";
+import SearchBar from "@/components/SearchBar";
+import TrendingDestinations from "@/components/TrendingDestinations";
 import Navbar from "@/components/Navbar";
-import { useUserInfo } from '@/hooks/api/useUserInfo';
+import { useUserInfo } from '@/hooks/useUserInfo';
 
 
 function HomePage() {

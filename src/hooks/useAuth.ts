@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import api from '@/services/api/axios';
+import api from '@/api/axios';
 
 interface LoginCredentials {
   userName: string;

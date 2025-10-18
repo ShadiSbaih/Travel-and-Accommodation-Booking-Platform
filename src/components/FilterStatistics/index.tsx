@@ -8,7 +8,7 @@ import {
   Fade,
 } from '@mui/material';
 import { Search, Hotel, FilterList } from '@mui/icons-material';
-import { useAppSelector } from '@/app/hooks';
+import { useAppSelector } from '@/store/hooks';
 
 interface FilterStatisticsProps {
   filteredCount: number;

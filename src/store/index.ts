@@ -1,12 +1,36 @@
-import { configureStore } from '@reduxjs/toolkit';
-import searchReducer from './searchSlice';
+/**
+ * Redux Store Configuration
+ * Centralized store setup with TypeScript support
+ */
 
+import { configureStore } from '@reduxjs/toolkit';
+import filterReducer from './slices/filterSlice';
+
+/**
+ * Configure and export the Redux store
+ */
 export const store = configureStore({
-    reducer: {
-        search: searchReducer,
-    },
+  reducer: {
+    filters: filterReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types if needed
+        ignoredActions: [],
+      },
+    }),
+  devTools: true, // Enable Redux DevTools
 });
 
-// TypeScript helpers
+/**
+ * TypeScript type for the root state
+ * Inferred from the store itself
+ */
 export type RootState = ReturnType<typeof store.getState>;
+
+/**
+ * TypeScript type for dispatch
+ * Includes thunk action types
+ */
 export type AppDispatch = typeof store.dispatch;

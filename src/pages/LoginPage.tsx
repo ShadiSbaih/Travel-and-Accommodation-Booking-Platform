@@ -1,13 +1,13 @@
-import Button from '@/components/common/Button';
-import Form from '@/components/common/Form';
-import Input from '@/components/common/Input';
+import Button from '@/components/Button';
+import Form from '@/components/Form';
+import Input from '@/components/Input';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import ThemeToggle from '@/components/common/ThemeToggle';
-import { useLogin } from '@/hooks/api/useAuth';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useLogin } from '@/hooks/useAuth';
 
 function LoginPage() {
   const loginMutation = useLogin();

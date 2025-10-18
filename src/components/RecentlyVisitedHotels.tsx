@@ -1,5 +1,5 @@
-import { useUserInfo } from "@/hooks/api/useUserInfo";
-import homePageApi from "@/services/api/home-page.api";
+import { useUserInfo } from "@/hooks/useUserInfo";
+import homePageApi from "@/api/home-page.api";
 import { useQuery } from "@tanstack/react-query";
 
 export interface RecentlyVisitedHotelDto {

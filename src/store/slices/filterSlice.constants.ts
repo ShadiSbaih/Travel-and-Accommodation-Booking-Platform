@@ -3,7 +3,7 @@
  * Centralized configuration and action types for the filter system
  */
 
-import type { FilterState } from './types';
+import type { FilterState } from './filterSlice.types';
 
 /**
  * Default filter configuration
