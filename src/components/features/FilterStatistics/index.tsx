@@ -8,7 +8,7 @@ import {
   Fade,
 } from '@mui/material';
 import { Search, Hotel, FilterList } from '@mui/icons-material';
-import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
+import { useAppSelector } from '@/app/hooks';
 
 interface FilterStatisticsProps {
   filteredCount: number;
@@ -18,13 +18,13 @@ interface FilterStatisticsProps {
 /**
  * Filter Statistics Component with MUI
  * Displays filtering results and selected amenities as tags
- * Uses context for amenities state
+ * Uses Redux for amenities state
  */
 const FilterStatistics: React.FC<FilterStatisticsProps> = ({
   filteredCount,
   totalCount,
 }) => {
-  const { selectedAmenities, filterMode } = useAmenitiesFilter();
+  const { selectedAmenities, filterMode } = useAppSelector((state) => state.filters);
 
   // Don't render if no filters are active
   if (selectedAmenities.length === 0) return null;

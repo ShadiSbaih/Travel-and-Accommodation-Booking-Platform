@@ -9,16 +9,18 @@ import {
   Tooltip,
   Fade
 } from '@mui/material';
-import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { toggleAmenity } from '@/features/filters';
 import type { AmenitiesListProps } from './types';
 
 /**
  * Scrollable Amenities List Component with MUI
  * Displays a list of amenities with checkboxes in a scrollable container
- * Uses context for selection state
+ * Uses Redux for selection state
  */
 const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
-  const { selectedAmenities, toggleAmenity } = useAmenitiesFilter();
+  const selectedAmenities = useAppSelector((state) => state.filters.selectedAmenities);
+  const dispatch = useAppDispatch();
 
   return (
     <Box
@@ -39,10 +41,10 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
         },
       }}
     >
-      <List 
-        dense 
-        sx={{ 
-          py: 1, 
+      <List
+        dense
+        sx={{
+          py: 1,
           px: 0.5,
           '& .MuiListItem-root:first-of-type': {
             mt: 0,
@@ -72,7 +74,7 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
                 control={
                   <Checkbox
                     checked={selectedAmenities.includes(amenity.name)}
-                    onChange={() => toggleAmenity(amenity.name)}
+                    onChange={() => dispatch(toggleAmenity(amenity.name))}
                     size="small"
                     color="primary"
                     sx={{
@@ -88,9 +90,9 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
                   />
                 }
                 label={
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
+                  <Typography
+                    variant="body2"
+                    sx={{
                       fontWeight: 500,
                       color: 'text.primary',
                       lineHeight: 1.4,
@@ -104,7 +106,7 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
                     {amenity.name}
                   </Typography>
                 }
-                sx={{ 
+                sx={{
                   margin: 0,
                   width: '100%',
                   alignItems: 'center',

@@ -7,20 +7,21 @@ import SearchBar from '../../components/features/SearchBar';
 import SearchResultsSection from '../../components/features/SearchResultsSection';
 import AmenitiesFilter from '../../components/features/AmenitiesFilter';
 import FilterStatistics from '../../components/features/FilterStatistics';
-import { AmenitiesFilterProvider, useAmenitiesFilter } from '../../context/AmenitiesFilter';
+import { useAppSelector } from '../../app/hooks';
 import searchApi from '../../services/api/search.api';
 import type { SearchResultDTO } from '../../types/api/hotel.types';
 import { Typography } from '@mui/material';
 
-// Inner component that uses the context
-const SearchResultsContent: React.FC = () => {
+// Main Search Results Page component using Redux
+const SearchResultPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
   const adults = Number(searchParams.get('adults')) || 2;
   const children = Number(searchParams.get('children')) || 0;
   const rooms = Number(searchParams.get('rooms')) || 1;
 
-  const { selectedAmenities, filterMode } = useAmenitiesFilter();
+  // Get filter state from Redux store
+  const { selectedAmenities, filterMode } = useAppSelector((state) => state.filters);
 
   const { data: rawHotels, isLoading, error } = useQuery<SearchResultDTO[]>({
     queryKey: ['searchResults', query, adults, children, rooms],
@@ -29,19 +30,25 @@ const SearchResultsContent: React.FC = () => {
     enabled: !!query,
   });
 
+  // Memoized filtering logic based on Redux state
   const filteredHotels = useMemo(() => {
     if (!rawHotels?.length) return [];
     if (!selectedAmenities.length) return rawHotels;
 
     return rawHotels.filter((hotel) => {
       const names = hotel.amenities?.map((a) => a.name?.toLowerCase().trim()) || [];
-      return filterMode === 'all'
-        ? selectedAmenities.every((a) =>
-          names.some((n) => n?.includes(a.toLowerCase()))
-        )
-        : selectedAmenities.some((a) =>
+      
+      // 'any' mode: hotel must have at least one of the selected amenities
+      if (filterMode === 'any') {
+        return selectedAmenities.some((a) =>
           names.some((n) => n?.includes(a.toLowerCase()))
         );
+      }
+      
+      // 'all' mode: hotel must have all of the selected amenities
+      return selectedAmenities.every((a) =>
+        names.some((n) => n?.includes(a.toLowerCase()))
+      );
     });
   }, [rawHotels, selectedAmenities, filterMode]);
 
@@ -90,15 +97,6 @@ const SearchResultsContent: React.FC = () => {
         </div>
       </div>
     </>
-  );
-};
-
-// 🧭 Main Search Results Page with Context Provider
-const SearchResultPage: React.FC = () => {
-  return (
-    <AmenitiesFilterProvider>
-      <SearchResultsContent />
-    </AmenitiesFilterProvider>
   );
 };
 

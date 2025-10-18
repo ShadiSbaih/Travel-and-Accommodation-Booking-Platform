@@ -13,16 +13,18 @@ import { Clear, Hotel, ErrorOutline } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import amenitiesApi from '@/services/api/amenities.api';
 import type { Amenity } from '@/types/api/amenities';
-import { useAmenitiesFilter } from '@/context/AmenitiesFilter';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { clearFilters } from '@/features/filters';
 import FilterModeSwitch from '../../common/FilterModeSwitch';
 import AmenitiesList from '../AmenitiesList';
 
 /**
  * Complete Amenities Filter Component with MUI
- * Uses context to manage state, eliminating prop drilling
+ * Uses Redux to manage state
  */
 const AmenitiesFilter: React.FC = () => {
-  const { selectedAmenities, clearAllAmenities } = useAmenitiesFilter();
+  const selectedAmenities = useAppSelector((state) => state.filters.selectedAmenities);
+  const dispatch = useAppDispatch();
 
   // Fetch amenities from API
   const { data: amenities, isLoading, error } = useQuery<Amenity[]>({
@@ -41,7 +43,7 @@ const AmenitiesFilter: React.FC = () => {
               Amenities
             </Typography>
           </Box>
-          
+
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4 }}>
             <CircularProgress size={24} sx={{ mb: 2 }} />
             <Typography variant="body2" color="text.secondary">
@@ -64,7 +66,7 @@ const AmenitiesFilter: React.FC = () => {
               Amenities
             </Typography>
           </Box>
-          
+
           <Alert severity="error" icon={<ErrorOutline />}>
             <Typography variant="body2">Failed to load amenities</Typography>
             <Typography variant="caption" color="text.secondary">
@@ -87,7 +89,7 @@ const AmenitiesFilter: React.FC = () => {
               Amenities
             </Typography>
           </Box>
-          
+
           <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ py: 4 }}>
             No amenities available
           </Typography>
@@ -98,11 +100,11 @@ const AmenitiesFilter: React.FC = () => {
 
   // Main render
   return (
-    <Card 
-      elevation={2} 
-      sx={{ 
-        overflow: 'hidden', 
-        position: 'sticky', 
+    <Card
+      elevation={2}
+      sx={{
+        overflow: 'hidden',
+        position: 'sticky',
         top: 24,
         borderRadius: 2,
         border: '1px solid',
@@ -123,15 +125,15 @@ const AmenitiesFilter: React.FC = () => {
                 Amenities
               </Typography>
             </Box>
-            
+
             {selectedAmenities.length > 0 && (
               <Button
                 size="small"
-                onClick={clearAllAmenities}
+                onClick={() => dispatch(clearFilters())}
                 startIcon={<Clear />}
                 color="error"
                 variant="outlined"
-                sx={{ 
+                sx={{
                   minWidth: 'auto',
                   fontSize: '0.75rem',
                   px: 1.5,
@@ -156,7 +158,7 @@ const AmenitiesFilter: React.FC = () => {
         <Box sx={{ p: 3, pt: 2.5 }}>
           {/* Filter Mode Switch */}
           <FilterModeSwitch />
-          
+
           {/* Scrollable Amenities List */}
           <Box sx={{ mt: 1 }}>
             <AmenitiesList amenities={amenities} />
