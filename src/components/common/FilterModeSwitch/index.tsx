@@ -54,27 +54,20 @@ const FilterModeSwitch: React.FC = () => {
           textTransform: 'none',
           fontSize: '1rem',
           fontWeight: 500,
-          color: 'rgba(159, 194, 229, 0.9)',
+          color: 'rgba(255, 255, 255, 0.9)',
           backgroundColor: 'transparent',
           border: 'none',
           transition: 'all 0.3s ease',
           '&.Mui-selected': {
-            backgroundColor: 'rgba(66, 153, 225, 0.15)',
-            color: 'rgb(96, 165, 250)',
+            backgroundColor: 'rgb(3,169,244)',
+            color: 'rgb(255, 255, 255)',
             borderColor: 'transparent',
-            '&:hover': {
-              backgroundColor: 'rgba(66, 153, 225, 0.2)',
-            },
+
           },
-          '&:not(.Mui-selected)': {
-            '&:hover': {
-              backgroundColor: 'rgba(66, 153, 225, 0.08)',
-              color: 'rgba(159, 194, 229, 1)',
-            },
-          },
+
           '&.Mui-disabled': {
-            opacity: 0.4,
-            color: 'rgba(159, 194, 229, 0.4)',
+            opacity: 0.6,
+            color: 'rgba(255, 255, 255)',
           },
         },
       }}
