@@ -9,7 +9,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
   images,
   config = {},
   className = "",
-  height = "600px",
+  height = "400px md:h-[500px] lg:h-[600px]",
   width = "100%",
   onSlideChange,
 }) => {

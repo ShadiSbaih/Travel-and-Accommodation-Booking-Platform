@@ -57,7 +57,7 @@ function HotelDetailsPage() {
         {sliderImages.length > 0 && (
           <ImageSlider
             images={sliderImages}
-            height="600px"
+            className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3 mx-auto"
             config={{
               autoplay: {
                 enabled: true,
