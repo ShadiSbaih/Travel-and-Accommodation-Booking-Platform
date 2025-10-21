@@ -1,4 +1,5 @@
 import type { SearchResultDTO } from '@/features/hotels/types/hotel.types';
+import { NavLink } from 'react-router-dom';
 
 interface HotelCardProps {
   hotel: SearchResultDTO;
@@ -76,9 +77,9 @@ function HotelCard({ hotel }: HotelCardProps) {
           </div>
         )}
 
-        <button className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
+        <NavLink to={`/hotels/${hotel.hotelId}`} className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
           View Details
-        </button>
+        </NavLink>
       </div>
     </div>
   );

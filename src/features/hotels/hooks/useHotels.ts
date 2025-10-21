@@ -67,7 +67,7 @@ export const useUpdateHotel = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<Hotel> }) => 
+    mutationFn: ({ id, data }: { id: number; data: Partial<Hotel> }) =>
       hotelsApi.updateHotel(id, data),
     onSuccess: (_, variables) => {
       // Invalidate specific hotel and list
