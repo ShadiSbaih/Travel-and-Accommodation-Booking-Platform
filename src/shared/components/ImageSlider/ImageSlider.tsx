@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import type { SliderImage, SliderConfig, ImageSliderProps } from './types';
+import type {  SliderConfig, ImageSliderProps } from './types';
 import NavigationControls from './NavigationControls';
 import AutoplayControl from './AutoplayControl';
 import ProgressBar from './ProgressBar';
-import SlideContent from './SlideContent';
 import ThumbnailNavigation from './ThumbnailNavigation';
 
 const ImageSlider: React.FC<ImageSliderProps> = ({
@@ -13,7 +12,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
   height = "600px",
   width = "100%",
   onSlideChange,
-  showOverlay = true
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(config.autoplay?.enabled || false);
@@ -67,13 +65,8 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 
   const toggleAutoplay = () => setIsPlaying(!isPlaying);
 
-  const handleImageClick = (image: SliderImage, _: number) => {
-    if (image.link) {
-      window.open(image.link, '_blank');
-    }
-  };
+ 
 
-  const currentImage = images[currentSlide];
 
   return (
     <div className={`relative bg-black ${className}`} style={{ width }}>
@@ -100,14 +93,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
           </div>
         ))}
 
-        {/* Slide Content */}
-        {showOverlay && currentImage && (
-          <SlideContent
-            image={currentImage}
-            onImageClick={handleImageClick}
-            index={currentSlide}
-          />
-        )}
 
         {/* Navigation Controls */}
         <NavigationControls
