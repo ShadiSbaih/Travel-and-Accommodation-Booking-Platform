@@ -1,9 +1,9 @@
 import api from '@/core/api/axios';
-import type { Hotel, HotelFilters, HotelGallery, HotelReview } from '../types/hotel.types';
+import type { Hotel, HotelFilters, HotelGallery, HotelReview, AvailableRoom } from '../types/hotel.types';
 
 export const hotelsApi = {
-  // Get hotels with filters
-  getHotels: async (filters?: HotelFilters): Promise<Hotel[]> => {
+  // Get hotels with filters (supports searchQuery, pageNumber, pageSize)
+  getHotels: async (filters?: HotelFilters & { searchQuery?: string; pageNumber?: number; pageSize?: number }): Promise<Hotel[]> => {
     const { data } = await api.get('/hotels', { params: filters });
     return data;
   },
@@ -17,6 +17,12 @@ export const hotelsApi = {
   // Get hotel gallery
   getHotelGallery: async (id: number): Promise<HotelGallery[]> => {
     const { data } = await api.get(`/hotels/${id}/gallery`);
+    return data;
+  },
+
+  // Get available rooms for a hotel
+  getAvailableRooms: async (id: number): Promise<AvailableRoom[]> => {
+    const { data } = await api.get(`/hotels/${id}/available-rooms`);
     return data;
   },
 

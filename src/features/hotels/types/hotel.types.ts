@@ -53,3 +53,15 @@ export interface SearchResultDTO {
   checkInDate: string;
   checkOutDate: string;
 }
+
+export interface AvailableRoom {
+  roomId: number;
+  roomNumber: string;
+  roomPhotoUrl: string;
+  roomType: string;
+  capacityOfAdults: number;
+  capacityOfChildren: number;
+  roomAmenities: Amenity[];
+  price: number;
+  availability: boolean;
+}
