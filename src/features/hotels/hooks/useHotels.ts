@@ -13,7 +13,7 @@ const hotelKeys = {
   reviews: (id: number) => [...hotelKeys.all, 'reviews', id] as const,
 };
 
-// ✅ GET: Fetch hotels list
+//GET: Fetch hotels list
 export const useHotels = (filters?: HotelFilters) => {
   return useQuery({
     queryKey: hotelKeys.list(filters),
@@ -22,7 +22,7 @@ export const useHotels = (filters?: HotelFilters) => {
   });
 };
 
-// ✅ GET: Fetch single hotel
+//GET: Fetch single hotel
 export const useHotel = (id: number) => {
   return useQuery({
     queryKey: hotelKeys.detail(id),
@@ -31,7 +31,7 @@ export const useHotel = (id: number) => {
   });
 };
 
-// ✅ GET: Fetch hotel gallery
+//GET: Fetch hotel gallery
 export const useHotelGallery = (id: number) => {
   return useQuery({
     queryKey: hotelKeys.gallery(id),
@@ -40,7 +40,7 @@ export const useHotelGallery = (id: number) => {
   });
 };
 
-// ✅ GET: Fetch hotel reviews
+//GET: Fetch hotel reviews
 export const useHotelReviews = (id: number) => {
   return useQuery({
     queryKey: hotelKeys.reviews(id),
@@ -49,7 +49,7 @@ export const useHotelReviews = (id: number) => {
   });
 };
 
-// ✅ POST: Create hotel (Admin)
+//POST: Create hotel (Admin)
 export const useCreateHotel = () => {
   const queryClient = useQueryClient();
 
@@ -62,7 +62,7 @@ export const useCreateHotel = () => {
   });
 };
 
-// ✅ PUT: Update hotel (Admin)
+//PUT: Update hotel (Admin)
 export const useUpdateHotel = () => {
   const queryClient = useQueryClient();
 
@@ -77,7 +77,7 @@ export const useUpdateHotel = () => {
   });
 };
 
-// ✅ DELETE: Delete hotel (Admin)
+//DELETE: Delete hotel (Admin)
 export const useDeleteHotel = () => {
   const queryClient = useQueryClient();
 
