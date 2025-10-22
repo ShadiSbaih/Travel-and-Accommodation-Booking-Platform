@@ -203,8 +203,7 @@ export function MuiImageSlider({
                         sx={{
                           position: 'absolute',
                           inset: 0,
-                          border: { xs: 2, md: 4 },
-                          borderColor: 'primary.main',
+                          border: { xs: '2px solid #2196F3', md: '4px solid #2196F3' },
                           borderRadius: { xs: 1, md: 2 },
                           pointerEvents: 'none',
                         }}
