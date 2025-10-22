@@ -4,21 +4,37 @@ export interface Amenity {
   description: string;
 }
 
-export interface Hotel {
+export interface Room {
   id: number;
   name: string;
+  type: string;
+  price: number;
+  available: boolean;
+  maxOccupancy: number;
+}
+
+export interface Hotel {
+  id: number;
+  hotelName?: string; // Some hotels use hotelName
+  name: string;
+  location?: string;
   description: string;
-  hotelType: number;
+  hotelType: string; // Changed from number to string (e.g., "Resort", "Hotel", "Lodge", "Boutique", "Inn")
   starRating: number;
   latitude: number;
   longitude: number;
+  rooms?: Room[];
+  imageUrl?: string;
+  availableRooms?: number;
+  cityId?: number;
+  amenities?: Amenity[];
 }
 
 export interface HotelFilters {
   name?: string;
   city?: string;
   starRating?: number;
-  hotelType?: number;
+  hotelType?: string; // Changed from number to string to match Hotel interface
 }
 
 export interface HotelGallery {
