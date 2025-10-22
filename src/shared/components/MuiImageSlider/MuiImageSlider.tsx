@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight, PlayArrow, Pause } from '@mui/icons-material';
-import type { SliderImage } from './types';
-
-interface MuiImageSliderProps {
-  images: SliderImage[];
-  className?: string;
-  height?: string | number;
-  autoPlay?: boolean;
-  autoPlayInterval?: number;
-  showThumbnails?: boolean;
-}
+import type { MuiImageSliderProps } from './types';
 
 export function MuiImageSlider({
   images,
@@ -24,27 +15,28 @@ export function MuiImageSlider({
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [progress, setProgress] = useState(0);
 
+  // Limit to 3 images
+  const displayImages = images.slice(0, 3);
+  const maxSlides = displayImages.length;
+
   // Auto-advance slides
   useEffect(() => {
-    if (!autoPlay || !isPlaying || images.length <= 1) return;
+    if (!autoPlay || !isPlaying || maxSlides <= 1) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % Math.min(images.length, 3));
+      setCurrentSlide((prev) => (prev + 1) % maxSlides);
       setProgress(0);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [isPlaying, autoPlay, autoPlayInterval, images.length]);
+  }, [isPlaying, autoPlay, autoPlayInterval, maxSlides]);
 
   // Progress bar animation
   useEffect(() => {
     if (!autoPlay || !isPlaying) return;
 
     const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) return 0;
-        return prev + 100 / (autoPlayInterval / 100);
-      });
+      setProgress((prev) => (prev >= 100 ? 0 : prev + 100 / (autoPlayInterval / 100)));
     }, 100);
 
     return () => clearInterval(progressInterval);
@@ -55,110 +47,70 @@ export function MuiImageSlider({
     setProgress(0);
   };
 
-  const nextSlide = () => goToSlide((currentSlide + 1) % Math.min(images.length, 3));
-  const prevSlide = () => goToSlide((currentSlide - 1 + Math.min(images.length, 3)) % Math.min(images.length, 3));
-  const toggleAutoplay = () => setIsPlaying(!isPlaying);
+  const nextSlide = () => goToSlide((currentSlide + 1) % maxSlides);
+  const prevSlide = () => goToSlide((currentSlide - 1 + maxSlides) % maxSlides);
+  const toggleAutoplay = () => setIsPlaying((prev) => !prev);
 
   if (!images || images.length === 0) return null;
 
   const heightValue = typeof height === 'number' ? `${height}px` : height;
-  
-  // Use only first 3 images for both slider and thumbnails
-  const displayImages = images.slice(0, 3);
+
+  const navigationButtonStyle = {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 20,
+    width: { xs: 32, md: 48 },
+    height: { xs: 32, md: 48 },
+    bgcolor: 'rgba(0, 0, 0, 0.5)',
+    backdropFilter: 'blur(4px)',
+    color: 'white',
+    transition: 'all 0.2s',
+    '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
+  };
 
   return (
     <Box className={className} sx={{ position: 'relative', bgcolor: 'black', width: '100%' }}>
-      {/* Main Hero Section */}
-      <Box
-        sx={{
-          position: 'relative',
-          width: '100%',
-          height: heightValue,
-          overflow: 'hidden',
-        }}
-      >
-        {/* Background Images */}
+      {/* Main Slider */}
+      <Box sx={{ position: 'relative', width: '100%', height: heightValue, overflow: 'hidden' }}>
+        {/* Images */}
         {displayImages.map((image, index) => (
           <Box
             key={image.id}
+            component="img"
+            src={image.src}
+            alt={image.alt}
+            loading={index === 0 ? 'eager' : 'lazy'}
             sx={{
               position: 'absolute',
               inset: 0,
-              transition: 'all 1s ease-in-out',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
               opacity: index === currentSlide ? 1 : 0,
               transform: index === currentSlide ? 'scale(1)' : 'scale(1.05)',
+              transition: 'all 1s ease-in-out',
             }}
-          >
-            <Box
-              component="img"
-              src={image.src}
-              alt={image.alt}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              sx={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-            />
-          </Box>
+          />
         ))}
 
-        {/* Navigation Controls */}
-        {displayImages.length > 1 && (
+        {/* Navigation Buttons */}
+        {maxSlides > 1 && (
           <>
-            <IconButton
-              onClick={prevSlide}
-              aria-label="Previous slide"
-              sx={{
-                position: 'absolute',
-                left: { xs: 8, md: 24 },
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 20,
-                width: { xs: 32, md: 48 },
-                height: { xs: 32, md: 48 },
-                bgcolor: 'rgba(0, 0, 0, 0.5)',
-                backdropFilter: 'blur(4px)',
-                color: 'white',
-                transition: 'all 0.2s',
-                '&:hover': {
-                  bgcolor: 'rgba(0, 0, 0, 0.7)',
-                },
-              }}
-            >
+            <IconButton onClick={prevSlide} aria-label="Previous" sx={{ ...navigationButtonStyle, left: { xs: 8, md: 24 } }}>
               <ChevronLeft sx={{ fontSize: { xs: 20, md: 24 } }} />
             </IconButton>
-
-            <IconButton
-              onClick={nextSlide}
-              aria-label="Next slide"
-              sx={{
-                position: 'absolute',
-                right: { xs: 8, md: 24 },
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 20,
-                width: { xs: 32, md: 48 },
-                height: { xs: 32, md: 48 },
-                bgcolor: 'rgba(0, 0, 0, 0.5)',
-                backdropFilter: 'blur(4px)',
-                color: 'white',
-                transition: 'all 0.2s',
-                '&:hover': {
-                  bgcolor: 'rgba(0, 0, 0, 0.7)',
-                },
-              }}
-            >
+            <IconButton onClick={nextSlide} aria-label="Next" sx={{ ...navigationButtonStyle, right: { xs: 8, md: 24 } }}>
               <ChevronRight sx={{ fontSize: { xs: 20, md: 24 } }} />
             </IconButton>
           </>
         )}
 
-        {/* Autoplay Control */}
+        {/* Autoplay Toggle */}
         {autoPlay && (
           <IconButton
             onClick={toggleAutoplay}
-            aria-label={isPlaying ? 'Pause autoplay' : 'Play autoplay'}
+            aria-label={isPlaying ? 'Pause' : 'Play'}
             sx={{
               position: 'absolute',
               bottom: { xs: 8, md: 16 },
@@ -169,17 +121,10 @@ export function MuiImageSlider({
               bgcolor: 'rgba(0, 0, 0, 0.5)',
               backdropFilter: 'blur(4px)',
               color: 'white',
-              transition: 'all 0.2s',
-              '&:hover': {
-                bgcolor: 'rgba(0, 0, 0, 0.7)',
-              },
+              '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
             }}
           >
-            {isPlaying ? (
-              <Pause sx={{ fontSize: { xs: 16, md: 20 } }} />
-            ) : (
-              <PlayArrow sx={{ fontSize: { xs: 16, md: 20 } }} />
-            )}
+            {isPlaying ? <Pause sx={{ fontSize: { xs: 16, md: 20 } }} /> : <PlayArrow sx={{ fontSize: { xs: 16, md: 20 } }} />}
           </IconButton>
         )}
 
@@ -200,16 +145,10 @@ export function MuiImageSlider({
         )}
       </Box>
 
-      {/* Thumbnail Navigation */}
-      {showThumbnails && displayImages.length > 1 && (
+      {/* Thumbnails */}
+      {showThumbnails && maxSlides > 1 && (
         <Box sx={{ bgcolor: 'background.paper', py: { xs: 2, md: 4 } }}>
-          <Box
-            sx={{
-              maxWidth: '1280px',
-              mx: 'auto',
-              px: { xs: 1, md: 4 },
-            }}
-          >
+          <Box sx={{ maxWidth: 1280, mx: 'auto', px: { xs: 1, md: 4 } }}>
             <Box
               sx={{
                 display: 'flex',
@@ -224,64 +163,41 @@ export function MuiImageSlider({
             >
               {displayImages.map((image, index) => {
                 const isActive = currentSlide === index;
-
                 return (
                   <Box
                     key={image.id}
                     component="button"
                     onClick={() => goToSlide(index)}
-                    aria-label={`Go to slide ${index + 1}: ${image.alt}`}
+                    aria-label={`Go to slide ${index + 1}`}
                     sx={{
                       position: 'relative',
                       flexShrink: 0,
                       borderRadius: { xs: 1, md: 2 },
                       overflow: 'hidden',
                       transition: 'all 0.5s ease-out',
-                      transform: isActive
-                        ? { xs: 'scale(1.1)', md: 'scale(1.15)' }
-                        : 'scale(1)',
-                      width: isActive
-                        ? { xs: 80, md: 128, lg: 160, xl: 176 }
-                        : { xs: 64, md: 96, lg: 128, xl: 144 },
-                      height: isActive
-                        ? { xs: 64, md: 96, lg: 112, xl: 128 }
-                        : { xs: 48, md: 72, lg: 96, xl: 108 },
+                      transform: isActive ? { xs: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1)',
+                      width: isActive ? { xs: 80, md: 128, lg: 160, xl: 176 } : { xs: 64, md: 96, lg: 128, xl: 144 },
+                      height: isActive ? { xs: 64, md: 96, lg: 112, xl: 128 } : { xs: 48, md: 72, lg: 96, xl: 108 },
                       boxShadow: isActive ? 10 : 1,
                       border: 'none',
                       cursor: 'pointer',
-                      '&:hover': {
-                        transform: isActive
-                          ? { xs: 'scale(1.1)', md: 'scale(1.15)' }
-                          : 'scale(1.05)',
-                      },
+                      '&:hover': { transform: isActive ? { xs: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1.05)' },
                     }}
                   >
-                    {/* Thumbnail Image */}
-                    <Box
-                      component="img"
-                      src={image.src}
-                      alt={image.alt}
-                      sx={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
+                    <Box component="img" src={image.src} alt={image.alt} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 
-                    {/* Shadow Overlay for inactive thumbnails */}
+                    {/* Overlay */}
                     <Box
                       sx={{
                         position: 'absolute',
                         inset: 0,
                         bgcolor: isActive ? 'transparent' : 'rgba(0, 0, 0, 0.4)',
                         transition: 'all 0.5s',
-                        '&:hover': {
-                          bgcolor: isActive ? 'transparent' : 'rgba(0, 0, 0, 0.2)',
-                        },
+                        '&:hover': { bgcolor: isActive ? 'transparent' : 'rgba(0, 0, 0, 0.2)' },
                       }}
                     />
 
-                    {/* Active border indicator */}
+                    {/* Active Border */}
                     {isActive && (
                       <Box
                         sx={{
@@ -295,14 +211,13 @@ export function MuiImageSlider({
                       />
                     )}
 
-                    {/* Progress indicator on active thumbnail */}
+                    {/* Progress */}
                     {isActive && autoPlay && isPlaying && (
                       <Box
                         sx={{
                           position: 'absolute',
                           bottom: 0,
                           left: 0,
-                          right: 0,
                           height: { xs: 2, md: 3 },
                           bgcolor: 'primary.main',
                           width: `${progress}%`,

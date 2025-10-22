@@ -32,25 +32,20 @@ function HotelDetailsPage() {
     return (
       <>
         <Navbar />
-        <div className="container mx-auto px-4 py-8">
-          <ErrorState
-            message="Failed to load hotel details. Please try again later."
-            variant="error"
-          />
-        </div>
+        <Container maxWidth="lg" sx={{ py: 8 }}>
+          <ErrorState message="Failed to load hotel details. Please try again later." variant="error" />
+        </Container>
       </>
     );
   }
 
   // Transform gallery images to slider format
-  const sliderImages: SliderImage[] = gallery?.map((img, index) => ({
-    id: img.id,
-    src: img.url,
-    alt: `${hotel?.name} - Image ${index + 1}`,
-    title: hotel?.name,
-    description: hotel?.description,
-    rating: hotel?.starRating,
-  })) || [];
+  const sliderImages: SliderImage[] =
+    gallery?.map((img, index) => ({
+      id: img.id,
+      src: img.url,
+      alt: `${hotel?.name} - Image ${index + 1}`,
+    })) || [];
 
   return (
     <>
@@ -59,13 +54,7 @@ function HotelDetailsPage() {
         {/* Image Slider */}
         {sliderImages.length > 0 && (
           <Box sx={{ maxWidth: { xs: '100%', md: '85%', lg: '75%', xl: '66%' }, mx: 'auto' }}>
-            <MuiImageSlider
-              images={sliderImages}
-              height={600}
-              autoPlay={true}
-              autoPlayInterval={5000}
-              showThumbnails={true}
-            />
+            <MuiImageSlider images={sliderImages} />
           </Box>
         )}
 
