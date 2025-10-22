@@ -60,7 +60,7 @@ function HotelDetailsPage() {
 
         {/* Hotel Location Map */}
         {hotel && (
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
             <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
               Hotel Location
             </Typography>
