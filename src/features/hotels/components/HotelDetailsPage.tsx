@@ -115,6 +115,33 @@ function HotelDetailsPage() {
                 />
               )}
             </Box>
+           
+            {hotel?.rooms && hotel.rooms.length > 0 && (
+              <Box sx={{ mt: 4 }}>
+                <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
+                  Available Rooms
+                </Typography>
+                {hotel.rooms.map((room) => (
+                  <Paper key={room.id} elevation={2} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      {room.type}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+                      {room?.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Capacity: {room.maxOccupancy} person{room.maxOccupancy > 1 ? 's' : ''}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {room.available? 'Available' : 'Not Available'}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      Price per night: ${room.price.toFixed(2)}
+                    </Typography>
+                  </Paper>
+                ))}
+              </Box>
+            )}
           </Paper>
         </Container>
       </Box>
