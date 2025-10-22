@@ -1,10 +1,13 @@
 import Navbar from '@/shared/components/Navbar';
 import { useParams } from 'react-router-dom';
 import { useHotel, useHotelGallery } from '../hooks/useHotels';
-import { ImageSlider } from '@/shared/components/ImageSlider';
-import type { SliderImage } from '@/shared/components/ImageSlider/types';
+import { MuiImageSlider } from '@/shared/components/MuiImageSlider';
+import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
 import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
+import { MuiMap } from '@/shared/components/MuiMap';
+import { Container, Typography, Paper, Box, Chip } from '@mui/material';
+import { LocationOn, Star } from '@mui/icons-material';
 
 function HotelDetailsPage() {
   const { id } = useParams();
@@ -52,54 +55,80 @@ function HotelDetailsPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', pb: 4 }}>
         {/* Image Slider */}
         {sliderImages.length > 0 && (
-          <ImageSlider
-            images={sliderImages}
-            className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3 mx-auto"
-            config={{
-              autoplay: {
-                enabled: true,
-                delay: 5000,
-                pauseOnHover: true,
-              },
-              navigation: {
-                enabled: true,
-              },
-              pagination: {
-                enabled: true,
-                type: 'thumbnails',
-                clickable: true,
-              },
-            }}
-          />
+          <Box sx={{ maxWidth: { xs: '100%', md: '85%', lg: '75%', xl: '66%' }, mx: 'auto' }}>
+            <MuiImageSlider
+              images={sliderImages}
+              height={600}
+              autoPlay={true}
+              autoPlayInterval={5000}
+              showThumbnails={true}
+            />
+          </Box>
+        )}
+
+        {/* Hotel Location Map */}
+        {hotel && (
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
+              Hotel Location
+            </Typography>
+            <MuiMap
+              latitude={hotel.latitude}
+              longitude={hotel.longitude}
+              hotelName={hotel.name}
+              location={hotel.location}
+              height={450}
+              zoom={15}
+            />
+          </Container>
         )}
 
         {/* Hotel Details Content */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <Container maxWidth="lg" sx={{ mt: 4 }}>
+          <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+            <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
               {hotel?.name}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
+            </Typography>
+            
+            {hotel?.location && (
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <LocationOn sx={{ mr: 1, color: 'text.secondary' }} />
+                <Typography variant="h6" color="text.secondary">
+                  {hotel.location}
+                </Typography>
+              </Box>
+            )}
+
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 3, fontSize: '1.1rem' }}>
               {hotel?.description}
-            </p>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center">
-                <span className="text-yellow-500 font-semibold text-xl">
-                  {'⭐'.repeat(hotel?.starRating || 0)}
-                </span>
-                <span className="ml-2 text-gray-600 dark:text-gray-400">
-                  {hotel?.starRating} Star Hotel
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          { hotel?.location }</h2>
-      </div>
+            </Typography>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+              {hotel?.starRating && (
+                <Chip
+                  icon={<Star />}
+                  label={`${hotel.starRating} Star Hotel`}
+                  color="primary"
+                  variant="outlined"
+                  sx={{ fontSize: '1rem', py: 2.5 }}
+                />
+              )}
+              
+              {hotel?.hotelType && (
+                <Chip
+                  label={hotel.hotelType}
+                  color="secondary"
+                  variant="outlined"
+                  sx={{ fontSize: '1rem', py: 2.5 }}
+                />
+              )}
+            </Box>
+          </Paper>
+        </Container>
+      </Box>
     </>
   );
 }
