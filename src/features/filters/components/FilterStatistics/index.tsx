@@ -9,11 +9,7 @@ import {
 } from '@mui/material';
 import { Search, Hotel, FilterList } from '@mui/icons-material';
 import { useAppSelector } from '@/core/store/hooks';
-
-interface FilterStatisticsProps {
-  filteredCount: number;
-  totalCount: number;
-}
+import type { FilterStatisticsProps } from './types';
 
 /**
  * Filter Statistics Component with MUI

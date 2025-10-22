@@ -1,11 +1,5 @@
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-
-interface EmptyStateProps {
-  title: string;
-  subtitle?: string;
-  icon?: React.ReactNode;
-  className?: string;
-}
+import type { EmptyStateProps } from '@/shared/types/common.types';
 
 function EmptyState({ 
   title, 

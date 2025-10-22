@@ -1,16 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '@/core/api/axios';
-
-interface LoginCredentials {
-  userName: string;
-  password: string;
-}
-
-interface AuthResponse {
-  authentication: string;
-  userType: 'Admin' | 'User';
-}
+import type { LoginCredentials, AuthResponse } from '../types/auth.types';
 
 export const useLogin = () => {
   const navigate = useNavigate();

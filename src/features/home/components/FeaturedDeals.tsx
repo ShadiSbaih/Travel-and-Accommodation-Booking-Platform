@@ -1,20 +1,6 @@
 import homePageApi from "../api/home-page.api";
 import { useQuery } from "@tanstack/react-query";
-
-export interface FeaturedDealDto {
-  hotelId: number;
-  originalRoomPrice: number;
-  discount: number;
-  finalPrice: number;
-  cityName: string;
-  hotelName: string;
-  hotelStarRating: number;
-  title: string;
-  description: string;
-  roomPhotoUrl: string;
-}
-
-export type FeaturedDealsDto = FeaturedDealDto[];
+import type { FeaturedDealDto } from '../types/home.types';
 
 function FeaturedDeals() {
   

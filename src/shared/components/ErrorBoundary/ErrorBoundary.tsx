@@ -1,10 +1,5 @@
 import { ErrorBoundary } from "react-error-boundary";
-import type { ReactNode } from "react";
-
-interface ErrorFallbackProps {
-  error: Error;
-  resetErrorBoundary: () => void;
-}
+import type { ErrorFallbackProps, AppErrorBoundaryProps } from '@/shared/types/common.types';
 
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
   return (
@@ -36,10 +31,6 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
       </div>
     </div>
   );
-}
-
-interface AppErrorBoundaryProps {
-  children: ReactNode;
 }
 
 export function AppErrorBoundary({ children }: AppErrorBoundaryProps) {

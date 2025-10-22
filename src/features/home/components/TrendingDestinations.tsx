@@ -1,15 +1,6 @@
 import homePageApi from "../api/home-page.api";
 import { useQuery } from "@tanstack/react-query";
-
-export interface TrendingDestinationDto {
-  cityId: number;
-  cityName: string;
-  countryName: string;
-  description: string;
-  thumbnailUrl: string;
-}
-
-export type TrendingDestinationsDto = TrendingDestinationDto[];
+import type { TrendingDestinationDto } from '../types/home.types';
 
 function TrendingDestinations() {
   const { data: trendingDestinations = [], isLoading, isError } = useQuery({

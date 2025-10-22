@@ -1,10 +1,5 @@
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-
-interface ErrorStateProps {
-  message?: string;
-  className?: string;
-  variant?: 'error' | 'warning' | 'info';
-}
+import type { ErrorStateProps } from '@/shared/types/common.types';
 
 function ErrorState({ 
   message = "An error occurred. Please try again.", 

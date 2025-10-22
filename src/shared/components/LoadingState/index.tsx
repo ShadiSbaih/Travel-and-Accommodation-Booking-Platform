@@ -1,9 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
-
-interface LoadingStateProps {
-  message?: string;
-  className?: string;
-}
+import type { LoadingStateProps } from '@/shared/types/common.types';
 
 function LoadingState({ 
   message = "Loading...", 

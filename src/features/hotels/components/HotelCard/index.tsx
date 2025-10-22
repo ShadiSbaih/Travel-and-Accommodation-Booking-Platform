@@ -1,9 +1,5 @@
-import type { SearchResultDTO } from '@/features/hotels/types/hotel.types';
 import { NavLink } from 'react-router-dom';
-
-interface HotelCardProps {
-  hotel: SearchResultDTO;
-}
+import type { HotelCardProps } from './types';
 
 function HotelCard({ hotel }: HotelCardProps) {
   const discountedPrice = hotel.roomPrice * (1 - hotel.discount / 100);

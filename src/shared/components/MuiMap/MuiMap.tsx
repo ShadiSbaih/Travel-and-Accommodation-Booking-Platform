@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Box, Paper, Typography } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import type { MuiMapProps } from './types';
 
 // Fix for default marker icon issue in React Leaflet
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -20,15 +21,6 @@ const DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
-
-interface MuiMapProps {
-  latitude: number;
-  longitude: number;
-  hotelName: string;
-  location?: string;
-  height?: string | number;
-  zoom?: number;
-}
 
 export function MuiMap({
   latitude,

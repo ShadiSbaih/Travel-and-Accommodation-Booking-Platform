@@ -1,19 +1,7 @@
 import { useUserInfo } from "@/shared/hooks/useUserInfo";
 import homePageApi from "../api/home-page.api";
 import { useQuery } from "@tanstack/react-query";
-
-export interface RecentlyVisitedHotelDto {
-  hotelId: number;
-  hotelName: string;
-  starRating: number;
-  visitDate: string;
-  cityName: string;
-  thumbnailUrl: string;
-  priceLowerBound: number;
-  priceUpperBound: number;
-}
-
-export type RecentlyVisitedHotelsDto = RecentlyVisitedHotelDto[];
+import type { RecentlyVisitedHotelDto } from '../types/home.types';
 
 function RecentlyVisitedHotels() {
   const { userId } = useUserInfo();

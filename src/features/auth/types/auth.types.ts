@@ -7,3 +7,13 @@ export interface TokenPayload {
   exp: number; // Expiration timestamp
   iss: string; // Issuer
 }
+
+export interface LoginCredentials {
+  userName: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  authentication: string;
+  userType: 'Admin' | 'User';
+}

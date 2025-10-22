@@ -2,16 +2,8 @@ import HotelCard from '@/features/hotels/components/HotelCard';
 import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
-import type { SearchResultDTO } from '@/features/hotels/types/hotel.types';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-
-interface SearchResultsSectionProps {
-  data?: SearchResultDTO[];
-  rawData?: SearchResultDTO[];
-  isLoading: boolean;
-  error: unknown;
-  hasActiveFilters: boolean;
-}
+import type { SearchResultsSectionProps } from '../types/search.types';
 
 function SearchResultsSection({ 
   data, 
