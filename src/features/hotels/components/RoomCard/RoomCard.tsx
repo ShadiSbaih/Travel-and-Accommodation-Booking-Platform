@@ -139,8 +139,10 @@ function RoomCard({ room, roomImage, hotelAmenities, onBookNow }: RoomCardProps)
         <Box
           sx={{
             display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: { xs: 2, sm: 0 },
             justifyContent: 'space-between',
-            alignItems: 'center',
+            alignItems: { xs: 'stretch', sm: 'center' },
             pt: 2,
             borderTop: '1px solid',
             borderColor: 'divider'
@@ -162,7 +164,7 @@ function RoomCard({ room, roomImage, hotelAmenities, onBookNow }: RoomCardProps)
               sx={{
                 fontWeight: 800,
                 color: 'primary.main',
-                fontSize: '1.75rem'
+                fontSize: { xs: '1.5rem', sm: '1.75rem' }
               }}
             >
               ${room.price.toFixed(0)}
@@ -185,10 +187,10 @@ function RoomCard({ room, roomImage, hotelAmenities, onBookNow }: RoomCardProps)
             onClick={handleBookNow}
             sx={{
               py: 1.5,
-              px: 3,
+              px: { xs: 2, sm: 3 },
               borderRadius: 2,
               textTransform: 'none',
-              fontSize: '1rem',
+              fontSize: { xs: '0.95rem', sm: '1rem' },
               fontWeight: 700,
               bgcolor: 'primary.main',
               boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)',
