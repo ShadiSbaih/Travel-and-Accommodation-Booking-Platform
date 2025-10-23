@@ -1,7 +1,15 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Box, IconButton } from '@mui/material';
-import { ChevronLeft, ChevronRight, PlayArrow, Pause } from '@mui/icons-material';
+import { useMemo } from 'react';
+import { Box } from '@mui/material';
 import type { MuiImageSliderProps } from './types';
+import { useSliderState } from './hooks/useSliderState';
+import { useSwipeGesture } from './hooks/useSwipeGesture';
+import { SlideImage } from './components/SlideImage';
+import { NavigationButtons } from './components/NavigationButtons';
+import { AutoplayButton } from './components/AutoplayButton';
+import { ProgressBar } from './components/ProgressBar';
+import { MobileIndicators } from './components/MobileIndicators';
+import { ThumbnailStrip } from './components/ThumbnailStrip';
+import { MOBILE_HEIGHT, TABLET_HEIGHT } from './constants/sliderStyles';
 
 export function MuiImageSlider({
   images,
@@ -11,327 +19,70 @@ export function MuiImageSlider({
   autoPlayInterval = 5000,
   showThumbnails = true,
 }: MuiImageSliderProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
-  const [progress, setProgress] = useState(0);
-  const slideTimerRef = useRef<number | null>(null);
-  const progressTimerRef = useRef<number | null>(null);
-  const touchStartRef = useRef<number | null>(null);
-  const touchEndRef = useRef<number | null>(null);
-
   // Memoize display images to avoid recalculation
   const displayImages = useMemo(() => images.slice(0, 3), [images]);
   const maxSlides = displayImages.length;
 
-  // Clear timers helper
-  const clearTimers = useCallback(() => {
-    if (slideTimerRef.current) clearInterval(slideTimerRef.current);
-    if (progressTimerRef.current) clearInterval(progressTimerRef.current);
-  }, []);
+  // Custom hooks for state and gestures
+  const sliderState = useSliderState({
+    maxSlides,
+    autoPlay,
+    autoPlayInterval,
+  });
 
-  // Combined effect for auto-advance and progress
-  useEffect(() => {
-    if (!autoPlay || !isPlaying || maxSlides <= 1) {
-      clearTimers();
-      setProgress(0);
-      return;
-    }
+  const swipeHandlers = useSwipeGesture({
+    onSwipeLeft: sliderState.nextSlide,
+    onSwipeRight: sliderState.prevSlide,
+  });
 
-    setProgress(0);
-    const startTime = Date.now();
-
-    // Progress animation
-    progressTimerRef.current = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min((elapsed / autoPlayInterval) * 100, 100);
-      setProgress(newProgress);
-    }, 100);
-
-    // Auto-advance slide
-    slideTimerRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % maxSlides);
-    }, autoPlayInterval);
-
-    return clearTimers;
-  }, [currentSlide, isPlaying, autoPlay, autoPlayInterval, maxSlides, clearTimers]);
-
-  const goToSlide = useCallback((index: number) => {
-    setCurrentSlide(index);
-  }, []);
-
-  const nextSlide = useCallback(() => goToSlide((currentSlide + 1) % maxSlides), [currentSlide, maxSlides, goToSlide]);
-  const prevSlide = useCallback(() => goToSlide((currentSlide - 1 + maxSlides) % maxSlides), [currentSlide, maxSlides, goToSlide]);
-  const toggleAutoplay = useCallback(() => setIsPlaying((prev) => !prev), []);
-
-  // Touch handlers for swipe
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartRef.current = e.touches[0].clientX;
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    touchEndRef.current = e.touches[0].clientX;
-  }, []);
-
-  const handleTouchEnd = useCallback(() => {
-    if (!touchStartRef.current || !touchEndRef.current) return;
-
-    const distance = touchStartRef.current - touchEndRef.current;
-    const minSwipeDistance = 50; // Minimum distance to trigger swipe
-
-    if (Math.abs(distance) > minSwipeDistance) {
-      if (distance > 0) {
-        // Swiped left - go to next
-        nextSlide();
-      } else {
-        // Swiped right - go to previous
-        prevSlide();
-      }
-    }
-
-    // Reset
-    touchStartRef.current = null;
-    touchEndRef.current = null;
-  }, [nextSlide, prevSlide]);
-
-  // Memoize computed values
+  // Memoize height value
   const heightValue = useMemo(() => (typeof height === 'number' ? `${height}px` : height), [height]);
-
-  const navigationButtonStyle = useMemo(
-    () => ({
-      position: 'absolute',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      zIndex: 20,
-      width: { xs: 32, md: 48 },
-      height: { xs: 32, md: 48 },
-      bgcolor: 'rgba(0, 0, 0, 0.5)',
-      backdropFilter: 'blur(4px)',
-      color: 'white',
-      transition: 'all 0.2s',
-      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
-    }),
-    []
-  );
 
   if (!images || images.length === 0) return null;
 
   return (
     <Box className={className} sx={{ position: 'relative', bgcolor: 'black', width: '100%' }}>
       {/* Main Slider */}
-      <Box 
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        sx={{ 
-          position: 'relative', 
-          width: '100%', 
-          height: { xs: 300, sm: 400, md: heightValue },
+      <Box
+        onTouchStart={swipeHandlers.handleTouchStart}
+        onTouchMove={swipeHandlers.handleTouchMove}
+        onTouchEnd={swipeHandlers.handleTouchEnd}
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: { xs: MOBILE_HEIGHT, sm: TABLET_HEIGHT, md: heightValue },
           overflow: 'hidden',
-          touchAction: 'pan-x'
+          touchAction: 'pan-x',
         }}
       >
         {/* Images */}
         {displayImages.map((image, index) => (
-          <Box
-            key={image.id}
-            component="img"
-            src={image.src}
-            alt={image.alt}
-            loading={index === 0 ? 'eager' : 'lazy'}
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: index === currentSlide ? 1 : 0,
-              transform: index === currentSlide ? 'scale(1)' : 'scale(1.05)',
-              transition: 'all 1s ease-in-out',
-            }}
-          />
+          <SlideImage key={image.id} image={image} isActive={index === sliderState.currentSlide} index={index} />
         ))}
 
         {/* Navigation Buttons */}
-        {maxSlides > 1 && (
-          <>
-            <IconButton 
-              onClick={prevSlide} 
-              aria-label="Previous" 
-              sx={{ 
-                ...navigationButtonStyle, 
-                left: { xs: 4, sm: 8, md: 24 },
-                display: { xs: 'none', sm: 'flex' }
-              }}
-            >
-              <ChevronLeft sx={{ fontSize: { xs: 20, md: 24 } }} />
-            </IconButton>
-            <IconButton 
-              onClick={nextSlide} 
-              aria-label="Next" 
-              sx={{ 
-                ...navigationButtonStyle, 
-                right: { xs: 4, sm: 8, md: 24 },
-                display: { xs: 'none', sm: 'flex' }
-              }}
-            >
-              <ChevronRight sx={{ fontSize: { xs: 20, md: 24 } }} />
-            </IconButton>
-          </>
-        )}
+        <NavigationButtons onPrevious={sliderState.prevSlide} onNext={sliderState.nextSlide} showButtons={maxSlides > 1} />
 
         {/* Autoplay Toggle */}
-        {autoPlay && (
-          <IconButton
-            onClick={toggleAutoplay}
-            aria-label={isPlaying ? 'Pause' : 'Play'}
-            sx={{
-              position: 'absolute',
-              bottom: { xs: 4, sm: 8, md: 16 },
-              right: { xs: 4, sm: 8, md: 16 },
-              zIndex: 20,
-              width: { xs: 28, sm: 32, md: 40 },
-              height: { xs: 28, sm: 32, md: 40 },
-              bgcolor: 'rgba(0, 0, 0, 0.5)',
-              backdropFilter: 'blur(4px)',
-              color: 'white',
-              '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
-            }}
-          >
-            {isPlaying ? <Pause sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} /> : <PlayArrow sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} />}
-          </IconButton>
-        )}
+        <AutoplayButton isPlaying={sliderState.isPlaying} onToggle={sliderState.toggleAutoplay} autoPlay={autoPlay} />
 
         {/* Progress Bar */}
-        {autoPlay && isPlaying && (
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              height: { xs: 3, md: 3 },
-              bgcolor: 'primary.main',
-              width: `${progress}%`,
-              transition: 'width 0.1s linear',
-              zIndex: 20,
-            }}
-          />
-        )}
+        <ProgressBar progress={sliderState.progress} isVisible={autoPlay && sliderState.isPlaying} />
 
         {/* Mobile Slide Indicators */}
-        <Box
-          sx={{
-            display: { xs: 'flex', sm: 'none' },
-            position: 'absolute',
-            bottom: 12,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            gap: 1,
-            zIndex: 20,
-          }}
-        >
-          {displayImages.map((_, index) => (
-            <Box
-              key={index}
-              onClick={() => goToSlide(index)}
-              sx={{
-                width: currentSlide === index ? 24 : 8,
-                height: 8,
-                borderRadius: 1,
-                bgcolor: currentSlide === index ? 'primary.main' : 'rgba(255, 255, 255, 0.5)',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer',
-              }}
-            />
-          ))}
-        </Box>
+        <MobileIndicators totalSlides={maxSlides} currentSlide={sliderState.currentSlide} onSlideClick={sliderState.goToSlide} />
       </Box>
 
       {/* Thumbnails */}
-      {showThumbnails && maxSlides > 1 && (
-        <Box sx={{ bgcolor: 'background.paper', py: { xs: 1.5, sm: 2, md: 4 }, display: { xs: 'none', sm: 'block' } }}>
-          <Box sx={{ maxWidth: 1280, mx: 'auto', px: { xs: 1, sm: 2, md: 4 } }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                gap: { xs: 1, sm: 1.5, md: 2 },
-                overflowX: 'auto',
-                py: { xs: 1, sm: 1.5, md: 2 },
-                '&::-webkit-scrollbar': { display: 'none' },
-                scrollbarWidth: 'none',
-              }}
-            >
-              {displayImages.map((image, index) => {
-                const isActive = currentSlide === index;
-                return (
-                  <Box
-                    key={image.id}
-                    component="button"
-                    onClick={() => goToSlide(index)}
-                    aria-label={`Go to slide ${index + 1}`}
-                    sx={{
-                      position: 'relative',
-                      flexShrink: 0,
-                      borderRadius: { sm: 1, md: 2 },
-                      overflow: 'hidden',
-                      transition: 'all 0.5s ease-out',
-                      transform: isActive ? { sm: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1)',
-                      width: isActive ? { sm: 96, md: 128, lg: 160, xl: 176 } : { sm: 80, md: 96, lg: 128, xl: 144 },
-                      height: isActive ? { sm: 72, md: 96, lg: 112, xl: 128 } : { sm: 60, md: 72, lg: 96, xl: 108 },
-                      boxShadow: isActive ? 10 : 1,
-                      border: 'none',
-                      cursor: 'pointer',
-                      '&:hover': { transform: isActive ? { sm: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1.05)' },
-                    }}
-                  >
-                    <Box component="img" src={image.src} alt={image.alt} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-
-                    {/* Overlay */}
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        inset: 0,
-                        bgcolor: isActive ? 'transparent' : 'rgba(0, 0, 0, 0.4)',
-                        transition: 'all 0.5s',
-                        '&:hover': { bgcolor: isActive ? 'transparent' : 'rgba(0, 0, 0, 0.2)' },
-                      }}
-                    />
-
-                    {/* Active Border */}
-                    {isActive && (
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          inset: 0,
-                          border: { sm: '3px solid #2196F3', md: '4px solid #2196F3' },
-                          borderRadius: { sm: 1, md: 2 },
-                          pointerEvents: 'none',
-                        }}
-                      />
-                    )}
-
-                    {/* Progress */}
-                    {isActive && autoPlay && isPlaying && (
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          bottom: 0,
-                          left: 0,
-                          height: { sm: 2, md: 3 },
-                          bgcolor: 'primary.main',
-                          width: `${progress}%`,
-                          transition: 'width 0.1s linear',
-                        }}
-                      />
-                    )}
-                  </Box>
-                );
-              })}
-            </Box>
-          </Box>
-        </Box>
-      )}
+      <ThumbnailStrip
+        images={displayImages}
+        currentSlide={sliderState.currentSlide}
+        onSlideClick={sliderState.goToSlide}
+        showThumbnails={showThumbnails}
+        autoPlay={autoPlay}
+        isPlaying={sliderState.isPlaying}
+        progress={sliderState.progress}
+      />
     </Box>
   );
 }
