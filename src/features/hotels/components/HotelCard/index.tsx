@@ -1,83 +1,81 @@
 import { NavLink } from 'react-router-dom';
+import { Card, CardContent, Box, Button, Divider } from '@mui/material';
 import type { HotelCardProps } from './types';
+import HotelCardImage from './HotelCardImage';
+import HotelCardHeader from './HotelCardHeader';
+import BookingDetailsBadges from './BookingDetailsBadges';
+import AmenitiesSection from './AmenitiesSection';
+import PriceDisplay from './PriceDisplay';
 
 function HotelCard({ hotel }: HotelCardProps) {
-  const discountedPrice = hotel.roomPrice * (1 - hotel.discount / 100);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div className="relative">
-        <img 
-          src={hotel.roomPhotoUrl} 
-          alt={hotel.hotelName}
-          className="w-full h-48 object-cover"
-        />
-        {hotel.discount > 0 && (
-          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">
-            {hotel.discount}% OFF
-          </div>
-        )}
-        <div className="absolute top-2 right-2 flex">
-          {[...Array(hotel.starRating)].map((_, i) => (
-            <span key={i} className="text-yellow-400">★</span>
-          ))}
-        </div>
-      </div>
+    <Card 
+      sx={{ 
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'all 0.3s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-8px)',
+          boxShadow: '0 12px 24px rgba(0, 0, 0, 0.15)',
+        }
+      }}
+    >
+      <HotelCardImage
+        imageUrl={hotel.roomPhotoUrl}
+        hotelName={hotel.hotelName}
+        discount={hotel.discount}
+        starRating={hotel.starRating}
+      />
       
-      <div className="p-4">
-        <h3 className="text-xl font-bold text-gray-800 mb-1">{hotel.hotelName}</h3>
-        <p className="text-gray-600 mb-2">{hotel.cityName}</p>
-        <p className="text-gray-700 mb-3">{hotel.roomType}</p>
+      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2, '&:last-child': { pb: 2 } }}>
+        <HotelCardHeader
+          hotelName={hotel.hotelName}
+          cityName={hotel.cityName}
+          roomType={hotel.roomType}
+        />
         
-        <div className="flex justify-between items-center mb-3">
-          <div>
-            {hotel.discount > 0 ? (
-              <div>
-                <span className="text-lg text-gray-500 line-through">${hotel.roomPrice}</span>
-                <span className="text-xl font-bold text-green-600 ml-2">${discountedPrice.toFixed(2)}</span>
-              </div>
-            ) : (
-              <span className="text-xl font-bold text-gray-800">${hotel.roomPrice}</span>
-            )}
-            <span className="text-gray-600 text-sm ml-1">/ night</span>
-          </div>
-        </div>
+        <Divider sx={{ my: 1 }} />
 
-        <div className="mb-3">
-          <p className="text-sm text-gray-600">
-            {hotel.numberOfAdults} Adults{hotel.numberOfChildren > 0 && `, ${hotel.numberOfChildren} Children`} • {hotel.numberOfRooms} Room{hotel.numberOfRooms > 1 ? 's' : ''}
-          </p>
-          <p className="text-sm text-gray-600">
-            {hotel.checkInDate} - {hotel.checkOutDate}
-          </p>
-        </div>
+        <BookingDetailsBadges
+          numberOfAdults={hotel.numberOfAdults}
+          numberOfChildren={hotel.numberOfChildren}
+          numberOfRooms={hotel.numberOfRooms}
+          checkInDate={hotel.checkInDate}
+          checkOutDate={hotel.checkOutDate}
+        />
 
-        {hotel.amenities.length > 0 && (
-          <div className="mb-3">
-            <p className="text-sm font-semibold text-gray-700 mb-1">Amenities:</p>
-            <div className="flex flex-wrap gap-1">
-              {hotel.amenities.slice(0, 3).map((amenity) => (
-                <span 
-                  key={amenity.id} 
-                  className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
-                >
-                  {amenity.name}
-                </span>
-              ))}
-              {hotel.amenities.length > 3 && (
-                <span className="text-xs text-gray-500">
-                  +{hotel.amenities.length - 3} more
-                </span>
-              )}
-            </div>
-          </div>
-        )}
+        <AmenitiesSection amenities={hotel.amenities} maxDisplay={2} />
 
-        <NavLink to={`/hotels/${hotel.hotelId}`} className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">
-          View Details
-        </NavLink>
-      </div>
-    </div>
+        <Box sx={{ mt: 'auto' }}>
+          <Divider sx={{ mb: 1.5 }} />
+          
+          <PriceDisplay 
+            originalPrice={hotel.roomPrice}
+            discount={hotel.discount}
+          />
+
+          <Button
+            component={NavLink}
+            to={`/hotels/${hotel.hotelId}`}
+            variant="contained"
+            fullWidth
+            sx={{
+              textTransform: 'none',
+              fontWeight: 600,
+              py: 1,
+              boxShadow: 2,
+              '&:hover': {
+                boxShadow: 4
+              }
+            }}
+          >
+            View Details
+          </Button>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }
 
