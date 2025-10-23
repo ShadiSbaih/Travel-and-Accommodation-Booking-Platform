@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight, PlayArrow, Pause } from '@mui/icons-material';
 import type { MuiImageSliderProps } from './types';
@@ -14,28 +14,23 @@ export function MuiImageSlider({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [progress, setProgress] = useState(0);
-  const [lastChangeTime, setLastChangeTime] = useState(Date.now());
+  const slideTimerRef = useRef<number | null>(null);
+  const progressTimerRef = useRef<number | null>(null);
 
-  // Limit to 3 images
-  const displayImages = images.slice(0, 3);
+  // Memoize display images to avoid recalculation
+  const displayImages = useMemo(() => images.slice(0, 3), [images]);
   const maxSlides = displayImages.length;
 
-  // Auto-advance slides
+  // Clear timers helper
+  const clearTimers = useCallback(() => {
+    if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    if (progressTimerRef.current) clearInterval(progressTimerRef.current);
+  }, []);
+
+  // Combined effect for auto-advance and progress
   useEffect(() => {
-    if (!autoPlay || !isPlaying || maxSlides <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % maxSlides);
-      setProgress(0);
-      setLastChangeTime(Date.now());
-    }, autoPlayInterval);
-
-    return () => clearInterval(interval);
-  }, [isPlaying, autoPlay, autoPlayInterval, maxSlides, lastChangeTime]);
-
-  // Progress bar animation
-  useEffect(() => {
-    if (!autoPlay || !isPlaying) {
+    if (!autoPlay || !isPlaying || maxSlides <= 1) {
+      clearTimers();
       setProgress(0);
       return;
     }
@@ -43,42 +38,50 @@ export function MuiImageSlider({
     setProgress(0);
     const startTime = Date.now();
 
-    const progressInterval = setInterval(() => {
+    // Progress animation
+    progressTimerRef.current = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const newProgress = Math.min((elapsed / autoPlayInterval) * 100, 100);
       setProgress(newProgress);
     }, 100);
 
-    return () => clearInterval(progressInterval);
-  }, [currentSlide, isPlaying, autoPlay, autoPlayInterval]);
+    // Auto-advance slide
+    slideTimerRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % maxSlides);
+    }, autoPlayInterval);
 
-  const goToSlide = (index: number) => {
+    return clearTimers;
+  }, [currentSlide, isPlaying, autoPlay, autoPlayInterval, maxSlides, clearTimers]);
+
+  const goToSlide = useCallback((index: number) => {
     setCurrentSlide(index);
-    setProgress(0);
-    setLastChangeTime(Date.now());
-  };
+  }, []);
 
-  const nextSlide = () => goToSlide((currentSlide + 1) % maxSlides);
-  const prevSlide = () => goToSlide((currentSlide - 1 + maxSlides) % maxSlides);
-  const toggleAutoplay = () => setIsPlaying((prev) => !prev);
+  const nextSlide = useCallback(() => goToSlide((currentSlide + 1) % maxSlides), [currentSlide, maxSlides, goToSlide]);
+  const prevSlide = useCallback(() => goToSlide((currentSlide - 1 + maxSlides) % maxSlides), [currentSlide, maxSlides, goToSlide]);
+  const toggleAutoplay = useCallback(() => setIsPlaying((prev) => !prev), []);
+
+  // Memoize computed values
+  const heightValue = useMemo(() => (typeof height === 'number' ? `${height}px` : height), [height]);
+
+  const navigationButtonStyle = useMemo(
+    () => ({
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      zIndex: 20,
+      width: { xs: 32, md: 48 },
+      height: { xs: 32, md: 48 },
+      bgcolor: 'rgba(0, 0, 0, 0.5)',
+      backdropFilter: 'blur(4px)',
+      color: 'white',
+      transition: 'all 0.2s',
+      '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
+    }),
+    []
+  );
 
   if (!images || images.length === 0) return null;
-
-  const heightValue = typeof height === 'number' ? `${height}px` : height;
-
-  const navigationButtonStyle = {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    zIndex: 20,
-    width: { xs: 32, md: 48 },
-    height: { xs: 32, md: 48 },
-    bgcolor: 'rgba(0, 0, 0, 0.5)',
-    backdropFilter: 'blur(4px)',
-    color: 'white',
-    transition: 'all 0.2s',
-    '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
-  };
 
   return (
     <Box className={className} sx={{ position: 'relative', bgcolor: 'black', width: '100%' }}>
