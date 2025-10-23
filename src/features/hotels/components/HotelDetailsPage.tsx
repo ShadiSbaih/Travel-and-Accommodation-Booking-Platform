@@ -90,25 +90,7 @@ function HotelDetailsPage() {
                 }}
               >
                 {sliderImages.length > 0 && (
-                  <Box sx={{ position: 'relative' }}>
-                    <MuiImageSlider images={sliderImages} />
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        top: 16,
-                        left: 16,
-                        bgcolor: 'rgba(0,0,0,0.7)',
-                        backdropFilter: 'blur(10px)',
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1
-                      }}
-                    >
-                      <Typography variant="body2" sx={{ color: 'white', fontWeight: 600 }}>
-                        {sliderImages.length} Photos
-                      </Typography>
-                    </Box>
-                  </Box>
+                  <MuiImageSlider images={sliderImages} />
                 )}
               </Paper>
 
