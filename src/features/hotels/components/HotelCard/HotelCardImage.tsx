@@ -4,13 +4,17 @@ import type { HotelCardImageProps } from './types';
 
 function HotelCardImage({ imageUrl, hotelName, discount, starRating }: HotelCardImageProps) {
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: 'relative', flexShrink: 0 }}>
       <CardMedia
         component="img"
-        height="200"
         image={imageUrl}
         alt={hotelName}
-        sx={{ objectFit: 'cover' }}
+        sx={{ 
+          height: 200,
+          width: '100%',
+          objectFit: 'cover',
+          display: 'block'
+        }}
       />
       
       {discount > 0 && (

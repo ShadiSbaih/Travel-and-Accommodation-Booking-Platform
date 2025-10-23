@@ -3,6 +3,7 @@ import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { Box, Typography, Badge } from '@mui/material';
 import type { SearchResultsSectionProps } from '../types/search.types';
 
 function SearchResultsSection({ 
@@ -38,27 +39,45 @@ function SearchResultsSection({
   const totalCount = rawData?.length || 0;
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Search Results</h2>
-        <div className="text-right">
-          <p className="text-gray-600">
-            {resultCount} hotel{resultCount !== 1 ? 's' : ''} 
-            {hasActiveFilters && totalCount !== resultCount && (
-              <span className="text-sm text-gray-500 block">
-                of {totalCount} total
-              </span>
-            )}
-          </p>
-        </div>
-      </div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h4" component="h2" fontWeight="bold">
+          Search Results
+        </Typography>
+        <Box sx={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="body1" color="text.secondary">
+            hotel{resultCount !== 1 ? 's' : ''}
+          </Typography>
+          <Badge 
+            badgeContent={resultCount} 
+            color="primary"
+            max={999}
+            sx={{ '& .MuiBadge-badge': { position: 'static', transform: 'none' } }}
+          />
+          {hasActiveFilters && totalCount !== resultCount && (
+            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+              of {totalCount} total
+            </Typography>
+          )}
+        </Box>
+      </Box>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Box 
+        sx={{ 
+          display: 'grid', 
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, 
+          gap: 3,
+          gridAutoRows: '1fr',
+          '& > *': {
+            minHeight: 0
+          }
+        }}
+      >
         {data?.map((hotel) => (
           <HotelCard key={hotel.hotelId} hotel={hotel} />
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
