@@ -101,27 +101,48 @@ const AmenitiesFilter: React.FC = () => {
   // Main render
   return (
     <Card
-      elevation={2}
+      elevation={0}
       sx={{
         overflow: 'hidden',
         position: 'sticky',
         top: 24,
-        borderRadius: 2,
+        borderRadius: 3,
         border: '1px solid',
         borderColor: 'divider',
-        transition: 'box-shadow 0.2s ease',
+        transition: 'all 0.3s ease',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
         '&:hover': {
-          boxShadow: 3,
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12)',
+          borderColor: 'primary.light',
         },
       }}
     >
       <CardContent sx={{ p: 0 }}>
         {/* Header with clear button */}
-        <Box sx={{ p: 3, pb: 2 }}>
+        <Box 
+          sx={{ 
+            p: 3, 
+            pb: 2,
+            background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.02) 100%)',
+          }}
+        >
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Hotel sx={{ mr: 1.5, color: 'primary.main', fontSize: 24 }} />
-              <Typography variant="h6" fontWeight={600} color="text.primary">
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 36,
+                  height: 36,
+                  borderRadius: 2,
+                  backgroundColor: 'primary.main',
+                  mr: 1.5,
+                }}
+              >
+                <Hotel sx={{ color: 'white', fontSize: 20 }} />
+              </Box>
+              <Typography variant="h6" fontWeight={700} color="text.primary">
                 Amenities
               </Typography>
             </Box>
@@ -130,20 +151,20 @@ const AmenitiesFilter: React.FC = () => {
               <Button
                 size="small"
                 onClick={() => dispatch(clearFilters())}
-                startIcon={<Clear />}
+                startIcon={<Clear sx={{ fontSize: 16 }} />}
                 color="error"
-                variant="outlined"
+                variant="contained"
                 sx={{
                   minWidth: 'auto',
                   fontSize: '0.75rem',
                   px: 1.5,
-                  py: 0.5,
+                  py: 0.75,
                   borderRadius: 2,
                   textTransform: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
+                  boxShadow: 'none',
                   '&:hover': {
-                    backgroundColor: 'error.light',
-                    color: 'error.contrastText',
+                    boxShadow: '0 2px 8px rgba(211, 47, 47, 0.3)',
                   },
                 }}
               >
@@ -153,7 +174,7 @@ const AmenitiesFilter: React.FC = () => {
           </Box>
         </Box>
 
-        <Divider sx={{ mx: 2 }} />
+        <Divider />
 
         <Box sx={{ p: 3, pt: 2.5 }}>
           {/* Filter Mode Switch */}

@@ -34,40 +34,51 @@ const FilterModeSwitch: React.FC = () => {
       sx={{
         mb: 2,
         height: 48,
-        backgroundColor: 'rgba(45, 55, 72, 0.9)',
-        borderRadius: '8px',
-        border: '1px solid rgba(66, 153, 225, 0.5)',
+        backgroundColor: 'background.paper',
+        borderRadius: 2,
+        border: '2px solid',
+        borderColor: 'divider',
         overflow: 'hidden',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
         '& .MuiToggleButtonGroup-grouped': {
           border: 'none',
           borderRadius: '8px !important',
-          margin: 0,
+          margin: '4px',
           '&:not(:first-of-type)': {
-            borderLeft: '1px solid rgba(66, 153, 225, 0.3)',
-            marginLeft: 0,
+            borderLeft: 'none',
+            marginLeft: '4px',
+          },
+          '&:first-of-type': {
+            marginLeft: '4px',
           },
         },
         '& .MuiToggleButton-root': {
           flex: 1,
-          px: 3,
+          px: 2,
           py: 1.5,
           textTransform: 'none',
-          fontSize: '1rem',
-          fontWeight: 500,
-          color: 'rgba(255, 255, 255, 0.9)',
+          fontSize: '0.9375rem',
+          fontWeight: 600,
+          color: 'text.secondary',
           backgroundColor: 'transparent',
           border: 'none',
-          transition: 'all 0.3s ease',
-          '&.Mui-selected': {
-            backgroundColor: 'rgb(3,169,244)',
-            color: 'rgb(255, 255, 255)',
-            borderColor: 'transparent',
-
+          transition: 'all 0.2s ease',
+          whiteSpace: 'nowrap',
+          '&:hover': {
+            backgroundColor: 'action.hover',
           },
-
+          '&.Mui-selected': {
+            backgroundColor: 'primary.main',
+            color: 'primary.contrastText',
+            borderColor: 'transparent',
+            boxShadow: '0 2px 6px rgba(25, 118, 210, 0.3)',
+            '&:hover': {
+              backgroundColor: 'primary.dark',
+            },
+          },
           '&.Mui-disabled': {
-            opacity: 0.6,
-            color: 'rgba(255, 255, 255)',
+            opacity: 0.5,
+            color: 'text.disabled',
           },
         },
       }}

@@ -30,14 +30,18 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
         overflowY: 'auto',
         overflowX: 'hidden',
         '&::-webkit-scrollbar': {
-          width: '6px',
+          width: '8px',
         },
         '&::-webkit-scrollbar-track': {
-          backgroundColor: '#f1f5f9',
+          backgroundColor: 'rgba(0, 0, 0, 0.03)',
+          borderRadius: '4px',
         },
         '&::-webkit-scrollbar-thumb': {
-          backgroundColor: '#cbd5e1',
-          borderRadius: '3px',
+          backgroundColor: 'rgba(25, 118, 210, 0.3)',
+          borderRadius: '4px',
+          '&:hover': {
+            backgroundColor: 'rgba(25, 118, 210, 0.5)',
+          },
         },
       }}
     >
@@ -59,14 +63,16 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
             key={amenity.id}
             disablePadding
             sx={{
-              borderRadius: 1.5,
+              borderRadius: 2,
               mx: 0.5,
-              my: 0.25,
+              my: 0.5,
               overflow: 'hidden',
+              border: '1px solid transparent',
               '&:hover': {
-                backgroundColor: 'action.hover',
+                backgroundColor: 'rgba(25, 118, 210, 0.04)',
+                borderColor: 'rgba(25, 118, 210, 0.2)',
               },
-              transition: 'background-color 0.2s ease',
+              transition: 'all 0.2s ease',
             }}
           >
             <Tooltip title={amenity.description || amenity.name} arrow placement="right">
@@ -80,11 +86,13 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
                     sx={{
                       p: 1.25,
                       '& .MuiSvgIcon-root': {
-                        fontSize: '1.125rem',
+                        fontSize: '1.2rem',
+                      },
+                      '&.Mui-checked': {
+                        color: 'primary.main',
                       },
                       '&:hover': {
-                        backgroundColor: 'primary.light',
-                        opacity: 0.1,
+                        backgroundColor: 'rgba(25, 118, 210, 0.08)',
                       },
                     }}
                   />
@@ -93,11 +101,12 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontWeight: 500,
-                      color: 'text.primary',
+                      fontWeight: selectedAmenities.includes(amenity.name) ? 600 : 500,
+                      color: selectedAmenities.includes(amenity.name) ? 'primary.main' : 'text.primary',
                       lineHeight: 1.4,
                       fontSize: '0.875rem',
                       ml: 0.5,
+                      transition: 'all 0.2s ease',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap'
