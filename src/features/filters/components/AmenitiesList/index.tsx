@@ -61,7 +61,6 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
         {amenities.map((amenity) => (
           <ListItem
             key={amenity.id}
-            disablePadding
             sx={{
               borderRadius: 2,
               mx: 0.5,
