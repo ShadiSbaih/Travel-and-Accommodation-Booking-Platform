@@ -66,7 +66,29 @@ function HotelDetailsPage() {
               {/* Picture Gallery Section */}
               <HotelGallery images={sliderImages} />
 
-              {/* Available Rooms Section */}
+              {/* Available Rooms Section - Hidden on mobile/tablet, shown on desktop */}
+              <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+                {hotel?.rooms && hotel.rooms.length > 0 && (
+                  <RoomsList
+                    rooms={hotel.rooms}
+                    hotelAmenities={hotel.amenities}
+                    roomImage={gallery?.[0]?.url}
+                    onRoomSelect={handleRoomBooking}
+                  />
+                )}
+              </Box>
+            </Box>
+
+            {/* Right Column - Info Banner, Location Map & Amenities */}
+            <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 calc(35% - 32px)' } }}>
+              {hotel && <HotelSidebar hotel={hotel} />}
+            </Box>
+
+            {/* Available Rooms Section - Shown on mobile/tablet, hidden on desktop */}
+            <Box sx={{ 
+              flex: { xs: '1 1 100%' },
+              display: { xs: 'block', lg: 'none' }
+            }}>
               {hotel?.rooms && hotel.rooms.length > 0 && (
                 <RoomsList
                   rooms={hotel.rooms}
@@ -75,11 +97,6 @@ function HotelDetailsPage() {
                   onRoomSelect={handleRoomBooking}
                 />
               )}
-            </Box>
-
-            {/* Right Column - Info Banner, Location Map & Amenities */}
-            <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 calc(35% - 32px)' } }}>
-              {hotel && <HotelSidebar hotel={hotel} />}
             </Box>
           </Box>
         </Container>

@@ -24,7 +24,14 @@ function HotelSidebar({ hotel }: HotelSidebarProps) {
         description={hotel.description}
       />
 
-      {/* Location on Map */}
+      {/* Amenities & Services - Shown first on mobile/tablet */}
+      <Box sx={{ display: { xs: 'block', lg: 'none' } }}>
+        {hotel.amenities && hotel.amenities.length > 0 && (
+          <AmenitiesList amenities={hotel.amenities} layout="vertical" />
+        )}
+      </Box>
+
+      {/* Location on Map - Shown second on mobile/tablet */}
       <HotelLocationMap
         latitude={hotel.latitude}
         longitude={hotel.longitude}
@@ -34,10 +41,12 @@ function HotelSidebar({ hotel }: HotelSidebarProps) {
         zoom={15}
       />
 
-      {/* Amenities & Services */}
-      {hotel.amenities && hotel.amenities.length > 0 && (
-        <AmenitiesList amenities={hotel.amenities} layout="vertical" />
-      )}
+      {/* Amenities & Services - Shown after map on desktop */}
+      <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+        {hotel.amenities && hotel.amenities.length > 0 && (
+          <AmenitiesList amenities={hotel.amenities} layout="vertical" />
+        )}
+      </Box>
     </Box>
   );
 }
