@@ -16,6 +16,8 @@ export function MuiImageSlider({
   const [progress, setProgress] = useState(0);
   const slideTimerRef = useRef<number | null>(null);
   const progressTimerRef = useRef<number | null>(null);
+  const touchStartRef = useRef<number | null>(null);
+  const touchEndRef = useRef<number | null>(null);
 
   // Memoize display images to avoid recalculation
   const displayImages = useMemo(() => images.slice(0, 3), [images]);
@@ -61,6 +63,36 @@ export function MuiImageSlider({
   const prevSlide = useCallback(() => goToSlide((currentSlide - 1 + maxSlides) % maxSlides), [currentSlide, maxSlides, goToSlide]);
   const toggleAutoplay = useCallback(() => setIsPlaying((prev) => !prev), []);
 
+  // Touch handlers for swipe
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndRef.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStartRef.current || !touchEndRef.current) return;
+
+    const distance = touchStartRef.current - touchEndRef.current;
+    const minSwipeDistance = 50; // Minimum distance to trigger swipe
+
+    if (Math.abs(distance) > minSwipeDistance) {
+      if (distance > 0) {
+        // Swiped left - go to next
+        nextSlide();
+      } else {
+        // Swiped right - go to previous
+        prevSlide();
+      }
+    }
+
+    // Reset
+    touchStartRef.current = null;
+    touchEndRef.current = null;
+  }, [nextSlide, prevSlide]);
+
   // Memoize computed values
   const heightValue = useMemo(() => (typeof height === 'number' ? `${height}px` : height), [height]);
 
@@ -86,7 +118,18 @@ export function MuiImageSlider({
   return (
     <Box className={className} sx={{ position: 'relative', bgcolor: 'black', width: '100%' }}>
       {/* Main Slider */}
-      <Box sx={{ position: 'relative', width: '100%', height: heightValue, overflow: 'hidden' }}>
+      <Box 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        sx={{ 
+          position: 'relative', 
+          width: '100%', 
+          height: { xs: 300, sm: 400, md: heightValue },
+          overflow: 'hidden',
+          touchAction: 'pan-x'
+        }}
+      >
         {/* Images */}
         {displayImages.map((image, index) => (
           <Box
@@ -111,10 +154,26 @@ export function MuiImageSlider({
         {/* Navigation Buttons */}
         {maxSlides > 1 && (
           <>
-            <IconButton onClick={prevSlide} aria-label="Previous" sx={{ ...navigationButtonStyle, left: { xs: 8, md: 24 } }}>
+            <IconButton 
+              onClick={prevSlide} 
+              aria-label="Previous" 
+              sx={{ 
+                ...navigationButtonStyle, 
+                left: { xs: 4, sm: 8, md: 24 },
+                display: { xs: 'none', sm: 'flex' }
+              }}
+            >
               <ChevronLeft sx={{ fontSize: { xs: 20, md: 24 } }} />
             </IconButton>
-            <IconButton onClick={nextSlide} aria-label="Next" sx={{ ...navigationButtonStyle, right: { xs: 8, md: 24 } }}>
+            <IconButton 
+              onClick={nextSlide} 
+              aria-label="Next" 
+              sx={{ 
+                ...navigationButtonStyle, 
+                right: { xs: 4, sm: 8, md: 24 },
+                display: { xs: 'none', sm: 'flex' }
+              }}
+            >
               <ChevronRight sx={{ fontSize: { xs: 20, md: 24 } }} />
             </IconButton>
           </>
@@ -127,18 +186,18 @@ export function MuiImageSlider({
             aria-label={isPlaying ? 'Pause' : 'Play'}
             sx={{
               position: 'absolute',
-              bottom: { xs: 8, md: 16 },
-              right: { xs: 8, md: 16 },
+              bottom: { xs: 4, sm: 8, md: 16 },
+              right: { xs: 4, sm: 8, md: 16 },
               zIndex: 20,
-              width: { xs: 32, md: 40 },
-              height: { xs: 32, md: 40 },
+              width: { xs: 28, sm: 32, md: 40 },
+              height: { xs: 28, sm: 32, md: 40 },
               bgcolor: 'rgba(0, 0, 0, 0.5)',
               backdropFilter: 'blur(4px)',
               color: 'white',
               '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
             }}
           >
-            {isPlaying ? <Pause sx={{ fontSize: { xs: 16, md: 20 } }} /> : <PlayArrow sx={{ fontSize: { xs: 16, md: 20 } }} />}
+            {isPlaying ? <Pause sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} /> : <PlayArrow sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} />}
           </IconButton>
         )}
 
@@ -149,7 +208,7 @@ export function MuiImageSlider({
               position: 'absolute',
               bottom: 0,
               left: 0,
-              height: { xs: 2, md: 3 },
+              height: { xs: 3, md: 3 },
               bgcolor: 'primary.main',
               width: `${progress}%`,
               transition: 'width 0.1s linear',
@@ -157,20 +216,48 @@ export function MuiImageSlider({
             }}
           />
         )}
+
+        {/* Mobile Slide Indicators */}
+        <Box
+          sx={{
+            display: { xs: 'flex', sm: 'none' },
+            position: 'absolute',
+            bottom: 12,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            gap: 1,
+            zIndex: 20,
+          }}
+        >
+          {displayImages.map((_, index) => (
+            <Box
+              key={index}
+              onClick={() => goToSlide(index)}
+              sx={{
+                width: currentSlide === index ? 24 : 8,
+                height: 8,
+                borderRadius: 1,
+                bgcolor: currentSlide === index ? 'primary.main' : 'rgba(255, 255, 255, 0.5)',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer',
+              }}
+            />
+          ))}
+        </Box>
       </Box>
 
       {/* Thumbnails */}
       {showThumbnails && maxSlides > 1 && (
-        <Box sx={{ bgcolor: 'background.paper', py: { xs: 2, md: 4 } }}>
-          <Box sx={{ maxWidth: 1280, mx: 'auto', px: { xs: 1, md: 4 } }}>
+        <Box sx={{ bgcolor: 'background.paper', py: { xs: 1.5, sm: 2, md: 4 }, display: { xs: 'none', sm: 'block' } }}>
+          <Box sx={{ maxWidth: 1280, mx: 'auto', px: { xs: 1, sm: 2, md: 4 } }}>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'flex-end',
-                gap: { xs: 1, md: 2 },
+                gap: { xs: 1, sm: 1.5, md: 2 },
                 overflowX: 'auto',
-                py: { xs: 1, md: 2 },
+                py: { xs: 1, sm: 1.5, md: 2 },
                 '&::-webkit-scrollbar': { display: 'none' },
                 scrollbarWidth: 'none',
               }}
@@ -186,16 +273,16 @@ export function MuiImageSlider({
                     sx={{
                       position: 'relative',
                       flexShrink: 0,
-                      borderRadius: { xs: 1, md: 2 },
+                      borderRadius: { sm: 1, md: 2 },
                       overflow: 'hidden',
                       transition: 'all 0.5s ease-out',
-                      transform: isActive ? { xs: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1)',
-                      width: isActive ? { xs: 80, md: 128, lg: 160, xl: 176 } : { xs: 64, md: 96, lg: 128, xl: 144 },
-                      height: isActive ? { xs: 64, md: 96, lg: 112, xl: 128 } : { xs: 48, md: 72, lg: 96, xl: 108 },
+                      transform: isActive ? { sm: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1)',
+                      width: isActive ? { sm: 96, md: 128, lg: 160, xl: 176 } : { sm: 80, md: 96, lg: 128, xl: 144 },
+                      height: isActive ? { sm: 72, md: 96, lg: 112, xl: 128 } : { sm: 60, md: 72, lg: 96, xl: 108 },
                       boxShadow: isActive ? 10 : 1,
                       border: 'none',
                       cursor: 'pointer',
-                      '&:hover': { transform: isActive ? { xs: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1.05)' },
+                      '&:hover': { transform: isActive ? { sm: 'scale(1.1)', md: 'scale(1.15)' } : 'scale(1.05)' },
                     }}
                   >
                     <Box component="img" src={image.src} alt={image.alt} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -217,8 +304,8 @@ export function MuiImageSlider({
                         sx={{
                           position: 'absolute',
                           inset: 0,
-                          border: { xs: '2px solid #2196F3', md: '4px solid #2196F3' },
-                          borderRadius: { xs: 1, md: 2 },
+                          border: { sm: '3px solid #2196F3', md: '4px solid #2196F3' },
+                          borderRadius: { sm: 1, md: 2 },
                           pointerEvents: 'none',
                         }}
                       />
@@ -231,7 +318,7 @@ export function MuiImageSlider({
                           position: 'absolute',
                           bottom: 0,
                           left: 0,
-                          height: { xs: 2, md: 3 },
+                          height: { sm: 2, md: 3 },
                           bgcolor: 'primary.main',
                           width: `${progress}%`,
                           transition: 'width 0.1s linear',
