@@ -14,6 +14,7 @@ export function MuiImageSlider({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [progress, setProgress] = useState(0);
+  const [lastChangeTime, setLastChangeTime] = useState(Date.now());
 
   // Limit to 3 images
   const displayImages = images.slice(0, 3);
@@ -26,17 +27,26 @@ export function MuiImageSlider({
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % maxSlides);
       setProgress(0);
+      setLastChangeTime(Date.now());
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [isPlaying, autoPlay, autoPlayInterval, maxSlides]);
+  }, [isPlaying, autoPlay, autoPlayInterval, maxSlides, lastChangeTime]);
 
   // Progress bar animation
   useEffect(() => {
-    if (!autoPlay || !isPlaying) return;
+    if (!autoPlay || !isPlaying) {
+      setProgress(0);
+      return;
+    }
+
+    setProgress(0);
+    const startTime = Date.now();
 
     const progressInterval = setInterval(() => {
-      setProgress((prev) => (prev >= 100 ? 0 : prev + 100 / (autoPlayInterval / 100)));
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min((elapsed / autoPlayInterval) * 100, 100);
+      setProgress(newProgress);
     }, 100);
 
     return () => clearInterval(progressInterval);
@@ -45,6 +55,7 @@ export function MuiImageSlider({
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
     setProgress(0);
+    setLastChangeTime(Date.now());
   };
 
   const nextSlide = () => goToSlide((currentSlide + 1) % maxSlides);
