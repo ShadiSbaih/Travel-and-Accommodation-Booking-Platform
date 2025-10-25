@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Box, Paper, Typography } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
@@ -30,20 +29,6 @@ export function MuiMap({
   height = 450,
   zoom = 13,
 }: MuiMapProps) {
-  useEffect(() => {
-    // Clean up on unmount
-    return () => {
-      const containers = document.querySelectorAll('.leaflet-container');
-      containers.forEach(container => {
-        // @ts-expect-error Leaflet internal cleanup for _leaflet_id property
-        if (container._leaflet_id) {
-          // @ts-expect-error Deleting Leaflet internal property
-          delete container._leaflet_id;
-        }
-      });
-    };
-  }, []);
-
   return (
     <Paper
       elevation={3}
@@ -54,6 +39,7 @@ export function MuiMap({
       }}
     >
       <MapContainer
+        key={`${latitude}-${longitude}`}
         center={[latitude, longitude]}
         zoom={zoom}
         style={{ height: '100%', width: '100%' }}
