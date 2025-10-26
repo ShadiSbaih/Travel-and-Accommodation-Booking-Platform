@@ -159,7 +159,7 @@ function SearchBar() {
         >
           {/* Destination */}
           <Box sx={{ 
-            flex: { lg: '1 1 35%' },
+            flex: { lg: '1 1 20%' },
             minWidth: { lg: 0 }
           }}>
             <TextField
@@ -192,7 +192,7 @@ function SearchBar() {
               display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
               gap: { xs: 2, md: 1.5 },
-              flex: { lg: '1 1 28%' },
+              flex: { lg: '1 1 38%' },
               minWidth: { lg: 0 }
             }}
           >

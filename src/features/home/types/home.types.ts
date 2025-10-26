@@ -35,3 +35,26 @@ export interface RecentlyVisitedHotelDto {
 }
 
 export type RecentlyVisitedHotelsDto = RecentlyVisitedHotelDto[];
+
+// Component Props Types
+export interface SectionHeaderProps {
+  title: string;
+  subtitle?: string;
+  icon?: React.ReactNode;
+}
+
+export interface FeaturedDealCardProps {
+  deal: FeaturedDealDto;
+}
+
+export interface TrendingDestinationCardProps {
+  destination: TrendingDestinationDto;
+}
+
+export interface RecentlyVisitedCardProps {
+  hotel: RecentlyVisitedHotelDto;
+}
+
+export interface HeroSectionProps {
+  userName?: string;
+}

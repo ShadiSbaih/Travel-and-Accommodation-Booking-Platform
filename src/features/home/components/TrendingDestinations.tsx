@@ -1,6 +1,13 @@
-import homePageApi from "../api/home-page.api";
-import { useQuery } from "@tanstack/react-query";
+import { Box, Container } from '@mui/material';
+import { TrendingUp as TrendingIcon } from '@mui/icons-material';
+import { useQuery } from '@tanstack/react-query';
+import homePageApi from '../api/home-page.api';
 import type { TrendingDestinationDto } from '../types/home.types';
+import TrendingDestinationCard from './TrendingDestinationCard';
+import SectionHeader from './SectionHeader';
+import LoadingState from '@/shared/components/LoadingState';
+import ErrorState from '@/shared/components/ErrorState';
+import EmptyState from '@/shared/components/EmptyState';
 
 function TrendingDestinations() {
   const { data: trendingDestinations = [], isLoading, isError } = useQuery({
@@ -8,19 +15,49 @@ function TrendingDestinations() {
     queryFn: () => homePageApi.getTrendingDestinations(),
   });
 
-  if (isLoading) return <div className="text-center">Loading...</div>;
-  if (isError) return <div className="text-center">Error loading trending destinations</div>;
+  if (isLoading) return <LoadingState message="Loading trending destinations..." />;
+  if (isError)
+    return <ErrorState message="Unable to load trending destinations. Please try again later." />;
+
+  if (trendingDestinations.length === 0) {
+    return (
+      <EmptyState
+        title="No trending destinations available"
+        subtitle="Explore our search to find your perfect destination"
+        icon={<TrendingIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
+      />
+    );
+  }
 
   return (
-    <div className="bg-slate-100 flex gap-4 p-4 overflow-x-auto">
-      {trendingDestinations.map((destination: TrendingDestinationDto) => (
-        <div key={destination.cityId} className="border-blue-700 border-2">
-          <h3>{destination.cityName}, {destination.countryName}</h3>
-          <p>{destination.description}</p>
-          <img src={destination.thumbnailUrl} alt={destination.cityName}  className="w-36 h-36"/>
-        </div>
-      ))}
-    </div>
+    <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'grey.50' }}>
+      <Container maxWidth="lg">
+        <SectionHeader
+          title="Trending Destinations"
+          subtitle="Popular places travelers are exploring now"
+          icon={
+            <TrendingIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'success.main' }} />
+          }
+        />
+
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(auto-fill, minmax(280px, 1fr))',
+              md: 'repeat(auto-fill, minmax(300px, 1fr))',
+            },
+            gap: { xs: 2, sm: 3, md: 4 },
+            justifyItems: 'center',
+          }}
+        >
+          {trendingDestinations.map((destination: TrendingDestinationDto) => (
+            <TrendingDestinationCard key={destination.cityId} destination={destination} />
+          ))}
+        </Box>
+      </Container>
+    </Box>
   );
 }
 

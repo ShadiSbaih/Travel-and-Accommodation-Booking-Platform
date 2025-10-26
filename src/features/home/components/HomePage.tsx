@@ -1,27 +1,27 @@
-import FeaturedDeals from "./FeaturedDeals";
-import RecentlyVisitedHotels from "./RecentlyVisitedHotels";
-import SearchBar from "@/features/search/components/SearchBar";
-import TrendingDestinations from "./TrendingDestinations";
-import Navbar from "@/shared/components/Navbar";
+import { Box } from '@mui/material';
+import Navbar from '@/shared/components/Navbar';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
-
+import HeroSection from './HeroSection';
+import FeaturedDeals from './FeaturedDeals';
+import TrendingDestinations from './TrendingDestinations';
+import RecentlyVisitedHotels from './RecentlyVisitedHotels';
 
 function HomePage() {
-
-  const { userInfo, fullName } = useUserInfo();
-  console.table(userInfo);
+  const { fullName } = useUserInfo();
 
   return (
-    <div className="min-h-screen bg-teal-100 dark:bg-teal-700">
+    <Box
+      sx={{
+        minHeight: '100vh',
+        bgcolor: 'background.default',
+      }}
+    >
       <Navbar />
-      <h1>HomePage</h1>
-      {userInfo && <p className="p-4 bg-orange-400 inline-block">Welcome, {fullName}!</p>}
-      <p>Your type is: {userInfo?.userType}</p>
-      <SearchBar />
+      <HeroSection userName={fullName} />
       <FeaturedDeals />
       <TrendingDestinations />
       <RecentlyVisitedHotels />
-    </div>
+    </Box>
   );
 }
 
