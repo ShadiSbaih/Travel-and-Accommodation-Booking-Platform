@@ -22,7 +22,7 @@ function HotelLocationMap({
     <Paper
       elevation={0}
       sx={{
-        p: 3,
+        p: 2,
         borderRadius: 3,
         border: '1px solid',
         borderColor: 'divider',
@@ -30,13 +30,13 @@ function HotelLocationMap({
       }}
     >
       <Typography
-        variant="h6"
+        variant="subtitle2"
         component="h2"
         gutterBottom
         sx={{
           fontWeight: 700,
-          mb: 2,
-          fontSize: '1.1rem'
+          mb: 1.5,
+          fontSize: '0.95rem'
         }}
       >
         Location

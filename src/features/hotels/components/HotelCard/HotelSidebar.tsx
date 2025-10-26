@@ -37,7 +37,7 @@ function HotelSidebar({ hotel }: HotelSidebarProps) {
         longitude={hotel.longitude}
         hotelName={hotel.name}
         location={hotel.location || ''}
-        height={300}
+        height={250}
         zoom={15}
       />
 

@@ -21,7 +21,7 @@ function HotelGallery({ images }: HotelGalleryProps) {
         mb: 4
       }}
     >
-      <MuiImageSlider images={images} />
+      <MuiImageSlider images={images} height={500} />
     </Paper>
   );
 }

@@ -13,7 +13,7 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
     <Paper
       elevation={0}
       sx={{
-        p: 3,
+        p: 2,
         borderRadius: 3,
         border: '1px solid',
         borderColor: 'divider',
@@ -22,24 +22,26 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
       }}
     >
       {/* Location */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-        <LocationOn sx={{ fontSize: 20, color: 'error.main' }} />
-        <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.primary' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 1.5 }}>
+        <LocationOn sx={{ fontSize: 18, color: 'error.main' }} />
+        <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary', fontSize: '0.9rem' }}>
           {location}
         </Typography>
       </Box>
 
       {/* Star Rating and Hotel Type */}
-      <Box sx={{ display: 'flex', gap: 1.5, mb: 3, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
         {starRating && (
           <Chip
-            icon={<Star sx={{ fontSize: 16 }} />}
+            icon={<Star sx={{ fontSize: 14 }} />}
             label={`${starRating} Star Hotel`}
             size="small"
             sx={{
               bgcolor: 'warning.main',
               color: 'white',
               fontWeight: 600,
+              height: 24,
+              fontSize: '0.75rem',
               '& .MuiChip-icon': { color: 'white' }
             }}
           />
@@ -52,7 +54,9 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
             sx={{
               bgcolor: 'primary.main',
               color: 'white',
-              fontWeight: 600
+              fontWeight: 600,
+              height: 24,
+              fontSize: '0.75rem'
             }}
           />
         )}
@@ -61,12 +65,12 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
       {/* About This Property */}
       <Box>
         <Typography
-          variant="h6"
+          variant="subtitle2"
           component="h3"
           sx={{
             fontWeight: 700,
-            mb: 1.5,
-            fontSize: '1.1rem',
+            mb: 1,
+            fontSize: '0.95rem',
             color: 'text.primary'
           }}
         >
@@ -76,8 +80,8 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
           variant="body2"
           sx={{
             color: 'text.secondary',
-            lineHeight: 1.7,
-            fontSize: '0.95rem'
+            lineHeight: 1.6,
+            fontSize: '0.85rem'
           }}
         >
           {description}
