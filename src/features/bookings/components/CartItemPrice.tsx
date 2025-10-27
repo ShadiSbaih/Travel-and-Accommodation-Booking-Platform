@@ -1,10 +1,5 @@
 import { Box, Typography } from '@mui/material';
-
-interface CartItemPriceProps {
-  pricePerNight: number;
-  numberOfNights: number;
-  totalPrice: number;
-}
+import type { CartItemPriceProps } from '@/features/bookings/types/booking.types';
 
 function CartItemPrice({
   pricePerNight,

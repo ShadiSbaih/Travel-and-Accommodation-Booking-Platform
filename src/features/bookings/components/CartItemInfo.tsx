@@ -1,12 +1,6 @@
 import { Box, Chip } from '@mui/material';
 import { LocalOffer } from '@mui/icons-material';
-
-interface CartItemInfoProps {
-  maxOccupancy: number;
-  numberOfNights: number;
-  checkInDate?: string;
-  checkOutDate?: string;
-}
+import type { CartItemInfoProps } from '@/features/bookings/types/booking.types';
 
 function CartItemInfo({
   maxOccupancy,

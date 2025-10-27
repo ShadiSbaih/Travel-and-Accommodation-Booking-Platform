@@ -1,14 +1,6 @@
 import { Paper, Box, Typography, Button, Divider } from '@mui/material';
+import type { OrderSummaryProps } from '@/features/bookings/types/booking.types';
 import OrderSummaryRow from './OrderSummaryRow';
-
-interface OrderSummaryProps {
-  totalItems: number;
-  subtotal: number;
-  serviceFee: number;
-  taxes: number;
-  total: number;
-  onProceedToCheckout: () => void;
-}
 
 function OrderSummary({
   totalItems,

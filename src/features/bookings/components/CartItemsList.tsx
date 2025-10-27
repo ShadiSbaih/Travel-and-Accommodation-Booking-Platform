@@ -1,11 +1,6 @@
 import { Box } from '@mui/material';
-import type { CartItem } from '@/features/cart';
+import type { CartItemsListProps } from '@/features/bookings/types/booking.types';
 import CartItemCard from './CartItemCard';
-
-interface CartItemsListProps {
-  items: CartItem[];
-  onRemoveItem: (itemId: string) => void;
-}
 
 function CartItemsList({ items, onRemoveItem }: CartItemsListProps) {
   return (

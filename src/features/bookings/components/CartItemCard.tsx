@@ -1,14 +1,9 @@
 import { Card, CardContent, CardMedia, Box } from '@mui/material';
-import type { CartItem } from '@/features/cart';
+import type { CartItemCardProps } from '@/features/bookings/types/booking.types';
 import CartItemHeader from './CartItemHeader';
 import CartItemInfo from './CartItemInfo';
 import CartItemAmenities from './CartItemAmenities';
 import CartItemPrice from './CartItemPrice';
-
-interface CartItemCardProps {
-  item: CartItem;
-  onRemove: (itemId: string) => void;
-}
 
 function CartItemCard({ item, onRemove }: CartItemCardProps) {
   const itemTotal = item.room.price * item.numberOfNights;
