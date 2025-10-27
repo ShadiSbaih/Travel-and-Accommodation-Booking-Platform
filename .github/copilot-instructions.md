@@ -1,0 +1,3 @@
+- i work with react typescript
+- Do not create readme file after each feature
+- always move the types and interfaces to the types files 
