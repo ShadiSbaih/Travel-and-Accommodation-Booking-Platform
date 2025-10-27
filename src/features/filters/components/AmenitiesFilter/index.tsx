@@ -121,7 +121,7 @@ const AmenitiesFilter: React.FC = () => {
         {/* Header with clear button */}
         <Box 
           sx={{ 
-            p: 3, 
+            p: 2, 
             pb: 2,
             background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.02) 100%)',
           }}
