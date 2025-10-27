@@ -2,21 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { hotelsApi } from '../api/hotels.api';
 import type { Hotel, HotelFilters } from '../types/hotel.types';
 
-// Query keys for hotels
-const hotelKeys = {
-  all: ['hotels'] as const,
-  lists: () => [...hotelKeys.all, 'list'] as const,
-  list: (filters?: HotelFilters) => [...hotelKeys.lists(), { filters }] as const,
-  details: () => [...hotelKeys.all, 'detail'] as const,
-  detail: (id: number) => [...hotelKeys.details(), id] as const,
-  gallery: (id: number) => [...hotelKeys.all, 'gallery', id] as const,
-  reviews: (id: number) => [...hotelKeys.all, 'reviews', id] as const,
-};
-
 //GET: Fetch hotels list
 export const useHotels = (filters?: HotelFilters) => {
   return useQuery({
-    queryKey: hotelKeys.list(filters),
+    queryKey: ['hotels', 'list', filters],
     queryFn: () => hotelsApi.getHotels(filters),
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
@@ -25,7 +14,7 @@ export const useHotels = (filters?: HotelFilters) => {
 //GET: Fetch single hotel
 export const useHotel = (id: number) => {
   return useQuery({
-    queryKey: hotelKeys.detail(id),
+    queryKey: ['hotels', 'detail', id],
     queryFn: () => hotelsApi.getHotelById(id),
     enabled: !!id, // Only run if id exists
   });
@@ -34,7 +23,7 @@ export const useHotel = (id: number) => {
 //GET: Fetch hotel gallery
 export const useHotelGallery = (id: number) => {
   return useQuery({
-    queryKey: hotelKeys.gallery(id),
+    queryKey: ['hotels', 'gallery', id],
     queryFn: () => hotelsApi.getHotelGallery(id),
     enabled: !!id,
   });
@@ -43,11 +32,20 @@ export const useHotelGallery = (id: number) => {
 //GET: Fetch hotel reviews
 export const useHotelReviews = (id: number) => {
   return useQuery({
-    queryKey: hotelKeys.reviews(id),
+    queryKey: ['hotels', 'reviews', id],
     queryFn: () => hotelsApi.getHotelReviews(id),
     enabled: !!id,
   });
 };
+
+//GET : Fetch available rooms for a hotel
+export const useAvailableRooms = (id: number) => {
+  return useQuery({
+    queryKey: ['availableRooms', id],
+    queryFn: () => hotelsApi.getAvailableRooms(id),
+    enabled: !!id,
+  });
+}
 
 //POST: Create hotel (Admin)
 export const useCreateHotel = () => {
@@ -57,7 +55,7 @@ export const useCreateHotel = () => {
     mutationFn: (hotelData: Omit<Hotel, 'id'>) => hotelsApi.createHotel(hotelData),
     onSuccess: () => {
       // Invalidate and refetch hotels list
-      queryClient.invalidateQueries({ queryKey: hotelKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['hotels'] });
     },
   });
 };
@@ -71,8 +69,8 @@ export const useUpdateHotel = () => {
       hotelsApi.updateHotel(id, data),
     onSuccess: (_, variables) => {
       // Invalidate specific hotel and list
-      queryClient.invalidateQueries({ queryKey: hotelKeys.detail(variables.id) });
-      queryClient.invalidateQueries({ queryKey: hotelKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['hotels', 'detail', variables.id] });
+      queryClient.invalidateQueries({ queryKey: ['hotels'] });
     },
   });
 };
@@ -85,7 +83,7 @@ export const useDeleteHotel = () => {
     mutationFn: (id: number) => hotelsApi.deleteHotel(id),
     onSuccess: () => {
       // Invalidate hotels list
-      queryClient.invalidateQueries({ queryKey: hotelKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['hotels'] });
     },
   });
 };

@@ -20,6 +20,7 @@ function HotelDetailsPage() {
   // Fetch hotel data and gallery
   const { data: hotel, isLoading: isLoadingHotel, error: hotelError } = useHotel(hotelId);
   const { data: gallery, isLoading: isLoadingGallery, error: galleryError } = useHotelGallery(hotelId);
+  
 
   // Show loading state
   if (isLoadingHotel || isLoadingGallery) {
