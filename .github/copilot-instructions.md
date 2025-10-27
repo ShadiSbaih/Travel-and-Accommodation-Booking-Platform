@@ -1,3 +1,4 @@
 - i work with react typescript
 - Do not create readme file after each feature
-- always move the types and interfaces to the types files 
+- always move the types and interfaces to the types files
+- my app works on modular frontend architecture feature based , so always create files in the respective feature folder and determine the correct feature folder
