@@ -1,50 +1,145 @@
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary } from 'react-error-boundary';
+import type { ErrorInfo } from 'react';
+import { Box, Container, Paper, Typography } from '@mui/material';
 import type { ErrorFallbackProps, AppErrorBoundaryProps } from '@/shared/types/common.types';
+import ErrorIcon from './ErrorIcon';
+import ErrorDetails from './ErrorDetails';
+import ErrorActions from './ErrorActions';
 
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+  const handleGoHome = () => {
+    window.location.href = '/';
+  };
+
   return (
-    <div role="alert" className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md w-full text-center">
-        <h2 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-4">
-          😵 Oops! Something went wrong
-        </h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
-          Sorry, an unexpected error occurred in the application:
-        </p>
-        <pre className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded border mb-6 overflow-auto text-left">
-          {error.message}
-        </pre>
-        <div className="flex gap-2 justify-center">
-          <button
-            onClick={resetErrorBoundary}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+    <Box
+      role="alert"
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: 'background.default',
+        py: 4,
+        px: 2,
+      }}
+    >
+      <Container maxWidth="md">
+        <Paper
+          elevation={3}
+          sx={{
+            p: { xs: 3, md: 5 },
+            borderRadius: 3,
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Decorative background */}
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 6,
+              background: 'linear-gradient(90deg, #f44336 0%, #e91e63 100%)',
+            }}
+          />
+
+          {/* Error Icon */}
+          <ErrorIcon />
+
+          {/* Error Title */}
+          <Typography
+            variant="h4"
+            component="h1"
+            sx={{
+              fontWeight: 700,
+              mb: 2,
+              color: 'text.primary',
+            }}
           >
-            Try Again
-          </button>
-          <button
-            onClick={() => window.location.href = '/'}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            Oops! Something Went Wrong
+          </Typography>
+
+          {/* Error Description */}
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 3, maxWidth: 500, mx: 'auto' }}
           >
-            Go to Home
-          </button>
-        </div>
-      </div>
-    </div>
+            We're sorry for the inconvenience. An unexpected error occurred while processing
+            your request. Please try refreshing the page or return to the home page.
+          </Typography>
+
+          {/* Error Details */}
+          <ErrorDetails error={error} />
+
+          {/* Action Buttons */}
+          <ErrorActions onRetry={resetErrorBoundary} onGoHome={handleGoHome} />
+
+          {/* Help Text */}
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{
+              display: 'block',
+              mt: 4,
+              fontStyle: 'italic',
+            }}
+          >
+            If this problem persists, please contact support or try again later.
+          </Typography>
+        </Paper>
+      </Container>
+    </Box>
   );
 }
 
+/**
+ * Application-wide Error Boundary
+ * Wraps the entire application to catch and handle React errors gracefully
+ */
 export function AppErrorBoundary({ children }: AppErrorBoundaryProps) {
+  const handleError = (error: Error, errorInfo: ErrorInfo) => {
+    // Log error to console in development
+    console.error('Error caught by ErrorBoundary:', {
+      error,
+      errorInfo,
+      timestamp: new Date().toISOString(),
+    });
+
+    // TODO: Send error to monitoring service (e.g., Sentry, LogRocket)
+    // Example:
+    // Sentry.captureException(error, {
+    //   contexts: {
+    //     react: {
+    //       componentStack: errorInfo.componentStack,
+    //     },
+    //   },
+    // });
+  };
+
+  const handleReset = () => {
+    // Clear any potentially corrupted state
+    try {
+      // Clear session storage if needed
+      sessionStorage.clear();
+    } catch (error) {
+      console.error('Failed to clear session storage:', error);
+    }
+
+    // Reload the page to reset the entire application state
+    window.location.reload();
+  };
+
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
-      onReset={() => {
-        // Reload the page to reset the entire application state
-        window.location.reload();
-      }}
-      onError={(error, errorInfo) => {
-        // Here you can send the error to a monitoring service like Sentry
-        console.error('Error caught by ErrorBoundary:', error, errorInfo);
-      }}
+      onReset={handleReset}
+      onError={handleError}
+      resetKeys={['user', 'location']} // Reset when these change
     >
       {children}
     </ErrorBoundary>

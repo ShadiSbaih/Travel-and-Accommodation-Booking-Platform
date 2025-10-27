@@ -1,5 +1,5 @@
 import { Card, CardMedia, CardContent, Box, Typography, Chip, Button } from '@mui/material';
-import { People, ChildCare, ShoppingCart, LocalOffer } from '@mui/icons-material';
+import { People, ChildCare, ShoppingCart, RemoveShoppingCart, LocalOffer } from '@mui/icons-material';
 import type { Room } from '../../../admin/rooms/room.types';
 import type { Amenity } from '../../types/amenities';
 
@@ -8,9 +8,10 @@ interface RoomCardProps {
   roomImage?: string;
   hotelAmenities?: Amenity[];
   onBookNow?: (roomId: number) => void;
+  isInCart?: boolean;
 }
 
-function RoomCard({ room, roomImage, hotelAmenities, onBookNow }: RoomCardProps) {
+function RoomCard({ room, roomImage, hotelAmenities, onBookNow, isInCart = false }: RoomCardProps) {
   const defaultImage = 'https://via.placeholder.com/400x220';
   const adultsCount = Math.floor(room.maxOccupancy / 2);
   const childrenCount = room.maxOccupancy % 2 || 1;
@@ -183,8 +184,9 @@ function RoomCard({ room, roomImage, hotelAmenities, onBookNow }: RoomCardProps)
           </Box>
           <Button
             variant="contained"
-            startIcon={<ShoppingCart />}
+            startIcon={isInCart ? <RemoveShoppingCart /> : <ShoppingCart />}
             onClick={handleBookNow}
+            color={isInCart ? 'error' : 'primary'}
             sx={{
               py: 1.5,
               px: { xs: 2, sm: 3 },
@@ -192,17 +194,21 @@ function RoomCard({ room, roomImage, hotelAmenities, onBookNow }: RoomCardProps)
               textTransform: 'none',
               fontSize: { xs: '0.95rem', sm: '1rem' },
               fontWeight: 700,
-              bgcolor: 'primary.main',
-              boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)',
+              bgcolor: isInCart ? 'error.main' : 'primary.main',
+              boxShadow: isInCart 
+                ? '0 4px 12px rgba(211, 47, 47, 0.3)' 
+                : '0 4px 12px rgba(25, 118, 210, 0.3)',
               '&:hover': {
-                bgcolor: 'primary.dark',
-                boxShadow: '0 6px 16px rgba(25, 118, 210, 0.4)',
+                bgcolor: isInCart ? 'error.dark' : 'primary.dark',
+                boxShadow: isInCart 
+                  ? '0 6px 16px rgba(211, 47, 47, 0.4)' 
+                  : '0 6px 16px rgba(25, 118, 210, 0.4)',
                 transform: 'translateY(-2px)'
               },
               transition: 'all 0.3s ease'
             }}
           >
-            Book Now
+            {isInCart ? 'Remove from Cart' : 'Book Now'}
           </Button>
         </Box>
       </CardContent>

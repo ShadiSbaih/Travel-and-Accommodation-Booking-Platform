@@ -4,13 +4,18 @@ import { useHotel, useHotelGallery } from '../hooks/useHotels';
 import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
 import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
-import { Container, Box } from '@mui/material';
+import { Container, Box, Snackbar, Alert } from '@mui/material';
 import { HotelGallery, HotelSidebar } from './HotelCard';
 import { RoomsList } from './RoomCard';
+import { useCart } from '@/features/cart';
+import { useState } from 'react';
 
 function HotelDetailsPage() {
   const { id } = useParams();
   const hotelId = Number(id);
+  const { addToCart, removeFromCart, isInCart } = useCart();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Fetch hotel data and gallery
   const { data: hotel, isLoading: isLoadingHotel, error: hotelError } = useHotel(hotelId);
@@ -47,8 +52,34 @@ function HotelDetailsPage() {
     })) || [];
 
   const handleRoomBooking = (roomId: number) => {
-    // TODO: Navigate to booking page or add to cart
-    console.log('Booking room:', roomId);
+    const room = hotel?.rooms?.find(r => r.id === roomId);
+    
+    if (room && hotel) {
+      const itemId = `${hotel.id}-${room.id}`;
+      
+      if (isInCart(hotel.id, room.id)) {
+        // Remove from cart
+        removeFromCart(itemId);
+        setSuccessMessage('Room removed from cart');
+        setShowSuccessMessage(true);
+      } else {
+        // Add to cart
+        addToCart({
+          room,
+          hotelId: hotel.id,
+          hotelName: hotel.name || hotel.hotelName || 'Unknown Hotel',
+          roomImage: gallery?.[0]?.url,
+          hotelAmenities: hotel.amenities,
+          numberOfNights: 1,
+        });
+        setSuccessMessage('Room added to cart successfully!');
+        setShowSuccessMessage(true);
+      }
+    }
+  };
+
+  const handleCloseSuccessMessage = () => {
+    setShowSuccessMessage(false);
   };
 
   return (
@@ -74,6 +105,7 @@ function HotelDetailsPage() {
                     hotelAmenities={hotel.amenities}
                     roomImage={gallery?.[0]?.url}
                     onRoomSelect={handleRoomBooking}
+                    cartItems={hotel.rooms.filter(room => isInCart(hotel.id, room.id)).map(r => r.id)}
                   />
                 )}
               </Box>
@@ -95,12 +127,30 @@ function HotelDetailsPage() {
                   hotelAmenities={hotel.amenities}
                   roomImage={gallery?.[0]?.url}
                   onRoomSelect={handleRoomBooking}
+                  cartItems={hotel.rooms.filter(room => isInCart(hotel.id, room.id)).map(r => r.id)}
                 />
               )}
             </Box>
           </Box>
         </Container>
       </Box>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={showSuccessMessage}
+        autoHideDuration={3000}
+        onClose={handleCloseSuccessMessage}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleCloseSuccessMessage}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

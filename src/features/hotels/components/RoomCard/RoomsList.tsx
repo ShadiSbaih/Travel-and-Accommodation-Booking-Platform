@@ -8,9 +8,10 @@ interface RoomsListProps {
   hotelAmenities?: Amenity[];
   roomImage?: string;
   onRoomSelect?: (roomId: number) => void;
+  cartItems?: number[]; // Array of room IDs that are in the cart
 }
 
-function RoomsList({ rooms, hotelAmenities, roomImage, onRoomSelect }: RoomsListProps) {
+function RoomsList({ rooms, hotelAmenities, roomImage, onRoomSelect, cartItems = [] }: RoomsListProps) {
   if (!rooms || rooms.length === 0) return null;
 
   return (
@@ -39,6 +40,7 @@ function RoomsList({ rooms, hotelAmenities, roomImage, onRoomSelect }: RoomsList
             roomImage={roomImage}
             hotelAmenities={hotelAmenities}
             onBookNow={onRoomSelect}
+            isInCart={cartItems.includes(room.id)}
           />
         ))}
       </Box>

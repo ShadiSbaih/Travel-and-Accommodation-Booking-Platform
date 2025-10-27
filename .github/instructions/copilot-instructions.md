@@ -1,0 +1,11 @@
+- i work with react typescript
+- Do not create readme file after each feature
+- always move the types and interfaces to the types files
+- my app works on modular frontend architecture feature based , so always create files in the respective feature folder and determine the correct feature folder
+-use @ for absolute imports from src folder
+-use mui components for ui design
+-always try to optimize the code and avoid redundancy
+- always use custom hooks for redux state management
+- always use custom hooks for api calls
+- always divide the components into smaller components for better readability and reusability
+-after each edit always suggest a commit message summarizing the changes

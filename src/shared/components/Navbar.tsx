@@ -12,12 +12,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import Badge from '@mui/material/Badge';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLogout } from '@/features/auth/hooks/useAuth';
 import ThemeToggle from './ThemeToggle';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import FTSLogo from '@/assets/FTS.png';
+import { CartIcon } from './CartIcon';
 
 const pages = [
     { name: 'Home', path: '/home' },
@@ -30,8 +29,6 @@ function Navbar() {
     const navigate = useNavigate();
     const logoutMutation = useLogout();
     const { fullName } = useUserInfo();
-
-    const cartItemsCount = 3; // This should come from your cart context/state
 
     const getInitials = (name: string): string => {
         const words = name.trim().split(' ').filter(Boolean);
@@ -50,7 +47,6 @@ function Navbar() {
 
     const handleCloseNavMenu = () => setAnchorElNav(null);
     const handleCloseUserMenu = () => setAnchorElUser(null);
-    const handleCartClick = () => navigate('/checkout');
     const handleLogout = () => logoutMutation.mutate();
 
     return (
@@ -189,22 +185,9 @@ function Navbar() {
 
                     {/* Cart Button */}
                     <Tooltip title="View Cart">
-                        <IconButton
-                            onClick={handleCartClick}
-                            sx={{
-                                mr: 2,
-                                color: 'white',
-                                '&:hover': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                    transform: 'scale(1.1)',
-                                    transition: 'all 0.2s ease-in-out'
-                                }
-                            }}
-                        >
-                            <Badge badgeContent={cartItemsCount} color="error">
-                                <ShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
+                        <Box sx={{ mr: 1 }}>
+                            <CartIcon />
+                        </Box>
                     </Tooltip>
 
                     {/* User Menu */}

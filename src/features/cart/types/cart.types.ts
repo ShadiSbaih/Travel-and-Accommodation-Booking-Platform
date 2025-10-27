@@ -1,0 +1,21 @@
+import type { Room } from '@/features/admin/rooms/room.types';
+import type { Amenity } from '@/features/hotels/types/amenities';
+
+export interface CartItem {
+  id: string; // Unique identifier for cart item (roomId-hotelId)
+  room: Room;
+  hotelId: number;
+  hotelName: string;
+  roomImage?: string;
+  hotelAmenities?: Amenity[];
+  checkInDate?: string;
+  checkOutDate?: string;
+  numberOfNights: number;
+  addedAt: number; // Timestamp
+}
+
+export interface CartState {
+  items: CartItem[];
+  totalItems: number;
+  totalPrice: number;
+}
