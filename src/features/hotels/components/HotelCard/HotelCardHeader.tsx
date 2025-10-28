@@ -5,10 +5,10 @@ import type { HotelCardHeaderProps } from './types';
 function HotelCardHeader({ hotelName, cityName, roomType }: HotelCardHeaderProps) {
   return (
     <>
-      <Typography 
-        variant="h6" 
+      <Typography
+        variant="h6"
         component="h3"
-        sx={{ 
+        sx={{
           fontWeight: 700,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -19,7 +19,7 @@ function HotelCardHeader({ hotelName, cityName, roomType }: HotelCardHeaderProps
       >
         {hotelName}
       </Typography>
-      
+
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <LocationOn sx={{ fontSize: 16, color: 'text.secondary', mr: 0.5 }} />
@@ -27,10 +27,10 @@ function HotelCardHeader({ hotelName, cityName, roomType }: HotelCardHeaderProps
             {cityName}
           </Typography>
         </Box>
-        <Chip 
+        <Chip
           label={roomType}
           size="small"
-          sx={{ 
+          sx={{
             fontWeight: 500,
             height: 22,
             fontSize: '0.75rem'

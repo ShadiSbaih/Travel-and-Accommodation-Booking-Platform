@@ -2,12 +2,12 @@ import { Stack, Chip } from '@mui/material';
 import { People, Hotel as HotelIcon, DateRange } from '@mui/icons-material';
 import type { BookingDetailsBadgesProps } from './types';
 
-function BookingDetailsBadges({ 
-  numberOfAdults, 
-  numberOfChildren, 
-  numberOfRooms, 
-  checkInDate, 
-  checkOutDate 
+function BookingDetailsBadges({
+  numberOfAdults,
+  numberOfChildren,
+  numberOfRooms,
+  checkInDate,
+  checkOutDate
 }: BookingDetailsBadgesProps) {
   return (
     <>

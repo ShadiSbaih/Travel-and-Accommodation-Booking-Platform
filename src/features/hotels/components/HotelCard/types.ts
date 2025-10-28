@@ -1,4 +1,4 @@
-import type { SearchResultDTO } from '@/features/hotels/types/hotel.types';
+import type { SearchResultDTO } from '@/features/hotels/types';
 
 export interface HotelCardProps {
   hotel: SearchResultDTO;

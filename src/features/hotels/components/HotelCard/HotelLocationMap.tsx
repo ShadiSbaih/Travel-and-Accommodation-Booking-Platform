@@ -1,14 +1,8 @@
 import { Paper, Box, Typography } from '@mui/material';
 import { MuiMap } from '@/shared/components/MuiMap';
+import type { HotelLocationMapProps } from '../../types';
 
-interface HotelLocationMapProps {
-  latitude: number;
-  longitude: number;
-  hotelName: string;
-  location: string;
-  height?: number;
-  zoom?: number;
-}
+
 
 function HotelLocationMap({ 
   latitude, 

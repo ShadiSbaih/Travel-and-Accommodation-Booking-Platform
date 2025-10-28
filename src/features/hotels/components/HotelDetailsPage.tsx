@@ -1,14 +1,14 @@
 import Navbar from '@/shared/components/Navbar';
 import { useParams } from 'react-router-dom';
-import { useHotel, useHotelGallery } from '../hooks/useHotels';
-import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
+import { useAvailableRooms, useHotel, useHotelGallery } from '../hooks/useHotels';
 import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import { Container, Box, Snackbar, Alert } from '@mui/material';
 import { HotelGallery, HotelSidebar } from './HotelCard';
-import { RoomsList } from './RoomCard';
+import RoomsList from './RoomCard/RoomsList';
 import { useCart } from '@/features/cart';
 import { useState } from 'react';
+import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
 
 function HotelDetailsPage() {
   const { id } = useParams();
@@ -17,13 +17,11 @@ function HotelDetailsPage() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Fetch hotel data and gallery
   const { data: hotel, isLoading: isLoadingHotel, error: hotelError } = useHotel(hotelId);
   const { data: gallery, isLoading: isLoadingGallery, error: galleryError } = useHotelGallery(hotelId);
-  
+  const { data: rooms, isLoading: isLoadingRooms } = useAvailableRooms(hotelId);
 
-  // Show loading state
-  if (isLoadingHotel || isLoadingGallery) {
+  if (isLoadingHotel || isLoadingGallery || isLoadingRooms) {
     return (
       <>
         <Navbar />
@@ -32,8 +30,7 @@ function HotelDetailsPage() {
     );
   }
 
-  // Show error state
-  if (hotelError || galleryError) {
+  if (hotelError || galleryError || !hotel) {
     return (
       <>
         <Navbar />
@@ -44,31 +41,35 @@ function HotelDetailsPage() {
     );
   }
 
-  // Transform gallery images to slider format
   const sliderImages: SliderImage[] =
     gallery?.map((img, index) => ({
       id: img.id,
       src: img.url,
-      alt: `${hotel?.name} - Image ${index + 1}`,
+      alt: `${hotel.name} - Image ${index + 1}`,
     })) || [];
 
   const handleRoomBooking = (roomId: number) => {
-    const room = hotel?.rooms?.find(r => r.id === roomId);
-    
-    if (room && hotel) {
-      const itemId = `${hotel.id}-${room.id}`;
-      
-      if (isInCart(hotel.id, room.id)) {
-        // Remove from cart
+    const room = rooms?.find((r) => r.roomId === roomId);
+
+    if (room) {
+      const itemId = `${hotel.id}-${room.roomId}`;
+
+      if (isInCart(hotel.id, room.roomId)) {
         removeFromCart(itemId);
         setSuccessMessage('Room removed from cart');
         setShowSuccessMessage(true);
       } else {
-        // Add to cart
         addToCart({
-          room,
+          room: {
+            id: room.roomId,
+            name: room.roomType,
+            type: room.roomType,
+            available: room.availability,
+            maxOccupancy: room.capacityOfAdults + room.capacityOfChildren,
+            price: room.price,
+          },
           hotelId: hotel.id,
-          hotelName: hotel.name || hotel.hotelName || 'Unknown Hotel',
+          hotelName: hotel.name,
           roomImage: gallery?.[0]?.url,
           hotelAmenities: hotel.amenities,
           numberOfNights: 1,
@@ -86,49 +87,32 @@ function HotelDetailsPage() {
   return (
     <>
       <Navbar />
-      <Box sx={{
-        minHeight: '100vh',
-        bgcolor: 'background.default',
-        pb: 6
-      }}>
+      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', pb: 6 }}>
         <Container maxWidth="xl" sx={{ mt: 3, px: { xs: 2, md: 3 } }}>
           <Box sx={{ display: 'flex', gap: 4, flexDirection: { xs: 'column', lg: 'row' } }}>
-            {/* Left Column - Picture Gallery and Rooms */}
             <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 65%' } }}>
-              {/* Picture Gallery Section */}
               <HotelGallery images={sliderImages} />
-
-              {/* Available Rooms Section - Hidden on mobile/tablet, shown on desktop */}
               <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-                {hotel?.rooms && hotel.rooms.length > 0 && (
+                {rooms && rooms.length > 0 && (
                   <RoomsList
-                    rooms={hotel.rooms}
-                    hotelAmenities={hotel.amenities}
-                    roomImage={gallery?.[0]?.url}
+                    rooms={rooms}
                     onRoomSelect={handleRoomBooking}
-                    cartItems={hotel.rooms.filter(room => isInCart(hotel.id, room.id)).map(r => r.id)}
+                    cartItems={rooms.filter((room) => isInCart(hotel.id, room.roomId)).map((r) => r.roomId)}
                   />
                 )}
               </Box>
             </Box>
 
-            {/* Right Column - Info Banner, Location Map & Amenities */}
             <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 calc(35% - 32px)' } }}>
-              {hotel && <HotelSidebar hotel={hotel} />}
+              <HotelSidebar hotel={hotel} />
             </Box>
 
-            {/* Available Rooms Section - Shown on mobile/tablet, hidden on desktop */}
-            <Box sx={{ 
-              flex: { xs: '1 1 100%' },
-              display: { xs: 'block', lg: 'none' }
-            }}>
-              {hotel?.rooms && hotel.rooms.length > 0 && (
+            <Box sx={{ flex: { xs: '1 1 100%' }, display: { xs: 'block', lg: 'none' } }}>
+              {rooms && rooms.length > 0 && (
                 <RoomsList
-                  rooms={hotel.rooms}
-                  hotelAmenities={hotel.amenities}
-                  roomImage={gallery?.[0]?.url}
+                  rooms={rooms}
                   onRoomSelect={handleRoomBooking}
-                  cartItems={hotel.rooms.filter(room => isInCart(hotel.id, room.id)).map(r => r.id)}
+                  cartItems={rooms.filter((room) => isInCart(hotel.id, room.roomId)).map((r) => r.roomId)}
                 />
               )}
             </Box>
@@ -136,7 +120,6 @@ function HotelDetailsPage() {
         </Container>
       </Box>
 
-      {/* Success Snackbar */}
       <Snackbar
         open={showSuccessMessage}
         autoHideDuration={3000}

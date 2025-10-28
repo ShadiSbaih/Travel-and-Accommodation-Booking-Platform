@@ -1,12 +1,8 @@
 import { Box, Typography, Chip } from '@mui/material';
 import { LocationOn, Star } from '@mui/icons-material';
+import type { HotelHeaderProps } from '../../types';
 
-interface HotelHeaderProps {
-  hotelName: string;
-  location?: string;
-  starRating?: number;
-  hotelType?: string;
-}
+
 
 function HotelHeader({ hotelName, location, starRating, hotelType }: HotelHeaderProps) {
   return (

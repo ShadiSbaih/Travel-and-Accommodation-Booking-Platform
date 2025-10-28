@@ -1,10 +1,8 @@
 import { Paper } from '@mui/material';
 import { MuiImageSlider } from '@/shared/components/MuiImageSlider';
-import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
+import type { HotelGalleryProps } from '../../types';
 
-interface HotelGalleryProps {
-  images: SliderImage[];
-}
+
 
 function HotelGallery({ images }: HotelGalleryProps) {
   if (images.length === 0) return null;

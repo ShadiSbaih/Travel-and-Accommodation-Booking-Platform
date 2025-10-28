@@ -9,14 +9,14 @@ function HotelCardImage({ imageUrl, hotelName, discount, starRating }: HotelCard
         component="img"
         image={imageUrl}
         alt={hotelName}
-        sx={{ 
+        sx={{
           height: 200,
           width: '100%',
           objectFit: 'cover',
           display: 'block'
         }}
       />
-      
+
       {discount > 0 && (
         <Chip
           icon={<LocalOffer />}
@@ -32,7 +32,7 @@ function HotelCardImage({ imageUrl, hotelName, discount, starRating }: HotelCard
           }}
         />
       )}
-      
+
       <Box
         sx={{
           position: 'absolute',
@@ -47,9 +47,9 @@ function HotelCardImage({ imageUrl, hotelName, discount, starRating }: HotelCard
           boxShadow: 2
         }}
       >
-        <Rating 
-          value={starRating} 
-          readOnly 
+        <Rating
+          value={starRating}
+          readOnly
           size="small"
           sx={{ color: '#FFD700' }}
         />

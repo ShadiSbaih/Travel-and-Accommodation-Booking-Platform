@@ -15,4 +15,4 @@ export {
   useDeleteHotel 
 } from './hooks/useHotels';
 
-export * from './types/hotel.types';
+export * from './types/index';

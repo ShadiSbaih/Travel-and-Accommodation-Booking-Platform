@@ -1,12 +1,8 @@
 import { Paper, Box, Typography, Chip, Tooltip } from '@mui/material';
 import { CheckCircle } from '@mui/icons-material';
-import type { Amenity } from '../../types/amenities';
+import type { AmenitiesListProps } from '../../types';
 
-interface AmenitiesListProps {
-  amenities: Amenity[];
-  layout?: 'vertical' | 'grid';
-  showTitle?: boolean;
-}
+
 
 function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
   if (!amenities || amenities.length === 0) return null;
@@ -41,7 +37,7 @@ function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
         gap: 1.5
       }}>
         {amenities.map((amenity) => (
-          <Tooltip 
+          <Tooltip
             key={amenity.id}
             title={amenity.description}
             arrow

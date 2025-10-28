@@ -2,11 +2,9 @@ import { Box } from '@mui/material';
 import HotelInfoBanner from './HotelInfoBanner';
 import HotelLocationMap from './HotelLocationMap';
 import AmenitiesList from './AmenitiesList';
-import type { Hotel } from '../../types/hotel.types';
+import type { HotelSidebarProps } from '../../types';
 
-interface HotelSidebarProps {
-  hotel: Hotel;
-}
+
 
 function HotelSidebar({ hotel }: HotelSidebarProps) {
   return (

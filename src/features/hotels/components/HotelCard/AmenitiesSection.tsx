@@ -8,9 +8,9 @@ function AmenitiesSection({ amenities, maxDisplay = 2 }: AmenitiesSectionProps) 
 
   return (
     <Box sx={{ mb: 1.5 }}>
-      <Typography 
-        variant="caption" 
-        sx={{ 
+      <Typography
+        variant="caption"
+        sx={{
           fontWeight: 600,
           color: 'text.secondary',
           textTransform: 'uppercase',
@@ -29,7 +29,7 @@ function AmenitiesSection({ amenities, maxDisplay = 2 }: AmenitiesSectionProps) 
             label={amenity.name}
             size="small"
             variant="outlined"
-            sx={{ 
+            sx={{
               fontSize: '0.7rem',
               height: 22
             }}
@@ -40,7 +40,7 @@ function AmenitiesSection({ amenities, maxDisplay = 2 }: AmenitiesSectionProps) 
             label={`+${amenities.length - maxDisplay}`}
             size="small"
             variant="filled"
-            sx={{ 
+            sx={{
               fontSize: '0.7rem',
               height: 22,
               backgroundColor: 'action.hover'

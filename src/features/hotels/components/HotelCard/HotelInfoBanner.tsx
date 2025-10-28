@@ -1,12 +1,8 @@
 import { Paper, Box, Typography, Chip } from '@mui/material';
 import { LocationOn, Star } from '@mui/icons-material';
+import type { HotelInfoBannerProps } from '../../types';
 
-interface HotelInfoBannerProps {
-  location: string;
-  starRating?: number;
-  hotelType?: string;
-  description: string;
-}
+
 
 function HotelInfoBanner({ location, starRating, hotelType, description }: HotelInfoBannerProps) {
   return (
