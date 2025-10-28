@@ -9,7 +9,7 @@ import AmenitiesFilter from '@/features/filters/components/AmenitiesFilter';
 import FilterStatistics from '@/features/filters/components/FilterStatistics';
 import { useAppSelector } from '@/core/store/hooks';
 import searchApi from '../api/search.api';
-import type { SearchResultDTO } from '@/features/hotels/types/hotel.types';
+import type { SearchResultDTO } from '@/features/hotels/types';
 import { Typography } from '@mui/material';
 
 // Main Search Results Page component using Redux

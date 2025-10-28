@@ -12,7 +12,7 @@ import {
 import { Clear, Hotel, ErrorOutline } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import amenitiesApi from '@/core/api/amenities.api';
-import type { Amenity } from '@/features/hotels/types/amenities';
+import type { Amenity } from '@/features/hotels/types';
 import { useAppSelector, useAppDispatch } from '@/core/store/hooks';
 import { clearFilters } from '@/features/filters/store/filterSlice';
 import FilterModeSwitch from '../FilterModeSwitch';
