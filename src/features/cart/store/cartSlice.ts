@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { CartState, CartItem } from '../types/cart.types';
-import type { Room } from '@/features/admin/rooms/room.types';
-import type { Amenity } from '@/features/hotels/types/amenities';
+import type { CartState, CartItem, AddToCartPayload } from '../types/cart.types';
 
 // Load cart from localStorage
 const loadCartFromStorage = (): CartState => {
@@ -42,16 +40,7 @@ const calculateTotals = (items: CartItem[]) => {
 
 const initialState: CartState = loadCartFromStorage();
 
-export interface AddToCartPayload {
-  room: Room;
-  hotelId: number;
-  hotelName: string;
-  roomImage?: string;
-  hotelAmenities?: Amenity[];
-  checkInDate?: string;
-  checkOutDate?: string;
-  numberOfNights?: number;
-}
+
 
 const cartSlice = createSlice({
   name: 'cart',
