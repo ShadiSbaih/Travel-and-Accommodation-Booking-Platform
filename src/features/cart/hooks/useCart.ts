@@ -5,7 +5,7 @@ import {
   clearCart as clearCartAction,
   updateCartItemDates as updateCartItemDatesAction,
 } from '../store/cartSlice';
-import type { AddToCartPayload } from '../types/cart.types';
+import type { AddToCartPayload } from '../types';
 
 export const useCart = () => {
   const dispatch = useAppDispatch();
