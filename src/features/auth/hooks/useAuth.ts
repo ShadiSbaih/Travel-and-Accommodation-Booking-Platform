@@ -1,24 +1,39 @@
-import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import api from '@/core/api/axios';
-import type { LoginCredentials, AuthResponse } from '../types/auth.types';
+// src/features/auth/hooks/useAuth.ts
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { loginRequest } from "../api/auth.api";
+import type { LoginCredentials, AuthResponse } from "../types";
+
+const AUTH_TOKEN_KEY = "token";
+const AUTH_USER_KEY = "user";
+
+const persistAuth = (data: AuthResponse) => {
+  localStorage.setItem(AUTH_TOKEN_KEY, data.authentication);
+  localStorage.setItem(
+    AUTH_USER_KEY,
+    JSON.stringify({ role: data.userType.toLowerCase() })
+  );
+};
+
+const clearAuth = () => {
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+  localStorage.removeItem(AUTH_USER_KEY);
+};
 
 export const useLogin = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-      const { data } = await api.post('/auth/authenticate', credentials);
-      return data;
-    },
+    mutationFn: (credentials: LoginCredentials) => loginRequest(credentials),
     onSuccess: (data) => {
-      localStorage.setItem('token', data.authentication);
-      localStorage.setItem('user', JSON.stringify({ role: data.userType.toLowerCase() }));
+      // 1) save
+      persistAuth(data);
 
-      if (data.userType === 'Admin') {
-        navigate('/admin/hotels');
+      // 2) route by role
+      if (data.userType === "Admin") {
+        navigate("/admin/hotels");
       } else {
-        navigate('/home');
+        navigate("/home");
       }
     },
   });
@@ -29,12 +44,10 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: async () => {
-      // Call logout endpoint if you have one
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      clearAuth();
     },
     onSuccess: () => {
-      navigate('/login');
+      navigate("/login");
     },
   });
 };

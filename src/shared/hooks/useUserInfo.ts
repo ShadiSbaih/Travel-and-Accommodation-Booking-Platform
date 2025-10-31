@@ -1,5 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
-import type { TokenPayload } from '@/features/auth/types/auth.types';
+import type { TokenPayload } from '@/features/auth/types';
 
 export function useUserInfo() {
 
