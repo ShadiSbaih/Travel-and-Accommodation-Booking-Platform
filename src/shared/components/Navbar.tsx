@@ -50,7 +50,7 @@ function Navbar() {
     const handleLogout = () => logoutMutation.mutate();
 
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* Desktop Logo */}
