@@ -189,6 +189,7 @@ function SearchBar() {
                 htmlInput: {
                   'aria-label': 'Enter destination',
                   'aria-required': 'true',
+                  'autoComplete': 'off',
                 },
                 input: {
                   startAdornment: (
