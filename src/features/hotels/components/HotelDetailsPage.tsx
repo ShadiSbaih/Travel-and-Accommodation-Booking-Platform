@@ -70,8 +70,8 @@ function HotelDetailsPage() {
           },
           hotelId: hotel.id,
           hotelName: hotel.name,
-          roomImage: gallery?.[0]?.url,
-          hotelAmenities: hotel.amenities,
+          roomImage: room.roomPhotoUrl,
+          hotelAmenities: room.roomAmenities,
           numberOfNights: 1,
         });
         setSuccessMessage('Room added to cart successfully!');
