@@ -2,7 +2,7 @@ import { Box, Container } from '@mui/material';
 import { LocalOffer as OfferIcon } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import homePageApi from '../api/home-page.api';
-import type { FeaturedDealDto } from '../types/home.types';
+import type { FeaturedDealDto } from '../types';
 import FeaturedDealCard from './FeaturedDealCard';
 import SectionHeader from './SectionHeader';
 import LoadingState from '@/shared/components/LoadingState';

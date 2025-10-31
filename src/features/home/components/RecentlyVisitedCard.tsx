@@ -15,7 +15,7 @@ import {
   AttachMoney as MoneyIcon,
 } from '@mui/icons-material';
 import { format } from 'date-fns';
-import type { RecentlyVisitedCardProps } from '../types/home.types';
+import type { RecentlyVisitedCardProps } from '../types';
 
 function RecentlyVisitedCard({ hotel }: RecentlyVisitedCardProps) {
   const navigate = useNavigate();

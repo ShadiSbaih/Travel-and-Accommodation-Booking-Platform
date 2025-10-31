@@ -12,4 +12,4 @@ export { default as TrendingDestinationCard } from './components/TrendingDestina
 export { default as RecentlyVisitedCard } from './components/RecentlyVisitedCard';
 export { default as SectionHeader } from './components/SectionHeader';
 
-export type * from './types/home.types';
+export type * from './types';

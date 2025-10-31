@@ -1,7 +1,7 @@
 import { Box, Container, Typography, Paper } from '@mui/material';
 import { TravelExplore as TravelIcon } from '@mui/icons-material';
 import SearchBar from '@/features/search/components/SearchBar';
-import type { HeroSectionProps } from '../types/home.types';
+import type { HeroSectionProps } from '../types';
 
 function HeroSection({ userName }: HeroSectionProps) {
   return (

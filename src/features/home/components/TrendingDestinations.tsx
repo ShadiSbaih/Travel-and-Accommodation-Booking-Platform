@@ -2,7 +2,7 @@ import { Box, Container } from '@mui/material';
 import { TrendingUp as TrendingIcon } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import homePageApi from '../api/home-page.api';
-import type { TrendingDestinationDto } from '../types/home.types';
+import type { TrendingDestinationDto } from '../types';
 import TrendingDestinationCard from './TrendingDestinationCard';
 import SectionHeader from './SectionHeader';
 import LoadingState from '@/shared/components/LoadingState';

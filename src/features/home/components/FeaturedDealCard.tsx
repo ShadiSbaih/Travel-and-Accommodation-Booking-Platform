@@ -15,7 +15,7 @@ import {
   LocalOffer as OfferIcon,
   ArrowForward as ArrowIcon,
 } from '@mui/icons-material';
-import type { FeaturedDealCardProps } from '../types/home.types';
+import type { FeaturedDealCardProps } from '../types';
 
 function FeaturedDealCard({ deal }: FeaturedDealCardProps) {
   const navigate = useNavigate();

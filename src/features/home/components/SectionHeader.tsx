@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import type { SectionHeaderProps } from '../types/home.types';
+import type { SectionHeaderProps } from '../types';
 
 function SectionHeader({ title, subtitle, icon }: SectionHeaderProps) {
   return (

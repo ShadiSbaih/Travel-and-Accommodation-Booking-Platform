@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { hotelsApi } from '../api/hotels.api';
-import type { Hotel, HotelFilters } from '../types/hotel.types';
+import type { Hotel, HotelFilters } from '../types';
 
 //GET: Fetch hotels list
 export const useHotels = (filters?: HotelFilters) => {

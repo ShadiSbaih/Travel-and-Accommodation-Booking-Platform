@@ -9,7 +9,7 @@ import {
   Box,
 } from '@mui/material';
 import { LocationOn as LocationIcon } from '@mui/icons-material';
-import type { TrendingDestinationCardProps } from '../types/home.types';
+import type { TrendingDestinationCardProps } from '../types';
 
 function TrendingDestinationCard({ destination }: TrendingDestinationCardProps) {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { History as HistoryIcon } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import homePageApi from '../api/home-page.api';
-import type { RecentlyVisitedHotelDto } from '../types/home.types';
+import type { RecentlyVisitedHotelDto } from '../types';
 import RecentlyVisitedCard from './RecentlyVisitedCard';
 import SectionHeader from './SectionHeader';
 import LoadingState from '@/shared/components/LoadingState';
