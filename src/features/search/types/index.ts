@@ -8,8 +8,8 @@ export interface SearchFormData {
 }
 
 export interface SearchResultsSectionProps {
-  data?: import('@/features/hotels/types/hotel.types').SearchResultDTO[];
-  rawData?: import('@/features/hotels/types/hotel.types').SearchResultDTO[];
+  data?: import('@/features/hotels/types').SearchResultDTO[];
+  rawData?: import('@/features/hotels/types').SearchResultDTO[];
   isLoading: boolean;
   error: unknown;
   hasActiveFilters: boolean;

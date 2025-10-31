@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import type { OrderSummaryRowProps } from '@/features/bookings/types/booking.types';
+import type { OrderSummaryRowProps } from '@/features/bookings/types';
 
 function OrderSummaryRow({ label, value, highlight = false }: OrderSummaryRowProps) {
   return (

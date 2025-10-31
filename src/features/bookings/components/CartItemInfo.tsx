@@ -1,6 +1,6 @@
 import { Box, Chip } from '@mui/material';
 import { LocalOffer } from '@mui/icons-material';
-import type { CartItemInfoProps } from '@/features/bookings/types/booking.types';
+import type { CartItemInfoProps } from '@/features/bookings/types';
 
 function CartItemInfo({
   maxOccupancy,

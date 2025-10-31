@@ -1,6 +1,6 @@
 import { Box, Typography, IconButton } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-import type { CartItemHeaderProps } from '@/features/bookings/types/booking.types';
+import type { CartItemHeaderProps } from '@/features/bookings/types';
 
 function CartItemHeader({ roomName, hotelName, onRemove }: CartItemHeaderProps) {
   return (

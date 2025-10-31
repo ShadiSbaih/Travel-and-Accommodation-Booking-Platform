@@ -23,7 +23,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
-import type { SearchFormData } from '../types/search.types';
+import type { SearchFormData } from '../types';
 
 function SearchBar() {
   const navigate = useNavigate();

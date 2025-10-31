@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Box } from '@mui/material';
-import type { CartItemCardProps } from '@/features/bookings/types/booking.types';
+import type { CartItemCardProps } from '@/features/bookings/types';
 import CartItemHeader from './CartItemHeader';
 import CartItemInfo from './CartItemInfo';
 import CartItemAmenities from './CartItemAmenities';

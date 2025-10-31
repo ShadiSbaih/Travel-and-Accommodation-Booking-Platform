@@ -1,5 +1,5 @@
 import { Box, Typography, Chip } from '@mui/material';
-import type { CartItemAmenitiesProps } from '@/features/bookings/types/booking.types';
+import type { CartItemAmenitiesProps } from '@/features/bookings/types';
 
 function CartItemAmenities({ amenities, maxDisplay = 4 }: CartItemAmenitiesProps) {
   if (!amenities || amenities.length === 0) return null;

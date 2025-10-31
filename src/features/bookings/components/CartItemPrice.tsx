@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import type { CartItemPriceProps } from '@/features/bookings/types/booking.types';
+import type { CartItemPriceProps } from '@/features/bookings/types';
 
 function CartItemPrice({
   pricePerNight,

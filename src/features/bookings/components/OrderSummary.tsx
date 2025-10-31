@@ -1,5 +1,5 @@
 import { Paper, Box, Typography, Button, Divider } from '@mui/material';
-import type { OrderSummaryProps } from '@/features/bookings/types/booking.types';
+import type { OrderSummaryProps } from '@/features/bookings/types';
 import OrderSummaryRow from './OrderSummaryRow';
 
 function OrderSummary({

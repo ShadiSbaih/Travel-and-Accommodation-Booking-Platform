@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import type { CartItemsListProps } from '@/features/bookings/types/booking.types';
+import type { CartItemsListProps } from '@/features/bookings/types';
 import CartItemCard from './CartItemCard';
 
 function CartItemsList({ items, onRemoveItem }: CartItemsListProps) {

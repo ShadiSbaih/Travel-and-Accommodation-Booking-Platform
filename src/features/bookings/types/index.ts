@@ -1,5 +1,5 @@
 import type { CartItem } from '@/features/cart';
-import type { Amenity } from '@/features/hotels/types/amenities';
+import type { Amenity } from '@/features/hotels/types';
 
 // Cart Item Component Props
 export interface CartItemCardProps {

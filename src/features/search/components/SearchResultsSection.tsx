@@ -4,7 +4,7 @@ import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Box, Typography, Badge } from '@mui/material';
-import type { SearchResultsSectionProps } from '../types/search.types';
+import type { SearchResultsSectionProps } from '../types';
 
 function SearchResultsSection({ 
   data, 
