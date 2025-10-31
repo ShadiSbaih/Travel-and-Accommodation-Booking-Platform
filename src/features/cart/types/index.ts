@@ -11,7 +11,6 @@ export interface CartItem {
   checkInDate?: string;
   checkOutDate?: string;
   numberOfNights: number;
-  addedAt: number; // Timestamp
 }
 
 export interface CartState {

@@ -76,7 +76,6 @@ const cartSlice = createSlice({
           checkInDate,
           checkOutDate,
           numberOfNights,
-          addedAt: Date.now(),
         };
         state.items.push(newItem);
 
