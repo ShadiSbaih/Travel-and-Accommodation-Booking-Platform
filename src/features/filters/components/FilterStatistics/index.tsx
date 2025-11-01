@@ -41,7 +41,7 @@ const FilterStatistics: React.FC<FilterStatisticsProps> = ({
       >
         <Box>
           <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
-            <Hotel sx={{ fontSize: 18, color: 'info.main' }} />
+            <Hotel sx={{ fontSize: 18, color: 'white' }} />
             <Typography variant="body2" component="span" fontWeight={600}>
               Found <Box component="span" fontWeight="bold">{filteredCount}</Box> hotel
               {filteredCount !== 1 ? 's' : ''} out of{' '}
@@ -50,9 +50,9 @@ const FilterStatistics: React.FC<FilterStatisticsProps> = ({
             
             {selectedAmenities.length > 1 && (
               <Typography variant="body2" component="span">
-                with <Box component="span" fontWeight="bold" color="primary.main">
+                with <Box component="span" fontWeight="bold" color="white">
                   {filterMode === 'any' ? 'any' : 'all'}
-                </Box> of the selected amenities
+                </Box > of the selected amenities
               </Typography>
             )}
             
