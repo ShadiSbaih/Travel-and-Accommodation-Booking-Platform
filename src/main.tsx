@@ -9,6 +9,7 @@ import { queryClient } from '@/core/api/queryClient'
 import {AppErrorBoundary} from '@/shared/components/ErrorBoundary'
 import { store } from '@/core/store'
 import { Provider } from 'react-redux';
+import GlobalSnackbar from '@/shared/components/GlobalSnackbar';
 
 
 
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
           <ThemeProvider>
             <BrowserRouter>
               <AppRoutes />
+              <GlobalSnackbar />
             </BrowserRouter>
           </ThemeProvider>
         </QueryClientProvider>

@@ -3,19 +3,18 @@ import { useParams } from 'react-router-dom';
 import { useAvailableRooms, useHotel, useHotelGallery } from '../hooks/useHotels';
 import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
-import { Container, Box, Snackbar, Alert } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { HotelGallery, HotelSidebar } from './HotelCard';
 import RoomsList from './RoomCard/RoomsList';
 import { useCart } from '@/features/cart';
-import { useState } from 'react';
+import { useNotification } from '@/shared/hooks/useNotification';
 import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
 
 function HotelDetailsPage() {
   const { id } = useParams();
   const hotelId = Number(id);
   const { addToCart, removeFromCart, isInCart } = useCart();
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const { notify } = useNotification();
 
   const { data: hotel, isLoading: isLoadingHotel, error: hotelError } = useHotel(hotelId);
   const { data: gallery, isLoading: isLoadingGallery, error: galleryError } = useHotelGallery(hotelId);
@@ -56,8 +55,7 @@ function HotelDetailsPage() {
 
       if (isInCart(hotel.id, room.roomId)) {
         removeFromCart(itemId);
-        setSuccessMessage('Room removed from cart');
-        setShowSuccessMessage(true);
+        notify('Room removed from cart', 'info');
       } else {
         addToCart({
           room: {
@@ -74,14 +72,9 @@ function HotelDetailsPage() {
           hotelAmenities: room.roomAmenities,
           numberOfNights: 1,
         });
-        setSuccessMessage('Room added to cart successfully!');
-        setShowSuccessMessage(true);
+        notify('Room added to cart successfully!', 'success');
       }
     }
-  };
-
-  const handleCloseSuccessMessage = () => {
-    setShowSuccessMessage(false);
   };
 
   return (
@@ -119,22 +112,6 @@ function HotelDetailsPage() {
           </Box>
         </Container>
       </Box>
-
-      <Snackbar
-        open={showSuccessMessage}
-        autoHideDuration={3000}
-        onClose={handleCloseSuccessMessage}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
-          onClose={handleCloseSuccessMessage}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {successMessage}
-        </Alert>
-      </Snackbar>
     </>
   );
 }
