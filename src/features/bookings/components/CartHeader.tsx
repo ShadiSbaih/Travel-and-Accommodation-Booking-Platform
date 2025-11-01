@@ -27,7 +27,7 @@ function CartHeader({ totalItems, onClearCart }: CartHeaderProps) {
         <Typography variant="h6" sx={{ fontWeight: 600 }}>
           Cart Items
         </Typography>
-        <Button variant="text" color="error" onClick={onClearCart} size="small">
+        <Button variant="outlined" color="error" onClick={onClearCart} size="small">
           Clear Cart
         </Button>
       </Box>

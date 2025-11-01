@@ -10,3 +10,6 @@ export { default as CartItemPrice } from './CartItemPrice';
 export { default as OrderSummary } from './OrderSummary';
 export { default as OrderSummaryRow } from './OrderSummaryRow';
 export { default as EmptyCartState } from './EmptyCartState';
+
+// Skeletons
+export * from './skeletons';
