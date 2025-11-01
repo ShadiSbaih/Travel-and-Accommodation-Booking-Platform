@@ -71,7 +71,7 @@ const HeroSection = () => {
               color: 'white',
             }}
           >
-            Feel at Home, Anywhere
+            Feel at Home Anywhere
           </Typography>
           
           <Typography
