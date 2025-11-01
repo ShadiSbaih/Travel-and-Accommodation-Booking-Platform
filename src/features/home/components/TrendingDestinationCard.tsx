@@ -117,7 +117,7 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
               variant="subtitle2"
               sx={{
                 fontWeight: 600,
-                color: 'text.primary',
+                color: '#000',
               }}
             >
               {destination.countryName || 'Country'}
