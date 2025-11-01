@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Container } from '@mui/material';
 import { History as HistoryIcon } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
@@ -11,7 +10,7 @@ import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
 import { RecentlyVisitedSkeleton } from './skeletons';
 
-const RecentlyVisitedHotels = React.memo(() => {
+function RecentlyVisitedHotels() {
   const { userId } = useUserInfo();
 
   const {
@@ -84,8 +83,6 @@ const RecentlyVisitedHotels = React.memo(() => {
       </Container>
     </Box>
   );
-});
-
-RecentlyVisitedHotels.displayName = 'RecentlyVisitedHotels';
+}
 
 export default RecentlyVisitedHotels;

@@ -90,6 +90,7 @@ function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
           <Button
             type="submit"
             variant="contained"
+            color="success"
             fullWidth
             size="large"
             disabled={isLoading || !customerName.trim()}
