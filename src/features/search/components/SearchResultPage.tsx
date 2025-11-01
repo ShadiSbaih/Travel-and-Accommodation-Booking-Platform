@@ -10,92 +10,111 @@ import FilterStatistics from '@/features/filters/components/FilterStatistics';
 import { useAppSelector } from '@/core/store/hooks';
 import searchApi from '../api/search.api';
 import type { SearchResultDTO } from '@/features/hotels/types';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+
+// Memoized filter function to prevent recreation on every render
+const filterHotelsByAmenities = (
+  hotels: SearchResultDTO[],
+  selectedAmenities: string[],
+  filterMode: 'any' | 'all'
+): SearchResultDTO[] => {
+  if (!selectedAmenities.length) return hotels;
+
+  return hotels.filter((hotel) => {
+    const names = hotel.amenities?.map((a) => a.name?.toLowerCase().trim()) || [];
+    
+    if (filterMode === 'any') {
+      return selectedAmenities.some((a) =>
+        names.some((n) => n?.includes(a.toLowerCase()))
+      );
+    }
+    
+    return selectedAmenities.every((a) =>
+      names.some((n) => n?.includes(a.toLowerCase()))
+    );
+  });
+};
 
 // Main Search Results Page component using Redux
 const SearchResultPage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const query = searchParams.get('query') || '';
-  const adults = Number(searchParams.get('adults')) || 2;
-  const children = Number(searchParams.get('children')) || 0;
-  const rooms = Number(searchParams.get('rooms')) || 1;
+  
+  // Memoize search parameters to prevent unnecessary re-renders
+  const searchConfig = useMemo(() => ({
+    query: searchParams.get('query') || '',
+    adults: Number(searchParams.get('adults')) || 2,
+    children: Number(searchParams.get('children')) || 0,
+    rooms: Number(searchParams.get('rooms')) || 1,
+  }), [searchParams]);
 
   // Get filter state from Redux store
   const { selectedAmenities, filterMode } = useAppSelector((state) => state.filters);
 
   const { data: rawHotels, isLoading, error } = useQuery<SearchResultDTO[]>({
-    queryKey: ['searchResults', query, adults, children, rooms],
+    queryKey: ['searchResults', searchConfig.query, searchConfig.adults, searchConfig.children, searchConfig.rooms],
     queryFn: () =>
-      searchApi.searchHotels({ city: query, adults, children, numberOfRooms: rooms }),
-    enabled: !!query,
+      searchApi.searchHotels({ 
+        city: searchConfig.query, 
+        adults: searchConfig.adults, 
+        children: searchConfig.children, 
+        numberOfRooms: searchConfig.rooms 
+      }),
+    enabled: !!searchConfig.query,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
   // Memoized filtering logic based on Redux state
   const filteredHotels = useMemo(() => {
     if (!rawHotels?.length) return [];
-    if (!selectedAmenities.length) return rawHotels;
-
-    return rawHotels.filter((hotel) => {
-      const names = hotel.amenities?.map((a) => a.name?.toLowerCase().trim()) || [];
-      
-      // 'any' mode: hotel must have at least one of the selected amenities
-      if (filterMode === 'any') {
-        return selectedAmenities.some((a) =>
-          names.some((n) => n?.includes(a.toLowerCase()))
-        );
-      }
-      
-      // 'all' mode: hotel must have all of the selected amenities
-      return selectedAmenities.every((a) =>
-        names.some((n) => n?.includes(a.toLowerCase()))
-      );
-    });
+    return filterHotelsByAmenities(rawHotels, selectedAmenities, filterMode);
   }, [rawHotels, selectedAmenities, filterMode]);
 
   return (
     <>
       <Navbar />
-      <Typography
-        variant="h3"
-        component="h1"
-        sx={{
-          fontWeight: 700,
-          color: 'text.primary',
-          my: 2,
-          textAlign: 'center',
-          letterSpacing: '-0.02em'
-        }}
-      >
-        Discover Your Perfect Stay
-      </Typography>
-      <SearchBar />
+      <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+        <Box sx={{ py: 2 }}>
+          <Typography
+            variant="h3"
+            component="h1"
+            sx={{
+              fontWeight: 700,
+              color: 'text.primary',
+              textAlign: 'center',
+              letterSpacing: '-0.02em',
+              mb: 2
+            }}
+          >
+            Discover Your Perfect Stay
+          </Typography>
+          <SearchBar />
+        </Box>
 
-      <div className="container mx-auto px-4 py-6">
+        <Box component="main" sx={{ px: { xs: 2, md: 4 }, pb: 6 }}>
+          <FilterStatistics
+            filteredCount={filteredHotels.length}
+            totalCount={rawHotels?.length || 0}
+          />
 
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 3, mt: 3 }}>
+            <Box sx={{ width: { xs: '100%', lg: 320 }, flexShrink: 0 }}>
+              <Box sx={{ position: { lg: 'sticky' }, top: { lg: 24 } }}>
+                <AmenitiesFilter />
+              </Box>
+            </Box>
 
-        <FilterStatistics
-          filteredCount={filteredHotels.length}
-          totalCount={rawHotels?.length || 0}
-        />
-
-        <div className="flex flex-col lg:flex-row gap-6">
-          <div className="lg:w-80 flex-shrink-0">
-            <div className="sticky top-6">
-              <AmenitiesFilter />
-            </div>
-          </div>
-
-          <div className="flex-1">
-            <SearchResultsSection
-              data={filteredHotels}
-              rawData={rawHotels}
-              isLoading={isLoading}
-              error={error}
-              hasActiveFilters={!!selectedAmenities.length}
-            />
-          </div>
-        </div>
-      </div>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <SearchResultsSection
+                data={filteredHotels}
+                rawData={rawHotels}
+                isLoading={isLoading}
+                error={error}
+                hasActiveFilters={!!selectedAmenities.length}
+              />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 };

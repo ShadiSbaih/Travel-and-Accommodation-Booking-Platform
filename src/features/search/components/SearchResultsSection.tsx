@@ -1,12 +1,13 @@
+import { memo } from 'react';
 import HotelCard from '@/features/hotels/components/HotelCard';
-import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { Box, Typography, Badge } from '@mui/material';
 import type { SearchResultsSectionProps } from '../types';
+import { SearchResultsSkeleton } from './skeletons';
 
-function SearchResultsSection({ 
+const SearchResultsSection = memo(function SearchResultsSection({ 
   data, 
   rawData,
   isLoading, 
@@ -14,7 +15,7 @@ function SearchResultsSection({
   hasActiveFilters 
 }: SearchResultsSectionProps) {
   if (isLoading) {
-    return <LoadingState message="Loading results..." />;
+    return <SearchResultsSkeleton count={6} />;
   }
 
   if (error) {
@@ -79,6 +80,6 @@ function SearchResultsSection({
       </Box>
     </Box>
   );
-}
+});
 
 export default SearchResultsSection;

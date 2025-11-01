@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Card, CardContent, Box, Button, Divider } from '@mui/material';
 import type { HotelCardProps } from './types';
@@ -7,7 +8,7 @@ import BookingDetailsBadges from './BookingDetailsBadges';
 import AmenitiesSection from './AmenitiesSection';
 import PriceDisplay from './PriceDisplay';
 
-function HotelCard({ hotel }: HotelCardProps) {
+const HotelCard = memo(function HotelCard({ hotel }: HotelCardProps) {
 
   return (
     <Card 
@@ -77,6 +78,6 @@ function HotelCard({ hotel }: HotelCardProps) {
       </CardContent>
     </Card>
   );
-}
+});
 
 export default HotelCard;
