@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Box, Skeleton } from '@mui/material';
 import type { OptimizedImageProps } from './types';
 import { DEFAULT_FALLBACK_IMAGE } from '@/shared/constants/image.constants';
@@ -20,12 +20,29 @@ function OptimizedImage({
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageSrc, setImageSrc] = useState(src);
     const [hasError, setHasError] = useState(false);
+    const imgRef = useRef<HTMLImageElement>(null);
 
     // Reset state when src changes
     useEffect(() => {
         setImageSrc(src);
-        setImageLoaded(false);
         setHasError(false);
+        
+        // Check if image is already cached/loaded immediately
+        const checkImageLoaded = () => {
+            if (imgRef.current?.complete && imgRef.current?.naturalHeight !== 0) {
+                setImageLoaded(true);
+            } else {
+                setImageLoaded(false);
+            }
+        };
+        
+        // Check immediately
+        checkImageLoaded();
+        
+        // Also check after a small delay to catch async-loaded cached images
+        const timeoutId = setTimeout(checkImageLoaded, 0);
+        
+        return () => clearTimeout(timeoutId);
     }, [src]);
 
     // Preload priority images
@@ -80,6 +97,7 @@ function OptimizedImage({
             {/* Actual image */}
             <Box
                 component="img"
+                ref={imgRef}
                 src={imageSrc}
                 alt={alt}
                 width={width}
