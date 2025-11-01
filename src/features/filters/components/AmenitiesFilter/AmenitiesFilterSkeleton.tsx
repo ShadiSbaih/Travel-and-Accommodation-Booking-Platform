@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import { Card, CardContent, Box, Skeleton } from '@mui/material';
 
-const AmenitiesFilterSkeleton = () => {
+const AmenitiesFilterSkeleton = memo(() => {
   return (
     <Card
       elevation={0}
@@ -54,6 +55,8 @@ const AmenitiesFilterSkeleton = () => {
       </CardContent>
     </Card>
   );
-};
+});
+
+AmenitiesFilterSkeleton.displayName = 'AmenitiesFilterSkeleton';
 
 export default AmenitiesFilterSkeleton;

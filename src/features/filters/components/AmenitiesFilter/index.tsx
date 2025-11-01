@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Card,
   CardContent,
   Typography,
   Button,
   Box,
-  Alert,
   Divider,
 } from '@mui/material';
-import { Clear, Hotel, ErrorOutline } from '@mui/icons-material';
+import { Clear, Hotel } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import amenitiesApi from '@/core/api/amenities.api';
 import type { Amenity } from '@/features/hotels/types';
@@ -17,17 +16,33 @@ import { clearFilters } from '@/features/filters/store/filterSlice';
 import FilterModeSwitch from '../FilterModeSwitch';
 import AmenitiesList from '../AmenitiesList';
 import AmenitiesFilterSkeleton from './AmenitiesFilterSkeleton';
+import AmenitiesFilterError from './AmenitiesFilterError';
+import AmenitiesFilterEmpty from './AmenitiesFilterEmpty';
 
 
 const AmenitiesFilter: React.FC = () => {
   const selectedAmenities = useAppSelector((state) => state.filters.selectedAmenities);
   const dispatch = useAppDispatch();
 
-  // Fetch amenities from API
+  // Fetch amenities from API with longer staleTime for better caching
   const { data: amenities, isLoading, error } = useQuery<Amenity[]>({
     queryKey: ['amenities'],
     queryFn: amenitiesApi.getAmenities,
+    staleTime: 10 * 60 * 1000, // 10 minutes - amenities don't change frequently
+    gcTime: 15 * 60 * 1000, // 15 minutes garbage collection
   });
+
+  // Memoize clear filter handler
+  const handleClearFilters = useMemo(
+    () => () => dispatch(clearFilters()),
+    [dispatch]
+  );
+
+  // Memoize has selected amenities check
+  const hasSelectedAmenities = useMemo(
+    () => selectedAmenities.length > 0,
+    [selectedAmenities.length]
+  );
 
   // Loading state
   if (isLoading) {
@@ -36,45 +51,12 @@ const AmenitiesFilter: React.FC = () => {
 
   // Error state
   if (error) {
-    return (
-      <Card elevation={1} sx={{ overflow: 'hidden' }}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-            <Hotel sx={{ mr: 1, color: 'primary.main' }} />
-            <Typography variant="h6" fontWeight={600}>
-              Amenities
-            </Typography>
-          </Box>
-
-          <Alert severity="error" icon={<ErrorOutline />}>
-            <Typography variant="body2">Failed to load amenities</Typography>
-            <Typography variant="caption" color="text.secondary">
-              Please try refreshing the page
-            </Typography>
-          </Alert>
-        </CardContent>
-      </Card>
-    );
+    return <AmenitiesFilterError />;
   }
 
   // No amenities state
   if (!amenities?.length) {
-    return (
-      <Card elevation={1} sx={{ overflow: 'hidden' }}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-            <Hotel sx={{ mr: 1, color: 'primary.main' }} />
-            <Typography variant="h6" fontWeight={600}>
-              Amenities
-            </Typography>
-          </Box>
-
-          <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ py: 4 }}>
-            No amenities available
-          </Typography>
-        </CardContent>
-      </Card>
-    );
+    return <AmenitiesFilterEmpty />;
   }
 
   // Main render
@@ -126,10 +108,10 @@ const AmenitiesFilter: React.FC = () => {
               </Typography>
             </Box>
 
-            {selectedAmenities.length > 0 && (
+            {hasSelectedAmenities && (
               <Button
                 size="small"
-                onClick={() => dispatch(clearFilters())}
+                onClick={handleClearFilters}
                 startIcon={<Clear sx={{ fontSize: 16 }} />}
                 color="error"
                 variant="contained"
