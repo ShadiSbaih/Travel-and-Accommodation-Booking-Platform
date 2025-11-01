@@ -41,6 +41,7 @@ function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
 
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
+          autoComplete='off'
             label="Customer Name"
             placeholder="Enter your full name"
             fullWidth
