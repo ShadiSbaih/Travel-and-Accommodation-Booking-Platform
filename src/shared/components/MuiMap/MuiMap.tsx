@@ -3,31 +3,18 @@ import { Box, Paper, Typography } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import type { MuiMapProps } from './types';
+import { DEFAULT_MARKER_ICON, DEFAULT_MAP_ZOOM, DEFAULT_MAP_HEIGHT } from '@/shared/constants/map.constants';
 
-// Fix for default marker icon issue in React Leaflet
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
-
-const DefaultIcon = L.icon({
-  iconUrl: icon,
-  iconRetinaUrl: iconRetina,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
+// Set default marker icon for Leaflet
+L.Marker.prototype.options.icon = DEFAULT_MARKER_ICON;
 
 export function MuiMap({
   latitude,
   longitude,
   hotelName,
   location,
-  height = 450,
-  zoom = 13,
+  height = DEFAULT_MAP_HEIGHT,
+  zoom = DEFAULT_MAP_ZOOM,
 }: MuiMapProps) {
   return (
     <Paper

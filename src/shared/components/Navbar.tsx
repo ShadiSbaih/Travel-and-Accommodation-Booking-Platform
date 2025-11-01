@@ -17,12 +17,8 @@ import ThemeToggle from './ThemeToggle';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import FTSLogo from '@/assets/FTS.png';
 import { CartIcon } from './CartIcon';
-
-
-const pages = [
-    { name: 'Home', path: '/home' },
-    { name: 'Search', path: '/search-results' }
-];
+import { NAVIGATION_PAGES } from '@/shared/constants/navigation.constants';
+import { getInitials } from '@/shared/utils/string.utils';
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -30,13 +26,6 @@ function Navbar() {
     const navigate = useNavigate();
     const logoutMutation = useLogout();
     const { fullName } = useUserInfo();
-
-    const getInitials = (name: string): string => {
-        const words = name.trim().split(' ').filter(Boolean);
-        return words.length > 1
-            ? (words[0][0] + words[words.length - 1][0]).toUpperCase()
-            : (words[0]?.[0] || 'U').toUpperCase();
-    };
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -102,7 +91,7 @@ function Navbar() {
                             onClose={handleCloseNavMenu}
                             sx={{ display: { xs: 'block', md: 'none' } }}
                         >
-                            {pages.map((page) => (
+                            {NAVIGATION_PAGES.map((page) => (
                                 <MenuItem
                                     key={page.name}
                                     component={NavLink}
@@ -157,7 +146,7 @@ function Navbar() {
 
                     {/* Desktop Navigation */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {NAVIGATION_PAGES.map((page) => (
                             <Button
                                 key={page.name}
                                 component={NavLink}

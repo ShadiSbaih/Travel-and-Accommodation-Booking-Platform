@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/core/store/hooks';
 import { removeFromCart, clearCart } from '@/features/cart';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '@/shared/hooks/useNotification';
+import { calculateCheckoutTotals } from '../utils/checkout.utils';
 
 export const useCheckout = () => {
   const dispatch = useAppDispatch();
@@ -29,11 +30,10 @@ export const useCheckout = () => {
     navigate('/search-results');
   };
 
-  const { serviceFee, taxes, total } = useMemo(() => ({
-    serviceFee: 0,
-    taxes: totalPrice * 0.1,
-    total: totalPrice + totalPrice * 0.1,
-  }), [totalPrice]);
+  const { serviceFee, taxes, total } = useMemo(
+    () => calculateCheckoutTotals(totalPrice),
+    [totalPrice]
+  );
 
   return {
     items,

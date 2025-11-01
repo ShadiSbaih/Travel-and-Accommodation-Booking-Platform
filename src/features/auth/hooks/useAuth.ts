@@ -2,23 +2,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { loginRequest } from "../api/auth.api";
-import type { LoginCredentials, AuthResponse } from "../types";
-
-const AUTH_TOKEN_KEY = "token";
-const AUTH_USER_KEY = "user";
-
-const persistAuth = (data: AuthResponse) => {
-  localStorage.setItem(AUTH_TOKEN_KEY, data.authentication);
-  localStorage.setItem(
-    AUTH_USER_KEY,
-    JSON.stringify({ role: data.userType.toLowerCase() })
-  );
-};
-
-const clearAuth = () => {
-  localStorage.removeItem(AUTH_TOKEN_KEY);
-  localStorage.removeItem(AUTH_USER_KEY);
-};
+import type { LoginCredentials } from "../types";
+import { persistAuth, clearAuth } from "../utils/auth.utils";
 
 export const useLogin = () => {
   const navigate = useNavigate();

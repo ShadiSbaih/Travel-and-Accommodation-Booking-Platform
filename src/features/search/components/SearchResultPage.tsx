@@ -11,29 +11,7 @@ import { useAppSelector } from '@/core/store/hooks';
 import searchApi from '../api/search.api';
 import type { SearchResultDTO } from '@/features/hotels/types';
 import { Typography, Box } from '@mui/material';
-
-// Memoized filter function to prevent recreation on every render
-const filterHotelsByAmenities = (
-  hotels: SearchResultDTO[],
-  selectedAmenities: string[],
-  filterMode: 'any' | 'all'
-): SearchResultDTO[] => {
-  if (!selectedAmenities.length) return hotels;
-
-  return hotels.filter((hotel) => {
-    const names = hotel.amenities?.map((a) => a.name?.toLowerCase().trim()) || [];
-    
-    if (filterMode === 'any') {
-      return selectedAmenities.some((a) =>
-        names.some((n) => n?.includes(a.toLowerCase()))
-      );
-    }
-    
-    return selectedAmenities.every((a) =>
-      names.some((n) => n?.includes(a.toLowerCase()))
-    );
-  });
-};
+import { filterHotelsByAmenities } from '../utils/filter.utils';
 
 // Main Search Results Page component using Redux
 const SearchResultPage: React.FC = () => {

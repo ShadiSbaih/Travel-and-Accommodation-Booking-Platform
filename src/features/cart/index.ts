@@ -8,3 +8,4 @@ export {
 export type { CartItem, CartState } from './types';
 export type { AddToCartPayload } from './types';
 export { useCart } from './hooks/useCart';
+export * from './utils';

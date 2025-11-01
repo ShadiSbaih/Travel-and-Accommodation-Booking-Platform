@@ -1,46 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { CartState, CartItem, AddToCartPayload } from '../types';
-
-// Load cart from localStorage
-const loadCartFromStorage = (): CartState => {
-  try {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      return JSON.parse(savedCart);
-    }
-  } catch (error) {
-    console.error('Failed to load cart from localStorage:', error);
-  }
-  return {
-    items: [],
-    totalItems: 0,
-    totalPrice: 0,
-  };
-};
-
-// Save cart to localStorage
-const saveCartToStorage = (state: CartState) => {
-  try {
-    localStorage.setItem('cart', JSON.stringify(state));
-  } catch (error) {
-    console.error('Failed to save cart to localStorage:', error);
-  }
-};
-
-// Calculate totals
-const calculateTotals = (items: CartItem[]) => {
-  const totalItems = items.length;
-  const totalPrice = items.reduce(
-    (sum, item) => sum + item.room.price * item.numberOfNights,
-    0
-  );
-  return { totalItems, totalPrice };
-};
+import { loadCartFromStorage, saveCartToStorage, calculateTotals } from '../utils/cart.utils';
 
 const initialState: CartState = loadCartFromStorage();
-
-
 
 const cartSlice = createSlice({
   name: 'cart',
