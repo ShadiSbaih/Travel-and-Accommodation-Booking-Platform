@@ -3,7 +3,7 @@ import HotelCard from '@/features/hotels/components/HotelCard';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { Box, Typography, Badge } from '@mui/material';
+import { Box, Typography, Chip } from '@mui/material';
 import type { SearchResultsSectionProps } from '../types';
 import { SearchResultsSkeleton } from './skeletons';
 
@@ -41,22 +41,22 @@ const SearchResultsSection = memo(function SearchResultsSection({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4" component="h2" fontWeight="bold">
           Search Results
         </Typography>
-        <Box sx={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Typography variant="body1" color="text.secondary">
-            hotel{resultCount !== 1 ? 's' : ''}
-          </Typography>
-          <Badge 
-            badgeContent={resultCount} 
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Chip 
+            label={`${resultCount} hotel${resultCount !== 1 ? 's' : ''}`}
             color="primary"
-            max={999}
-            sx={{ '& .MuiBadge-badge': { position: 'static', transform: 'none' } }}
+            sx={{ 
+              fontWeight: 600,
+              fontSize: '0.9rem',
+              height: 36
+            }}
           />
           {hasActiveFilters && totalCount !== resultCount && (
-            <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+            <Typography variant="body2" color="text.secondary">
               of {totalCount} total
             </Typography>
           )}

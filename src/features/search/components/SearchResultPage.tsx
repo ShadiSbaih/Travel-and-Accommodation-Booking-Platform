@@ -90,14 +90,22 @@ const SearchResultPage: React.FC = () => {
           <SearchBar />
         </Box>
 
-        <Box component="main" sx={{ px: { xs: 2, md: 4 }, pb: 6 }}>
+        <Box 
+          component="main" 
+          sx={{ 
+            maxWidth: 1600, 
+            mx: 'auto', 
+            px: { xs: 2, md: 3 }, 
+            pb: 6 
+          }}
+        >
           <FilterStatistics
             filteredCount={filteredHotels.length}
             totalCount={rawHotels?.length || 0}
           />
 
           <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 3, mt: 3 }}>
-            <Box sx={{ width: { xs: '100%', lg: 320 }, flexShrink: 0 }}>
+            <Box sx={{ width: { xs: '100%', lg: 300 }, flexShrink: 0 }}>
               <Box sx={{ position: { lg: 'sticky' }, top: { lg: 24 } }}>
                 <AmenitiesFilter />
               </Box>
