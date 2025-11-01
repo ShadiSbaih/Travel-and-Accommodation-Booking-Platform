@@ -34,8 +34,8 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
           boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
         },
         width: '100%',
-        maxWidth: 320,
-        height: 480,
+        maxWidth: 380,
+        height: 520,
         borderRadius: 2,
         overflow: 'hidden',
       }}
@@ -53,19 +53,30 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
           sx={{
             position: 'relative',
             width: '100%',
-            height: 220,
+            height: 260,
             overflow: 'hidden',
             flexShrink: 0,
+            bgcolor: 'grey.200',
           }}
         >
           <OptimizedImage
             src={destination.thumbnailUrl || ''}
             alt={`${destination.cityName || 'City'}, ${destination.countryName || 'Country'}`}
-            width={320}
-            height={220}
+            width={380}
+            height={260}
             fallbackSrc="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop"
             sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              paddingBottom: 0,
               transition: 'transform 0.3s ease-in-out',
+              '& img': {
+                objectFit: 'cover',
+                transition: 'transform 0.3s ease-in-out',
+              },
               '&:hover img': {
                 transform: 'scale(1.05)',
               },
@@ -143,11 +154,13 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
             color="text.secondary"
             sx={{
               overflow: 'hidden',
+              textOverflow: 'ellipsis',
               display: '-webkit-box',
               WebkitLineClamp: 3,
               WebkitBoxOrient: 'vertical',
               lineHeight: 1.6,
               flex: 1,
+              wordBreak: 'break-word',
             }}
           >
             {destination.description || 'Discover this amazing destination'}

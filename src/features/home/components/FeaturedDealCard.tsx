@@ -28,7 +28,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
     <Card
       sx={{
         display: 'grid',
-        gridTemplateRows: '220px 1fr auto',
+        gridTemplateRows: '260px 1fr auto',
         transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
         willChange: 'transform',
         '&:hover': {
@@ -36,8 +36,8 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
         },
         width: '100%',
-        maxWidth: 320,
-        height: 480,
+        maxWidth: 380,
+        height: 520,
         borderRadius: 2,
         overflow: 'hidden',
       }}
@@ -48,14 +48,27 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           position: 'relative', 
           overflow: 'hidden',
           bgcolor: 'grey.200',
+          width: '100%',
+          height: '100%',
         }}
       >
         <OptimizedImage
           src={deal.roomPhotoUrl || ''}
           alt={deal.title || 'Hotel deal'}
-          width={320}
-          height={220}
+          width={380}
+          height={260}
           fallbackSrc="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop"
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            paddingBottom: 0,
+            '& img': {
+              objectFit: 'cover',
+            }
+          }}
         />
         
         {/* Discount badge */}
@@ -99,6 +112,8 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           p: 2.5,
           pb: 2,
           overflow: 'hidden',
+          width: '100%',
+          minWidth: 0,
         }}
       >
         <Typography
@@ -114,6 +129,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
             WebkitBoxOrient: 'vertical',
             lineHeight: 1.3,
             minHeight: '2.6rem',
+            wordBreak: 'break-word',
           }}
         >
           {deal.title || 'Special Deal'}
@@ -147,8 +163,8 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           )}
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <LocationIcon sx={{ fontSize: '1rem', color: 'text.secondary' }} />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 0, overflow: 'hidden' }}>
+          <LocationIcon sx={{ fontSize: '1rem', color: 'text.secondary', flexShrink: 0 }} />
           <Typography 
             variant="body2" 
             color="text.secondary"
@@ -156,26 +172,13 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
+              flex: 1,
+              minWidth: 0,
             }}
           >
             {deal.cityName || 'Location'}
           </Typography>
         </Box>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{
-            overflow: 'hidden',
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            lineHeight: 1.5,
-            minHeight: '3rem',
-          }}
-        >
-          {deal.description || 'Amazing deal on this property'}
-        </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
           {deal.discount > 0 && deal.originalRoomPrice > 0 && (

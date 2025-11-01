@@ -53,10 +53,10 @@ const TrendingDestinations = React.memo(() => {
             display: 'grid',
             gridTemplateColumns: {
               xs: '1fr',
-              sm: 'repeat(auto-fill, minmax(280px, 1fr))',
-              md: 'repeat(auto-fill, minmax(300px, 1fr))',
+              sm: 'repeat(auto-fill, minmax(320px, 1fr))',
+              md: 'repeat(auto-fill, minmax(360px, 1fr))',
             },
-            gap: { xs: 2, sm: 3, md: 4 },
+            gap: { xs: 1.5, sm: 2, md: 2.5 },
             justifyItems: 'center',
           }}
         >
