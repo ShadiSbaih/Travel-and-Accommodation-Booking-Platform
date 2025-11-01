@@ -20,7 +20,7 @@ export function MuiImageSlider({
   showThumbnails = true,
 }: MuiImageSliderProps) {
   // Memoize display images to avoid recalculation
-  const displayImages = useMemo(() => images.slice(0, 3), [images]);
+  const displayImages = useMemo(() => images.slice(0, 5), [images]);
   const maxSlides = displayImages.length;
 
   // Custom hooks for state and gestures
