@@ -18,23 +18,9 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import type { BookingReceiptProps } from '../types';
+import { formatDate, formatCurrency } from '../utils';
 
 function BookingReceipt({ receipt }: BookingReceiptProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const formatCurrency = (amount: number) => {
-    return `$${amount.toFixed(2)}`;
-  };
-
   const handleDownloadPDF = async () => {
     const element = document.getElementById('booking-receipt');
     if (!element) return;

@@ -3,3 +3,4 @@
  */
 
 export * from './filter.utils';
+export * from './search.utils';

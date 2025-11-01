@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Box, Skeleton } from '@mui/material';
 import type { OptimizedImageProps } from './types';
 import { DEFAULT_FALLBACK_IMAGE } from '@/shared/constants/image.constants';
+import { calculateAspectRatio, preloadImage } from '@/shared/utils';
 
 function OptimizedImage({
     src,
@@ -30,8 +31,7 @@ function OptimizedImage({
     // Preload priority images
     useEffect(() => {
         if (priority && src) {
-            const img = new Image();
-            img.src = src;
+            preloadImage(src);
         }
     }, [priority, src]);
 
@@ -49,7 +49,7 @@ function OptimizedImage({
     };
 
     // Calculate aspect ratio for skeleton
-    const aspectRatio = (height / width) * 100;
+    const aspectRatio = calculateAspectRatio(width, height);
 
     return (
         <Box

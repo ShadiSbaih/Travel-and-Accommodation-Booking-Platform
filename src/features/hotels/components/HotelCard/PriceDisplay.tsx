@@ -1,8 +1,9 @@
 import { Box, Typography, Stack } from '@mui/material';
 import type { PriceDisplayProps } from './types';
+import { calculateDiscountedPrice } from '../../utils';
 
 function PriceDisplay({ originalPrice, discount }: PriceDisplayProps) {
-  const discountedPrice = originalPrice * (1 - discount / 100);
+  const discountedPrice = calculateDiscountedPrice(originalPrice, discount);
 
   return (
     <Box sx={{ mb: 1.5 }}>

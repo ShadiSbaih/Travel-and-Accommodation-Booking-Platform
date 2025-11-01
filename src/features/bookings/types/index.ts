@@ -1,6 +1,18 @@
 import type { CartItem } from '@/features/cart';
 import type { Amenity } from '@/features/hotels/types';
 
+// Booking API Types
+export interface CreateBookingRequest {
+  customerName: string;
+  items: CartItem[];
+  paymentMethod: string;
+  totalCost: number;
+}
+
+export interface CreateBookingResponse {
+  receipt: BookingReceipt;
+}
+
 // Booking Receipt Types
 export interface BookingReceipt {
   customerName: string;

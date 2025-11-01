@@ -22,60 +22,20 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import type { SearchFormData } from '../types';
+import { getDefaultDates, getInitialSearchState, DEFAULT_SEARCH_VALUES } from '../utils';
 
 function SearchBar() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  // Helper to create default dates
-  const getDefaultDates = () => {
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-    return { today, tomorrow };
-  };
-
-  // Initialize state from URL params or defaults
-  const getInitialState = (): SearchFormData => {
-    const { today, tomorrow } = getDefaultDates();
-
-    return {
-      query: searchParams.get('query') || '',
-      checkIn: searchParams.get('checkIn')
-        ? parseISO(searchParams.get('checkIn')!)
-        : today,
-      checkOut: searchParams.get('checkOut')
-        ? parseISO(searchParams.get('checkOut')!)
-        : tomorrow,
-      adults: parseInt(searchParams.get('adults') || '2'),
-      children: parseInt(searchParams.get('children') || '0'),
-      rooms: parseInt(searchParams.get('rooms') || '1'),
-    };
-  };
-
-  const [searchData, setSearchData] = useState<SearchFormData>(getInitialState);
+  const [searchData, setSearchData] = useState<SearchFormData>(() => getInitialSearchState(searchParams));
   const [guestButton, setGuestButton] = useState<HTMLElement | null>(null);
 
   // Sync state with URL when searchParams change (e.g., browser back/forward)
   useEffect(() => {
-    const { today, tomorrow } = getDefaultDates();
-
-    const newState: SearchFormData = {
-      query: searchParams.get('query') || '',
-      checkIn: searchParams.get('checkIn')
-        ? parseISO(searchParams.get('checkIn')!)
-        : today,
-      checkOut: searchParams.get('checkOut')
-        ? parseISO(searchParams.get('checkOut')!)
-        : tomorrow,
-      adults: parseInt(searchParams.get('adults') || '2'),
-      children: parseInt(searchParams.get('children') || '0'),
-      rooms: parseInt(searchParams.get('rooms') || '1'),
-    };
-
-    setSearchData(newState);
+    setSearchData(getInitialSearchState(searchParams));
   }, [searchParams]);
 
   // Guest selector handlers
@@ -125,9 +85,9 @@ function SearchBar() {
       query: '',
       checkIn: today,
       checkOut: tomorrow,
-      adults: 2,
-      children: 0,
-      rooms: 1,
+      adults: DEFAULT_SEARCH_VALUES.adults,
+      children: DEFAULT_SEARCH_VALUES.children,
+      rooms: DEFAULT_SEARCH_VALUES.rooms,
     });
   };
 

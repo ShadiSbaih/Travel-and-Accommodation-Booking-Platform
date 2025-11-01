@@ -1,17 +1,9 @@
 import axios from '@/core/api/axios';
-import type { BookingReceipt } from '../types';
-import type { CartItem } from '@/features/cart';
-
-export interface CreateBookingRequest {
-  customerName: string;
-  items: CartItem[];
-  paymentMethod: string;
-  totalCost: number;
-}
-
-export interface CreateBookingResponse {
-  receipt: BookingReceipt;
-}
+import type { 
+  BookingReceipt, 
+  CreateBookingRequest, 
+  CreateBookingResponse 
+} from '../types';
 
 export const createBooking = async (
   data: CreateBookingRequest
