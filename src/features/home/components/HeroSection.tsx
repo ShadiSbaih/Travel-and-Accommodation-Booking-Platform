@@ -7,7 +7,7 @@ function HeroSection({ userName }: HeroSectionProps) {
   return (
     <Box
       sx={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #0891b2 100%)',
         py: { xs: 6, sm: 8, md: 10 },
         position: 'relative',
         overflow: 'hidden',
@@ -19,7 +19,7 @@ function HeroSection({ userName }: HeroSectionProps) {
           right: 0,
           bottom: 0,
           background:
-            'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
+            'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 50%)',
         },
       }}
     >

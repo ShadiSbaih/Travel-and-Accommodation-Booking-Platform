@@ -104,20 +104,39 @@ function SearchBar() {
           e.preventDefault();
           handleSearch();
         }}
-        elevation={4}
+        elevation={0}
         sx={{
           padding: { xs: 2, sm: 2.5, md: 3 },
-          borderRadius: 3,
+          borderRadius: '24px !important',
           maxWidth: 1400,
           margin: '0 auto',
-          backgroundColor: 'background.paper',
+          background: (theme) => 
+            theme.palette.mode === 'dark'
+              ? 'rgba(30, 41, 59, 0.85) !important'
+              : 'rgba(255, 255, 255, 0.95) !important',
+          backdropFilter: 'blur(20px) saturate(180%) !important',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%) !important',
           width: '100%',
-          border: '1px solid',
-          borderColor: 'divider',
-          transition: 'box-shadow 0.3s ease-in-out',
+          border: (theme) => 
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(20, 184, 166, 0.3)'
+              : '1px solid rgba(20, 184, 166, 0.2)',
+          boxShadow: (theme) => 
+            theme.palette.mode === 'dark'
+              ? '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 2px rgba(20, 184, 166, 0.4) !important'
+              : '0 8px 32px rgba(20, 184, 166, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1) !important',
+          transition: 'all 0.3s ease-in-out',
           '&:hover': {
-            boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
-          }
+            boxShadow: (theme) => 
+              theme.palette.mode === 'dark'
+                ? '0 12px 48px rgba(20, 184, 166, 0.3), 0 0 4px rgba(20, 184, 166, 0.6) !important'
+                : '0 12px 48px rgba(20, 184, 166, 0.25), 0 8px 24px rgba(0, 0, 0, 0.15) !important',
+            transform: 'translateY(-2px)',
+            border: (theme) => 
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(20, 184, 166, 0.5)'
+                : '1px solid rgba(20, 184, 166, 0.4)',
+          },
         }}
       >
         <Box
@@ -159,7 +178,8 @@ function SearchBar() {
               }}
               sx={{
                 '& .MuiInputBase-root': {
-                  height: 56
+                  height: 56,
+                  borderRadius: '16px',
                 }
               }}
             />
@@ -199,7 +219,8 @@ function SearchBar() {
                   },
                   sx: {
                     '& .MuiInputBase-root': {
-                      height: 56
+                      height: 56,
+                      borderRadius: '16px',
                     }
                   },
                 },
@@ -230,7 +251,8 @@ function SearchBar() {
                   },
                   sx: {
                     '& .MuiInputBase-root': {
-                      height: 56
+                      height: 56,
+                      borderRadius: '16px',
                     }
                   },
                 },
@@ -258,6 +280,7 @@ function SearchBar() {
               aria-expanded={isGuestOpen}
               sx={{
                 height: 56,
+                borderRadius: '16px',
                 justifyContent: 'flex-start',
                 textTransform: 'none',
                 fontSize: { xs: '0.875rem', md: '0.95rem' },
@@ -304,6 +327,7 @@ function SearchBar() {
                 minWidth: { lg: 110 },
                 px: { xs: 2, sm: 2, md: 2.5 },
                 fontWeight: 600,
+                borderRadius: '16px',
                 boxShadow: 'none',
                 '&:hover': {
                   boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
@@ -332,11 +356,12 @@ function SearchBar() {
                 minWidth: { lg: 130 },
                 px: { xs: 2, sm: 2, md: 3 },
                 fontWeight: 600,
+                borderRadius: '16px',
                 boxShadow: 'none',
-                background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
+                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #1565c0 0%, #0d47a1 100%)',
-                  boxShadow: '0 4px 20px rgba(25, 118, 210, 0.4)',
+                  background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                  boxShadow: '0 4px 20px rgba(249, 115, 22, 0.4)',
                   transform: 'translateY(-1px)',
                   transition: 'all 0.2s ease-in-out'
                 },
@@ -363,7 +388,9 @@ function SearchBar() {
               sx: {
                 mt: 1,
                 minWidth: { xs: 280, sm: 320 },
-                maxWidth: { xs: '90vw', sm: 400 }
+                maxWidth: { xs: '90vw', sm: 400 },
+                borderRadius: '20px',
+                boxShadow: '0 8px 32px rgba(20, 184, 166, 0.15)',
               }
             }
           }}

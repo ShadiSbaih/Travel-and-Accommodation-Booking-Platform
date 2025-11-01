@@ -65,7 +65,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
               position: 'absolute',
               top: 16,
               right: 16,
-              bgcolor: 'error.main',
+              bgcolor: 'warning.main',
               color: 'white',
               px: 1.5,
               py: 0.75,
@@ -73,7 +73,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              boxShadow: '0 4px 12px rgba(249, 115, 22, 0.4)',
             }}
           >
             <OfferIcon sx={{ fontSize: '1rem' }} />

@@ -67,8 +67,8 @@ const LoginForm = () => {
               ? formik.errors.userName
               : undefined
           }
-          leftIcon={<PersonOutlineIcon fontSize="small" className="text-[#00b6ff]" />}
-          className="[&_label]:text-[#00b6ff] [&_label]:font-semibold [&_input]:border-[#00b6ff] [&_input]:border-2 [&_input]:bg-transparent [&_input]:text-white [&_input]:placeholder-gray-500 [&_input]:rounded-xl [&_input]:focus:ring-[#00b6ff]/40 [&_input]:focus:ring-2"
+          leftIcon={<PersonOutlineIcon fontSize="small" className="text-primary-400" />}
+          className="[&_label]:text-primary-400 [&_label]:font-semibold [&_input]:border-primary-400 [&_input]:border-2 [&_input]:bg-transparent [&_input]:text-white [&_input]:placeholder-gray-500 [&_input]:rounded-xl [&_input]:focus:ring-primary-400/40 [&_input]:focus:ring-2"
         />
 
         <Input
@@ -87,12 +87,12 @@ const LoginForm = () => {
               ? formik.errors.password
               : undefined
           }
-          leftIcon={<LockOutlinedIcon fontSize="small" className="text-[#00b6ff]" />}
+          leftIcon={<LockOutlinedIcon fontSize="small" className="text-primary-400" />}
           rightIcon={
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="text-[#00b6ff] transition hover:text-[#33c4ff] focus:outline-none"
+              className="text-primary-400 transition hover:text-primary-300 focus:outline-none"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
@@ -102,7 +102,7 @@ const LoginForm = () => {
               )}
             </button>
           }
-          className="[&_label]:text-[#00b6ff] [&_label]:font-semibold [&_input]:border-[#00b6ff] [&_input]:border-2 [&_input]:bg-transparent [&_input]:text-white [&_input]:placeholder-gray-500 [&_input]:rounded-xl [&_input]:focus:ring-[#00b6ff]/40 [&_input]:focus:ring-2"
+          className="[&_label]:text-primary-400 [&_label]:font-semibold [&_input]:border-primary-400 [&_input]:border-2 [&_input]:bg-transparent [&_input]:text-white [&_input]:placeholder-gray-500 [&_input]:rounded-xl [&_input]:focus:ring-primary-400/40 [&_input]:focus:ring-2"
         />
 
         <Button
@@ -110,7 +110,7 @@ const LoginForm = () => {
           variant="solid"
           size="lg"
           disabled={loginMutation.isPending}
-          className="mt-6 w-full rounded-xl bg-[#00b6ff] hover:bg-[#0096d1] py-3 text-sm font-semibold uppercase tracking-widest"
+          className="mt-6 w-full rounded-xl bg-primary-500 hover:bg-primary-600 py-3 text-sm font-semibold uppercase tracking-widest"
         >
           {loginMutation.isPending ? 'Logging in…' : 'Login'}
         </Button>

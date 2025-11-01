@@ -38,7 +38,7 @@ const FeaturedDeals = React.memo(() => {
         <SectionHeader
           title="Featured Deals"
           subtitle="Limited time offers on amazing hotels"
-          icon={<OfferIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'error.main' }} />}
+          icon={<OfferIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'warning.main' }} />}
         />
 
         <Box

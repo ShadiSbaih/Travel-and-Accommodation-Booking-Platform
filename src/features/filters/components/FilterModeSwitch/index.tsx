@@ -35,14 +35,14 @@ const FilterModeSwitch: React.FC = () => {
         mb: 2,
         height: 48,
         backgroundColor: 'background.paper',
-        borderRadius: 2,
+        borderRadius: '24px',
         border: '2px solid',
         borderColor: 'divider',
         overflow: 'hidden',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
         '& .MuiToggleButtonGroup-grouped': {
           border: 'none',
-          borderRadius: '8px !important',
+          borderRadius: '20px !important',
           margin: '4px',
           '&:not(:first-of-type)': {
             borderLeft: 'none',

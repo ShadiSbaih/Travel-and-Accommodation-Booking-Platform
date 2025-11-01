@@ -10,12 +10,13 @@
 :root {
   --font-display: "Poppins", "sans-serif";
   --breakpoint-3xl: 1920px;
-  --color-primary: #1368ec;
-  --color-secondary: #ff6b6b;
+  /* 🌴 Tropical Paradise Theme */
+  --color-primary: #14b8a6;    /* Teal */
+  --color-secondary: #06b6d4;  /* Cyan */
   --color-success: #10b981;
-  --color-warning: #f59e0b;
+  --color-warning: #f97316;    /* Orange */
   --color-danger: #ef4444;
-  --color-info: #3b82f6;
+  --color-info: #0ea5e9;
 }
 
 @layer base {
@@ -31,7 +32,7 @@
   }
 
   body {
-    background-color: #fcfbfc;
+    background-color: #fafaf9;
     overflow-x: hidden;
     line-height: 1.5;
     font-weight: 400;
@@ -40,6 +41,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Dark mode body styles */
+  html.dark body {
+    background-color: #0f172a;
   }
 
   /* Reset default styles */
@@ -91,7 +98,7 @@
 @layer utilities {
   /* Add your custom utility classes here */
   .text-gradient {
-    @apply bg-gradient-to-r from-[var(--color-primary)] to-blue-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent;
   }
 
   .animate-fade-in {

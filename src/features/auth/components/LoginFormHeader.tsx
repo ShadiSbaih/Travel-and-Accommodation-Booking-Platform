@@ -31,7 +31,7 @@ const LoginFormHeader = () => {
           sx={{
             fontSize: { xs: '2.5rem', sm: '3rem' },
             fontWeight: 'bold',
-            color: '#00b6ff',
+            color: '#14b8a6',
           }}
         >
           Welcome

@@ -33,7 +33,12 @@ const TrendingDestinations = React.memo(() => {
   }
 
   return (
-    <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'grey.50' }}>
+    <Box 
+      sx={{ 
+        py: { xs: 4, sm: 6, md: 8 }, 
+        bgcolor: 'background.paper',
+      }}
+    >
       <Container maxWidth="lg">
         <SectionHeader
           title="Trending Destinations"
