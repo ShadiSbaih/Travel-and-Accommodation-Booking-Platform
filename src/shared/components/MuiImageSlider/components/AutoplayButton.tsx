@@ -1,5 +1,7 @@
 import { IconButton } from '@mui/material';
-import { PlayArrow, Pause } from '@mui/icons-material';
+// Optimized icon imports
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 import { AUTOPLAY_BUTTON_STYLE } from '../constants/sliderStyles';
 
 interface AutoplayButtonProps {
@@ -18,9 +20,9 @@ export function AutoplayButton({ isPlaying, onToggle, autoPlay }: AutoplayButton
       sx={AUTOPLAY_BUTTON_STYLE}
     >
       {isPlaying ? (
-        <Pause sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} />
+        <PauseIcon sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} />
       ) : (
-        <PlayArrow sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} />
+        <PlayArrowIcon sx={{ fontSize: { xs: 14, sm: 16, md: 20 } }} />
       )}
     </IconButton>
   );

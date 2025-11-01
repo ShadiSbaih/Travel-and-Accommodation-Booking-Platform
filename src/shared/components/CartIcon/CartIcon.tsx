@@ -1,5 +1,6 @@
 import { IconButton, Badge } from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
+// Optimized icon import
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAppSelector } from '@/core/store/hooks';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +32,7 @@ function CartIcon() {
           },
         }}
       >
-        <ShoppingCart />
+        <ShoppingCartIcon />
       </Badge>
     </IconButton>
   );

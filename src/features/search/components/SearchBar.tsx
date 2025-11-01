@@ -10,14 +10,13 @@ import {
   InputAdornment,
   Divider,
 } from '@mui/material';
-import {
-  Search as SearchIcon,
-  CalendarToday as CalendarIcon,
-  Person as PersonIcon,
-  Add as AddIcon,
-  Remove as RemoveIcon,
-  RestartAlt as RestartAltIcon,
-} from '@mui/icons-material';
+// Optimized icon imports - import directly from icon files
+import SearchIcon from '@mui/icons-material/Search';
+import CalendarIcon from '@mui/icons-material/CalendarToday';
+import PersonIcon from '@mui/icons-material/Person';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';

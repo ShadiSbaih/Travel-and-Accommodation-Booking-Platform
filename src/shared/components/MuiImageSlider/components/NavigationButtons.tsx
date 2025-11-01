@@ -1,5 +1,7 @@
 import { IconButton } from '@mui/material';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+// Optimized icon imports
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { NAVIGATION_BUTTON_STYLE } from '../constants/sliderStyles';
 
 interface NavigationButtonsProps {
@@ -22,7 +24,7 @@ export function NavigationButtons({ onPrevious, onNext, showButtons }: Navigatio
           display: { xs: 'none', sm: 'flex' },
         }}
       >
-        <ChevronLeft sx={{ fontSize: { xs: 20, md: 24 } }} />
+        <ChevronLeftIcon sx={{ fontSize: { xs: 20, md: 24 } }} />
       </IconButton>
       <IconButton
         onClick={onNext}
@@ -33,7 +35,7 @@ export function NavigationButtons({ onPrevious, onNext, showButtons }: Navigatio
           display: { xs: 'none', sm: 'flex' },
         }}
       >
-        <ChevronRight sx={{ fontSize: { xs: 20, md: 24 } }} />
+        <ChevronRightIcon sx={{ fontSize: { xs: 20, md: 24 } }} />
       </IconButton>
     </>
   );

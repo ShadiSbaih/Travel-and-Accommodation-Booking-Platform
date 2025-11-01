@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
-import { ErrorOutline } from '@mui/icons-material';
+// Optimized icon import
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 function ErrorIcon() {
   return (
@@ -30,7 +31,7 @@ function ErrorIcon() {
           },
         }}
       >
-        <ErrorOutline
+        <ErrorOutlineIcon
           sx={{
             fontSize: 48,
             color: 'error.main',
