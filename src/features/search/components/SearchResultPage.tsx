@@ -50,7 +50,7 @@ const SearchResultPage: React.FC = () => {
   // Get filter state from Redux store
   const { selectedAmenities, filterMode } = useAppSelector((state) => state.filters);
 
-  const { data: rawHotels, isLoading, error } = useQuery<SearchResultDTO[]>({
+  const { data: rawHotels, isLoading, isFetching, error } = useQuery<SearchResultDTO[]>({
     queryKey: ['searchResults', searchConfig.query, searchConfig.adults, searchConfig.children, searchConfig.rooms],
     queryFn: () =>
       searchApi.searchHotels({ 
@@ -62,6 +62,9 @@ const SearchResultPage: React.FC = () => {
     enabled: !!searchConfig.query,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
+
+  // Show loading state for initial load or when fetching new data
+  const isLoadingResults = isLoading || isFetching;
 
   // Memoized filtering logic based on Redux state
   const filteredHotels = useMemo(() => {
@@ -115,7 +118,7 @@ const SearchResultPage: React.FC = () => {
               <SearchResultsSection
                 data={filteredHotels}
                 rawData={rawHotels}
-                isLoading={isLoading}
+                isLoading={isLoadingResults}
                 error={error}
                 hasActiveFilters={!!selectedAmenities.length}
               />

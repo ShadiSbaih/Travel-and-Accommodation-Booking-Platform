@@ -16,7 +16,7 @@ import {
   Person as PersonIcon,
   Add as AddIcon,
   Remove as RemoveIcon,
-  Clear as ClearIcon,
+  RestartAlt as RestartAltIcon,
 } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -152,14 +152,20 @@ function SearchBar() {
           e.preventDefault();
           handleSearch();
         }}
-        elevation={3}
+        elevation={4}
         sx={{
           padding: { xs: 2, sm: 2.5, md: 3 },
-          borderRadius: 2,
+          borderRadius: 3,
           maxWidth: 1400,
           margin: '0 auto',
           backgroundColor: 'background.paper',
-          width: '100%'
+          width: '100%',
+          border: '1px solid',
+          borderColor: 'divider',
+          transition: 'box-shadow 0.3s ease-in-out',
+          '&:hover': {
+            boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+          }
         }}
       >
         <Box
@@ -324,31 +330,40 @@ function SearchBar() {
           <Box
             sx={{
               display: 'flex',
-              gap: 1,
-              flex: { lg: '0 0 17%' },
-              flexDirection: { xs: 'row', lg: 'row' },
-              minWidth: { lg: 0 }
+              gap: 1.5,
+              flex: { lg: '0 0 auto' },
+              flexDirection: { xs: 'column', sm: 'row', lg: 'row' },
+              minWidth: { lg: 0 },
+              width: { xs: '100%', sm: 'auto' }
             }}
           >
             <Button
               type="button"
-              variant="outlined"
-              color="secondary"
+              variant="contained"
+              color="error"
               onClick={handleClear}
-              startIcon={<ClearIcon />}
-              aria-label="Clear search form"
+              startIcon={<RestartAltIcon />}
+              aria-label="Reset search form"
               sx={{
-                flex: { xs: 1, lg: 'none' },
                 height: 56,
                 textTransform: 'none',
-                fontSize: { xs: '0.875rem', md: '0.95rem' },
-                minWidth: { lg: 80 },
-                px: { xs: 1, md: 2 }
+                fontSize: { xs: '0.95rem', md: '0.95rem' },
+                flex: { xs: 1, sm: 1, lg: 'none' },
+                minWidth: { lg: 110 },
+                px: { xs: 2, sm: 2, md: 2.5 },
+                fontWeight: 600,
+                boxShadow: 'none',
+                '&:hover': {
+                  boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
+                  transform: 'translateY(-1px)',
+                  transition: 'all 0.2s ease-in-out'
+                },
+                '&:active': {
+                  transform: 'translateY(0)',
+                }
               }}
             >
-              <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
-                Clear
-              </Box>
+              Reset
             </Button>
 
             <Button
@@ -358,13 +373,24 @@ function SearchBar() {
               startIcon={<SearchIcon />}
               aria-label="Search hotels"
               sx={{
-                flex: { xs: 2, lg: 1 },
                 height: 56,
                 textTransform: 'none',
-                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                fontSize: { xs: '1rem', md: '1rem' },
+                flex: { xs: 1, sm: 1, lg: 'none' },
+                minWidth: { lg: 130 },
+                px: { xs: 2, sm: 2, md: 3 },
                 fontWeight: 600,
-                minWidth: { lg: 100 },
-                px: { xs: 2, md: 2.5 }
+                boxShadow: 'none',
+                background: 'linear-gradient(135deg, #1976d2 0%, #1565c0 100%)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #1565c0 0%, #0d47a1 100%)',
+                  boxShadow: '0 4px 20px rgba(25, 118, 210, 0.4)',
+                  transform: 'translateY(-1px)',
+                  transition: 'all 0.2s ease-in-out'
+                },
+                '&:active': {
+                  transform: 'translateY(0)',
+                }
               }}
             >
               Search
