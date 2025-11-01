@@ -1,15 +1,36 @@
-import CircularProgress from "@mui/material/CircularProgress";
+import { Box, CircularProgress, Typography } from '@mui/material';
 import type { LoadingStateProps } from '@/shared/types/common.types';
 
-function LoadingState({ 
-  message = "Loading...", 
-  className = "" 
-}: LoadingStateProps) {
+function LoadingState({ message = 'Loading...', className = '' }: LoadingStateProps) {
   return (
-    <div className={`flex flex-col items-center justify-center py-12 text-gray-600 ${className}`}>
-      <CircularProgress className="w-8 h-8 animate-spin mb-3 text-primary-500" />
-      <p className="text-lg">{message}</p>
-    </div>
+    <Box
+      className={className}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        py: { xs: 6, sm: 8, md: 12 },
+        px: { xs: 2, sm: 3 },
+        minHeight: '200px',
+      }}
+    >
+      <CircularProgress
+        sx={{
+          mb: 3,
+          color: 'primary.main',
+        }}
+      />
+      <Typography
+        variant="body1"
+        sx={{
+          color: 'text.secondary',
+          fontSize: { xs: '0.875rem', sm: '1rem' },
+        }}
+      >
+        {message}
+      </Typography>
+    </Box>
   );
 }
 

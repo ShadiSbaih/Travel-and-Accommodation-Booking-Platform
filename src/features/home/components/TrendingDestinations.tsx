@@ -11,7 +11,7 @@ import EmptyState from '@/shared/components/EmptyState';
 import { TrendingDestinationsSkeleton } from './skeletons';
 
 const TrendingDestinations = React.memo(() => {
-  const { data: trendingDestinations = [], isLoading, isError } = useQuery({
+  const { data: trendingDestinations = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['trendingDestinations'],
     queryFn: () => homePageApi.getTrendingDestinations(),
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
@@ -20,15 +20,39 @@ const TrendingDestinations = React.memo(() => {
 
   if (isLoading) return <TrendingDestinationsSkeleton />;
   if (isError)
-    return <ErrorState message="Unable to load trending destinations. Please try again later." />;
+    return (
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <ErrorState
+            title="Unable to Load Trending Destinations"
+            message="We're having trouble loading trending destinations right now. Please try again."
+            variant="error"
+            icon={<TrendingIcon sx={{ fontSize: '3rem', color: 'error.main' }} />}
+            showRetry
+            onRetry={() => refetch()}
+          />
+        </Container>
+      </Box>
+    );
 
   if (trendingDestinations.length === 0) {
     return (
-      <EmptyState
-        title="No trending destinations available"
-        subtitle="Explore our search to find your perfect destination"
-        icon={<TrendingIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
-      />
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <SectionHeader
+            title="Trending Destinations"
+            subtitle="Popular places travelers are exploring now"
+            icon={
+              <TrendingIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'success.main' }} />
+            }
+          />
+          <EmptyState
+            title="No trending destinations available"
+            subtitle="Explore our search to find your perfect destination"
+            icon={<TrendingIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
+          />
+        </Container>
+      </Box>
     );
   }
 

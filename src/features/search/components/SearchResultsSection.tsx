@@ -2,7 +2,7 @@ import { memo } from 'react';
 import HotelCard from '@/features/hotels/components/HotelCard/index.tsx';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import { ErrorOutline as ErrorIcon, FilterAlt as FilterIcon } from '@mui/icons-material';
 import { Box, Typography, Chip } from '@mui/material';
 import type { SearchResultsSectionProps } from '../types';
 import { SearchResultsSkeleton } from './skeletons';
@@ -11,7 +11,8 @@ const SearchResultsSection = memo(function SearchResultsSection({
   data, 
   rawData,
   isLoading, 
-  error, 
+  error,
+  refetch,
   hasActiveFilters 
 }: SearchResultsSectionProps) {
   if (isLoading) {
@@ -19,19 +20,34 @@ const SearchResultsSection = memo(function SearchResultsSection({
   }
 
   if (error) {
-    return <ErrorState message="Error loading results. Please try again." />;
+    return (
+      <ErrorState
+        title="Unable to Load Search Results"
+        message="We encountered an error while loading the hotels. Please try again."
+        variant="error"
+        icon={<ErrorIcon sx={{ fontSize: '3rem', color: 'error.main' }} />}
+        showRetry
+        onRetry={refetch}
+      />
+    );
   }
 
   if (!rawData || rawData.length === 0) {
-    return <EmptyState title="No hotels found for your search." />;
+    return (
+      <EmptyState
+        title="No hotels found for your search"
+        subtitle="Try adjusting your search criteria or dates"
+        icon={<ErrorIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
+      />
+    );
   }
 
   if (hasActiveFilters && (!data || data.length === 0)) {
     return (
       <EmptyState 
-        title="No hotels match your selected filters."
-        subtitle="Try removing some filters to see more results."
-        icon={<ErrorOutlineIcon className="w-12 h-12 mx-auto text-gray-400 mb-2" />}
+        title="No hotels match your selected filters"
+        subtitle="Try removing some filters to see more results"
+        icon={<FilterIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
       />
     );
   }

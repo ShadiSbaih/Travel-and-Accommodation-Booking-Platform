@@ -5,12 +5,24 @@ export interface EmptyStateProps {
   subtitle?: string;
   icon?: React.ReactNode;
   className?: string;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
 export interface ErrorStateProps {
+  title?: string;
   message?: string;
   className?: string;
   variant?: 'error' | 'warning' | 'info';
+  icon?: React.ReactNode;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+  showRetry?: boolean;
+  onRetry?: () => void;
 }
 
 export interface LoadingStateProps {

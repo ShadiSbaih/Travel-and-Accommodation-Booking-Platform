@@ -26,7 +26,7 @@ function FeaturedDealsSkeleton() {
             justifyItems: 'center',
           }}
         >
-          {[...Array(6)].map((_, index) => (
+          {[...Array(3)].map((_, index) => (
             <Box
               key={index}
               sx={{

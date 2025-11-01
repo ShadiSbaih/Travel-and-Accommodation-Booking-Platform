@@ -88,7 +88,7 @@ const AmenitiesFilter: React.FC = () => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', pt: 2.5 }}>
               <Box
                 sx={{
                   display: 'flex',

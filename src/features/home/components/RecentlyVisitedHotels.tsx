@@ -17,6 +17,7 @@ function RecentlyVisitedHotels() {
     data: recentlyVisitedHotels = [],
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ['recentlyVisitedHotels', userId],
     queryFn: () => homePageApi.getRecentlyVisitedHotels(userId as string),
@@ -25,12 +26,44 @@ function RecentlyVisitedHotels() {
     gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
   });
 
-  // Don't show section if user is not logged in
-  if (!userId) return null;
+  // Show empty state if user is not logged in
+  if (!userId) {
+    return (
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.default' }}>
+        <Container maxWidth="lg">
+          <SectionHeader
+            title="Recently Visited"
+            subtitle="Hotels you've checked out recently"
+            icon={
+              <HistoryIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'info.main' }} />
+            }
+          />
+          <EmptyState
+            title="Sign in to see your hotel history"
+            subtitle="Log in to view hotels you've recently explored"
+            icon={<HistoryIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
+          />
+        </Container>
+      </Box>
+    );
+  }
 
   if (isLoading) return <RecentlyVisitedSkeleton />;
   if (isError)
-    return <ErrorState message="Unable to load your hotel history. Please try again later." />;
+    return (
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.default' }}>
+        <Container maxWidth="lg">
+          <ErrorState
+            title="Unable to Load Your Hotel History"
+            message="We're having trouble loading your recently visited hotels. Please try again."
+            variant="error"
+            icon={<HistoryIcon sx={{ fontSize: '3rem', color: 'error.main' }} />}
+            showRetry
+            onRetry={() => refetch()}
+          />
+        </Container>
+      </Box>
+    );
 
   if (recentlyVisitedHotels.length === 0) {
     return (

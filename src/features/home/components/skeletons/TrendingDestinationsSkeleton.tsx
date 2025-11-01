@@ -2,7 +2,7 @@ import { Box, Container, Skeleton } from '@mui/material';
 
 function TrendingDestinationsSkeleton() {
   return (
-    <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'grey.50' }}>
+    <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.paper' }}>
       <Container maxWidth="lg">
         {/* Header Skeleton */}
         <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -26,7 +26,7 @@ function TrendingDestinationsSkeleton() {
             justifyItems: 'center',
           }}
         >
-          {[...Array(6)].map((_, index) => (
+          {[...Array(3)].map((_, index) => (
             <Box
               key={index}
               sx={{

@@ -1,5 +1,5 @@
 import Navbar from '@/shared/components/Navbar';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAvailableRooms, useHotel, useHotelGallery } from '../hooks/useHotels';
 import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
@@ -9,14 +9,16 @@ import RoomsList from './RoomCard/RoomsList';
 import { useCart } from '@/features/cart';
 import { useNotification } from '@/shared/hooks/useNotification';
 import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
+import { ErrorOutline as ErrorIcon } from '@mui/icons-material';
 
 function HotelDetailsPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const hotelId = Number(id);
   const { addToCart, removeFromCart, isInCart } = useCart();
   const notify = useNotification();
 
-  const { data: hotel, isLoading: isLoadingHotel, error: hotelError } = useHotel(hotelId);
+  const { data: hotel, isLoading: isLoadingHotel, error: hotelError, refetch: refetchHotel } = useHotel(hotelId);
   const { data: gallery, isLoading: isLoadingGallery, error: galleryError } = useHotelGallery(hotelId);
   const { data: rooms, isLoading: isLoadingRooms } = useAvailableRooms(hotelId);
 
@@ -37,7 +39,18 @@ function HotelDetailsPage() {
       <>
         <Navbar />
         <Container maxWidth="lg" sx={{ py: 8 }}>
-          <ErrorState message="Failed to load hotel details. Please try again later." variant="error" />
+          <ErrorState
+            title="Unable to Load Hotel Details"
+            message="We couldn't find the hotel you're looking for or there was an error loading the details."
+            variant="error"
+            icon={<ErrorIcon sx={{ fontSize: '3rem', color: 'error.main' }} />}
+            showRetry
+            onRetry={() => refetchHotel()}
+            action={{
+              label: 'Back to Search',
+              onClick: () => navigate('/search'),
+            }}
+          />
         </Container>
       </>
     );

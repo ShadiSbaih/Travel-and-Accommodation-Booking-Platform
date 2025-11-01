@@ -11,7 +11,7 @@ import EmptyState from '@/shared/components/EmptyState';
 import { FeaturedDealsSkeleton } from './skeletons';
 
 const FeaturedDeals = React.memo(() => {
-  const { data: featuredDeals = [], isLoading, isError } = useQuery({
+  const { data: featuredDeals = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['featuredDeals'],
     queryFn: () => homePageApi.getFeaturedDeals(),
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
@@ -20,15 +20,37 @@ const FeaturedDeals = React.memo(() => {
 
   if (isLoading) return <FeaturedDealsSkeleton />;
   if (isError)
-    return <ErrorState message="Unable to load featured deals. Please try again later." />;
+    return (
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.default' }}>
+        <Container maxWidth="lg">
+          <ErrorState
+            title="Unable to Load Featured Deals"
+            message="We're having trouble loading our featured deals at the moment. Please try again."
+            variant="error"
+            icon={<OfferIcon sx={{ fontSize: '3rem', color: 'error.main' }} />}
+            showRetry
+            onRetry={() => refetch()}
+          />
+        </Container>
+      </Box>
+    );
 
   if (featuredDeals.length === 0) {
     return (
-      <EmptyState
-        title="No featured deals available"
-        subtitle="Check back later for exciting offers"
-        icon={<OfferIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
-      />
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.default' }}>
+        <Container maxWidth="lg">
+          <SectionHeader
+            title="Featured Deals"
+            subtitle="Limited time offers on amazing hotels"
+            icon={<OfferIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'warning.main' }} />}
+          />
+          <EmptyState
+            title="No featured deals available"
+            subtitle="Check back later for exciting offers"
+            icon={<OfferIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
+          />
+        </Container>
+      </Box>
     );
   }
 
