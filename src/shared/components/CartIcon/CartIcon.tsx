@@ -14,6 +14,7 @@ function CartIcon() {
   return (
     <IconButton
       onClick={handleCartClick}
+      aria-label={`View cart with ${totalItems} item${totalItems !== 1 ? 's' : ''}`}
       sx={{
         color: 'inherit',
         '&:hover': {

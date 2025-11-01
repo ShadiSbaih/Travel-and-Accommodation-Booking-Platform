@@ -50,7 +50,8 @@ function HeroSection({ userName }: HeroSectionProps) {
           
           {userName && (
             <Typography
-              variant="h5"
+              variant="h2"
+              component="h2"
               sx={{
                 color: 'rgba(255, 255, 255, 0.95)',
                 fontWeight: 400,

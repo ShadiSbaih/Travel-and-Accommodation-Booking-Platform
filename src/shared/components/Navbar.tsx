@@ -83,7 +83,7 @@ function Navbar() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
-                            aria-label="menu"
+                            aria-label="Open navigation menu"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
@@ -184,17 +184,15 @@ function Navbar() {
                     </Box>
 
                     {/* Cart Button */}
-                    <Tooltip title="View Cart">
-                        <Box sx={{ mr: 1 }}>
-                            <CartIcon />
-                        </Box>
-                    </Tooltip>
+                    <Box sx={{ mr: 1 }}>
+                        <CartIcon />
+                    </Box>
 
                     {/* User Menu */}
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={fullName}>
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} aria-label="Open user menu">
+                                <Avatar alt={fullName} sx={{ bgcolor: 'primary.main' }}>
                                     {getInitials(fullName || '')}
                                 </Avatar>
                             </IconButton>

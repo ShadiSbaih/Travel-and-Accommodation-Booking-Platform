@@ -97,6 +97,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
             <OfferIcon sx={{ fontSize: '1rem' }} />
             <Typography
               variant="subtitle2"
+              component="span"
               sx={{
                 fontWeight: 700,
                 fontSize: '0.875rem',
@@ -208,6 +209,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           )}
           <Typography
             variant="h5"
+            component="span"
             sx={{
               fontWeight: 700,
               color: 'primary.main',
@@ -215,7 +217,7 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           >
             ${Math.round(deal.finalPrice || 0)}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" component="span">
             /night
           </Typography>
         </Box>
