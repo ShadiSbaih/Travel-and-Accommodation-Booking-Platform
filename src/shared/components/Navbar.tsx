@@ -18,6 +18,7 @@ import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import FTSLogo from '@/assets/FTS.png';
 import { CartIcon } from './CartIcon';
 
+
 const pages = [
     { name: 'Home', path: '/home' },
     { name: 'Search', path: '/search-results' }
@@ -54,11 +55,11 @@ function Navbar() {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* Desktop Logo */}
-                    <Box 
-                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }} 
+                    <Box
+                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }}
                         onClick={() => navigate('/home')}
                     >
-                        <img src={FTSLogo} alt="FTS Logo" style={{ height: 50, width: 'auto' }} />
+                        <img src={FTSLogo} alt="FTS Logo" width={50} height={50} style={{ width: 'auto', height: 50 }} />
                     </Box>
                     <Typography
                         variant="h6"
@@ -108,12 +109,12 @@ function Navbar() {
                                     to={page.path}
                                     onClick={handleCloseNavMenu}
                                     sx={{
-                                        '&:hover': { 
-                                            backgroundColor: 'grey.600', 
-                                            color: 'common.white' 
+                                        '&:hover': {
+                                            backgroundColor: 'grey.600',
+                                            color: 'common.white'
                                         },
-                                        '&.active': { 
-                                            color: 'primary.main', 
+                                        '&.active': {
+                                            color: 'primary.main',
                                             backgroundColor: 'action.selected',
                                             fontWeight: 'bold'
                                         }
@@ -128,11 +129,11 @@ function Navbar() {
                     </Box>
 
                     {/* Mobile Logo */}
-                    <Box 
-                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }} 
+                    <Box
+                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer' }}
                         onClick={() => navigate('/home')}
                     >
-                        <img src={FTSLogo} alt="FTS Logo" style={{ height: 32, width: 'auto' }} />
+                        <img src={FTSLogo} alt="FTS Logo" width={32} height={32} style={{ width: 'auto', height: 32 }} />
                     </Box>
                     <Typography
                         variant="h5"
@@ -167,11 +168,11 @@ function Navbar() {
                                     display: 'block',
                                     borderRadius: 1,
                                     transition: 'all 0.2s ease-in-out',
-                                    '&:hover': { 
+                                    '&:hover': {
                                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
                                     },
-                                    '&.active': { 
-                                        fontWeight: 'bold', 
+                                    '&.active': {
+                                        fontWeight: 'bold',
                                         backgroundColor: 'rgba(255, 255, 255, 0.2)',
                                         borderBottom: '2px solid white',
                                         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.4)'

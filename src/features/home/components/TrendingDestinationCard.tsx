@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { LocationOn as LocationIcon } from '@mui/icons-material';
 import type { TrendingDestinationCardProps } from '../types';
+import { OptimizedImage } from '@/shared/components/OptimizedImage';
 
 const TrendingDestinationCard = React.memo(({ destination }: TrendingDestinationCardProps) => {
   const navigate = useNavigate();
@@ -23,16 +24,12 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
 
   // Default placeholder image for missing images
   const defaultImage = 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop';
-  const imageUrl = useMemo(() => 
-    destination.thumbnailUrl && destination.thumbnailUrl.trim() !== '' 
-      ? destination.thumbnailUrl 
+  const imageUrl = useMemo(() =>
+    destination.thumbnailUrl && destination.thumbnailUrl.trim() !== ''
+      ? destination.thumbnailUrl
       : defaultImage,
     [destination.thumbnailUrl, defaultImage]
   );
-
-  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = defaultImage;
-  }, [defaultImage]);
 
   return (
     <Card
@@ -52,41 +49,38 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
         overflow: 'hidden',
       }}
     >
-      <CardActionArea 
-        onClick={handleClick} 
-        sx={{ 
+      <CardActionArea
+        onClick={handleClick}
+        sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
         }}
       >
-        <Box 
-          sx={{ 
-            position: 'relative', 
+        <Box
+          sx={{
+            position: 'relative',
             width: '100%',
             height: 220,
             overflow: 'hidden',
             flexShrink: 0,
           }}
         >
-          <Box
-            component="img"
+          <OptimizedImage
             src={imageUrl}
             alt={`${destination.cityName || 'City'}, ${destination.countryName || 'Country'}`}
-            onError={handleImageError}
-            loading="lazy"
-            sx={{ 
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
+            width={320}
+            height={220}
+            fallbackSrc={defaultImage}
+            sx={{
               transition: 'transform 0.3s ease-in-out',
-              '&:hover': {
+              '&:hover img': {
                 transform: 'scale(1.05)',
               },
             }}
           />
-          
+
           {/* Gradient overlay */}
           <Box
             sx={{
@@ -99,7 +93,7 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
               pointerEvents: 'none',
             }}
           />
-          
+
           {/* Location badge */}
           <Box
             sx={{
@@ -128,9 +122,9 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
             </Typography>
           </Box>
         </Box>
-        
-        <CardContent 
-          sx={{ 
+
+        <CardContent
+          sx={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',

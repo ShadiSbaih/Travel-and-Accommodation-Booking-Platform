@@ -15,6 +15,7 @@ import {
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 import type { RecentlyVisitedCardProps } from '../types';
+import { OptimizedImage } from '@/shared/components/OptimizedImage';
 
 const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => {
   const navigate = useNavigate();
@@ -24,8 +25,8 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
   }, [navigate, hotel.hotelId]);
 
   // Safely format date with fallback
-  const formattedDate = useMemo(() => 
-    hotel.visitDate 
+  const formattedDate = useMemo(() =>
+    hotel.visitDate
       ? format(new Date(hotel.visitDate), 'MMM dd, yyyy')
       : 'Recently',
     [hotel.visitDate]
@@ -33,16 +34,12 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
 
   // Default placeholder image for missing images
   const defaultImage = 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop';
-  const imageUrl = useMemo(() => 
-    hotel.thumbnailUrl && hotel.thumbnailUrl.trim() !== '' 
-      ? hotel.thumbnailUrl 
+  const imageUrl = useMemo(() =>
+    hotel.thumbnailUrl && hotel.thumbnailUrl.trim() !== ''
+      ? hotel.thumbnailUrl
       : defaultImage,
     [hotel.thumbnailUrl, defaultImage]
   );
-
-  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = defaultImage;
-  }, [defaultImage]);
 
   return (
     <Card
@@ -62,41 +59,38 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
         overflow: 'hidden',
       }}
     >
-      <CardActionArea 
-        onClick={handleClick} 
-        sx={{ 
+      <CardActionArea
+        onClick={handleClick}
+        sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
         }}
       >
-        <Box 
-          sx={{ 
-            position: 'relative', 
+        <Box
+          sx={{
+            position: 'relative',
             width: '100%',
             height: 220,
             overflow: 'hidden',
             flexShrink: 0,
           }}
         >
-          <Box
-            component="img"
+          <OptimizedImage
             src={imageUrl}
             alt={hotel.hotelName || 'Hotel'}
-            onError={handleImageError}
-            loading="lazy"
-            sx={{ 
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
+            width={320}
+            height={220}
+            fallbackSrc={defaultImage}
+            sx={{
               transition: 'transform 0.3s ease-in-out',
-              '&:hover': {
+              '&:hover img': {
                 transform: 'scale(1.05)',
               },
             }}
           />
-          
+
           {/* Gradient overlay for better text visibility */}
           <Box
             sx={{
@@ -110,9 +104,9 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
             }}
           />
         </Box>
-        
-        <CardContent 
-          sx={{ 
+
+        <CardContent
+          sx={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
@@ -150,13 +144,13 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
                 {hotel.cityName || 'Unknown location'}
               </Typography>
             </Box>
-            
+
             {hotel.starRating > 0 && (
               <Rating
                 value={Math.min(Math.max(hotel.starRating, 0), 5)}
                 readOnly
                 size="small"
-                sx={{ 
+                sx={{
                   '& .MuiRating-iconFilled': {
                     color: 'warning.main',
                   },

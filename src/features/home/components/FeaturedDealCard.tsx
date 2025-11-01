@@ -15,6 +15,7 @@ import {
   ArrowForward as ArrowIcon,
 } from '@mui/icons-material';
 import type { FeaturedDealCardProps } from '../types';
+import { OptimizedImage } from '@/shared/components/OptimizedImage';
 
 const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
   const navigate = useNavigate();
@@ -31,10 +32,6 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
       : defaultImage,
     [deal.roomPhotoUrl, defaultImage]
   );
-
-  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = defaultImage;
-  }, [defaultImage]);
 
   return (
     <Card
@@ -62,18 +59,12 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
           bgcolor: 'grey.200',
         }}
       >
-        <Box
-          component="img"
+        <OptimizedImage
           src={imageUrl}
           alt={deal.title || 'Hotel deal'}
-          onError={handleImageError}
-          loading="lazy"
-          sx={{ 
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-          }}
+          width={320}
+          height={220}
+          fallbackSrc={defaultImage}
         />
         
         {/* Discount badge */}
