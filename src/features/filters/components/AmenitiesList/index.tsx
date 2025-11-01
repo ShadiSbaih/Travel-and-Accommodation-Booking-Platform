@@ -7,7 +7,6 @@ import {
   Typography,
   Box,
   Tooltip,
-  Fade
 } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '@/core/store/hooks';
 import { toggleAmenity } from '@/features/filters/store/filterSlice';
@@ -46,7 +45,7 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
       }}
     >
       <List
-        dense
+        
         sx={{
           py: 1,
           px: 0.5,
@@ -134,21 +133,7 @@ const AmenitiesList: React.FC<AmenitiesListProps> = ({ amenities }) => {
         ))}
       </List>
 
-      {/* Scroll indicator for more content */}
-      <Fade in={amenities.length > 8}>
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 16,
-            background: 'linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0))',
-            pointerEvents: 'none',
-            borderRadius: '0 0 8px 8px',
-          }}
-        />
-      </Fade>
+     
     </Box>
   );
 };
