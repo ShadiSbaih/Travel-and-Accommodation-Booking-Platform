@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
-  CardMedia,
   CardActionArea,
   Typography,
   Box,
@@ -11,29 +10,37 @@ import {
 import { LocationOn as LocationIcon } from '@mui/icons-material';
 import type { TrendingDestinationCardProps } from '../types';
 
-function TrendingDestinationCard({ destination }: TrendingDestinationCardProps) {
+const TrendingDestinationCard = React.memo(({ destination }: TrendingDestinationCardProps) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     // Navigate to search results for this city
     const cityName = destination.cityName || '';
     if (cityName) {
       navigate(`/search-results?query=${encodeURIComponent(cityName)}`);
     }
-  };
+  }, [navigate, destination.cityName]);
 
   // Default placeholder image for missing images
   const defaultImage = 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop';
-  const imageUrl = destination.thumbnailUrl && destination.thumbnailUrl.trim() !== '' 
-    ? destination.thumbnailUrl 
-    : defaultImage;
+  const imageUrl = useMemo(() => 
+    destination.thumbnailUrl && destination.thumbnailUrl.trim() !== '' 
+      ? destination.thumbnailUrl 
+      : defaultImage,
+    [destination.thumbnailUrl, defaultImage]
+  );
+
+  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = defaultImage;
+  }, [defaultImage]);
 
   return (
     <Card
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        transition: 'all 0.3s ease-in-out',
+        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        willChange: 'transform',
         '&:hover': {
           transform: 'translateY(-8px)',
           boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
@@ -63,13 +70,12 @@ function TrendingDestinationCard({ destination }: TrendingDestinationCardProps) 
             flexShrink: 0,
           }}
         >
-          <CardMedia
+          <Box
             component="img"
-            image={imageUrl}
+            src={imageUrl}
             alt={`${destination.cityName || 'City'}, ${destination.countryName || 'Country'}`}
-            onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-              e.currentTarget.src = defaultImage;
-            }}
+            onError={handleImageError}
+            loading="lazy"
             sx={{ 
               width: '100%',
               height: '100%',
@@ -199,4 +205,8 @@ function TrendingDestinationCard({ destination }: TrendingDestinationCardProps) 
       </CardActionArea>
     </Card>
   );
-}export default TrendingDestinationCard;
+});
+
+TrendingDestinationCard.displayName = 'TrendingDestinationCard';
+
+export default TrendingDestinationCard;

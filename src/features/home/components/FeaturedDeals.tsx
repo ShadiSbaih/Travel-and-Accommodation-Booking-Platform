@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Container } from '@mui/material';
 import { LocalOffer as OfferIcon } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
@@ -5,17 +6,19 @@ import homePageApi from '../api/home-page.api';
 import type { FeaturedDealDto } from '../types';
 import FeaturedDealCard from './FeaturedDealCard';
 import SectionHeader from './SectionHeader';
-import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
+import { FeaturedDealsSkeleton } from './skeletons';
 
-function FeaturedDeals() {
+const FeaturedDeals = React.memo(() => {
   const { data: featuredDeals = [], isLoading, isError } = useQuery({
     queryKey: ['featuredDeals'],
     queryFn: () => homePageApi.getFeaturedDeals(),
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
   });
 
-  if (isLoading) return <LoadingState message="Loading featured deals..." />;
+  if (isLoading) return <FeaturedDealsSkeleton />;
   if (isError)
     return <ErrorState message="Unable to load featured deals. Please try again later." />;
 
@@ -57,6 +60,8 @@ function FeaturedDeals() {
       </Container>
     </Box>
   );
-}
+});
+
+FeaturedDeals.displayName = 'FeaturedDeals';
 
 export default FeaturedDeals;

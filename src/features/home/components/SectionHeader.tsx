@@ -1,7 +1,8 @@
+import React from 'react';
 import { Box, Typography } from '@mui/material';
 import type { SectionHeaderProps } from '../types';
 
-function SectionHeader({ title, subtitle, icon }: SectionHeaderProps) {
+const SectionHeader = React.memo(({ title, subtitle, icon }: SectionHeaderProps) => {
   return (
     <Box sx={{ mb: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
@@ -31,6 +32,8 @@ function SectionHeader({ title, subtitle, icon }: SectionHeaderProps) {
       )}
     </Box>
   );
-}
+});
+
+SectionHeader.displayName = 'SectionHeader';
 
 export default SectionHeader;

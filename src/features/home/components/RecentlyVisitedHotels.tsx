@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Container } from '@mui/material';
 import { History as HistoryIcon } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
@@ -6,11 +7,11 @@ import homePageApi from '../api/home-page.api';
 import type { RecentlyVisitedHotelDto } from '../types';
 import RecentlyVisitedCard from './RecentlyVisitedCard';
 import SectionHeader from './SectionHeader';
-import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
+import { RecentlyVisitedSkeleton } from './skeletons';
 
-function RecentlyVisitedHotels() {
+const RecentlyVisitedHotels = React.memo(() => {
   const { userId } = useUserInfo();
 
   const {
@@ -21,12 +22,14 @@ function RecentlyVisitedHotels() {
     queryKey: ['recentlyVisitedHotels', userId],
     queryFn: () => homePageApi.getRecentlyVisitedHotels(userId as string),
     enabled: !!userId,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
   });
 
   // Don't show section if user is not logged in
   if (!userId) return null;
 
-  if (isLoading) return <LoadingState message="Loading your recently visited hotels..." />;
+  if (isLoading) return <RecentlyVisitedSkeleton />;
   if (isError)
     return <ErrorState message="Unable to load your hotel history. Please try again later." />;
 
@@ -81,6 +84,8 @@ function RecentlyVisitedHotels() {
       </Container>
     </Box>
   );
-}
+});
+
+RecentlyVisitedHotels.displayName = 'RecentlyVisitedHotels';
 
 export default RecentlyVisitedHotels;

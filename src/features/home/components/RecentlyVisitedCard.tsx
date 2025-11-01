@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
-  CardMedia,
   CardActionArea,
   Typography,
   Box,
@@ -17,30 +16,41 @@ import {
 import { format } from 'date-fns';
 import type { RecentlyVisitedCardProps } from '../types';
 
-function RecentlyVisitedCard({ hotel }: RecentlyVisitedCardProps) {
+const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     navigate(`/hotels/${hotel.hotelId}`);
-  };
+  }, [navigate, hotel.hotelId]);
 
   // Safely format date with fallback
-  const formattedDate = hotel.visitDate 
-    ? format(new Date(hotel.visitDate), 'MMM dd, yyyy')
-    : 'Recently';
+  const formattedDate = useMemo(() => 
+    hotel.visitDate 
+      ? format(new Date(hotel.visitDate), 'MMM dd, yyyy')
+      : 'Recently',
+    [hotel.visitDate]
+  );
 
   // Default placeholder image for missing images
   const defaultImage = 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop';
-  const imageUrl = hotel.thumbnailUrl && hotel.thumbnailUrl.trim() !== '' 
-    ? hotel.thumbnailUrl 
-    : defaultImage;
+  const imageUrl = useMemo(() => 
+    hotel.thumbnailUrl && hotel.thumbnailUrl.trim() !== '' 
+      ? hotel.thumbnailUrl 
+      : defaultImage,
+    [hotel.thumbnailUrl, defaultImage]
+  );
+
+  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = defaultImage;
+  }, [defaultImage]);
 
   return (
     <Card
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        transition: 'all 0.3s ease-in-out',
+        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        willChange: 'transform',
         '&:hover': {
           transform: 'translateY(-8px)',
           boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
@@ -70,13 +80,12 @@ function RecentlyVisitedCard({ hotel }: RecentlyVisitedCardProps) {
             flexShrink: 0,
           }}
         >
-          <CardMedia
+          <Box
             component="img"
-            image={imageUrl}
+            src={imageUrl}
             alt={hotel.hotelName || 'Hotel'}
-            onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-              e.currentTarget.src = defaultImage;
-            }}
+            onError={handleImageError}
+            loading="lazy"
             sx={{ 
               width: '100%',
               height: '100%',
@@ -212,4 +221,8 @@ function RecentlyVisitedCard({ hotel }: RecentlyVisitedCardProps) {
       </CardActionArea>
     </Card>
   );
-}export default RecentlyVisitedCard;
+});
+
+RecentlyVisitedCard.displayName = 'RecentlyVisitedCard';
+
+export default RecentlyVisitedCard;

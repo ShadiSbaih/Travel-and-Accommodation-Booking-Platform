@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
-  CardMedia,
   CardActions,
   Typography,
   Box,
@@ -17,25 +16,33 @@ import {
 } from '@mui/icons-material';
 import type { FeaturedDealCardProps } from '../types';
 
-function FeaturedDealCard({ deal }: FeaturedDealCardProps) {
+const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
   const navigate = useNavigate();
 
-  const handleViewDeal = () => {
+  const handleViewDeal = useCallback(() => {
     navigate(`/hotels/${deal.hotelId}`);
-  };
+  }, [navigate, deal.hotelId]);
 
   // Default placeholder image for missing images
   const defaultImage = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop';
-  const imageUrl = deal.roomPhotoUrl && deal.roomPhotoUrl.trim() !== '' 
-    ? deal.roomPhotoUrl 
-    : defaultImage;
+  const imageUrl = useMemo(() => 
+    deal.roomPhotoUrl && deal.roomPhotoUrl.trim() !== '' 
+      ? deal.roomPhotoUrl 
+      : defaultImage,
+    [deal.roomPhotoUrl, defaultImage]
+  );
+
+  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = defaultImage;
+  }, [defaultImage]);
 
   return (
     <Card
       sx={{
         display: 'grid',
         gridTemplateRows: '220px 1fr auto',
-        transition: 'all 0.3s ease-in-out',
+        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        willChange: 'transform',
         '&:hover': {
           transform: 'translateY(-8px)',
           boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
@@ -55,13 +62,12 @@ function FeaturedDealCard({ deal }: FeaturedDealCardProps) {
           bgcolor: 'grey.200',
         }}
       >
-        <CardMedia
+        <Box
           component="img"
-          image={imageUrl}
+          src={imageUrl}
           alt={deal.title || 'Hotel deal'}
-          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            e.currentTarget.src = defaultImage;
-          }}
+          onError={handleImageError}
+          loading="lazy"
           sx={{ 
             width: '100%',
             height: '100%',
@@ -232,6 +238,8 @@ function FeaturedDealCard({ deal }: FeaturedDealCardProps) {
       </CardActions>
     </Card>
   );
-}
+});
+
+FeaturedDealCard.displayName = 'FeaturedDealCard';
 
 export default FeaturedDealCard;

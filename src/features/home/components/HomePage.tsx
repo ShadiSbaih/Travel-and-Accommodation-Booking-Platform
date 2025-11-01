@@ -1,10 +1,15 @@
+import React from 'react';
 import { Box } from '@mui/material';
 import Navbar from '@/shared/components/Navbar';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import HeroSection from './HeroSection';
-import FeaturedDeals from './FeaturedDeals';
-import TrendingDestinations from './TrendingDestinations';
-import RecentlyVisitedHotels from './RecentlyVisitedHotels';
+import LazySection from './LazySection';
+import { FeaturedDealsSkeleton, TrendingDestinationsSkeleton, RecentlyVisitedSkeleton } from './skeletons';
+
+// Lazy load sections for better performance
+const FeaturedDeals = React.lazy(() => import('./FeaturedDeals'));
+const TrendingDestinations = React.lazy(() => import('./TrendingDestinations'));
+const RecentlyVisitedHotels = React.lazy(() => import('./RecentlyVisitedHotels'));
 
 function HomePage() {
   const { fullName } = useUserInfo();
@@ -18,9 +23,18 @@ function HomePage() {
     >
       <Navbar />
       <HeroSection userName={fullName} />
-      <FeaturedDeals />
-      <TrendingDestinations />
-      <RecentlyVisitedHotels />
+      
+      <LazySection fallback={<FeaturedDealsSkeleton />}>
+        <FeaturedDeals />
+      </LazySection>
+      
+      <LazySection fallback={<TrendingDestinationsSkeleton />}>
+        <TrendingDestinations />
+      </LazySection>
+      
+      <LazySection fallback={<RecentlyVisitedSkeleton />}>
+        <RecentlyVisitedHotels />
+      </LazySection>
     </Box>
   );
 }
