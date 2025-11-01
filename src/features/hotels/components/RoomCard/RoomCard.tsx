@@ -5,7 +5,7 @@ import type { RoomCardProps } from '../../types';
 function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
   const isDisabled = !room.availability;
   const buttonColor = isInCart ? 'error' : 'primary';
-  const buttonText = isDisabled ? 'Unavailable' : isInCart ? 'Remove' : 'Book Now';
+  const buttonText = isDisabled ? 'Unavailable' : isInCart ? 'Remove from Cart' : 'Add to Cart';
 
   return (
     <Card
