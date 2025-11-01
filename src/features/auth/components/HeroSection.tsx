@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import Mosque from '@/assets/mosque.svg';
 import Italy from '@/assets/italy.svg';
+import RoadsImage from '@/assets/roads.jpg';
 
 const HeroSection = () => {
   return (
@@ -19,8 +20,7 @@ const HeroSection = () => {
         sx={{
           position: 'absolute',
           inset: 0,
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1920&auto=format&fit=crop')",
+          backgroundImage: `url(${RoadsImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
