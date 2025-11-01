@@ -37,6 +37,7 @@ function ConfirmationPage() {
       >
         <Container maxWidth="lg">
           <Button
+            variant="outlined"
             startIcon={<ArrowBack />}
             onClick={() => navigate('/')}
             sx={{

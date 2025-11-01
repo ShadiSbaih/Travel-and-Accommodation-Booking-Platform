@@ -80,3 +80,11 @@ export interface OrderSummaryRowProps {
   value: string;
   highlight?: boolean;
 }
+
+// Clear Cart Dialog Props
+export interface ClearCartDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  itemCount: number;
+}
