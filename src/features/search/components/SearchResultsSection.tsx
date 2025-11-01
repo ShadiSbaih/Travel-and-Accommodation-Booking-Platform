@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import HotelCard from '@/features/hotels/components/HotelCard';
+import HotelCard from '@/features/hotels/components/HotelCard/index.tsx';
 import ErrorState from '@/shared/components/ErrorState';
 import EmptyState from '@/shared/components/EmptyState';
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
