@@ -1,20 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Box, Skeleton } from '@mui/material';
-import type { SxProps, Theme } from '@mui/material';
-
-interface OptimizedImageProps {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    fallbackSrc?: string;
-    sx?: SxProps<Theme>;
-    loading?: 'lazy' | 'eager';
-    objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
-    priority?: boolean;
-    onLoad?: () => void;
-    onError?: () => void;
-}
+import type { OptimizedImageProps } from './types';
 
 const DEFAULT_FALLBACK = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23e0e0e0"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18" fill="%23757575"%3ENo Image%3C/text%3E%3C/svg%3E';
 

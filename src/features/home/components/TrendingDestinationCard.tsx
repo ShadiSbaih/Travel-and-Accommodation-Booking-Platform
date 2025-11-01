@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
@@ -21,15 +21,6 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
       navigate(`/search-results?query=${encodeURIComponent(cityName)}`);
     }
   }, [navigate, destination.cityName]);
-
-  // Default placeholder image for missing images
-  const defaultImage = 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop';
-  const imageUrl = useMemo(() =>
-    destination.thumbnailUrl && destination.thumbnailUrl.trim() !== ''
-      ? destination.thumbnailUrl
-      : defaultImage,
-    [destination.thumbnailUrl, defaultImage]
-  );
 
   return (
     <Card
@@ -68,11 +59,11 @@ const TrendingDestinationCard = React.memo(({ destination }: TrendingDestination
           }}
         >
           <OptimizedImage
-            src={imageUrl}
+            src={destination.thumbnailUrl || ''}
             alt={`${destination.cityName || 'City'}, ${destination.countryName || 'Country'}`}
             width={320}
             height={220}
-            fallbackSrc={defaultImage}
+            fallbackSrc="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop"
             sx={{
               transition: 'transform 0.3s ease-in-out',
               '&:hover img': {

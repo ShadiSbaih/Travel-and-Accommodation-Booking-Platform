@@ -22,7 +22,7 @@ export const useCheckout = () => {
 
   const handleProceedToCheckout = () => {
     // TODO: Navigate to payment/confirmation page
-    console.log('Proceeding to checkout with items:', items);
+    // Placeholder for checkout logic
   };
 
   const handleBrowseHotels = () => {

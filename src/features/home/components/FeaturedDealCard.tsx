@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
@@ -23,15 +23,6 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
   const handleViewDeal = useCallback(() => {
     navigate(`/hotels/${deal.hotelId}`);
   }, [navigate, deal.hotelId]);
-
-  // Default placeholder image for missing images
-  const defaultImage = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop';
-  const imageUrl = useMemo(() => 
-    deal.roomPhotoUrl && deal.roomPhotoUrl.trim() !== '' 
-      ? deal.roomPhotoUrl 
-      : defaultImage,
-    [deal.roomPhotoUrl, defaultImage]
-  );
 
   return (
     <Card
@@ -60,11 +51,11 @@ const FeaturedDealCard = React.memo(({ deal }: FeaturedDealCardProps) => {
         }}
       >
         <OptimizedImage
-          src={imageUrl}
+          src={deal.roomPhotoUrl || ''}
           alt={deal.title || 'Hotel deal'}
           width={320}
           height={220}
-          fallbackSrc={defaultImage}
+          fallbackSrc="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop"
         />
         
         {/* Discount badge */}
