@@ -4,7 +4,7 @@ import type { RoomCardProps } from '../../types';
 
 
 
-function RoomCard({ room, onBookNow }: RoomCardProps) {
+function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
   const handleBookNow = () => {
     if (onBookNow) {
       onBookNow(room.roomId);
@@ -136,15 +136,21 @@ function RoomCard({ room, onBookNow }: RoomCardProps) {
             onClick={handleBookNow}
             disabled={!room.availability}
             sx={{
-              bgcolor: room.availability ? 'primary.main' : 'grey.500',
+              bgcolor: room.availability 
+                ? (isInCart ? 'error.main' : 'primary.main')
+                : 'grey.500',
               color: 'white',
               fontWeight: 700,
               '&:hover': {
-                bgcolor: room.availability ? 'primary.dark' : 'grey.500',
+                bgcolor: room.availability 
+                  ? (isInCart ? 'error.dark' : 'primary.dark')
+                  : 'grey.500',
               },
             }}
           >
-            {room.availability ? 'Book Now' : 'Unavailable'}
+            {room.availability 
+              ? (isInCart ? 'Remove' : 'Book Now')
+              : 'Unavailable'}
           </Button>
         </Box>
       </CardContent>

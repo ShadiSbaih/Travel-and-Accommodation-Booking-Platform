@@ -93,6 +93,7 @@ export interface RoomsListProps {
 export interface RoomCardProps {
     room: AvailableRoom;
     onBookNow?: (roomId: number) => void;
+    isInCart?: boolean;
 }
 export interface AmenitiesListProps {
     amenities: Amenity[];
