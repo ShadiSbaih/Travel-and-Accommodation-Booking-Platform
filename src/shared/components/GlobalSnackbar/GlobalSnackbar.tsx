@@ -4,10 +4,11 @@ import { hideNotification } from '@/core/store/slices/notificationSlice';
 
 function GlobalSnackbar() {
   const dispatch = useAppDispatch();
-  const { open, message, severity } = useAppSelector((state) => state.notification);
+  const { open, message, severity, key } = useAppSelector((state) => state.notification);
 
   return (
     <Snackbar
+      key={key}
       open={open}
       autoHideDuration={3000}
       onClose={() => dispatch(hideNotification())}

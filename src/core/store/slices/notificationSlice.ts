@@ -7,12 +7,14 @@ export interface NotificationState {
   open: boolean;
   message: string;
   severity: NotificationSeverity;
+  key: number;
 }
 
 const initialState: NotificationState = {
   open: false,
   message: '',
   severity: 'success',
+  key: 0,
 };
 
 const notificationSlice = createSlice({
@@ -26,6 +28,7 @@ const notificationSlice = createSlice({
       state.open = true;
       state.message = action.payload.message;
       state.severity = action.payload.severity || 'success';
+      state.key = Date.now(); // Unique key for each notification
     },
     hideNotification: (state) => {
       state.open = false;
