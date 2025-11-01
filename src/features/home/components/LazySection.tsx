@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Box } from '@mui/material';
-import { useIntersectionObserver } from '@/shared/hooks/useIntersectionObserver';
+import { useInView } from 'react-intersection-observer';
 
 interface LazySectionProps {
   children: React.ReactNode;
@@ -9,21 +9,21 @@ interface LazySectionProps {
 }
 
 const LazySection = React.memo(({ children, fallback, minHeight = 400 }: LazySectionProps) => {
-  const [ref, isVisible] = useIntersectionObserver({
+  const { ref, inView } = useInView({
     threshold: 0,
     rootMargin: '200px', // Load content 200px before it comes into view
-    freezeOnceVisible: true,
+    triggerOnce: true, // Only trigger once when it comes into view
   });
 
   return (
     <Box
       ref={ref}
       sx={{
-        minHeight: isVisible ? 'auto' : minHeight,
+        minHeight: inView ? 'auto' : minHeight,
       }}
     >
-      {isVisible && <Suspense fallback={fallback}>{children}</Suspense>}
-      {!isVisible && fallback}
+      {inView && <Suspense fallback={fallback}>{children}</Suspense>}
+      {!inView && fallback}
     </Box>
   );
 });
