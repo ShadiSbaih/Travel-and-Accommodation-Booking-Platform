@@ -1,12 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import RoomCard from './RoomCard';
-
 import type { RoomsListProps } from '../../types';
 
-
-
 function RoomsList({ rooms, onRoomSelect, cartItems }: RoomsListProps) {
-  if (!rooms || rooms.length === 0) return null;
+  if (!rooms?.length) return null;
 
   return (
     <Box>

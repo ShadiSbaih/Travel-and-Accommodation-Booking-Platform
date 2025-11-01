@@ -6,19 +6,15 @@ function GlobalSnackbar() {
   const dispatch = useAppDispatch();
   const { open, message, severity } = useAppSelector((state) => state.notification);
 
-  const handleClose = () => {
-    dispatch(hideNotification());
-  };
-
   return (
     <Snackbar
       open={open}
       autoHideDuration={3000}
-      onClose={handleClose}
+      onClose={() => dispatch(hideNotification())}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
     >
       <Alert
-        onClose={handleClose}
+        onClose={() => dispatch(hideNotification())}
         severity={severity}
         variant="filled"
         sx={{ width: '100%' }}

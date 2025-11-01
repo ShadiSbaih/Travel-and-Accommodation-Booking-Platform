@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '@/core/store/hooks';
 import { removeFromCart, clearCart } from '@/features/cart';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +7,7 @@ import { useNotification } from '@/shared/hooks/useNotification';
 export const useCheckout = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { notify } = useNotification();
+  const notify = useNotification();
   const { items, totalItems, totalPrice } = useAppSelector((state) => state.cart);
 
   const handleRemoveItem = (itemId: string) => {
@@ -28,10 +29,11 @@ export const useCheckout = () => {
     navigate('/search-results');
   };
 
-  // Calculate order summary values
-  const serviceFee = 0;
-  const taxes = totalPrice * 0.1;
-  const total = totalPrice + serviceFee + taxes;
+  const { serviceFee, taxes, total } = useMemo(() => ({
+    serviceFee: 0,
+    taxes: totalPrice * 0.1,
+    total: totalPrice + totalPrice * 0.1,
+  }), [totalPrice]);
 
   return {
     items,

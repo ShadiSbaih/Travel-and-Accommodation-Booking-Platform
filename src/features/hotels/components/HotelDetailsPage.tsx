@@ -14,13 +14,16 @@ function HotelDetailsPage() {
   const { id } = useParams();
   const hotelId = Number(id);
   const { addToCart, removeFromCart, isInCart } = useCart();
-  const { notify } = useNotification();
+  const notify = useNotification();
 
   const { data: hotel, isLoading: isLoadingHotel, error: hotelError } = useHotel(hotelId);
   const { data: gallery, isLoading: isLoadingGallery, error: galleryError } = useHotelGallery(hotelId);
   const { data: rooms, isLoading: isLoadingRooms } = useAvailableRooms(hotelId);
 
-  if (isLoadingHotel || isLoadingGallery || isLoadingRooms) {
+  const isLoading = isLoadingHotel || isLoadingGallery || isLoadingRooms;
+  const hasError = hotelError || galleryError || !hotel;
+
+  if (isLoading) {
     return (
       <>
         <Navbar />
@@ -29,7 +32,7 @@ function HotelDetailsPage() {
     );
   }
 
-  if (hotelError || galleryError || !hotel) {
+  if (hasError) {
     return (
       <>
         <Navbar />
@@ -47,33 +50,35 @@ function HotelDetailsPage() {
       alt: `${hotel.name} - Image ${index + 1}`,
     })) || [];
 
+  const cartItems = rooms?.filter((room) => isInCart(hotel.id, room.roomId)).map((r) => r.roomId) || [];
+
   const handleRoomBooking = (roomId: number) => {
     const room = rooms?.find((r) => r.roomId === roomId);
+    if (!room) return;
 
-    if (room) {
-      const itemId = `${hotel.id}-${room.roomId}`;
+    const itemId = `${hotel.id}-${room.roomId}`;
+    const inCart = isInCart(hotel.id, room.roomId);
 
-      if (isInCart(hotel.id, room.roomId)) {
-        removeFromCart(itemId);
-        notify('Room removed from cart', 'info');
-      } else {
-        addToCart({
-          room: {
-            id: room.roomId,
-            name: room.roomType,
-            type: room.roomType,
-            available: room.availability,
-            maxOccupancy: room.capacityOfAdults + room.capacityOfChildren,
-            price: room.price,
-          },
-          hotelId: hotel.id,
-          hotelName: hotel.name,
-          roomImage: room.roomPhotoUrl,
-          hotelAmenities: room.roomAmenities,
-          numberOfNights: 1,
-        });
-        notify('Room added to cart successfully!', 'success');
-      }
+    if (inCart) {
+      removeFromCart(itemId);
+      notify('Room removed from cart', 'info');
+    } else {
+      addToCart({
+        room: {
+          id: room.roomId,
+          name: room.roomType,
+          type: room.roomType,
+          available: room.availability,
+          maxOccupancy: room.capacityOfAdults + room.capacityOfChildren,
+          price: room.price,
+        },
+        hotelId: hotel.id,
+        hotelName: hotel.name,
+        roomImage: room.roomPhotoUrl,
+        hotelAmenities: room.roomAmenities,
+        numberOfNights: 1,
+      });
+      notify('Room added to cart successfully!', 'success');
     }
   };
 
@@ -85,29 +90,11 @@ function HotelDetailsPage() {
           <Box sx={{ display: 'flex', gap: 4, flexDirection: { xs: 'column', lg: 'row' } }}>
             <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 65%' } }}>
               <HotelGallery images={sliderImages} />
-              <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-                {rooms && rooms.length > 0 && (
-                  <RoomsList
-                    rooms={rooms}
-                    onRoomSelect={handleRoomBooking}
-                    cartItems={rooms.filter((room) => isInCart(hotel.id, room.roomId)).map((r) => r.roomId)}
-                  />
-                )}
-              </Box>
+              {rooms && <RoomsList rooms={rooms} onRoomSelect={handleRoomBooking} cartItems={cartItems} />}
             </Box>
 
             <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 calc(35% - 32px)' } }}>
               <HotelSidebar hotel={hotel} />
-            </Box>
-
-            <Box sx={{ flex: { xs: '1 1 100%' }, display: { xs: 'block', lg: 'none' } }}>
-              {rooms && rooms.length > 0 && (
-                <RoomsList
-                  rooms={rooms}
-                  onRoomSelect={handleRoomBooking}
-                  cartItems={rooms.filter((room) => isInCart(hotel.id, room.roomId)).map((r) => r.roomId)}
-                />
-              )}
             </Box>
           </Box>
         </Container>

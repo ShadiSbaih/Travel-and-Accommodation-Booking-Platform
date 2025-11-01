@@ -2,14 +2,10 @@ import { Card, CardMedia, CardContent, Box, Typography, Chip, Button } from '@mu
 import { People, ChildCare } from '@mui/icons-material';
 import type { RoomCardProps } from '../../types';
 
-
-
 function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
-  const handleBookNow = () => {
-    if (onBookNow) {
-      onBookNow(room.roomId);
-    }
-  };
+  const isDisabled = !room.availability;
+  const buttonColor = isInCart ? 'error' : 'primary';
+  const buttonText = isDisabled ? 'Unavailable' : isInCart ? 'Remove' : 'Book Now';
 
   return (
     <Card
@@ -34,33 +30,18 @@ function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
           alt={room.roomType}
           sx={{ objectFit: 'cover' }}
         />
-        {room.availability ? (
-          <Chip
-            label="Available"
-            size="small"
-            sx={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              bgcolor: 'success.main',
-              color: 'white',
-              fontWeight: 600,
-            }}
-          />
-        ) : (
-          <Chip
-            label="Unavailable"
-            size="small"
-            sx={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              bgcolor: 'grey.500',
-              color: 'white',
-              fontWeight: 600,
-            }}
-          />
-        )}
+        <Chip
+          label={room.availability ? 'Available' : 'Unavailable'}
+          size="small"
+          sx={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            bgcolor: room.availability ? 'success.main' : 'grey.500',
+            color: 'white',
+            fontWeight: 600,
+          }}
+        />
       </Box>
 
       <CardContent sx={{ p: 3 }}>
@@ -133,24 +114,12 @@ function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
           </Typography>
           <Button
             variant="contained"
-            onClick={handleBookNow}
-            disabled={!room.availability}
-            sx={{
-              bgcolor: room.availability 
-                ? (isInCart ? 'error.main' : 'primary.main')
-                : 'grey.500',
-              color: 'white',
-              fontWeight: 700,
-              '&:hover': {
-                bgcolor: room.availability 
-                  ? (isInCart ? 'error.dark' : 'primary.dark')
-                  : 'grey.500',
-              },
-            }}
+            color={isDisabled ? 'inherit' : buttonColor}
+            onClick={() => onBookNow?.(room.roomId)}
+            disabled={isDisabled}
+            sx={{ fontWeight: 700 }}
           >
-            {room.availability 
-              ? (isInCart ? 'Remove' : 'Book Now')
-              : 'Unavailable'}
+            {buttonText}
           </Button>
         </Box>
       </CardContent>
