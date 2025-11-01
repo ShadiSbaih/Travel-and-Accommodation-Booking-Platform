@@ -4,7 +4,9 @@ import EmptyCartState from './EmptyCartState';
 import CartHeader from './CartHeader';
 import CartItemsList from './CartItemsList';
 import OrderSummary from './OrderSummary';
+import PaymentForm from './PaymentForm';
 import { useCheckout } from '../hooks/useCheckout';
+import { useState } from 'react';
 
 function CheckoutPage() {
   const {
@@ -18,7 +20,18 @@ function CheckoutPage() {
     handleClearCart,
     handleProceedToCheckout,
     handleBrowseHotels,
+    isBookingLoading,
   } = useCheckout();
+
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+
+  const handleProceedClick = () => {
+    setShowPaymentForm(true);
+  };
+
+  const handlePaymentSubmit = (customerName: string, paymentMethod: string) => {
+    handleProceedToCheckout(customerName, paymentMethod);
+  };
 
   if (items.length === 0) {
     return (
@@ -54,16 +67,24 @@ function CheckoutPage() {
               <CartItemsList items={items} onRemoveItem={handleRemoveItem} />
             </Box>
 
-            {/* Order Summary */}
+            {/* Order Summary or Payment Form */}
             <Box>
-              <OrderSummary
-                totalItems={totalItems}
-                subtotal={totalPrice}
-                serviceFee={serviceFee}
-                taxes={taxes}
-                total={total}
-                onProceedToCheckout={handleProceedToCheckout}
-              />
+              {!showPaymentForm ? (
+                <OrderSummary
+                  totalItems={totalItems}
+                  subtotal={totalPrice}
+                  serviceFee={serviceFee}
+                  taxes={taxes}
+                  total={total}
+                  onProceedToCheckout={handleProceedClick}
+                />
+              ) : (
+                <PaymentForm
+                  total={total}
+                  onSubmit={handlePaymentSubmit}
+                  isLoading={isBookingLoading}
+                />
+              )}
             </Box>
           </Box>
         </Container>

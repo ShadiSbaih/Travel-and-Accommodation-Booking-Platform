@@ -1,6 +1,23 @@
 import type { CartItem } from '@/features/cart';
 import type { Amenity } from '@/features/hotels/types';
 
+// Booking Receipt Types
+export interface BookingReceipt {
+  customerName: string;
+  hotelName: string;
+  roomNumber: string;
+  roomType: string;
+  bookingDateTime: string;
+  totalCost: number;
+  paymentMethod: string;
+  bookingStatus: string;
+  confirmationNumber: string;
+}
+
+export interface BookingReceiptProps {
+  receipt: BookingReceipt;
+}
+
 // Cart Item Component Props
 export interface CartItemCardProps {
   item: CartItem;

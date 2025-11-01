@@ -4,12 +4,14 @@ import { removeFromCart, clearCart } from '@/features/cart';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '@/shared/hooks/useNotification';
 import { calculateCheckoutTotals } from '../utils/checkout.utils';
+import { useBooking } from './useBooking';
 
 export const useCheckout = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const notify = useNotification();
   const { items, totalItems, totalPrice } = useAppSelector((state) => state.cart);
+  const { createBooking, navigateToConfirmation, isLoading: isBookingLoading } = useBooking();
 
   const handleRemoveItem = (itemId: string) => {
     dispatch(removeFromCart(itemId));
@@ -21,9 +23,15 @@ export const useCheckout = () => {
     notify('Cart cleared', 'info');
   };
 
-  const handleProceedToCheckout = () => {
-    // TODO: Navigate to payment/confirmation page
-    // Placeholder for checkout logic
+  const handleProceedToCheckout = async (customerName: string, paymentMethod: string) => {
+    const receipt = await createBooking(customerName, items, paymentMethod, total);
+    
+    if (receipt) {
+      // Clear cart after successful booking
+      dispatch(clearCart());
+      // Navigate to confirmation page with receipt
+      navigateToConfirmation(receipt);
+    }
   };
 
   const handleBrowseHotels = () => {
@@ -46,5 +54,6 @@ export const useCheckout = () => {
     handleClearCart,
     handleProceedToCheckout,
     handleBrowseHotels,
+    isBookingLoading,
   };
 };
