@@ -4,7 +4,6 @@ import {
   CardContent,
   Typography,
   Button,
-  CircularProgress,
   Box,
   Alert,
   Divider,
@@ -17,11 +16,9 @@ import { useAppSelector, useAppDispatch } from '@/core/store/hooks';
 import { clearFilters } from '@/features/filters/store/filterSlice';
 import FilterModeSwitch from '../FilterModeSwitch';
 import AmenitiesList from '../AmenitiesList';
+import AmenitiesFilterSkeleton from './AmenitiesFilterSkeleton';
 
-/**
- * Complete Amenities Filter Component with MUI
- * Uses Redux to manage state
- */
+
 const AmenitiesFilter: React.FC = () => {
   const selectedAmenities = useAppSelector((state) => state.filters.selectedAmenities);
   const dispatch = useAppDispatch();
@@ -34,25 +31,7 @@ const AmenitiesFilter: React.FC = () => {
 
   // Loading state
   if (isLoading) {
-    return (
-      <Card elevation={1} sx={{ overflow: 'hidden' }}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-            <Hotel sx={{ mr: 1, color: 'primary.main' }} />
-            <Typography variant="h6" fontWeight={600}>
-              Amenities
-            </Typography>
-          </Box>
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4 }}>
-            <CircularProgress size={24} sx={{ mb: 2 }} />
-            <Typography variant="body2" color="text.secondary">
-              Loading amenities...
-            </Typography>
-          </Box>
-        </CardContent>
-      </Card>
-    );
+    return <AmenitiesFilterSkeleton />;
   }
 
   // Error state
