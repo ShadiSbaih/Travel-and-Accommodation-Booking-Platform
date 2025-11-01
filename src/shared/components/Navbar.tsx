@@ -106,7 +106,7 @@ function Navbar() {
                                             color: 'primary.main',
                                             backgroundColor: 'action.selected',
                                             fontWeight: 'bold'
-                                        }
+                                        },
                                     }}
                                 >
                                     <Typography sx={{ textAlign: 'center' }}>
@@ -145,7 +145,7 @@ function Navbar() {
                     </Typography>
 
                     {/* Desktop Navigation */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
                         {NAVIGATION_PAGES.map((page) => (
                             <Button
                                 key={page.name}
@@ -153,6 +153,7 @@ function Navbar() {
                                 to={page.path}
                                 sx={{
                                     my: 2,
+                                    px: 2,
                                     color: 'white',
                                     display: 'block',
                                     borderRadius: 1,
