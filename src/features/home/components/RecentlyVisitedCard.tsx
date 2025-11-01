@@ -32,15 +32,6 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
     [hotel.visitDate]
   );
 
-  // Default placeholder image for missing images
-  const defaultImage = 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop';
-  const imageUrl = useMemo(() =>
-    hotel.thumbnailUrl && hotel.thumbnailUrl.trim() !== ''
-      ? hotel.thumbnailUrl
-      : defaultImage,
-    [hotel.thumbnailUrl, defaultImage]
-  );
-
   return (
     <Card
       sx={{
@@ -78,11 +69,11 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
           }}
         >
           <OptimizedImage
-            src={imageUrl}
+            src={hotel.thumbnailUrl || ''}
             alt={hotel.hotelName || 'Hotel'}
             width={320}
             height={220}
-            fallbackSrc={defaultImage}
+            fallbackSrc="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop"
             sx={{
               transition: 'transform 0.3s ease-in-out',
               '&:hover img': {
