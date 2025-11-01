@@ -193,7 +193,7 @@ function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} aria-label="Open user menu">
-                                <Avatar alt={fullName} sx={{ bgcolor: 'primary.main' }}>
+                                <Avatar alt={fullName} sx={{ bgcolor: 'primary' }}>
                                     {getInitials(fullName || '')}
                                 </Avatar>
                             </IconButton>
