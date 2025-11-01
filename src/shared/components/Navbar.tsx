@@ -208,7 +208,31 @@ function Navbar() {
                             </IconButton>
                         </Tooltip>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{ 
+                                mt: '45px',
+                                '& .MuiPaper-root': {
+                                    borderRadius: '16px',
+                                    minWidth: 220,
+                                    boxShadow: (theme) => 
+                                        theme.palette.mode === 'dark'
+                                            ? '0 8px 32px rgba(0, 0, 0, 0.6), 0 0 2px rgba(20, 184, 166, 0.3)'
+                                            : '0 8px 32px rgba(0, 0, 0, 0.15)',
+                                    background: (theme) => 
+                                        theme.palette.mode === 'dark'
+                                            ? 'rgba(30, 41, 59, 0.95)'
+                                            : 'rgba(255, 255, 255, 0.98)',
+                                    backdropFilter: 'blur(12px)',
+                                    border: (theme) => 
+                                        theme.palette.mode === 'dark'
+                                            ? '1px solid rgba(20, 184, 166, 0.2)'
+                                            : '1px solid rgba(20, 184, 166, 0.1)',
+                                    overflow: 'visible',
+                                    mt: 1.5,
+                                },
+                                '& .MuiList-root': {
+                                    padding: '8px',
+                                },
+                            }}
                             id="user-menu"
                             anchorEl={anchorElUser}
                             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -217,13 +241,67 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem onClick={handleLogout}>
-                                <Button variant="contained" color="error" fullWidth>
+                            {/* User Info Header */}
+                            <Box
+                                sx={{
+                                    px: 2,
+                                    py: 1.5,
+                                    mb: 1,
+                                    borderBottom: (theme) => 
+                                        `1px solid ${theme.palette.mode === 'dark' ? 'rgba(20, 184, 166, 0.2)' : 'rgba(0, 0, 0, 0.08)'}`,
+                                }}
+                            >
+                                <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                                    {fullName}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                    Account Settings
+                                </Typography>
+                            </Box>
+
+                            {/* Theme Toggle */}
+                            <MenuItem 
+                                sx={{ 
+                                    borderRadius: '12px',
+                                    mb: 1,
+                                    '&:hover': {
+                                        backgroundColor: (theme) => 
+                                            theme.palette.mode === 'dark'
+                                                ? 'rgba(20, 184, 166, 0.12)'
+                                                : 'rgba(20, 184, 166, 0.08)',
+                                    },
+                                }}
+                            >
+                                <ThemeToggle />
+                            </MenuItem>
+
+                            {/* Logout Button */}
+                            <MenuItem 
+                                onClick={handleLogout}
+                                sx={{ 
+                                    borderRadius: '12px',
+                                    p: 0,
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                <Button 
+                                    variant="contained" 
+                                    color="error" 
+                                    fullWidth
+                                    sx={{
+                                        borderRadius: '12px',
+                                        py: 1.25,
+                                        fontWeight: 600,
+                                        textTransform: 'none',
+                                        fontSize: '0.9375rem',
+                                        boxShadow: 'none',
+                                        '&:hover': {
+                                            boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)',
+                                        },
+                                    }}
+                                >
                                     Logout
                                 </Button>
-                            </MenuItem>
-                            <MenuItem>
-                                <ThemeToggle />
                             </MenuItem>
                         </Menu>
                     </Box>

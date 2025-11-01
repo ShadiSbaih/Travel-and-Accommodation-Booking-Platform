@@ -1,28 +1,75 @@
-import  useTheme  from "@/core/context/Theme/useTheme";
+import useTheme from "@/core/context/Theme/useTheme";
+import { Box, Typography, Switch } from "@mui/material";
+import { 
+  LightMode as LightModeIcon, 
+  DarkMode as DarkModeIcon,
+} from "@mui/icons-material";
 
 export const ThemeToggle = () => {
-  const { theme, setTheme, isDark } = useTheme();
+  const { setTheme, isDark } = useTheme();
 
-  const toggleTheme = () => {
-    if (theme === 'system') {
-      // If on system, switch to opposite of current system preference
-      setTheme(isDark ? 'light' : 'dark');
-    } else if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
+  const handleToggle = () => {
+    setTheme(isDark ? 'light' : 'dark');
   };
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="p-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-      aria-label="Toggle theme"
-      title={`Current theme: ${theme}${theme === 'system' ? ` (${isDark ? 'dark' : 'light'})` : ''}`}
+    <Box 
+      onClick={handleToggle}
+      sx={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        width: '100%',
+        gap: 1.5,
+        cursor: 'pointer',
+        userSelect: 'none',
+        '&:hover': {
+          '& .icon-container': {
+            transform: 'scale(1.05)',
+          },
+        },
+      }}
     >
-      {isDark ? '🌞' : '🌙'}
-    </button>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <Box
+          className="icon-container"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 36,
+            height: 36,
+            borderRadius: '10px',
+            backgroundColor: (theme) => 
+              theme.palette.mode === 'dark' 
+                ? 'rgba(20, 184, 166, 0.15)' 
+                : 'rgba(20, 184, 166, 0.1)',
+            color: 'primary.main',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          {isDark ? <DarkModeIcon sx={{ fontSize: '1.25rem' }} /> : <LightModeIcon sx={{ fontSize: '1.25rem' }} />}
+        </Box>
+        <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
+          {isDark ? 'Dark Mode' : 'Light Mode'}
+        </Typography>
+      </Box>
+      
+      <Switch
+        checked={isDark}
+        onChange={handleToggle}
+        onClick={(e) => e.stopPropagation()}
+        sx={{
+          pointerEvents: 'none',
+          '& .MuiSwitch-switchBase.Mui-checked': {
+            color: 'primary.main',
+          },
+          '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+            backgroundColor: 'primary.main',
+          },
+        }}
+      />
+    </Box>
   );
 };
 
