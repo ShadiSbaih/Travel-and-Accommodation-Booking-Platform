@@ -96,16 +96,8 @@ function SearchBar() {
   };
 
   const handleSearch = () => {
-    // Validation
-    if (!searchData.query.trim()) {
-      alert('Please enter a destination');
-      return;
-    }
+    // Validation later
 
-    if (searchData.checkOut <= searchData.checkIn) {
-      alert('Check-out must be after check-in');
-      return;
-    }
 
     // Build URL with all search parameters
     const params = new URLSearchParams({
