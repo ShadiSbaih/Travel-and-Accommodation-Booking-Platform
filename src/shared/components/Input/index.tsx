@@ -31,6 +31,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
     label?: string;
     error?: string;
     helperText?: string;
+    leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     variant?: 'outline' | 'filled' | 'flushed';
     size?: 'sm' | 'md' | 'lg';
@@ -45,6 +46,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             label,
             error,
             helperText,
+            leftIcon,
             rightIcon,
             id,
             ...props
@@ -64,11 +66,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                     </label>
                 )}
                 <div className="relative">
+                    {leftIcon && (
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                            {leftIcon}
+                        </div>
+                    )}
                     <input
                         id={inputId}
                         ref={ref}
                         className={cn(
                             inputVariants({ variant, size, error: !!error }),
+                            leftIcon && 'pl-10',
                             rightIcon && 'pr-10',
                             className
                         )}

@@ -8,6 +8,15 @@ export default {
   ],
   theme: {
     extend: {
+      keyframes: {
+        'plane-glide': {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(18px)' },
+        },
+      },
+      animation: {
+        'plane-glide': 'plane-glide 6s ease-in-out infinite',
+      },
       colors: {
         primary: {
           50: '#eff6ff',
