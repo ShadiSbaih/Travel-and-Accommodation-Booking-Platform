@@ -19,6 +19,7 @@ function RoomsList({ rooms, onRoomSelect, cartItems }: RoomsListProps) {
         sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+          gridAutoRows: '1fr',
           gap: 3,
         }}
       >

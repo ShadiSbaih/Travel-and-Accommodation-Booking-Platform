@@ -1,5 +1,5 @@
 import { Paper, Box, Typography, Chip, Tooltip } from '@mui/material';
-import { CheckCircle } from '@mui/icons-material';
+import { CheckCircle, Spa } from '@mui/icons-material';
 import type { AmenitiesListProps } from '../../types';
 
 
@@ -11,25 +11,28 @@ function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
     <Paper
       elevation={0}
       sx={{
-        p: 2,
-        borderRadius: 3,
+        p: 3,
+        borderRadius: 1,
         border: '1px solid',
-        borderColor: 'divider'
+        borderColor: 'divider',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
       }}
     >
       {showTitle && (
-        <Typography
-          variant="subtitle2"
-          component="h2"
-          gutterBottom
-          sx={{
-            fontWeight: 700,
-            mb: 2,
-            fontSize: '0.95rem'
-          }}
-        >
-          Amenities & Services
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2.5 }}>
+          <Spa sx={{ fontSize: 24, color: 'success.main' }} />
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              fontSize: '1.05rem',
+              color: 'text.primary'
+            }}
+          >
+            Amenities & Services
+          </Typography>
+        </Box>
       )}
       <Box sx={{
         display: 'flex',
@@ -42,28 +45,23 @@ function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
             title={amenity.description}
             arrow
             placement="top"
-            enterDelay={200}
+            enterDelay={300}
             leaveDelay={0}
             slotProps={{
               tooltip: {
                 sx: {
-                  bgcolor: 'background.paper',
-                  color: 'text.primary',
-                  border: '1px solid',
-                  borderColor: 'divider',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  bgcolor: 'grey.900',
+                  color: 'white',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
                   fontSize: '0.875rem',
-                  padding: '8px 12px',
-                  maxWidth: 300
+                  padding: '10px 14px',
+                  maxWidth: 280,
+                  borderRadius: 0.5,
                 }
               },
               arrow: {
                 sx: {
-                  color: 'background.paper',
-                  '&::before': {
-                    border: '1px solid',
-                    borderColor: 'divider',
-                  }
+                  color: 'grey.900',
                 }
               }
             }}
@@ -72,27 +70,31 @@ function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
               icon={<CheckCircle />}
               label={amenity.name}
               sx={{
-                bgcolor: 'background.paper',
-                border: '1px solid',
-                borderColor: 'divider',
+                bgcolor: 'success.50',
+                border: '1.5px solid',
+                borderColor: 'success.200',
                 fontWeight: 600,
                 fontSize: '0.875rem',
-                px: 0.5,
+                height: 36,
+                px: 1,
+                borderRadius: 0.5,
+                color: 'success.800',
                 '& .MuiChip-icon': {
                   color: 'success.main',
-                  fontSize: '1.1rem'
+                  fontSize: '1.2rem',
+                  ml: 0.5
                 },
                 '&:hover': {
-                  bgcolor: 'primary.main',
-                  borderColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  boxShadow: '0 2px 8px rgba(25, 118, 210, 0.25)',
+                  bgcolor: 'success.main',
+                  borderColor: 'success.main',
+                  color: 'white',
+                  boxShadow: '0 4px 12px rgba(76, 175, 80, 0.35)',
                   transform: 'translateY(-2px)',
                   '& .MuiChip-icon': {
-                    color: 'primary.contrastText'
+                    color: 'white'
                   }
                 },
-                transition: 'all 0.2s ease-in-out',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                 cursor: 'default'
               }}
             />

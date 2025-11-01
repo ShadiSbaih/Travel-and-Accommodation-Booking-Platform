@@ -1,4 +1,5 @@
 import { Paper, Box, Typography } from '@mui/material';
+import { LocationOn } from '@mui/icons-material';
 import { MuiMap } from '@/shared/components/MuiMap';
 import type { HotelLocationMapProps } from '../../types';
 
@@ -16,30 +17,34 @@ function HotelLocationMap({
     <Paper
       elevation={0}
       sx={{
-        p: 2,
-        borderRadius: 3,
+        p: 3,
+        borderRadius: 1,
         border: '1px solid',
         borderColor: 'divider',
-        mb: 3
+        mb: 3,
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
       }}
     >
-      <Typography
-        variant="subtitle2"
-        component="h2"
-        gutterBottom
-        sx={{
-          fontWeight: 700,
-          mb: 1.5,
-          fontSize: '0.95rem'
-        }}
-      >
-        Location
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2.5 }}>
+        <LocationOn sx={{ fontSize: 24, color: 'primary.main' }} />
+        <Typography
+          variant="h6"
+          component="h2"
+          sx={{
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            color: 'text.primary'
+          }}
+        >
+          Location
+        </Typography>
+      </Box>
       <Box sx={{
-        borderRadius: 2,
+        borderRadius: 0.5,
         overflow: 'hidden',
         border: '1px solid',
-        borderColor: 'divider'
+        borderColor: 'divider',
+        boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
       }}>
         <MuiMap
           latitude={latitude}

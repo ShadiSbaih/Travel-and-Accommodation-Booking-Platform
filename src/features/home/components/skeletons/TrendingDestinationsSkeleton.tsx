@@ -19,10 +19,10 @@ function TrendingDestinationsSkeleton() {
             display: 'grid',
             gridTemplateColumns: {
               xs: '1fr',
-              sm: 'repeat(auto-fill, minmax(280px, 1fr))',
-              md: 'repeat(auto-fill, minmax(300px, 1fr))',
+              sm: 'repeat(auto-fill, minmax(320px, 1fr))',
+              md: 'repeat(auto-fill, minmax(360px, 1fr))',
             },
-            gap: { xs: 2, sm: 3, md: 4 },
+            gap: { xs: 1.5, sm: 2, md: 2.5 },
             justifyItems: 'center',
           }}
         >
@@ -31,13 +31,13 @@ function TrendingDestinationsSkeleton() {
               key={index}
               sx={{
                 width: '100%',
-                maxWidth: 320,
-                height: 480,
-                borderRadius: 2,
+                maxWidth: 380,
+                height: 520,
+                borderRadius: 1,
                 overflow: 'hidden',
               }}
             >
-              <Skeleton variant="rectangular" width="100%" height={220} />
+              <Skeleton variant="rectangular" width="100%" height={260} />
               <Box sx={{ p: 2.5 }}>
                 <Skeleton variant="text" width="70%" height={28} sx={{ mb: 1 }} />
                 <Skeleton variant="text" width="50%" height={20} sx={{ mb: 2 }} />

@@ -9,36 +9,43 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
     <Paper
       elevation={0}
       sx={{
-        p: 2,
-        borderRadius: 3,
+        p: 3,
+        borderRadius: 1,
         border: '1px solid',
         borderColor: 'divider',
         mb: 3,
-        background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(33, 203, 243, 0.05) 100%)'
+        bgcolor: 'background.paper',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
       }}
     >
       {/* Location */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mb: 1.5 }}>
-        <LocationOn sx={{ fontSize: 18, color: 'error.main' }} />
-        <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary', fontSize: '0.9rem' }}>
+      <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 2 }}>
+        <LocationOn sx={{ fontSize: 20, color: 'error.main', mt: 0.25 }} />
+        <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.primary', fontSize: '1rem', lineHeight: 1.5 }}>
           {location}
         </Typography>
       </Box>
 
       {/* Star Rating and Hotel Type */}
-      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', gap: 1.25, mb: 3, flexWrap: 'wrap' }}>
         {starRating && (
           <Chip
-            icon={<Star sx={{ fontSize: 14 }} />}
+            icon={<Star sx={{ fontSize: 16 }} />}
             label={`${starRating} Star Hotel`}
-            size="small"
+            size="medium"
             sx={{
               bgcolor: 'warning.main',
               color: 'white',
-              fontWeight: 600,
-              height: 24,
-              fontSize: '0.75rem',
-              '& .MuiChip-icon': { color: 'white' }
+              fontWeight: 700,
+              height: 32,
+              fontSize: '0.875rem',
+              px: 0.5,
+              borderRadius: 0.5,
+              '& .MuiChip-icon': { 
+                color: 'white',
+                ml: 0.5
+              },
+              boxShadow: '0 2px 4px rgba(237, 108, 2, 0.3)',
             }}
           />
         )}
@@ -46,13 +53,16 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
         {hotelType && (
           <Chip
             label={hotelType}
-            size="small"
+            size="medium"
             sx={{
-              bgcolor: 'primary.main',
+              bgcolor: 'info.main',
               color: 'white',
-              fontWeight: 600,
-              height: 24,
-              fontSize: '0.75rem'
+              fontWeight: 700,
+              height: 32,
+              fontSize: '0.875rem',
+              px: 1,
+              borderRadius: 0.5,
+              boxShadow: '0 2px 4px rgba(25, 118, 210, 0.3)',
             }}
           />
         )}
@@ -61,23 +71,23 @@ function HotelInfoBanner({ location, starRating, hotelType, description }: Hotel
       {/* About This Property */}
       <Box>
         <Typography
-          variant="subtitle2"
+          variant="h6"
           component="h3"
           sx={{
             fontWeight: 700,
-            mb: 1,
-            fontSize: '0.95rem',
+            mb: 1.5,
+            fontSize: '1.05rem',
             color: 'text.primary'
           }}
         >
           About This Property
         </Typography>
         <Typography
-          variant="body2"
+          variant="body1"
           sx={{
             color: 'text.secondary',
-            lineHeight: 1.6,
-            fontSize: '0.85rem'
+            lineHeight: 1.75,
+            fontSize: '0.95rem'
           }}
         >
           {description}

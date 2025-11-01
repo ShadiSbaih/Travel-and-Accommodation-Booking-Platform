@@ -18,11 +18,13 @@ export function MuiMap({
 }: MuiMapProps) {
   return (
     <Paper
-      elevation={3}
+      elevation={0}
       sx={{
         overflow: 'hidden',
-        borderRadius: 2,
+        borderRadius: 0.5,
         height: typeof height === 'number' ? `${height}px` : height,
+        border: '1px solid',
+        borderColor: 'divider',
       }}
     >
       <MapContainer

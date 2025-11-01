@@ -11,12 +11,16 @@ function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
     <Card
       elevation={0}
       sx={{
-        borderRadius: 3,
+        borderRadius: 1,
         border: '1px solid',
         borderColor: 'divider',
         transition: 'all 0.3s ease',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        minHeight: 580,
         '&:hover': {
-          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
           transform: 'translateY(-4px)',
           borderColor: 'primary.main',
         },
@@ -44,7 +48,7 @@ function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
         />
       </Box>
 
-      <CardContent sx={{ p: 3 }}>
+      <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <Typography
           variant="h6"
           component="h3"
@@ -55,31 +59,35 @@ function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
 
         <Box sx={{ display: 'flex', gap: 1.5, mb: 3, flexWrap: 'wrap' }}>
           <Chip
-            icon={<People sx={{ fontSize: 18 }} />}
+            icon={<People sx={{ fontSize: 20 }} />}
             label={`${room.capacityOfAdults} Adults`}
-            size="small"
+            size="medium"
             sx={{
               bgcolor: 'rgba(25, 118, 210, 0.1)',
               color: 'primary.main',
               fontWeight: 600,
+              fontSize: '0.9rem',
+              height: 36,
             }}
           />
           <Chip
-            icon={<ChildCare sx={{ fontSize: 18 }} />}
+            icon={<ChildCare sx={{ fontSize: 20 }} />}
             label={`${room.capacityOfChildren} Children`}
-            size="small"
+            size="medium"
             sx={{
               bgcolor: 'rgba(46, 125, 50, 0.1)',
               color: 'success.main',
               fontWeight: 600,
+              fontSize: '0.9rem',
+              height: 36,
             }}
           />
         </Box>
 
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, flexGrow: 1, minHeight: 80 }}>
           <Typography
-            variant="caption"
-            sx={{ fontWeight: 700, mb: 1, display: 'block', color: 'text.secondary' }}
+            variant="body2"
+            sx={{ fontWeight: 700, mb: 1.5, display: 'block', color: 'text.secondary', fontSize: '0.9rem' }}
           >
             Room Amenities
           </Typography>
@@ -88,9 +96,14 @@ function RoomCard({ room, onBookNow, isInCart = false }: RoomCardProps) {
               <Chip
                 key={amenity.id}
                 label={amenity.name}
-                size="small"
+                size="medium"
                 variant="outlined"
-                sx={{ fontSize: '0.75rem', borderColor: 'divider', color: 'text.secondary' }}
+                sx={{ 
+                  fontSize: '0.85rem', 
+                  borderColor: 'divider', 
+                  color: 'text.secondary',
+                  height: 32,
+                }}
               />
             ))}
           </Box>
