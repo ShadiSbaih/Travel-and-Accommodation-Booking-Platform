@@ -1,22 +1,10 @@
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  IconButton,
-  Tooltip,
-  Chip,
-  Box,
-  Typography,
-  Rating,
-} from '@mui/material';
+import { Box, IconButton, Tooltip, Chip, Typography, Rating } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HotelIcon from '@mui/icons-material/Hotel';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AdminEntityTable from '@/shared/components/AdminEntityTable';
+import type { AdminEntityTableColumn } from '@/shared/components/AdminEntityTable';
 import { useHotels } from '../hooks/useHotels';
 import { useCity } from '@/features/admin/cities/hooks/useCities';
 import type { Hotel } from '../types';
@@ -26,92 +14,111 @@ interface HotelListViewProps {
   onEdit: (hotel: Hotel) => void;
 }
 
-interface HotelRowProps {
-  hotel: Hotel;
-  index: number;
-  onEdit: (hotel: Hotel) => void;
-  onDelete: (hotel: Hotel) => void;
-  isDeleting: boolean;
+function HotelNameCell({ hotel }: { hotel: Hotel }) {
+  const displayName = hotel.name || hotel.hotelName;
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+      <Box
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: 1.5,
+          bgcolor: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'rgba(6, 182, 212, 0.2)'
+              : 'rgba(20, 184, 166, 0.15)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}
+      >
+        <HotelIcon
+          sx={{
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+            fontSize: 20,
+          }}
+        />
+      </Box>
+      <Box>
+        <Typography
+          variant="body1"
+          fontWeight={600}
+          sx={{
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+          }}
+        >
+          {displayName}
+        </Typography>
+        <Chip
+          label={`ID: ${hotel.id}`}
+          size="small"
+          sx={{
+            height: 18,
+            fontSize: '0.65rem',
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(100, 116, 139, 0.3)'
+                : 'grey.200',
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+            mt: 0.5,
+          }}
+        />
+      </Box>
+    </Box>
+  );
 }
 
-function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps) {
+function HotelLocationCell({ hotel }: { hotel: Hotel }) {
   const { data: city } = useCity(hotel.cityId);
-  const displayName = hotel.name || hotel.hotelName;
   const displayLocation = city?.name || hotel.location;
 
   return (
-    <TableRow
-      key={`hotel-list-${hotel.id}-${index}`}
-      sx={{
-        '&:nth-of-type(odd)': {
-          bgcolor: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(51, 65, 85, 0.3)'
-              : 'grey.50',
-        },
-        '&:hover': {
-          bgcolor: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(6, 182, 212, 0.1)'
-              : 'rgba(20, 184, 166, 0.05)',
-        },
-      }}
-    >
-      <TableCell>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              borderRadius: 1,
-              bgcolor: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'rgba(6, 182, 212, 0.2)'
-                  : 'rgba(20, 184, 166, 0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <HotelIcon
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
-                fontSize: 20,
-              }}
-            />
-          </Box>
-          <Box>
-            <Typography
-              variant="body2"
-              fontWeight="600"
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-              }}
-            >
-              {displayName}
-            </Typography>
-            <Chip
-              label={`ID: ${hotel.id}`}
-              size="small"
-              sx={{
-                height: 18,
-                fontSize: '0.65rem',
-                bgcolor: (theme) =>
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(100, 116, 139, 0.3)'
-                    : 'grey.200',
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-                mt: 0.5,
-              }}
-            />
-          </Box>
-        </Box>
-      </TableCell>
-      <TableCell>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+      <LocationOnIcon
+        sx={{
+          fontSize: 16,
+          color: (theme) =>
+            theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+        }}
+      />
+      <Typography
+        variant="body2"
+        sx={{
+          color: (theme) =>
+            theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+        }}
+      >
+        {displayLocation}
+      </Typography>
+    </Box>
+  );
+}
+
+function HotelListView({ hotels, onEdit }: HotelListViewProps) {
+  const { deleteHotel, isDeleting } = useHotels();
+
+  const handleDelete = (hotel: Hotel) => {
+    if (window.confirm(`Are you sure you want to delete ${hotel.name || hotel.hotelName}?`)) {
+      deleteHotel(hotel.id);
+    }
+  };
+
+  const columns: AdminEntityTableColumn<Hotel>[] = [
+    {
+      id: 'hotel',
+      header: 'Hotel',
+      render: (hotel) => <HotelNameCell hotel={hotel} />,
+    },
+    {
+      id: 'type',
+      header: 'Type',
+      width: 120,
+      render: (hotel) => (
         <Chip
           label={hotel.hotelType}
           size="small"
@@ -123,33 +130,28 @@ function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps)
             color: (theme) =>
               theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
             fontWeight: 600,
+            borderRadius: 1,
           }}
         />
-      </TableCell>
-      <TableCell>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <LocationOnIcon
-            sx={{
-              fontSize: 16,
-              color: (theme) =>
-                theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-            }}
-          />
-          <Typography
-            variant="body2"
-            sx={{
-              color: (theme) =>
-                theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-            }}
-          >
-            {displayLocation}
-          </Typography>
-        </Box>
-      </TableCell>
-      <TableCell>
-        <Rating value={hotel.starRating} readOnly size="small" />
-      </TableCell>
-      <TableCell>
+      ),
+    },
+    {
+      id: 'location',
+      header: 'Location',
+      render: (hotel) => <HotelLocationCell hotel={hotel} />,
+    },
+    {
+      id: 'rating',
+      header: 'Rating',
+      width: 140,
+      render: (hotel) => <Rating value={hotel.starRating} readOnly size="small" />,
+    },
+    {
+      id: 'rooms',
+      header: 'Rooms',
+      width: 100,
+      align: 'center',
+      render: (hotel) => (
         <Typography
           variant="body2"
           sx={{
@@ -159,8 +161,12 @@ function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps)
         >
           {hotel.availableRooms}
         </Typography>
-      </TableCell>
-      <TableCell>
+      ),
+    },
+    {
+      id: 'description',
+      header: 'Description',
+      render: (hotel) => (
         <Typography
           variant="body2"
           sx={{
@@ -172,10 +178,16 @@ function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps)
             whiteSpace: 'nowrap',
           }}
         >
-          {hotel.description || 'No description'}
+          {hotel.description || 'No description available'}
         </Typography>
-      </TableCell>
-      <TableCell align="center">
+      ),
+    },
+    {
+      id: 'actions',
+      header: 'Actions',
+      align: 'center',
+      width: 160,
+      render: (hotel) => (
         <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
           <Tooltip title="Edit Hotel" arrow>
             <IconButton
@@ -198,7 +210,7 @@ function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps)
           <Tooltip title="Delete Hotel" arrow>
             <IconButton
               size="small"
-              onClick={() => onDelete(hotel)}
+              onClick={() => handleDelete(hotel)}
               disabled={isDeleting}
               sx={{
                 color: (theme) =>
@@ -215,131 +227,18 @@ function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps)
             </IconButton>
           </Tooltip>
         </Box>
-      </TableCell>
-    </TableRow>
-  );
-}
-
-function HotelListView({ hotels, onEdit }: HotelListViewProps) {
-  const { deleteHotel, isDeleting } = useHotels();
-
-  const handleDelete = (hotel: Hotel) => {
-    if (window.confirm(`Are you sure you want to delete ${hotel.name || hotel.hotelName}?`)) {
-      deleteHotel(hotel.id);
-    }
-  };
+      ),
+    },
+  ];
 
   return (
-    <TableContainer
-      component={Paper}
-      elevation={0}
-      sx={{
-        background: (theme) =>
-          theme.palette.mode === 'dark'
-            ? 'rgba(30, 41, 59, 0.95)'
-            : 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(20px)',
-        borderRadius: 2,
-        overflow: 'hidden',
-      }}
-    >
-      <Table>
-        <TableHead>
-          <TableRow
-            sx={{
-              bgcolor: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'rgba(51, 65, 85, 0.6)'
-                  : 'rgba(226, 232, 240, 0.8)',
-            }}
-          >
-            <TableCell
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Hotel
-            </TableCell>
-            <TableCell
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Type
-            </TableCell>
-            <TableCell
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Location
-            </TableCell>
-            <TableCell
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Rating
-            </TableCell>
-            <TableCell
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Rooms
-            </TableCell>
-            <TableCell
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Description
-            </TableCell>
-            <TableCell
-              align="center"
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-              }}
-            >
-              Actions
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {hotels.map((hotel, index) => (
-            <HotelRow
-              key={`hotel-list-${hotel.id}-${index}`}
-              hotel={hotel}
-              index={index}
-              onEdit={onEdit}
-              onDelete={handleDelete}
-              isDeleting={isDeleting}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <AdminEntityTable
+      rows={hotels}
+      columns={columns}
+      getRowKey={(hotel) => hotel.id}
+      emptyMessage="No hotels found"
+      containerSx={{ borderRadius: 0.5 }}
+    />
   );
 }
 
