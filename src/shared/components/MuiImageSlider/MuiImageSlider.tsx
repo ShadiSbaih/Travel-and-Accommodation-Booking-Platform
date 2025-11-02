@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Box } from '@mui/material';
 import type { MuiImageSliderProps } from './types';
 import { useSliderState } from './hooks/useSliderState';
@@ -9,6 +9,8 @@ import { AutoplayButton } from './components/AutoplayButton';
 import { ProgressBar } from './components/ProgressBar';
 import { MobileIndicators } from './components/MobileIndicators';
 import { ThumbnailStrip } from './components/ThumbnailStrip';
+import { FullscreenButton } from './components/FullscreenButton';
+import { FullscreenModal } from './components/FullscreenModal';
 import { MOBILE_HEIGHT, TABLET_HEIGHT } from './constants/sliderStyles';
 
 export function MuiImageSlider({
@@ -19,6 +21,9 @@ export function MuiImageSlider({
   autoPlayInterval = 5000,
   showThumbnails = true,
 }: MuiImageSliderProps) {
+  // Fullscreen state
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
+
   // Memoize display images to avoid recalculation
   const displayImages = useMemo(() => images.slice(0, 5), [images]);
   const maxSlides = displayImages.length;
@@ -37,6 +42,23 @@ export function MuiImageSlider({
 
   // Memoize height value
   const heightValue = useMemo(() => (typeof height === 'number' ? `${height}px` : height), [height]);
+
+  // Fullscreen handlers
+  const handleOpenFullscreen = () => {
+    setIsFullscreenOpen(true);
+    // Pause autoplay when opening fullscreen
+    if (sliderState.isPlaying) {
+      sliderState.toggleAutoplay();
+    }
+  };
+
+  const handleCloseFullscreen = () => {
+    setIsFullscreenOpen(false);
+    // Resume autoplay when closing fullscreen if autoPlay is enabled
+    if (autoPlay && !sliderState.isPlaying) {
+      sliderState.toggleAutoplay();
+    }
+  };
 
   if (!images || images.length === 0) return null;
 
@@ -63,6 +85,9 @@ export function MuiImageSlider({
         {/* Navigation Buttons */}
         <NavigationButtons onPrevious={sliderState.prevSlide} onNext={sliderState.nextSlide} showButtons={maxSlides > 1} />
 
+        {/* Fullscreen Button */}
+        <FullscreenButton onClick={handleOpenFullscreen} />
+
         {/* Autoplay Toggle */}
         <AutoplayButton isPlaying={sliderState.isPlaying} onToggle={sliderState.toggleAutoplay} autoPlay={autoPlay} />
 
@@ -82,6 +107,16 @@ export function MuiImageSlider({
         autoPlay={autoPlay}
         isPlaying={sliderState.isPlaying}
         progress={sliderState.progress}
+      />
+
+      {/* Fullscreen Modal */}
+      <FullscreenModal
+        open={isFullscreenOpen}
+        onClose={handleCloseFullscreen}
+        images={displayImages}
+        currentIndex={sliderState.currentSlide}
+        onPrevious={sliderState.prevSlide}
+        onNext={sliderState.nextSlide}
       />
     </Box>
   );

@@ -32,6 +32,23 @@ export const AUTOPLAY_BUTTON_STYLE: SxProps<Theme> = {
   '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' },
 };
 
+export const FULLSCREEN_BUTTON_STYLE: SxProps<Theme> = {
+  position: 'absolute',
+  top: { xs: 8, sm: 12, md: 16 },
+  right: { xs: 8, sm: 12, md: 16 },
+  zIndex: 20,
+  width: { xs: 32, sm: 36, md: 44 },
+  height: { xs: 32, sm: 36, md: 44 },
+  bgcolor: 'rgba(0, 0, 0, 0.5)',
+  backdropFilter: 'blur(4px)',
+  color: 'white',
+  transition: 'all 0.2s',
+  '&:hover': { 
+    bgcolor: 'rgba(0, 0, 0, 0.7)',
+    transform: 'scale(1.05)',
+  },
+};
+
 export const PROGRESS_BAR_STYLE: SxProps<Theme> = {
   position: 'absolute',
   bottom: 0,
