@@ -5,7 +5,6 @@ import {
   Button,
   TextField,
   InputAdornment,
-  Fade,
   Paper,
   Chip,
   Stack,
@@ -112,8 +111,7 @@ function CitiesPage() {
       }}
     >
       {/* Main Container */}
-      <Fade in timeout={800}>
-        <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
+      <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
           {/* Header Section */}
           <Paper
             elevation={0}
@@ -405,9 +403,39 @@ function CitiesPage() {
               ))}
             </Box>
           ) : filteredCities && filteredCities.length > 0 ? (
-            <Fade in timeout={600}>
-              <Box>
-                {viewMode === 'grid' ? (
+            <Box>
+              {viewMode === 'grid' ? (
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: {
+                      xs: '1fr',
+                      sm: 'repeat(2, 1fr)',
+                      lg: 'repeat(3, 1fr)',
+                    },
+                    gap: 3,
+                  }}
+                >
+                  {displayedCities.map((city) => (
+                    <CityCard key={city.id} city={city} onEdit={handleOpenDialog} />
+                  ))}
+                </Box>
+              ) : (
+                <CityListView cities={displayedCities} onEdit={handleOpenDialog} />
+              )}
+
+              {/* Load More Trigger for Infinite Scroll */}
+              {hasMore && (
+                <Box
+                  ref={loadMoreRef}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    py: 4,
+                    mt: 3,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'grid',
@@ -417,52 +445,16 @@ function CitiesPage() {
                         lg: 'repeat(3, 1fr)',
                       },
                       gap: 3,
+                      width: '100%',
                     }}
                   >
-                    {displayedCities.map((city, index) => (
-                      <Fade in timeout={400 + index * 100} key={city.id}>
-                        <Box>
-                          <CityCard city={city} onEdit={handleOpenDialog} />
-                        </Box>
-                      </Fade>
+                    {Array.from({ length: 3 }).map((_, index) => (
+                      <CityCardSkeleton key={`skeleton-${index}`} />
                     ))}
                   </Box>
-                ) : (
-                  <CityListView cities={displayedCities} onEdit={handleOpenDialog} />
-                )}
-
-                {/* Load More Trigger for Infinite Scroll */}
-                {hasMore && (
-                  <Box
-                    ref={loadMoreRef}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      py: 4,
-                      mt: 3,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'grid',
-                        gridTemplateColumns: {
-                          xs: '1fr',
-                          sm: 'repeat(2, 1fr)',
-                          lg: 'repeat(3, 1fr)',
-                        },
-                        gap: 3,
-                        width: '100%',
-                      }}
-                    >
-                      {Array.from({ length: 3 }).map((_, index) => (
-                        <CityCardSkeleton key={`skeleton-${index}`} />
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-              </Box>
-            </Fade>
+                </Box>
+              )}
+            </Box>
           ) : (
             <Paper
               elevation={0}
@@ -537,8 +529,7 @@ function CitiesPage() {
               )}
             </Paper>
           )}
-        </Box>
-      </Fade>
+      </Box>
 
       {/* Add/Edit Dialog */}
       <CityDialog
