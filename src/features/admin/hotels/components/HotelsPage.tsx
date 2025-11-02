@@ -12,7 +12,7 @@ import EmptyHotelsState from './EmptyHotelsState';
 import type { Hotel } from '../types';
 import type { ViewMode } from '../types/component.types';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 6;
 
 function HotelsPage() {
   const [searchQuery, setSearchQuery] = useState('');
