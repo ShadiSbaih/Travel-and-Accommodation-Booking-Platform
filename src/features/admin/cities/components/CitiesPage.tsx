@@ -1,11 +1,12 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Box, Paper } from '@mui/material';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { useCities } from '../hooks/useCities';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import AdminPageHeader from '@/features/admin/shared/components/AdminPageHeader';
 import CityDialog from './CityDialog';
 import CityErrorState from './CityErrorState';
-import CitiesPageHeader from './CitiesPageHeader';
 import CitiesSearchBar from './CitiesSearchBar';
 import CitiesContent from './CitiesContent';
 import EmptyCitiesState from './EmptyCitiesState';
@@ -76,7 +77,7 @@ function CitiesPage() {
     <Box
       sx={{
         minHeight: '100vh',
-    
+
         p: { xs: 2, sm: 3, md: 4 },
       }}
     >
@@ -100,16 +101,21 @@ function CitiesPage() {
               theme.palette.mode === 'dark' ? '1px solid rgba(148, 163, 184, 0.1)' : 'none',
           }}
         >
-          <CitiesPageHeader
-            citiesCount={filteredCities?.length || 0}
+          <AdminPageHeader
+            title="Cities Management"
+            count={filteredCities.length}
+            singularLabel="city"
+            pluralLabel="cities"
             hasSearchQuery={!!searchQuery}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
-            onAddCity={() => handleOpenDialog()}
+            onAdd={() => handleOpenDialog()}
+            addButtonLabel="Add City"
+            icon={LocationCityIcon}
           />
           <CitiesSearchBar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            value={searchQuery}
+            onChange={setSearchQuery}
             onReset={handleReset}
           />
         </Paper>

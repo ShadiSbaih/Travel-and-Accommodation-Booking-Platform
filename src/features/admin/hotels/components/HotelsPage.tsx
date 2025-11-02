@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Box, Paper } from '@mui/material';
+import HotelIcon from '@mui/icons-material/Hotel';
 import { useHotels } from '../hooks/useHotels';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import AdminPageHeader from '@/features/admin/shared/components/AdminPageHeader';
 import HotelDialog from './HotelDialog';
 import HotelErrorState from './HotelErrorState';
-import HotelsPageHeader from './HotelsPageHeader';
 import HotelsSearchBar from './HotelsSearchBar';
 import HotelsContent from './HotelsContent';
 import EmptyHotelsState from './EmptyHotelsState';
@@ -100,16 +101,21 @@ function HotelsPage() {
               theme.palette.mode === 'dark' ? '1px solid rgba(148, 163, 184, 0.1)' : 'none',
           }}
         >
-          <HotelsPageHeader
-            hotelsCount={uniqueHotels.length}
+          <AdminPageHeader
+            title="Hotels Management"
+            count={uniqueHotels.length}
+            singularLabel="hotel"
+            pluralLabel="hotels"
             hasSearchQuery={!!searchQuery}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
-            onAddHotel={() => handleOpenDialog()}
+            onAdd={() => handleOpenDialog()}
+            addButtonLabel="Add Hotel"
+            icon={HotelIcon}
           />
           <HotelsSearchBar
-            searchQuery={searchQuery}
-            onSearchChange={handleSearchChange}
+            value={searchQuery}
+            onChange={handleSearchChange}
             onReset={handleReset}
           />
         </Paper>

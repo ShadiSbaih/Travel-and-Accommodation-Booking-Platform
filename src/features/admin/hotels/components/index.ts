@@ -1,5 +1,4 @@
 export { default as HotelsPage } from './HotelsPage';
-export { default as HotelsPageHeader } from './HotelsPageHeader';
 export { default as HotelsSearchBar } from './HotelsSearchBar';
 export { default as HotelsContent } from './HotelsContent';
 export { default as HotelCard } from './HotelCard';
