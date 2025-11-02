@@ -37,6 +37,7 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
 
   useEffect(() => {
     if (room) {
+      console.log('📝 [RoomDialog] Editing existing room:', room);
       setRoomNumber(room.roomNumber.toString());
       setRoomType(room.roomType);
       setCapacityOfAdults(room.capacityOfAdults.toString());
@@ -45,6 +46,7 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
       setAvailability(room.availability);
       setRoomPhotoUrl(room.roomPhotoUrl || '');
     } else {
+      console.log('➕ [RoomDialog] Creating new room');
       setRoomNumber('');
       setRoomType('');
       setCapacityOfAdults('2');
@@ -56,7 +58,21 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
   }, [room, open]);
 
   const handleSubmit = () => {
-    if (!roomNumber.trim() || !roomType.trim() || !price.trim()) return;
+    console.log('📤 [RoomDialog] Form submission started');
+    console.log('📋 [RoomDialog] Form values:', {
+      roomNumber,
+      roomType,
+      capacityOfAdults,
+      capacityOfChildren,
+      price,
+      availability,
+      roomPhotoUrl,
+    });
+
+    if (!roomNumber.trim() || !roomType.trim() || !price.trim()) {
+      console.warn('⚠️ [RoomDialog] Form validation failed - missing required fields');
+      return;
+    }
 
     const roomData = {
       roomNumber: parseInt(roomNumber, 10),
@@ -66,20 +82,28 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
       price: parseFloat(price),
       availability,
       roomPhotoUrl: roomPhotoUrl || undefined,
+      // Preserve amenities when updating
+      ...(room?.amenities && { amenities: room.amenities }),
     };
 
+    console.log('✅ [RoomDialog] Parsed room data:', roomData);
+
     if (room) {
+      console.log('✏️ [RoomDialog] Calling updateRoom for room ID:', room.roomId);
       updateRoom(
         { roomId: room.roomId, data: roomData },
         {
           onSuccess: () => {
+            console.log('✅ [RoomDialog] Update successful, closing dialog');
             onSuccess();
           },
         }
       );
     } else {
+      console.log('➕ [RoomDialog] Calling createRoom');
       createRoom(roomData, {
         onSuccess: () => {
+          console.log('✅ [RoomDialog] Create successful, closing dialog');
           onSuccess();
         },
       });
@@ -87,6 +111,7 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
   };
 
   const handleCancel = () => {
+    console.log('❌ [RoomDialog] Dialog cancelled, resetting form');
     setRoomNumber('');
     setRoomType('');
     setCapacityOfAdults('2');

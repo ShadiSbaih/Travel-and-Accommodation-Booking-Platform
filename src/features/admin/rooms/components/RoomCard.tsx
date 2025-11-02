@@ -25,12 +25,17 @@ function RoomCard({ room }: RoomCardProps) {
   const { deleteRoom, isDeleting } = useRooms();
 
   const handleEdit = () => {
+    console.log('✏️ [RoomCard] Edit button clicked for room:', room);
     dispatch(openRoomDialog(room));
   };
 
   const handleDelete = () => {
+    console.log('🗑️ [RoomCard] Delete button clicked for room ID:', room.roomId, 'Room #', room.roomNumber);
     if (window.confirm(`Are you sure you want to delete Room #${room.roomNumber}?`)) {
+      console.log('✅ [RoomCard] Delete confirmed, calling deleteRoom');
       deleteRoom(room.roomId);
+    } else {
+      console.log('❌ [RoomCard] Delete cancelled by user');
     }
   };
 

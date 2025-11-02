@@ -32,25 +32,40 @@ function RoomsPage() {
     debouncedSearchQuery ? { searchQuery: debouncedSearchQuery } : undefined
   );
 
+  console.log('📊 [RoomsPage] Current state:', {
+    totalRooms: rooms.length,
+    isLoading,
+    hasError: !!error,
+    searchQuery,
+    debouncedSearchQuery,
+    viewMode,
+    displayCount,
+  });
+
   // Remove duplicate rooms by ID (defensive programming)
   const uniqueRooms = useMemo(() => {
-    return rooms.reduce((acc: typeof rooms, room) => {
+    const unique = rooms.reduce((acc: typeof rooms, room) => {
       if (!acc.find((r) => r.roomId === room.roomId)) {
         acc.push(room);
       }
       return acc;
     }, []);
+    console.log('🔍 [RoomsPage] Unique rooms after deduplication:', unique.length);
+    return unique;
   }, [rooms]);
 
   const displayedRooms = useMemo(() => {
-    return uniqueRooms.slice(0, displayCount);
+    const displayed = uniqueRooms.slice(0, displayCount);
+    console.log('📋 [RoomsPage] Displayed rooms:', displayed.length, 'of', uniqueRooms.length);
+    return displayed;
   }, [uniqueRooms, displayCount]);
 
   const hasMore = displayCount < uniqueRooms.length;
 
   const handleLoadMore = useCallback(() => {
+    console.log('📥 [RoomsPage] Loading more rooms, current displayCount:', displayCount);
     dispatch(incrementRoomsDisplayCount());
-  }, [dispatch]);
+  }, [dispatch, displayCount]);
 
   useInfiniteScroll({
     ref: loadMoreRef,
@@ -60,32 +75,39 @@ function RoomsPage() {
   });
 
   const handleSearchChange = useCallback((value: string) => {
+    console.log('🔍 [RoomsPage] Search query changed:', value);
     dispatch(setRoomsSearchQuery(value));
   }, [dispatch]);
 
   const handleSearchReset = useCallback(() => {
+    console.log('🔄 [RoomsPage] Search query reset');
     dispatch(setRoomsSearchQuery(''));
   }, [dispatch]);
 
   const handleCreateRoom = useCallback(() => {
+    console.log('➕ [RoomsPage] Create room button clicked');
     dispatch(openRoomDialog(null));
   }, [dispatch]);
 
   const handleCloseDialog = useCallback(() => {
+    console.log('❌ [RoomsPage] Room dialog closed');
     dispatch(closeRoomDialog());
   }, [dispatch]);
 
   const handleSuccess = useCallback(() => {
+    console.log('✅ [RoomsPage] Room operation successful, refetching data');
     refetch();
     handleCloseDialog();
   }, [refetch, handleCloseDialog]);
 
   const handleViewModeChange = useCallback((mode: typeof viewMode) => {
+    console.log('👁️ [RoomsPage] View mode changed to:', mode);
     dispatch(setRoomsViewMode(mode));
   }, [dispatch]);
 
   // Error state
   if (error && rooms.length === 0) {
+    console.error('❌ [RoomsPage] Error state - showing error component:', error);
     return (
       <Box sx={{ p: 3 }}>
         <Paper
@@ -124,6 +146,7 @@ function RoomsPage() {
 
   // Empty state - show when no rooms exist and not loading
   if (!isLoading && rooms.length === 0 && !debouncedSearchQuery) {
+    console.log('📭 [RoomsPage] Empty state - no rooms available');
     return (
       <Box sx={{ p: 3 }}>
         <Paper
