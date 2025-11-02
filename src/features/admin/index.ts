@@ -2,6 +2,10 @@
  * Admin Feature Exports
  */
 
-export { default as CitiesPage } from './cities/CitiesPage';
-export { default as HotelsPage } from './hotels/HotelsPage';
-export { default as RoomsPage } from './rooms/RoomsPage';
+export { CitiesPage, citiesApi, useCities, useCity } from './cities';
+export type { City, CityFilters } from './cities';
+
+export { HotelsPage } from './hotels';
+
+export { RoomsPage, roomsApi, useRooms, useRoom } from './rooms';
+export type { Room, RoomFilters } from './rooms';
