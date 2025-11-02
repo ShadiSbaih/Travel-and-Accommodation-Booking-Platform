@@ -248,41 +248,59 @@ function RoomCard({ room }: RoomCardProps) {
         {/* Action Buttons */}
         <Stack direction="row" spacing={1.5}>
           <Button
-            variant="contained"
+            variant="outlined"
             startIcon={<EditIcon />}
             onClick={handleEdit}
             fullWidth
+            size="medium"
             sx={{
               textTransform: 'none',
               fontWeight: 600,
-              bgcolor: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'rgba(234, 88, 12, 0.9)'
-                  : '#ea580c',
+              borderRadius: 2,
+              borderWidth: 2,
+              borderColor: (theme) =>
+                theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
+              py: 1,
               '&:hover': {
+                borderWidth: 2,
+                borderColor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#06b6d4' : '#0d9488',
                 bgcolor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#ea580c' : '#c2410c',
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(6, 182, 212, 0.08)'
+                    : 'rgba(20, 184, 166, 0.08)',
               },
             }}
           >
             Edit
           </Button>
           <Button
-            variant="contained"
+            variant="outlined"
             startIcon={<DeleteIcon />}
             onClick={handleDelete}
             disabled={isDeleting}
             fullWidth
+            size="medium"
             sx={{
               textTransform: 'none',
               fontWeight: 600,
-              bgcolor: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'rgba(239, 68, 68, 0.9)'
-                  : '#ef4444',
+              borderRadius: 2,
+              borderWidth: 2,
+              borderColor: (theme) =>
+                theme.palette.mode === 'dark' ? '#f87171' : '#ef4444',
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? '#f87171' : '#ef4444',
+              py: 1,
               '&:hover': {
-                bgcolor: (theme) =>
+                borderWidth: 2,
+                borderColor: (theme) =>
                   theme.palette.mode === 'dark' ? '#ef4444' : '#dc2626',
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(239, 68, 68, 0.08)'
+                    : 'rgba(239, 68, 68, 0.08)',
               },
             }}
           >

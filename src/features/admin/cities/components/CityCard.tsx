@@ -131,29 +131,32 @@ function CityCard({ city }: CityCardProps) {
         </Box>
 
         {/* Action Buttons */}
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1.5 }}>
           <Tooltip title="Edit City" arrow>
             <Button
               variant="outlined"
-              size="small"
+              size="medium"
               startIcon={<EditIcon />}
               onClick={handleEdit}
               sx={{
                 flex: 1,
                 textTransform: 'none',
-                borderRadius: 1,
+                borderRadius: 2,
+                borderWidth: 2,
                 borderColor: (theme) =>
                   theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
                 color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#67e8f9' : '#0d9488',
+                  theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
                 fontWeight: 600,
+                py: 1,
                 '&:hover': {
+                  borderWidth: 2,
                   borderColor: (theme) =>
                     theme.palette.mode === 'dark' ? '#06b6d4' : '#0d9488',
                   bgcolor: (theme) =>
                     theme.palette.mode === 'dark'
-                      ? 'rgba(6, 182, 212, 0.1)'
-                      : 'rgba(20, 184, 166, 0.05)',
+                      ? 'rgba(6, 182, 212, 0.08)'
+                      : 'rgba(20, 184, 166, 0.08)',
                 },
               }}
             >
@@ -163,26 +166,29 @@ function CityCard({ city }: CityCardProps) {
           <Tooltip title="Delete City" arrow>
             <Button
               variant="outlined"
-              size="small"
+              size="medium"
               startIcon={<DeleteIcon />}
               onClick={handleDelete}
               disabled={isDeleting}
               sx={{
                 flex: 1,
                 textTransform: 'none',
-                borderRadius: 1,
+                borderRadius: 2,
+                borderWidth: 2,
                 borderColor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#f87171' : 'error.main',
+                  theme.palette.mode === 'dark' ? '#f87171' : '#ef4444',
                 color: (theme) =>
-                  theme.palette.mode === 'dark' ? '#fca5a5' : 'error.main',
+                  theme.palette.mode === 'dark' ? '#f87171' : '#ef4444',
                 fontWeight: 600,
+                py: 1,
                 '&:hover': {
+                  borderWidth: 2,
                   borderColor: (theme) =>
-                    theme.palette.mode === 'dark' ? '#ef4444' : 'error.dark',
+                    theme.palette.mode === 'dark' ? '#ef4444' : '#dc2626',
                   bgcolor: (theme) =>
                     theme.palette.mode === 'dark'
-                      ? 'rgba(248, 113, 113, 0.1)'
-                      : 'rgba(239, 68, 68, 0.05)',
+                      ? 'rgba(239, 68, 68, 0.08)'
+                      : 'rgba(239, 68, 68, 0.08)',
                 },
               }}
             >
