@@ -1,9 +1,8 @@
 import { Box, Container } from '@mui/material';
 import { History as HistoryIcon } from '@mui/icons-material';
-import { useQuery } from '@tanstack/react-query';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
-import homePageApi from '../api/home-page.api';
 import type { RecentlyVisitedHotelDto } from '../types';
+import { useRecentlyVisitedHotels } from '../hooks';
 import RecentlyVisitedCard from './RecentlyVisitedCard';
 import SectionHeader from './SectionHeader';
 import ErrorState from '@/shared/components/ErrorState';
@@ -18,13 +17,7 @@ function RecentlyVisitedHotels() {
     isLoading,
     isError,
     refetch,
-  } = useQuery({
-    queryKey: ['recentlyVisitedHotels', userId],
-    queryFn: () => homePageApi.getRecentlyVisitedHotels(userId as string),
-    enabled: !!userId,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
-  });
+  } = useRecentlyVisitedHotels(userId as string);
 
   // Show empty state if user is not logged in
   if (!userId) {

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
 import { TrendingUp as TrendingIcon } from '@mui/icons-material';
-import { useQuery } from '@tanstack/react-query';
-import homePageApi from '../api/home-page.api';
 import type { TrendingDestinationDto } from '../types';
+import { useTrendingDestinations } from '../hooks';
 import TrendingDestinationCard from './TrendingDestinationCard';
 import SectionHeader from './SectionHeader';
 import ErrorState from '@/shared/components/ErrorState';
@@ -11,12 +10,7 @@ import EmptyState from '@/shared/components/EmptyState';
 import { TrendingDestinationsSkeleton } from './skeletons';
 
 const TrendingDestinations = React.memo(() => {
-  const { data: trendingDestinations = [], isLoading, isError, refetch } = useQuery({
-    queryKey: ['trendingDestinations'],
-    queryFn: () => homePageApi.getTrendingDestinations(),
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
-  });
+  const { data: trendingDestinations = [], isLoading, isError, refetch } = useTrendingDestinations();
 
   if (isLoading) return <TrendingDestinationsSkeleton />;
   if (isError)

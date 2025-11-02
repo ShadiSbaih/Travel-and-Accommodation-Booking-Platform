@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
 import Navbar from '@/shared/components/Navbar';
 import SearchBar from './SearchBar';
@@ -8,10 +7,9 @@ import SearchResultsSection from './SearchResultsSection';
 import AmenitiesFilter from '@/features/filters/components/AmenitiesFilter';
 import FilterStatistics from '@/features/filters/components/FilterStatistics';
 import { useAppSelector } from '@/core/store/hooks';
-import searchApi from '../api/search.api';
-import type { SearchResultDTO } from '@/features/hotels/types';
 import { Typography, Box } from '@mui/material';
 import { filterHotelsByAmenities } from '../utils/filter.utils';
+import { useSearchHotels } from '../hooks';
 
 // Main Search Results Page component using Redux
 const SearchResultPage: React.FC = () => {
@@ -28,18 +26,7 @@ const SearchResultPage: React.FC = () => {
   // Get filter state from Redux store
   const { selectedAmenities, filterMode } = useAppSelector((state) => state.filters);
 
-  const { data: rawHotels, isLoading, isFetching, error } = useQuery<SearchResultDTO[]>({
-    queryKey: ['searchResults', searchConfig.query, searchConfig.adults, searchConfig.children, searchConfig.rooms],
-    queryFn: () =>
-      searchApi.searchHotels({ 
-        city: searchConfig.query, 
-        adults: searchConfig.adults, 
-        children: searchConfig.children, 
-        numberOfRooms: searchConfig.rooms 
-      }),
-    enabled: !!searchConfig.query,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-  });
+  const { data: rawHotels, isLoading, isFetching, error } = useSearchHotels(searchConfig);
 
   // Show loading state for initial load or when fetching new data
   const isLoadingResults = isLoading || isFetching;

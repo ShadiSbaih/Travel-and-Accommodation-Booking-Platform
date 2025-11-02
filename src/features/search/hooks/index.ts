@@ -1,0 +1,1 @@
+export { useSearchHotels } from './useSearchHotels';

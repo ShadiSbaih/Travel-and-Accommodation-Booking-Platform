@@ -8,11 +8,9 @@ import {
   Divider,
 } from '@mui/material';
 import { Clear, Hotel } from '@mui/icons-material';
-import { useQuery } from '@tanstack/react-query';
-import amenitiesApi from '@/core/api/amenities.api';
-import type { Amenity } from '@/features/hotels/types';
 import { useAppSelector, useAppDispatch } from '@/core/store/hooks';
 import { clearFilters } from '@/features/filters/store/filterSlice';
+import { useAmenities } from '../../hooks';
 import FilterModeSwitch from '../FilterModeSwitch';
 import AmenitiesList from '../AmenitiesList';
 import AmenitiesFilterSkeleton from './AmenitiesFilterSkeleton';
@@ -25,12 +23,7 @@ const AmenitiesFilter: React.FC = () => {
   const dispatch = useAppDispatch();
 
   // Fetch amenities from API with longer staleTime for better caching
-  const { data: amenities, isLoading, error } = useQuery<Amenity[]>({
-    queryKey: ['amenities'],
-    queryFn: amenitiesApi.getAmenities,
-    staleTime: 10 * 60 * 1000, // 10 minutes - amenities don't change frequently
-    gcTime: 15 * 60 * 1000, // 15 minutes garbage collection
-  });
+  const { data: amenities, isLoading, error } = useAmenities();
 
   // Memoize clear filter handler
   const handleClearFilters = useMemo(
