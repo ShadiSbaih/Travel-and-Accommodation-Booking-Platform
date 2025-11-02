@@ -46,20 +46,20 @@ function AdminNavbar() {
     const handleLogout = () => logoutMutation.mutate();
 
     return (
-        <AppBar 
+        <AppBar
             position="sticky"
             sx={{
-                background: (theme) => 
-                    theme.palette.mode === 'dark' 
+                background: (theme) =>
+                    theme.palette.mode === 'dark'
                         ? 'rgba(109, 40, 217, 0.75) !important' // Purple for admin
                         : 'rgba(147, 51, 234, 0.85) !important',
                 backdropFilter: 'blur(20px) saturate(180%) !important',
                 WebkitBackdropFilter: 'blur(20px) saturate(180%) !important',
-                boxShadow: (theme) => 
+                boxShadow: (theme) =>
                     theme.palette.mode === 'dark'
                         ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 1px rgba(147, 51, 234, 0.3) !important'
                         : '0 8px 32px rgba(0, 0, 0, 0.1) !important',
-                borderBottom: (theme) => 
+                borderBottom: (theme) =>
                     theme.palette.mode === 'dark'
                         ? '1px solid rgba(147, 51, 234, 0.2)'
                         : '1px solid rgba(255, 255, 255, 0.18)',
@@ -68,14 +68,7 @@ function AdminNavbar() {
         >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    {/* Desktop Logo */}
-                    <Box
-                        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, cursor: 'pointer' }}
-                        onClick={() => navigate('/admin/hotels')}
-                    >
-                        <img src={FTSLogo} alt="FTS Logo" width={50} height={50} style={{ width: 'auto', height: 50 }} />
-                    </Box>
-                    
+
                     {/* Admin Badge */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', mr: 3 }}>
                         <AdminPanelSettingsIcon sx={{ mr: 1 }} />
@@ -204,19 +197,19 @@ function AdminNavbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} aria-label="Open user menu">
-                                <Avatar 
-                                    alt={fullName} 
-                                    sx={{ 
-                                        bgcolor: (theme) => 
-                                            theme.palette.mode === 'dark' 
+                                <Avatar
+                                    alt={fullName}
+                                    sx={{
+                                        bgcolor: (theme) =>
+                                            theme.palette.mode === 'dark'
                                                 ? 'rgba(255, 255, 255, 0.15)'
                                                 : 'rgba(255, 255, 255, 0.95)',
-                                        color: (theme) => 
+                                        color: (theme) =>
                                             theme.palette.mode === 'dark'
                                                 ? '#ffffff'
                                                 : '#7c3aed',
                                         fontWeight: 700,
-                                        border: (theme) => 
+                                        border: (theme) =>
                                             theme.palette.mode === 'dark'
                                                 ? '2px solid rgba(147, 51, 234, 0.3)'
                                                 : '2px solid rgba(255, 255, 255, 0.8)',
@@ -231,21 +224,21 @@ function AdminNavbar() {
                             </IconButton>
                         </Tooltip>
                         <Menu
-                            sx={{ 
+                            sx={{
                                 mt: '45px',
                                 '& .MuiPaper-root': {
                                     borderRadius: '8px',
                                     minWidth: 220,
-                                    boxShadow: (theme) => 
+                                    boxShadow: (theme) =>
                                         theme.palette.mode === 'dark'
                                             ? '0 8px 24px rgba(0, 0, 0, 0.5)'
                                             : '0 4px 16px rgba(0, 0, 0, 0.12)',
-                                    background: (theme) => 
+                                    background: (theme) =>
                                         theme.palette.mode === 'dark'
                                             ? 'rgba(30, 41, 59, 0.98)'
                                             : 'rgba(255, 255, 255, 0.98)',
                                     backdropFilter: 'blur(12px)',
-                                    border: (theme) => 
+                                    border: (theme) =>
                                         theme.palette.mode === 'dark'
                                             ? '1px solid rgba(255, 255, 255, 0.08)'
                                             : '1px solid rgba(0, 0, 0, 0.08)',
@@ -270,7 +263,7 @@ function AdminNavbar() {
                                     px: 2,
                                     py: 1.5,
                                     mb: 1,
-                                    borderBottom: (theme) => 
+                                    borderBottom: (theme) =>
                                         `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)'}`,
                                 }}
                             >
@@ -284,12 +277,12 @@ function AdminNavbar() {
                             </Box>
 
                             {/* Theme Toggle */}
-                            <MenuItem 
-                                sx={{ 
+                            <MenuItem
+                                sx={{
                                     borderRadius: '6px',
                                     mb: 1,
                                     '&:hover': {
-                                        backgroundColor: (theme) => 
+                                        backgroundColor: (theme) =>
                                             theme.palette.mode === 'dark'
                                                 ? 'rgba(255, 255, 255, 0.08)'
                                                 : 'rgba(0, 0, 0, 0.04)',
@@ -300,17 +293,17 @@ function AdminNavbar() {
                             </MenuItem>
 
                             {/* Logout Button */}
-                            <MenuItem 
+                            <MenuItem
                                 onClick={handleLogout}
-                                sx={{ 
+                                sx={{
                                     borderRadius: '6px',
                                     p: 0,
                                     overflow: 'hidden',
                                 }}
                             >
-                                <Button 
-                                    variant="contained" 
-                                    color="error" 
+                                <Button
+                                    variant="contained"
+                                    color="error"
                                     fullWidth
                                     sx={{
                                         borderRadius: '6px',
