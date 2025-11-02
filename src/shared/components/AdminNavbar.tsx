@@ -20,8 +20,8 @@ import { getInitials } from '@/shared/utils/string.utils';
 
 // Admin navigation pages
 const ADMIN_PAGES = [
-    { name: 'Hotels', path: '/admin/hotels' },
     { name: 'Cities', path: '/admin/cities' },
+    { name: 'Hotels', path: '/admin/hotels' },
     { name: 'Rooms', path: '/admin/rooms' },
 ];
 

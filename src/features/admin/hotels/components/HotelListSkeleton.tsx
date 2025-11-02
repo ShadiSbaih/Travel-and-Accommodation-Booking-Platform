@@ -28,19 +28,74 @@ function HotelListSkeleton() {
         <TableHead>
           <TableRow
             sx={{
-              background: (theme) =>
+              bgcolor: (theme) =>
                 theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                  : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                  ? 'rgba(51, 65, 85, 0.6)'
+                  : 'rgba(226, 232, 240, 0.8)',
             }}
           >
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>Hotel</TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>Type</TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>Location</TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>Rating</TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>Rooms</TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>Description</TableCell>
-            <TableCell align="center" sx={{ color: 'white', fontWeight: 700 }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              Hotel
+            </TableCell>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              Type
+            </TableCell>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              Location
+            </TableCell>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              Rating
+            </TableCell>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              Rooms
+            </TableCell>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              Description
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
               Actions
             </TableCell>
           </TableRow>

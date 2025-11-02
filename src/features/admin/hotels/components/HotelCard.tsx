@@ -116,17 +116,23 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
                 width: 48,
                 height: 48,
                 borderRadius: 1.5,
-                background: (theme) =>
+                bgcolor: (theme) =>
                   theme.palette.mode === 'dark'
-                    ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                    : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                    ? 'rgba(6, 182, 212, 0.2)'
+                    : 'rgba(20, 184, 166, 0.15)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
               }}
             >
-              <HotelIcon sx={{ color: 'white', fontSize: 24 }} />
+              <HotelIcon
+                sx={{
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                  fontSize: 24,
+                }}
+              />
             </Box>
             <Box sx={{ flex: 1, minWidth: 0 }}>
               <Typography

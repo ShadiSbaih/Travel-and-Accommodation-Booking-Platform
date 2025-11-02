@@ -29,17 +29,23 @@ function CitiesPageHeader({
             width: { xs: 48, sm: 56 },
             height: { xs: 48, sm: 56 },
             borderRadius: 1.5,
-            background: (theme) =>
+            bgcolor: (theme) =>
               theme.palette.mode === 'dark'
-                ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                ? 'rgba(6, 182, 212, 0.2)'
+                : 'rgba(20, 184, 166, 0.15)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
           }}
         >
-          <LocationCityIcon sx={{ color: 'white', fontSize: { xs: 28, sm: 32 } }} />
+          <LocationCityIcon
+            sx={{
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+              fontSize: { xs: 28, sm: 32 },
+            }}
+          />
         </Box>
         <Box sx={{ minWidth: 0 }}>
           <Typography
@@ -173,10 +179,9 @@ function CitiesPageHeader({
           startIcon={<AddIcon sx={{ display: { xs: 'none', sm: 'block' } }} />}
           onClick={onAddCity}
           sx={{
-            background: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark' ? '#0891b2' : '#14b8a6',
+            color: 'white',
             textTransform: 'none',
             borderRadius: 1.5,
             px: { xs: 2, sm: 3 },
@@ -185,10 +190,8 @@ function CitiesPageHeader({
             fontSize: { xs: '0.875rem', sm: '1rem' },
             minWidth: { xs: 'auto', sm: 'auto' },
             '&:hover': {
-              background: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)'
-                  : 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark' ? '#0e7490' : '#0d9488',
               transform: 'translateY(-2px)',
             },
             transition: 'all 0.3s ease',

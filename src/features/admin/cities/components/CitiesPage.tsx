@@ -76,10 +76,7 @@ function CitiesPage() {
     <Box
       sx={{
         minHeight: '100vh',
-        background: (theme) =>
-          theme.palette.mode === 'dark'
-            ? 'linear-gradient(135deg, #0c4a6e 0%, #164e63 100%)'
-            : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+    
         p: { xs: 2, sm: 3, md: 4 },
       }}
     >

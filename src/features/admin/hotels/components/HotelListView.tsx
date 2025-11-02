@@ -64,17 +64,23 @@ function HotelRow({ hotel, index, onEdit, onDelete, isDeleting }: HotelRowProps)
               width: 40,
               height: 40,
               borderRadius: 1,
-              background: (theme) =>
+              bgcolor: (theme) =>
                 theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                  : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                  ? 'rgba(6, 182, 212, 0.2)'
+                  : 'rgba(20, 184, 166, 0.15)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
             }}
           >
-            <HotelIcon sx={{ color: 'white', fontSize: 20 }} />
+            <HotelIcon
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                fontSize: 20,
+              }}
+            />
           </Box>
           <Box>
             <Typography
@@ -241,33 +247,80 @@ function HotelListView({ hotels, onEdit }: HotelListViewProps) {
         <TableHead>
           <TableRow
             sx={{
-              background: (theme) =>
+              bgcolor: (theme) =>
                 theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                  : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                  ? 'rgba(51, 65, 85, 0.6)'
+                  : 'rgba(226, 232, 240, 0.8)',
             }}
           >
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Hotel
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Type
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Location
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Rating
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Rooms
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Description
             </TableCell>
             <TableCell
               align="center"
-              sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
             >
               Actions
             </TableCell>

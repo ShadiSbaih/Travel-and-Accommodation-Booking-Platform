@@ -30,16 +30,22 @@ function HotelsPageHeader({
             width: 56,
             height: 56,
             borderRadius: 2,
-            background: (theme) =>
+            bgcolor: (theme) =>
               theme.palette.mode === 'dark'
-                ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                ? 'rgba(6, 182, 212, 0.2)'
+                : 'rgba(20, 184, 166, 0.15)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <HotelIcon sx={{ color: 'white', fontSize: 32 }} />
+          <HotelIcon
+            sx={{
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+              fontSize: 32,
+            }}
+          />
         </Box>
         <Box>
           <Typography
@@ -138,15 +144,12 @@ function HotelsPageHeader({
             fontSize: { xs: '0.875rem', sm: '1rem' },
             fontWeight: 600,
             minWidth: { xs: 'auto', sm: 'auto' },
-            background: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark' ? '#0891b2' : '#14b8a6',
+            color: 'white',
             '&:hover': {
-              background: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)'
-                  : 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark' ? '#0e7490' : '#0d9488',
             },
             '& .MuiButton-startIcon': {
               marginRight: { xs: 0.5, sm: 1 },

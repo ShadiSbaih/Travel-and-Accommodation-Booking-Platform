@@ -93,15 +93,12 @@ function EmptyHotelsState({ hasSearchQuery, onAddHotel }: EmptyHotelsStateProps)
             px: 4,
             py: 1.5,
             fontWeight: 600,
-            background: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark' ? '#0891b2' : '#14b8a6',
+            color: 'white',
             '&:hover': {
-              background: (theme) =>
-                theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)'
-                  : 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark' ? '#0e7490' : '#0d9488',
             },
           }}
         >

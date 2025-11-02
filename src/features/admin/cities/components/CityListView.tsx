@@ -42,34 +42,60 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
             ? 'rgba(30, 41, 59, 0.95)'
             : 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(20px)',
-        borderRadius:.5,
-     
+        borderRadius: .5,
+
         overflow: 'hidden',
-      
+
       }}
     >
       <Table>
         <TableHead>
           <TableRow
             sx={{
-              background: (theme) =>
+              bgcolor: (theme) =>
                 theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                  : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                  ? 'rgba(51, 65, 85, 0.6)'
+                  : 'rgba(226, 232, 240, 0.8)',
             }}
           >
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               City
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               ID
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
+            >
               Description
             </TableCell>
             <TableCell
               align="center"
-              sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+              }}
             >
               Actions
             </TableCell>
@@ -101,20 +127,22 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                       width: 40,
                       height: 40,
                       borderRadius: 1.5,
-                      background: (theme) =>
+                      bgcolor: (theme) =>
                         theme.palette.mode === 'dark'
-                          ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                          : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                          ? 'rgba(6, 182, 212, 0.2)'
+                          : 'rgba(20, 184, 166, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: (theme) =>
-                        theme.palette.mode === 'dark'
-                          ? '0 4px 15px rgba(6, 182, 212, 0.3)'
-                          : '0 4px 15px rgba(20, 184, 166, 0.3)',
                     }}
                   >
-                    <LocationOnIcon sx={{ color: 'white', fontSize: 20 }} />
+                    <LocationOnIcon
+                      sx={{
+                        color: (theme) =>
+                          theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                        fontSize: 20,
+                      }}
+                    />
                   </Box>
                   <Typography
                     variant="body1"

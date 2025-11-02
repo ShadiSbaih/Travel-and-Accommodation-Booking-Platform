@@ -33,20 +33,48 @@ function CityListSkeleton() {
         <TableHead>
           <TableRow
             sx={{
-              background: (theme) =>
+              bgcolor: (theme) =>
                 theme.palette.mode === 'dark'
-                  ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                  : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                  ? 'rgba(51, 65, 85, 0.6)'
+                  : 'rgba(226, 232, 240, 0.8)',
             }}
           >
-            <TableCell sx={{ color: 'white', fontWeight: 700, py: 2 }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+                py: 2,
+              }}
+            >
               City
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>ID</TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }}>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
+              ID
+            </TableCell>
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+            >
               Description
             </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 700 }} align="right">
+            <TableCell
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                fontWeight: 700,
+              }}
+              align="right"
+            >
               Actions
             </TableCell>
           </TableRow>

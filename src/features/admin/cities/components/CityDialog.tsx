@@ -94,13 +94,13 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
         },
       }}
     >
-      {/* Header with Gradient */}
+      {/* Header */}
       <Box
         sx={{
-          background: (theme) =>
+          bgcolor: (theme) =>
             theme.palette.mode === 'dark'
-              ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-              : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+              ? 'rgba(51, 65, 85, 0.6)'
+              : 'rgba(226, 232, 240, 0.8)',
           p: 3,
           position: 'relative',
         }}
@@ -111,10 +111,17 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
             position: 'absolute',
             right: 16,
             top: 16,
-            color: 'white',
-            bgcolor: 'rgba(255, 255, 255, 0.1)',
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(71, 85, 105, 0.5)'
+                : 'rgba(148, 163, 184, 0.2)',
             '&:hover': {
-              bgcolor: 'rgba(255, 255, 255, 0.2)',
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? 'rgba(71, 85, 105, 0.7)'
+                  : 'rgba(148, 163, 184, 0.3)',
             },
           }}
         >
@@ -127,19 +134,42 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
               width: 56,
               height: 56,
               borderRadius: 1.5,
-              bgcolor: 'rgba(255, 255, 255, 0.2)',
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? 'rgba(6, 182, 212, 0.2)'
+                  : 'rgba(20, 184, 166, 0.15)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <AddLocationIcon sx={{ color: 'white', fontSize: 32 }} />
+            <AddLocationIcon
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                fontSize: 32,
+              }}
+            />
           </Box>
           <Box>
-            <Typography variant="h5" fontWeight="700" color="white">
+            <Typography
+              variant="h5"
+              fontWeight="700"
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+              }}
+            >
               {city ? 'Edit City' : 'Add New City'}
             </Typography>
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)', mt: 0.5 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+                mt: 0.5,
+              }}
+            >
               {city
                 ? 'Update city information below'
                 : 'Fill in the details to create a new city'}
@@ -275,21 +305,22 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
                 px: 4,
                 py: 1.2,
                 fontWeight: 600,
-                background: (theme) =>
-                  theme.palette.mode === 'dark'
-                    ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
-                    : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#0891b2' : '#14b8a6',
+                color: 'white',
                 '&:hover': {
-                  background: (theme) =>
-                    theme.palette.mode === 'dark'
-                      ? 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)'
-                      : 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#0e7490' : '#0d9488',
                 },
                 '&:disabled': {
-                  background: (theme) =>
+                  bgcolor: (theme) =>
                     theme.palette.mode === 'dark'
                       ? 'rgba(100, 116, 139, 0.3)'
                       : 'grey.300',
+                  color: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(148, 163, 184, 0.5)'
+                      : 'rgba(0, 0, 0, 0.26)',
                   boxShadow: 'none',
                 },
               }}
