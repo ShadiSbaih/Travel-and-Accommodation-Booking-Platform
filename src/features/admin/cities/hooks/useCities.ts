@@ -8,7 +8,7 @@ export const useCities = (filters?: CityFilters) => {
   const notify = useNotification();
 
   // Get all cities with filters (name, country)
-  const { data: cities, isLoading, error } = useQuery({
+  const { data: cities, isLoading, error, refetch } = useQuery({
     queryKey: ['cities', filters],
     queryFn: () => citiesApi.getCities(filters),
   });
@@ -54,6 +54,7 @@ export const useCities = (filters?: CityFilters) => {
     cities,
     isLoading,
     error,
+    refetch,
     createCity: createCityMutation.mutate,
     updateCity: updateCityMutation.mutate,
     deleteCity: deleteCityMutation.mutate,

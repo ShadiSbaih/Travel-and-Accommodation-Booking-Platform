@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -22,16 +22,64 @@ import { useCities } from '../hooks/useCities';
 import CityCard from './CityCard';
 import CityDialog from './CityDialog';
 import CityListView from './CityListView';
+import CityCardSkeleton from './CityCardSkeleton';
+import CityErrorState from './CityErrorState';
 import type { City } from '../types';
+
+const ITEMS_PER_PAGE = 12;
 
 function CitiesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // Use 'name' filter as per API requirements (GET /cities?name=...)
-  const { cities, isLoading } = useCities({ name: searchQuery });
+  // Fetch all cities without filters (backend returns all)
+  const { cities: allCities, isLoading, error, refetch } = useCities();
+
+  // Local search filtering
+  const filteredCities = useMemo(() => {
+    if (!allCities) return [];
+    
+    if (!searchQuery.trim()) return allCities;
+
+    const query = searchQuery.toLowerCase().trim();
+    return allCities.filter((city) =>
+      city.name.toLowerCase().includes(query)
+    );
+  }, [allCities, searchQuery]);
+
+  // Paginated cities for display
+  const displayedCities = useMemo(() => {
+    return filteredCities.slice(0, displayCount);
+  }, [filteredCities, displayCount]);
+
+  const hasMore = displayCount < filteredCities.length;
+
+  // Infinite scroll observer
+  useEffect(() => {
+    if (!loadMoreRef.current || !hasMore || isLoading) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => observer.disconnect();
+  }, [hasMore, isLoading]);
+
+  // Reset display count when search query changes
+  useEffect(() => {
+    setDisplayCount(ITEMS_PER_PAGE);
+  }, [searchQuery]);
 
   const handleOpenDialog = (city?: City) => {
     setSelectedCity(city || null);
@@ -45,6 +93,11 @@ function CitiesPage() {
 
   const handleReset = () => {
     setSearchQuery('');
+    setDisplayCount(ITEMS_PER_PAGE);
+  };
+
+  const handleRetry = () => {
+    refetch();
   };
 
   return (
@@ -122,7 +175,7 @@ function CitiesPage() {
                   </Typography>
                   <Stack direction="row" spacing={1} sx={{ mt: 0.5 }}>
                     <Chip
-                      label={`${cities?.length || 0} Cities`}
+                      label={`${filteredCities?.length || 0} ${searchQuery ? 'Results' : 'Cities'}`}
                       size="small"
                       sx={{
                         background: (theme) =>
@@ -333,39 +386,25 @@ function CitiesPage() {
           </Paper>
 
           {/* Content Area */}
-          {isLoading ? (
-            <Paper
-              elevation={0}
+          {error ? (
+            <CityErrorState onRetry={handleRetry} />
+          ) : isLoading ? (
+            <Box
               sx={{
-                background: (theme) =>
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(30, 41, 59, 0.95)'
-                    : 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(20px)',
-                borderRadius: 2,
-                p: 8,
-                textAlign: 'center',
-                boxShadow: (theme) =>
-                  theme.palette.mode === 'dark'
-                    ? '0 8px 32px rgba(0, 0, 0, 0.5)'
-                    : '0 8px 32px rgba(0, 0, 0, 0.1)',
-                border: (theme) =>
-                  theme.palette.mode === 'dark'
-                    ? '1px solid rgba(148, 163, 184, 0.1)'
-                    : 'none',
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: '1fr',
+                  sm: 'repeat(2, 1fr)',
+                  lg: 'repeat(3, 1fr)',
+                },
+                gap: 3,
               }}
             >
-              <Typography
-                variant="h6"
-                sx={{
-                  color: (theme) =>
-                    theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-                }}
-              >
-                Loading cities...
-              </Typography>
-            </Paper>
-          ) : cities && cities.length > 0 ? (
+              {Array.from({ length: 6 }).map((_, index) => (
+                <CityCardSkeleton key={index} />
+              ))}
+            </Box>
+          ) : filteredCities && filteredCities.length > 0 ? (
             <Fade in timeout={600}>
               <Box>
                 {viewMode === 'grid' ? (
@@ -380,7 +419,7 @@ function CitiesPage() {
                       gap: 3,
                     }}
                   >
-                    {cities.map((city, index) => (
+                    {displayedCities.map((city, index) => (
                       <Fade in timeout={400 + index * 100} key={city.id}>
                         <Box>
                           <CityCard city={city} onEdit={handleOpenDialog} />
@@ -389,7 +428,38 @@ function CitiesPage() {
                     ))}
                   </Box>
                 ) : (
-                  <CityListView cities={cities} onEdit={handleOpenDialog} />
+                  <CityListView cities={displayedCities} onEdit={handleOpenDialog} />
+                )}
+
+                {/* Load More Trigger for Infinite Scroll */}
+                {hasMore && (
+                  <Box
+                    ref={loadMoreRef}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      py: 4,
+                      mt: 3,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'grid',
+                        gridTemplateColumns: {
+                          xs: '1fr',
+                          sm: 'repeat(2, 1fr)',
+                          lg: 'repeat(3, 1fr)',
+                        },
+                        gap: 3,
+                        width: '100%',
+                      }}
+                    >
+                      {Array.from({ length: 3 }).map((_, index) => (
+                        <CityCardSkeleton key={`skeleton-${index}`} />
+                      ))}
+                    </Box>
+                  </Box>
                 )}
               </Box>
             </Fade>
