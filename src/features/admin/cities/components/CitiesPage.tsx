@@ -1,18 +1,7 @@
-import { useMemo, useEffect, useRef, useCallback, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import { useCities } from '../hooks/useCities';
-import { useDebounce } from '@/shared/hooks/useDebounce';
-import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
-import { useAppDispatch, useAppSelector } from '@/core/store/hooks';
-import {
-  setCitiesViewMode,
-  openCityDialog,
-  closeCityDialog,
-  setCitiesSearchQuery,
-  incrementCitiesDisplayCount,
-  resetCitiesDisplayCount,
-} from '@/core/store/slices/adminUiSlice';
+import { useCitiesPage } from '../hooks/useCitiesPage';
+import { pageContainerSx, paperSx } from '../styles/page.styles';
 import AdminPageHeader from '@/features/admin/shared/components/AdminPageHeader';
 import CityDialog from './CityDialog';
 import CityErrorState from './CityErrorState';
@@ -20,96 +9,37 @@ import CitiesSearchBar from './CitiesSearchBar';
 import CitiesContent from './CitiesContent';
 import EmptyCitiesState from './EmptyCitiesState';
 
+/**
+ * Cities Management Page Component
+ * Main page for managing cities in the admin panel
+ */
 function CitiesPage() {
-  const dispatch = useAppDispatch();
-  const loadMoreRef = useRef<HTMLDivElement>(null);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  // Get state from Redux
-  const { searchQuery, viewMode, isDialogOpen, selectedCity, displayCount } =
-    useAppSelector((state) => state.adminUi.cities);
-
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
-  const { cities = [], isLoading, error, refetch } = useCities();
-
-  // Local search filtering
-  const filteredCities = useMemo(() => {
-    if (!debouncedSearchQuery.trim()) return cities;
-
-    const query = debouncedSearchQuery.toLowerCase().trim();
-    return cities.filter((city) =>
-      city.name.toLowerCase().includes(query)
-    );
-  }, [cities, debouncedSearchQuery]);
-
-  // Paginated cities for display
-  const displayedCities = useMemo(() => {
-    return filteredCities.slice(0, displayCount);
-  }, [filteredCities, displayCount]);
-
-  const hasMore = displayCount < filteredCities.length;
-
-  const handleLoadMore = useCallback(() => {
-    setIsLoadingMore(true);
-    // Simulate async loading
-    setTimeout(() => {
-      dispatch(incrementCitiesDisplayCount());
-      setIsLoadingMore(false);
-    }, 300);
-  }, [dispatch]);
-
-  useInfiniteScroll({
-    ref: loadMoreRef,
+  const {
+    searchQuery,
+    viewMode,
+    isDialogOpen,
+    selectedCity,
+    filteredCities,
+    displayedCities,
+    isLoading,
+    isLoadingMore,
+    error,
     hasMore,
-    isLoading: isLoadingMore,
-    onLoadMore: handleLoadMore,
-  });
+    loadMoreRef,
+    handleSearchChange,
+    handleSearchReset,
+    handleOpenDialog,
+    handleCloseDialog,
+    handleViewModeChange,
+    refetch,
+  } = useCitiesPage();
 
-  // Reset display count when search query changes
-  useEffect(() => {
-    dispatch(resetCitiesDisplayCount());
-  }, [debouncedSearchQuery, dispatch]);
 
-  const handleOpenDialog = useCallback(() => {
-    dispatch(openCityDialog(null));
-  }, [dispatch]);
-
-  const handleCloseDialog = useCallback(() => {
-    dispatch(closeCityDialog());
-  }, [dispatch]);
-
-  const handleReset = useCallback(() => {
-    dispatch(setCitiesSearchQuery(''));
-  }, [dispatch]);
-
-  const handleSearchChange = useCallback((value: string) => {
-    dispatch(setCitiesSearchQuery(value));
-  }, [dispatch]);
-
-  const handleViewModeChange = useCallback((mode: typeof viewMode) => {
-    dispatch(setCitiesViewMode(mode));
-  }, [dispatch]);
-
-  // Error state - don't show search bar
-  if (error && cities.length === 0) {
+  // Error state
+  if (error && filteredCities.length === 0) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            bgcolor: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(30, 41, 59, 0.95)'
-                : 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: 2,
-            border: (theme) =>
-              theme.palette.mode === 'dark'
-                ? '1px solid rgba(148, 163, 184, 0.1)'
-                : 'none',
-          }}
-        >
+      <Box sx={pageContainerSx}>
+        <Paper elevation={0} sx={paperSx}>
           <AdminPageHeader
             title="Cities Management"
             count={filteredCities.length}
@@ -128,26 +58,11 @@ function CitiesPage() {
     );
   }
 
-  // Empty state - show when no cities exist and not loading
-  if (!isLoading && cities.length === 0 && !debouncedSearchQuery) {
+  // Empty state
+  if (!isLoading && filteredCities.length === 0 && !searchQuery) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            bgcolor: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(30, 41, 59, 0.95)'
-                : 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: 2,
-            border: (theme) =>
-              theme.palette.mode === 'dark'
-                ? '1px solid rgba(148, 163, 184, 0.1)'
-                : 'none',
-          }}
-        >
+      <Box sx={pageContainerSx}>
+        <Paper elevation={0} sx={paperSx}>
           <AdminPageHeader
             title="Cities Management"
             count={filteredCities.length}
@@ -169,24 +84,10 @@ function CitiesPage() {
     );
   }
 
+  // Main content
   return (
-    <Box sx={{ p: 3 }}>
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          bgcolor: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(30, 41, 59, 0.95)'
-              : 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: 2,
-          border: (theme) =>
-            theme.palette.mode === 'dark'
-              ? '1px solid rgba(148, 163, 184, 0.1)'
-              : 'none',
-        }}
-      >
+    <Box sx={pageContainerSx}>
+      <Paper elevation={0} sx={paperSx}>
         <AdminPageHeader
           title="Cities Management"
           count={filteredCities.length}
@@ -202,7 +103,7 @@ function CitiesPage() {
         <CitiesSearchBar
           value={searchQuery}
           onChange={handleSearchChange}
-          onReset={handleReset}
+          onReset={handleSearchReset}
         />
 
         {isLoading ? (
@@ -213,7 +114,7 @@ function CitiesPage() {
             hasMore={false}
             loadMoreRef={loadMoreRef}
           />
-        ) : filteredCities && filteredCities.length > 0 ? (
+        ) : filteredCities.length > 0 ? (
           <CitiesContent
             cities={displayedCities}
             viewMode={viewMode}

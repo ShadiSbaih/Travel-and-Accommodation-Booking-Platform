@@ -1,17 +1,7 @@
-import { useMemo, useCallback, useRef, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import { useRooms } from '../hooks/useRooms';
-import { useDebounce } from '@/shared/hooks/useDebounce';
-import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
-import { useAppDispatch, useAppSelector } from '@/core/store/hooks';
-import {
-  setRoomsViewMode,
-  openRoomDialog,
-  closeRoomDialog,
-  setRoomsSearchQuery,
-  incrementRoomsDisplayCount,
-} from '@/core/store/slices/adminUiSlice';
+import { useRoomsPage } from '../hooks/useRoomsPage';
+import { pageContainerSx, paperSx } from '../styles/page.styles';
 import AdminPageHeader from '@/features/admin/shared/components/AdminPageHeader';
 import RoomsSearchBar from './RoomsSearchBar';
 import RoomsContent from './RoomsContent';
@@ -19,99 +9,37 @@ import RoomDialog from './RoomDialog';
 import EmptyRoomsState from './EmptyRoomsState';
 import RoomErrorState from './RoomErrorState';
 
+/**
+ * Rooms Management Page Component
+ * Main page for managing hotel rooms in the admin panel
+ */
 function RoomsPage() {
-  const dispatch = useAppDispatch();
-  const loadMoreRef = useRef<HTMLDivElement>(null);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  // Get state from Redux
-  const { searchQuery, viewMode, isDialogOpen, selectedRoom, displayCount } =
-    useAppSelector((state) => state.adminUi.rooms);
-
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
-  const { rooms = [], isLoading, error, refetch } = useRooms(
-    debouncedSearchQuery ? { searchQuery: debouncedSearchQuery } : undefined
-  );
-
-  // Remove duplicate rooms by ID (defensive programming)
-  const uniqueRooms = useMemo(() => {
-    const unique = rooms.reduce((acc: typeof rooms, room) => {
-      if (!acc.find((r) => r.roomId === room.roomId)) {
-        acc.push(room);
-      }
-      return acc;
-    }, []);
-    return unique;
-  }, [rooms]);
-
-  const displayedRooms = useMemo(() => {
-    const displayed = uniqueRooms.slice(0, displayCount);
-    return displayed;
-  }, [uniqueRooms, displayCount]);
-
-  const hasMore = displayCount < uniqueRooms.length;
-
-  const handleLoadMore = useCallback(() => {
-    setIsLoadingMore(true);
-    // Simulate async loading
-    setTimeout(() => {
-      dispatch(incrementRoomsDisplayCount());
-      setIsLoadingMore(false);
-    }, 300);
-  }, [dispatch]);
-
-  useInfiniteScroll({
-    ref: loadMoreRef,
+  const {
+    searchQuery,
+    viewMode,
+    isDialogOpen,
+    selectedRoom,
+    uniqueRooms,
+    displayedRooms,
+    isLoading,
+    isLoadingMore,
+    error,
     hasMore,
-    isLoading: isLoadingMore,
-    onLoadMore: handleLoadMore,
-  });
-
-  const handleSearchChange = useCallback((value: string) => {
-    dispatch(setRoomsSearchQuery(value));
-  }, [dispatch]);
-
-  const handleSearchReset = useCallback(() => {
-    dispatch(setRoomsSearchQuery(''));
-  }, [dispatch]);
-
-  const handleCreateRoom = useCallback(() => {
-    dispatch(openRoomDialog(null));
-  }, [dispatch]);
-
-  const handleCloseDialog = useCallback(() => {
-    dispatch(closeRoomDialog());
-  }, [dispatch]);
-
-  const handleSuccess = useCallback(() => {
-    refetch();
-    handleCloseDialog();
-  }, [refetch, handleCloseDialog]);
-
-  const handleViewModeChange = useCallback((mode: typeof viewMode) => {
-    dispatch(setRoomsViewMode(mode));
-  }, [dispatch]);
+    loadMoreRef,
+    handleSearchChange,
+    handleSearchReset,
+    handleCreateRoom,
+    handleCloseDialog,
+    handleSuccess,
+    handleViewModeChange,
+    refetch,
+  } = useRoomsPage();
 
   // Error state
-  if (error && rooms.length === 0) {
+  if (error && uniqueRooms.length === 0) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            bgcolor: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(30, 41, 59, 0.95)'
-                : 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: 2,
-            border: (theme) =>
-              theme.palette.mode === 'dark'
-                ? '1px solid rgba(148, 163, 184, 0.1)'
-                : 'none',
-          }}
-        >
+      <Box sx={pageContainerSx}>
+        <Paper elevation={0} sx={paperSx}>
           <AdminPageHeader
             title="Rooms Management"
             count={uniqueRooms.length}
@@ -131,25 +59,10 @@ function RoomsPage() {
   }
 
   // Empty state - show when no rooms exist and not loading
-  if (!isLoading && rooms.length === 0 && !debouncedSearchQuery) {
+  if (!isLoading && uniqueRooms.length === 0 && !searchQuery) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            bgcolor: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(30, 41, 59, 0.95)'
-                : 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: 2,
-            border: (theme) =>
-              theme.palette.mode === 'dark'
-                ? '1px solid rgba(148, 163, 184, 0.1)'
-                : 'none',
-          }}
-        >
+      <Box sx={pageContainerSx}>
+        <Paper elevation={0} sx={paperSx}>
           <AdminPageHeader
             title="Rooms Management"
             count={uniqueRooms.length}
@@ -168,24 +81,10 @@ function RoomsPage() {
     );
   }
 
+  // Main content
   return (
-    <Box sx={{ p: 3 }}>
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          bgcolor: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(30, 41, 59, 0.95)'
-              : 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(20px)',
-          borderRadius: 2,
-          border: (theme) =>
-            theme.palette.mode === 'dark'
-              ? '1px solid rgba(148, 163, 184, 0.1)'
-              : 'none',
-        }}
-      >
+    <Box sx={pageContainerSx}>
+      <Paper elevation={0} sx={paperSx}>
         <AdminPageHeader
           title="Rooms Management"
           count={uniqueRooms.length}
