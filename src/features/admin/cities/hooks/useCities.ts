@@ -1,21 +1,21 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { citiesApi } from '../api/cities.api';
-import type { City, CityFilters } from '../types/city.types';
+import type { CityFilters, CreateCityDto, UpdateCityDto } from '../types/city.types';
 import { useNotification } from '@/shared/hooks/useNotification';
 
 export const useCities = (filters?: CityFilters) => {
   const queryClient = useQueryClient();
   const notify = useNotification();
 
-  // Get all cities
+  // Get all cities with filters (name, country)
   const { data: cities, isLoading, error } = useQuery({
     queryKey: ['cities', filters],
     queryFn: () => citiesApi.getCities(filters),
   });
 
-  // Create city mutation
+  // Create city mutation - POST /cities
   const createCityMutation = useMutation({
-    mutationFn: (cityData: Omit<City, 'id'>) => citiesApi.createCity(cityData),
+    mutationFn: (cityData: CreateCityDto) => citiesApi.createCity(cityData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cities'] });
       notify('City created successfully', 'success');
@@ -25,10 +25,10 @@ export const useCities = (filters?: CityFilters) => {
     },
   });
 
-  // Update city mutation
+  // Update city mutation - PUT /cities/{cityId}
   const updateCityMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<City> }) =>
-      citiesApi.updateCity(id, data),
+    mutationFn: ({ cityId, data }: { cityId: number; data: UpdateCityDto }) =>
+      citiesApi.updateCity(cityId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cities'] });
       notify('City updated successfully', 'success');
@@ -38,9 +38,9 @@ export const useCities = (filters?: CityFilters) => {
     },
   });
 
-  // Delete city mutation
+  // Delete city mutation - DELETE /cities/{cityId}
   const deleteCityMutation = useMutation({
-    mutationFn: (id: number) => citiesApi.deleteCity(id),
+    mutationFn: (cityId: number) => citiesApi.deleteCity(cityId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cities'] });
       notify('City deleted successfully', 'success');
