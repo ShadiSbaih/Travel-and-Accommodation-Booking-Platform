@@ -48,7 +48,7 @@ function HotelDetailsPage() {
             onRetry={() => refetchHotel()}
             action={{
               label: 'Back to Search',
-              onClick: () => navigate('/search'),
+              onClick: () => navigate('/search-results'),
             }}
           />
         </Container>
