@@ -21,8 +21,8 @@ function HotelsPage() {
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // Debounce search query for smoother UX
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+  // Debounce search query with longer delay to reduce API calls (600ms)
+  const debouncedSearchQuery = useDebounce(searchQuery, 600);
 
   // Fetch hotels with search query (backend handles filtering)
   const { hotels: allHotels, isLoading, error, refetch } = useHotels({
