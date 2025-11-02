@@ -1,5 +1,5 @@
 import api from "./axios";
-import type { Amenity } from "@/features/hotels/types/amenities";
+import type { Amenity } from "@/features/hotels/types";
 
 const amenitiesApi = {
     getAmenities: async (): Promise<Amenity[]> => {

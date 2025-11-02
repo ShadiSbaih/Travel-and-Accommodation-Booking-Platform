@@ -1,5 +1,5 @@
 import api from '@/core/api/axios';
-import type { Hotel, HotelFilters, HotelGallery, HotelReview, AvailableRoom } from '../types/hotel.types';
+import type { Hotel, HotelFilters, HotelGallery, HotelReview, AvailableRoom } from '../types';
 
 export const hotelsApi = {
   // Get hotels with filters (supports searchQuery, pageNumber, pageSize)
