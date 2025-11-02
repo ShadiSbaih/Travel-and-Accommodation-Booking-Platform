@@ -11,9 +11,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PeopleIcon from '@mui/icons-material/People';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
+import BedIcon from '@mui/icons-material/Bed';
 import { useRooms } from '../hooks/useRooms';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openRoomDialog } from '@/core/store/slices/adminUiSlice';
+import OptimizedImage from '@/shared/components/OptimizedImage';
 import type { Room } from '../types';
 
 interface RoomCardProps {
@@ -64,8 +66,71 @@ function RoomCard({ room }: RoomCardProps) {
         },
       }}
     >
-
-   
+      {/* Room Image */}
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: 200,
+          overflow: 'hidden',
+        }}
+      >
+        <OptimizedImage
+          src={room.roomPhotoUrl || 'https://t3.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg'}
+          alt={`${room.roomType} Room #${room.roomNumber}`}
+          width={400}
+          height={200}
+          objectFit="cover"
+          sx={{
+            borderRadius: '8px 8px 0 0',
+          }}
+        />
+        {/* Room Number Badge */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            left: 12,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(6, 182, 212, 0.95)'
+                : 'rgba(20, 184, 166, 0.95)',
+            color: 'white',
+            px: 2,
+            py: 0.75,
+            borderRadius: 1.5,
+            fontWeight: 700,
+            fontSize: '0.875rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <BedIcon sx={{ fontSize: 18 }} />
+          Room #{room.roomNumber}
+        </Box>
+        {/* Availability Badge */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            bgcolor: room.availability
+              ? 'rgba(34, 197, 94, 0.95)'
+              : 'rgba(239, 68, 68, 0.95)',
+            color: 'white',
+            px: 1.5,
+            py: 0.5,
+            borderRadius: 1,
+            fontWeight: 600,
+            fontSize: '0.75rem',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          {room.availability ? 'Available' : 'Unavailable'}
+        </Box>
+      </Box>
 
       <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Room Type & Price */}
