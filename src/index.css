@@ -9,14 +9,6 @@
 /* ==================== Tailwind Theme Configuration ==================== */
 :root {
   --font-display: "Poppins", "sans-serif";
-  --breakpoint-3xl: 1920px;
-  /* 🌴 Tropical Paradise Theme */
-  --color-primary: #14b8a6;    /* Teal */
-  --color-secondary: #06b6d4;  /* Cyan */
-  --color-success: #10b981;
-  --color-warning: #f97316;    /* Orange */
-  --color-danger: #ef4444;
-  --color-info: #0ea5e9;
 }
 
 @layer base {
@@ -77,53 +69,3 @@
     font-family: inherit;
   }
 }
-
-/* ==================== Components Layer ==================== */
-@layer components {
-  /* Add your custom component classes here */
-  .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
-  .btn-primary {
-    @apply bg-[var(--color-primary)] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300;
-  }
-
-  .card {
-    @apply bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300;
-  }
-}
-
-/* ==================== Utilities Layer ==================== */
-@layer utilities {
-  /* Add your custom utility classes here */
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-in;
-  }
-
-  /* Hide scrollbar for mobile thumbnails */
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-
