@@ -50,17 +50,17 @@ function AdminNavbar() {
             sx={{
                 background: (theme) =>
                     theme.palette.mode === 'dark'
-                        ? 'rgba(109, 40, 217, 0.75) !important' // Purple for admin
-                        : 'rgba(147, 51, 234, 0.85) !important',
+                        ? 'rgba(13, 148, 136, 0.75) !important'
+                        : 'rgba(20, 184, 166, 0.85) !important',
                 backdropFilter: 'blur(20px) saturate(180%) !important',
                 WebkitBackdropFilter: 'blur(20px) saturate(180%) !important',
                 boxShadow: (theme) =>
                     theme.palette.mode === 'dark'
-                        ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 1px rgba(147, 51, 234, 0.3) !important'
+                        ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 1px rgba(20, 184, 166, 0.3) !important'
                         : '0 8px 32px rgba(0, 0, 0, 0.1) !important',
                 borderBottom: (theme) =>
                     theme.palette.mode === 'dark'
-                        ? '1px solid rgba(147, 51, 234, 0.2)'
+                        ? '1px solid rgba(20, 184, 166, 0.2)'
                         : '1px solid rgba(255, 255, 255, 0.18)',
                 transition: 'all 0.3s ease',
             }}

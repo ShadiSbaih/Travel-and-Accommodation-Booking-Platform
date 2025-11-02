@@ -31,25 +31,25 @@ function CityCard({ city, onEdit }: CityCardProps) {
     <Card
       sx={{
         height: '100%',
-        background: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderRadius: 3,
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+        background: (theme) =>
+          theme.palette.mode === 'dark'
+            ? 'rgba(30, 41, 59, 0.95)'
+            : 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        borderRadius: 2,
+        boxShadow: (theme) =>
+          theme.palette.mode === 'dark'
+            ? '0 4px 20px rgba(0, 0, 0, 0.3)'
+            : '0 4px 20px rgba(0, 0, 0, 0.08)',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         position: 'relative',
         overflow: 'hidden',
         '&:hover': {
           transform: 'translateY(-8px)',
-          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
-        },
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 4,
-          background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+          boxShadow: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '0 12px 40px rgba(0, 0, 0, 0.4)'
+              : '0 12px 40px rgba(0, 0, 0, 0.15)',
         },
       }}
     >
@@ -61,12 +61,14 @@ function CityCard({ city, onEdit }: CityCardProps) {
               sx={{
                 width: 48,
                 height: 48,
-                borderRadius: 2,
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: 1.5,
+                background: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
+                    : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
               }}
             >
               <LocationOnIcon sx={{ color: 'white', fontSize: 24 }} />
@@ -77,7 +79,8 @@ function CityCard({ city, onEdit }: CityCardProps) {
                 component="h3"
                 fontWeight="700"
                 sx={{
-                  color: 'text.primary',
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
@@ -91,8 +94,12 @@ function CityCard({ city, onEdit }: CityCardProps) {
                 sx={{
                   height: 20,
                   fontSize: '0.7rem',
-                  bgcolor: 'grey.100',
-                  color: 'text.secondary',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(100, 116, 139, 0.3)'
+                      : 'grey.100',
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
                   mt: 0.5,
                 }}
               />
@@ -104,7 +111,8 @@ function CityCard({ city, onEdit }: CityCardProps) {
         <Typography
           variant="body2"
           sx={{
-            color: 'text.secondary',
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
             mb: 3,
             minHeight: 60,
             display: '-webkit-box',
@@ -124,7 +132,10 @@ function CityCard({ city, onEdit }: CityCardProps) {
             gap: 1,
             pt: 2,
             borderTop: '1px solid',
-            borderColor: 'grey.200',
+            borderColor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(148, 163, 184, 0.1)'
+                : 'grey.200',
           }}
         >
           <Tooltip title="Edit City" arrow>
@@ -136,13 +147,19 @@ function CityCard({ city, onEdit }: CityCardProps) {
               sx={{
                 flex: 1,
                 textTransform: 'none',
-                borderRadius: 2,
-                borderColor: 'primary.main',
-                color: 'primary.main',
+                borderRadius: 1,
+                borderColor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#67e8f9' : '#0d9488',
                 fontWeight: 600,
                 '&:hover': {
-                  borderColor: 'primary.dark',
-                  bgcolor: 'primary.50',
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#06b6d4' : '#0d9488',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(6, 182, 212, 0.1)'
+                      : 'rgba(20, 184, 166, 0.05)',
                 },
               }}
             >
@@ -159,13 +176,19 @@ function CityCard({ city, onEdit }: CityCardProps) {
               sx={{
                 flex: 1,
                 textTransform: 'none',
-                borderRadius: 2,
-                borderColor: 'error.main',
-                color: 'error.main',
+                borderRadius: 1,
+                borderColor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#f87171' : 'error.main',
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#fca5a5' : 'error.main',
                 fontWeight: 600,
                 '&:hover': {
-                  borderColor: 'error.dark',
-                  bgcolor: 'error.50',
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#ef4444' : 'error.dark',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(248, 113, 113, 0.1)'
+                      : 'rgba(239, 68, 68, 0.05)',
                 },
               }}
             >

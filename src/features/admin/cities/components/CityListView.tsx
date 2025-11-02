@@ -37,18 +37,31 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
       component={Paper}
       elevation={0}
       sx={{
-        background: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderRadius: 4,
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+        background: (theme) =>
+          theme.palette.mode === 'dark'
+            ? 'rgba(30, 41, 59, 0.95)'
+            : 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        borderRadius: 1.5,
+        boxShadow: (theme) =>
+          theme.palette.mode === 'dark'
+            ? '0 8px 32px rgba(0, 0, 0, 0.5)'
+            : '0 8px 32px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
+        border: (theme) =>
+          theme.palette.mode === 'dark'
+            ? '1px solid rgba(148, 163, 184, 0.1)'
+            : '1px solid rgba(226, 232, 240, 0.8)',
       }}
     >
       <Table>
         <TableHead>
           <TableRow
             sx={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
+                  : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
             }}
           >
             <TableCell sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem' }}>
@@ -73,9 +86,17 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
             <TableRow
               key={city.id}
               sx={{
-                '&:nth-of-type(odd)': { bgcolor: 'grey.50' },
+                '&:nth-of-type(odd)': {
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(51, 65, 85, 0.3)'
+                      : 'grey.50',
+                },
                 '&:hover': {
-                  bgcolor: 'action.hover',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(6, 182, 212, 0.1)'
+                      : 'rgba(20, 184, 166, 0.05)',
                   transition: 'background-color 0.2s',
                 },
                 animation: `fadeIn 0.3s ease-in ${index * 0.05}s`,
@@ -91,17 +112,30 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                     sx={{
                       width: 40,
                       height: 40,
-                      borderRadius: 2,
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      borderRadius: 1.5,
+                      background: (theme) =>
+                        theme.palette.mode === 'dark'
+                          ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
+                          : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
+                      boxShadow: (theme) =>
+                        theme.palette.mode === 'dark'
+                          ? '0 4px 15px rgba(6, 182, 212, 0.3)'
+                          : '0 4px 15px rgba(20, 184, 166, 0.3)',
                     }}
                   >
                     <LocationOnIcon sx={{ color: 'white', fontSize: 20 }} />
                   </Box>
-                  <Typography variant="body1" fontWeight={600}>
+                  <Typography
+                    variant="body1"
+                    fontWeight={600}
+                    sx={{
+                      color: (theme) =>
+                        theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+                    }}
+                  >
                     {city.name}
                   </Typography>
                 </Box>
@@ -111,8 +145,14 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                   label={city.id}
                   size="small"
                   sx={{
-                    bgcolor: 'grey.200',
+                    bgcolor: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? 'rgba(100, 116, 139, 0.3)'
+                        : 'grey.200',
+                    color: (theme) =>
+                      theme.palette.mode === 'dark' ? '#cbd5e1' : 'text.primary',
                     fontWeight: 600,
+                    borderRadius: 1,
                   }}
                 />
               </TableCell>
@@ -120,7 +160,8 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: 'text.secondary',
+                    color: (theme) =>
+                      theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
                     maxWidth: 400,
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
@@ -137,9 +178,13 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                       size="small"
                       onClick={() => onEdit(city)}
                       sx={{
-                        color: 'primary.main',
+                        color: (theme) =>
+                          theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
                         '&:hover': {
-                          bgcolor: 'primary.50',
+                          bgcolor: (theme) =>
+                            theme.palette.mode === 'dark'
+                              ? 'rgba(6, 182, 212, 0.1)'
+                              : 'rgba(20, 184, 166, 0.1)',
                         },
                       }}
                     >
@@ -152,9 +197,13 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                       onClick={() => handleDelete(city)}
                       disabled={isDeleting}
                       sx={{
-                        color: 'error.main',
+                        color: (theme) =>
+                          theme.palette.mode === 'dark' ? '#f87171' : 'error.main',
                         '&:hover': {
-                          bgcolor: 'error.50',
+                          bgcolor: (theme) =>
+                            theme.palette.mode === 'dark'
+                              ? 'rgba(248, 113, 113, 0.1)'
+                              : 'rgba(239, 68, 68, 0.1)',
                         },
                       }}
                     >

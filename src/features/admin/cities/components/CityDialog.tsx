@@ -76,18 +76,31 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 4,
-          background: 'rgba(255, 255, 255, 0.98)',
-          backdropFilter: 'blur(10px)',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+          borderRadius: 2,
+          background: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'rgba(30, 41, 59, 0.98)'
+              : 'rgba(255, 255, 255, 0.98)',
+          backdropFilter: 'blur(20px)',
+          boxShadow: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '0 20px 60px rgba(0, 0, 0, 0.6)'
+              : '0 20px 60px rgba(0, 0, 0, 0.3)',
           overflow: 'hidden',
+          border: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(148, 163, 184, 0.1)'
+              : 'none',
         },
       }}
     >
       {/* Header with Gradient */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
+              : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
           p: 3,
           position: 'relative',
         }}
@@ -113,7 +126,7 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
             sx={{
               width: 56,
               height: 56,
-              borderRadius: 2,
+              borderRadius: 1.5,
               bgcolor: 'rgba(255, 255, 255, 0.2)',
               display: 'flex',
               alignItems: 'center',
@@ -148,13 +161,32 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
             sx={{
               mb: 3,
               '& .MuiOutlinedInput-root': {
-                borderRadius: 2,
+                borderRadius: 1.5,
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'dark' ? 'rgba(51, 65, 85, 0.3)' : 'white',
+                '& fieldset': {
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(148, 163, 184, 0.2)'
+                      : 'rgba(0, 0, 0, 0.12)',
+                },
                 '&:hover fieldset': {
-                  borderColor: 'primary.main',
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
                 },
                 '&.Mui-focused fieldset': {
                   borderWidth: 2,
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#06b6d4' : '#0d9488',
                 },
+                '& input': {
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? '#e2e8f0' : 'inherit',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#94a3b8' : 'inherit',
               },
             }}
             placeholder="Enter city name..."
@@ -171,13 +203,32 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
             sx={{
               mb: 4,
               '& .MuiOutlinedInput-root': {
-                borderRadius: 2,
+                borderRadius: 1.5,
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'dark' ? 'rgba(51, 65, 85, 0.3)' : 'white',
+                '& fieldset': {
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(148, 163, 184, 0.2)'
+                      : 'rgba(0, 0, 0, 0.12)',
+                },
                 '&:hover fieldset': {
-                  borderColor: 'primary.main',
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
                 },
                 '&.Mui-focused fieldset': {
                   borderWidth: 2,
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#06b6d4' : '#0d9488',
                 },
+                '& textarea': {
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? '#e2e8f0' : 'inherit',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#94a3b8' : 'inherit',
               },
             }}
             placeholder="Describe the city..."
@@ -191,15 +242,23 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
               disabled={isCreating || isUpdating}
               sx={{
                 textTransform: 'none',
-                borderRadius: 2,
+                borderRadius: 1.5,
                 px: 4,
                 py: 1.2,
                 fontWeight: 600,
-                borderColor: 'grey.400',
-                color: 'text.secondary',
+                borderColor: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(148, 163, 184, 0.3)'
+                    : 'grey.400',
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
                 '&:hover': {
-                  borderColor: 'grey.600',
-                  bgcolor: 'grey.50',
+                  borderColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#475569' : 'grey.600',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(51, 65, 85, 0.3)'
+                      : 'grey.50',
                 },
               }}
             >
@@ -212,18 +271,25 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
               startIcon={<SaveIcon />}
               sx={{
                 textTransform: 'none',
-                borderRadius: 2,
+                borderRadius: 1.5,
                 px: 4,
                 py: 1.2,
                 fontWeight: 600,
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                background: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
+                    : 'linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)',
-                  boxShadow: '0 6px 20px rgba(102, 126, 234, 0.5)',
+                  background: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)'
+                      : 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
                 },
                 '&:disabled': {
-                  background: 'grey.300',
+                  background: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(100, 116, 139, 0.3)'
+                      : 'grey.300',
                   boxShadow: 'none',
                 },
               }}
