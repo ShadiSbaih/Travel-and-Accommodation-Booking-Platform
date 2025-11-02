@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TextField, InputAdornment, IconButton, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -73,4 +74,4 @@ function HotelsSearchBar({ searchQuery, onSearchChange, onReset }: HotelsSearchB
   );
 }
 
-export default HotelsSearchBar;
+export default memo(HotelsSearchBar);

@@ -21,7 +21,7 @@ function HotelsPage() {
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const debouncedSearchQuery = useDebounce(searchQuery, 600);
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const { hotels = [], isLoading, error, refetch } = useHotels({
     searchQuery: debouncedSearchQuery,
   });
@@ -53,9 +53,13 @@ function HotelsPage() {
     setSelectedHotel(null);
   };
 
-  const handleReset = () => {
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchQuery(value);
+  }, []);
+
+  const handleReset = useCallback(() => {
     setSearchQuery('');
-  };
+  }, []);
 
   return (
     <Box
@@ -97,7 +101,7 @@ function HotelsPage() {
           />
           <HotelsSearchBar
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            onSearchChange={handleSearchChange}
             onReset={handleReset}
           />
         </Paper>
