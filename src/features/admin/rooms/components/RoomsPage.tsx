@@ -105,7 +105,8 @@ function RoomsPage() {
 
         <RoomsContent
           rooms={displayedRooms}
-          isLoading={isLoadingMore}
+          isLoading={isLoading}
+          isLoadingMore={isLoadingMore}
           hasMore={hasMore}
           viewMode={viewMode}
           loadMoreRef={loadMoreRef}
