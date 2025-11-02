@@ -41,16 +41,8 @@ function CityCard({ city, onEdit }: CityCardProps) {
           theme.palette.mode === 'dark'
             ? '0 4px 20px rgba(0, 0, 0, 0.3)'
             : '0 4px 20px rgba(0, 0, 0, 0.08)',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         position: 'relative',
         overflow: 'hidden',
-        '&:hover': {
-          transform: 'translateY(-8px)',
-          boxShadow: (theme) =>
-            theme.palette.mode === 'dark'
-              ? '0 12px 40px rgba(0, 0, 0, 0.4)'
-              : '0 12px 40px rgba(0, 0, 0, 0.15)',
-        },
       }}
     >
       <CardContent sx={{ p: 3 }}>

@@ -42,16 +42,10 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
             ? 'rgba(30, 41, 59, 0.95)'
             : 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(20px)',
-        borderRadius: 1.5,
-        boxShadow: (theme) =>
-          theme.palette.mode === 'dark'
-            ? '0 8px 32px rgba(0, 0, 0, 0.5)'
-            : '0 8px 32px rgba(0, 0, 0, 0.1)',
+        borderRadius:.5,
+     
         overflow: 'hidden',
-        border: (theme) =>
-          theme.palette.mode === 'dark'
-            ? '1px solid rgba(148, 163, 184, 0.1)'
-            : '1px solid rgba(226, 232, 240, 0.8)',
+      
       }}
     >
       <Table>
@@ -82,7 +76,7 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cities.map((city, index) => (
+          {cities.map((city) => (
             <TableRow
               key={city.id}
               sx={{
@@ -97,12 +91,6 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
                     theme.palette.mode === 'dark'
                       ? 'rgba(6, 182, 212, 0.1)'
                       : 'rgba(20, 184, 166, 0.05)',
-                  transition: 'background-color 0.2s',
-                },
-                animation: `fadeIn 0.3s ease-in ${index * 0.05}s`,
-                '@keyframes fadeIn': {
-                  from: { opacity: 0, transform: 'translateY(10px)' },
-                  to: { opacity: 1, transform: 'translateY(0)' },
                 },
               }}
             >
