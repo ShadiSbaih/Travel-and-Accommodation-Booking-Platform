@@ -1,5 +1,5 @@
 import api from '@/core/api/axios';
-import type { City, CityFilters, CreateCityDto, UpdateCityDto } from '../types/city.types';
+import type { City, CityFilters, CreateCityDto, UpdateCityDto } from '../types';
 
 export const citiesApi = {
   // GET /cities - Get all cities with optional filters (name, country)

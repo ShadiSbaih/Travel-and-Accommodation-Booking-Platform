@@ -1,5 +1,5 @@
 import api from '@/core/api/axios';
-import type { Room, RoomFilters } from '../types/room.types';
+import type { Room, RoomFilters } from '../types';
 
 export const roomsApi = {
   // Get all rooms with optional filters

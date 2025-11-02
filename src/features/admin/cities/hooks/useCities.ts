@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { citiesApi } from '../api/cities.api';
-import type { CityFilters, CreateCityDto, UpdateCityDto } from '../types/city.types';
+import type { CityFilters, CreateCityDto, UpdateCityDto } from '../types';
 import { useNotification } from '@/shared/hooks/useNotification';
 
 export const useCities = (filters?: CityFilters) => {

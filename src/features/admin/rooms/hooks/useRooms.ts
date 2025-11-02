@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { roomsApi } from '../api/rooms.api';
-import type { Room, RoomFilters } from '../types/room.types';
+import type { Room, RoomFilters } from '../types';
 import { useNotification } from '@/shared/hooks/useNotification';
 
 export const useRooms = (filters?: RoomFilters) => {
