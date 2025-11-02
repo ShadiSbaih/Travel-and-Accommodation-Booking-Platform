@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import LoadingState from '@/shared/components/LoadingState';
 import RoomGridView from './RoomGridView';
 import RoomListView from './RoomListView';
@@ -34,8 +34,16 @@ function RoomsContent({
 
       {/* Infinite scroll trigger */}
       {hasMore && (
-        <Box ref={loadMoreRef} sx={{ py: 2, textAlign: 'center' }}>
-          {isLoading && <LoadingState message="Loading more rooms..." />}
+        <Box 
+          ref={loadMoreRef} 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            py: 4, 
+            mt: 3 
+          }}
+        >
+          {isLoading && <CircularProgress />}
         </Box>
       )}
     </Box>

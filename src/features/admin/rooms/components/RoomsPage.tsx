@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useRef } from 'react';
+import { useMemo, useCallback, useRef, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { useRooms } from '../hooks/useRooms';
@@ -22,6 +22,7 @@ import RoomErrorState from './RoomErrorState';
 function RoomsPage() {
   const dispatch = useAppDispatch();
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Get state from Redux
   const { searchQuery, viewMode, isDialogOpen, selectedRoom, displayCount } =
@@ -51,13 +52,18 @@ function RoomsPage() {
   const hasMore = displayCount < uniqueRooms.length;
 
   const handleLoadMore = useCallback(() => {
-    dispatch(incrementRoomsDisplayCount());
+    setIsLoadingMore(true);
+    // Simulate async loading
+    setTimeout(() => {
+      dispatch(incrementRoomsDisplayCount());
+      setIsLoadingMore(false);
+    }, 300);
   }, [dispatch]);
 
   useInfiniteScroll({
     ref: loadMoreRef,
     hasMore,
-    isLoading,
+    isLoading: isLoadingMore,
     onLoadMore: handleLoadMore,
   });
 
@@ -200,7 +206,7 @@ function RoomsPage() {
 
         <RoomsContent
           rooms={displayedRooms}
-          isLoading={isLoading}
+          isLoading={isLoadingMore}
           hasMore={hasMore}
           viewMode={viewMode}
           loadMoreRef={loadMoreRef}

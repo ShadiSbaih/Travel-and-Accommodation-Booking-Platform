@@ -42,21 +42,21 @@ const ITEMS_PER_PAGE = 12;
 
 const initialState: AdminUiState = {
   rooms: {
-    viewMode: 'list',
+    viewMode: 'grid',
     selectedRoom: null,
     isDialogOpen: false,
     searchQuery: '',
     displayCount: ITEMS_PER_PAGE,
   },
   hotels: {
-    viewMode: 'list',
+    viewMode: 'grid',
     selectedHotel: null,
     isDialogOpen: false,
     searchQuery: '',
     displayCount: ITEMS_PER_PAGE,
   },
   cities: {
-    viewMode: 'list',
+    viewMode: 'grid',
     selectedCity: null,
     isDialogOpen: false,
     searchQuery: '',

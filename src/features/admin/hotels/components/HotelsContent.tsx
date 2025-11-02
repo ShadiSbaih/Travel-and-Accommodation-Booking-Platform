@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import HotelCard from './HotelCard';
 import HotelListView from './HotelListView';
 import HotelCardSkeleton from './HotelCardSkeleton';
@@ -65,24 +65,16 @@ function HotelsContent({
 
       {/* Infinite scroll trigger */}
       {hasMore && (
-        <Box ref={loadMoreRef} sx={{ py: 2, mt: 3 }}>
-          {isLoading && viewMode === 'grid' ? (
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: {
-                  xs: '1fr',
-                  sm: 'repeat(2, 1fr)',
-                  lg: 'repeat(3, 1fr)',
-                },
-                gap: 3,
-              }}
-            >
-              {Array.from({ length: 3 }).map((_, index) => (
-                <HotelCardSkeleton key={`skeleton-${index}`} />
-              ))}
-            </Box>
-          ) : null}
+        <Box 
+          ref={loadMoreRef} 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            py: 4, 
+            mt: 3 
+          }}
+        >
+          {isLoading && <CircularProgress />}
         </Box>
       )}
     </Box>

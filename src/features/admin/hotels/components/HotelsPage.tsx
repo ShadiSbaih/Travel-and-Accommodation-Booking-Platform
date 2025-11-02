@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import HotelIcon from '@mui/icons-material/Hotel';
 import { useHotels } from '../hooks/useHotels';
@@ -23,6 +23,7 @@ import EmptyHotelsState from './EmptyHotelsState';
 function HotelsPage() {
   const dispatch = useAppDispatch();
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Get state from Redux
   const { searchQuery, viewMode, isDialogOpen, selectedHotel, displayCount } =
@@ -45,13 +46,18 @@ function HotelsPage() {
   const hasMore = displayCount < uniqueHotels.length;
 
   const handleLoadMore = useCallback(() => {
-    dispatch(incrementHotelsDisplayCount());
+    setIsLoadingMore(true);
+    // Simulate async loading
+    setTimeout(() => {
+      dispatch(incrementHotelsDisplayCount());
+      setIsLoadingMore(false);
+    }, 300);
   }, [dispatch]);
 
   useInfiniteScroll({
     ref: loadMoreRef,
     hasMore,
-    isLoading,
+    isLoading: isLoadingMore,
     onLoadMore: handleLoadMore,
   });
 
@@ -207,7 +213,7 @@ function HotelsPage() {
           <HotelsContent
             hotels={displayedHotels}
             viewMode={viewMode}
-            isLoading={false}
+            isLoading={isLoadingMore}
             hasMore={hasMore}
             loadMoreRef={loadMoreRef}
           />

@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useRef, useCallback } from 'react';
+import { useMemo, useEffect, useRef, useCallback, useState } from 'react';
 import { Box, Paper } from '@mui/material';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { useCities } from '../hooks/useCities';
@@ -23,6 +23,7 @@ import EmptyCitiesState from './EmptyCitiesState';
 function CitiesPage() {
   const dispatch = useAppDispatch();
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // Get state from Redux
   const { searchQuery, viewMode, isDialogOpen, selectedCity, displayCount } =
@@ -49,13 +50,18 @@ function CitiesPage() {
   const hasMore = displayCount < filteredCities.length;
 
   const handleLoadMore = useCallback(() => {
-    dispatch(incrementCitiesDisplayCount());
+    setIsLoadingMore(true);
+    // Simulate async loading
+    setTimeout(() => {
+      dispatch(incrementCitiesDisplayCount());
+      setIsLoadingMore(false);
+    }, 300);
   }, [dispatch]);
 
   useInfiniteScroll({
     ref: loadMoreRef,
     hasMore,
-    isLoading,
+    isLoading: isLoadingMore,
     onLoadMore: handleLoadMore,
   });
 
@@ -211,7 +217,7 @@ function CitiesPage() {
           <CitiesContent
             cities={displayedCities}
             viewMode={viewMode}
-            isLoading={false}
+            isLoading={isLoadingMore}
             hasMore={hasMore}
             loadMoreRef={loadMoreRef}
           />
