@@ -234,7 +234,7 @@ function BookingReceipt({ receipt }: BookingReceiptProps) {
             borderRadius: 1,
           }}
         >
-          <Typography variant="h6" fontWeight="bold" color="text.secondary">
+          <Typography variant="h6" fontWeight="bold" color="primary.main">
             Total Amount
           </Typography>
           <Typography variant="h5" fontWeight="bold" sx={{ color: 'primary.main' }}>
