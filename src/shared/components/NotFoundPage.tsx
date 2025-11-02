@@ -1,5 +1,5 @@
 
-import { Box, Button, Container, Typography, useTheme } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ExploreIcon from '@mui/icons-material/Explore';
 import HomeIcon from '@mui/icons-material/Home';
@@ -7,7 +7,6 @@ import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
 function NotFoundPage() {
   const navigate = useNavigate();
-  const theme = useTheme();
 
   return (
     <Container maxWidth="lg">
@@ -37,7 +36,7 @@ function NotFoundPage() {
           <TravelExploreIcon
             sx={{
               fontSize: 120,
-              color: theme.palette.primary.main,
+              color: 'primary.main',
               filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))',
             }}
           />
@@ -49,7 +48,8 @@ function NotFoundPage() {
           sx={{
             fontSize: { xs: '6rem', sm: '8rem', md: '10rem' },
             fontWeight: 800,
-            background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+            background: (theme) => 
+              `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -65,7 +65,7 @@ function NotFoundPage() {
           variant="h4"
           sx={{
             fontWeight: 600,
-            color: theme.palette.text.primary,
+            color: 'text.primary',
             mb: 2,
             fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
           }}
@@ -76,7 +76,7 @@ function NotFoundPage() {
         <Typography
           variant="body1"
           sx={{
-            color: theme.palette.text.secondary,
+            color: 'text.secondary',
             mb: 4,
             maxWidth: 500,
             fontSize: { xs: '0.95rem', sm: '1.1rem' },
@@ -103,7 +103,7 @@ function NotFoundPage() {
                 width: 8,
                 height: 8,
                 borderRadius: '50%',
-                bgcolor: theme.palette.primary.main,
+                bgcolor: 'primary.main',
                 opacity: 0.6,
                 animation: `pulse 2s ease-in-out infinite ${index * 0.2}s`,
                 '@keyframes pulse': {
@@ -143,9 +143,9 @@ function NotFoundPage() {
               textTransform: 'none',
               fontSize: '1rem',
               fontWeight: 600,
-              boxShadow: theme.shadows[4],
+              boxShadow: 4,
               '&:hover': {
-                boxShadow: theme.shadows[8],
+                boxShadow: 8,
                 transform: 'translateY(-2px)',
               },
               transition: 'all 0.3s ease',
@@ -183,7 +183,7 @@ function NotFoundPage() {
           variant="caption"
           sx={{
             mt: 6,
-            color: theme.palette.text.disabled,
+            color: 'text.disabled',
             fontStyle: 'italic',
           }}
         >

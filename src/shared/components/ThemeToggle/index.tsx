@@ -1,4 +1,4 @@
-import useTheme from "@/core/context/Theme/useTheme";
+import { useTheme } from "@/core/context/Theme";
 import { Box, Typography, Switch } from "@mui/material";
 import { 
   LightMode as LightModeIcon, 
@@ -55,6 +55,7 @@ export const ThemeToggle = () => {
         </Typography>
       </Box>
       
+      
       <Switch
         checked={isDark}
         onChange={handleToggle}
@@ -72,5 +73,3 @@ export const ThemeToggle = () => {
     </Box>
   );
 };
-
-export default ThemeToggle;

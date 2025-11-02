@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useLogout } from '@/features/auth/hooks/useAuth';
-import ThemeToggle from './ThemeToggle';
+import { ThemeToggle } from './ThemeToggle';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import FTSLogo from '@/assets/FTS.png';
 import { CartIcon } from './CartIcon';
