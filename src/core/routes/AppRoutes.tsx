@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import AdminProtectedRoute from './AdminProtectedRoute';
-import { Box, CircularProgress } from '@mui/material';
 
 // Lazy load all pages
 const LoginPage = lazy(() => import('@/features/auth').then(module => ({ default: module.LoginPage })));
@@ -17,19 +16,7 @@ const RoomsPage = lazy(() => import('@/features/admin').then(module => ({ defaul
 const NotFound = lazy(() => import('@/shared/components/NotFoundPage'));
 
 // Loading fallback component
-const PageLoader = () => (
-    <Box
-        sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            bgcolor: 'background.default'
-        }}
-    >
-        <CircularProgress size={60} />
-    </Box>
-);
+import PageLoader from '@/shared/components/PageLoader';
 
 const AppRoutes = () => {
     return (

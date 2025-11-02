@@ -5,6 +5,14 @@
 export { default as HotelDetailsPage } from './components/HotelDetailsPage';
 export { default as HotelCard } from './components/HotelCard';
 
+// Skeleton Components
+export { 
+  HotelDetailsPageSkeleton, 
+  HotelGallerySkeleton, 
+  HotelSidebarSkeleton, 
+  RoomCardSkeleton 
+} from './components/skeletons';
+
 export { 
   useHotels, 
   useHotel, 

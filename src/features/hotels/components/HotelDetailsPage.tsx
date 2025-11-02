@@ -1,7 +1,6 @@
 import Navbar from '@/shared/components/Navbar';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAvailableRooms, useHotel, useHotelGallery } from '../hooks/useHotels';
-import LoadingState from '@/shared/components/LoadingState';
 import ErrorState from '@/shared/components/ErrorState';
 import { Container, Box } from '@mui/material';
 import { HotelGallery, HotelSidebar } from './HotelCard';
@@ -10,6 +9,7 @@ import { useCart } from '@/features/cart';
 import { useNotification } from '@/shared/hooks/useNotification';
 import type { SliderImage } from '@/shared/components/MuiImageSlider/types';
 import { ErrorOutline as ErrorIcon } from '@mui/icons-material';
+import { HotelDetailsPageSkeleton } from './skeletons';
 
 function HotelDetailsPage() {
   const { id } = useParams();
@@ -26,12 +26,7 @@ function HotelDetailsPage() {
   const hasError = hotelError || galleryError || !hotel;
 
   if (isLoading) {
-    return (
-      <>
-        <Navbar />
-        <LoadingState message="Loading hotel details..." />
-      </>
-    );
+    return <HotelDetailsPageSkeleton />;
   }
 
   if (hasError) {
