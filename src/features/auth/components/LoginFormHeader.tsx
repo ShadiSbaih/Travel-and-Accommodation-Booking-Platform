@@ -19,7 +19,7 @@ const LoginFormHeader = () => {
           alt="Plane"
           sx={{
             height: { xs: '8rem', sm: '10rem' },
-            width: { xs: '8rem', sm: '10rem' },
+            width: { xs: '16rem', sm: '20rem' },
           }}
         />
       </Box>
