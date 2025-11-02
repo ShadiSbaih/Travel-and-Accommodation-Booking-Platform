@@ -10,8 +10,8 @@ function HotelSidebar({ hotel }: HotelSidebarProps) {
   return (
     <Box
       sx={{
-        position: { lg: 'fixed' },
-      
+        width: '100%',
+        maxWidth: { lg: '400px' },
       }}
     >
       {/* Hotel Info Banner */}

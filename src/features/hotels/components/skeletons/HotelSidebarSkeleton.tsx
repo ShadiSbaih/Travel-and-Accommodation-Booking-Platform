@@ -4,8 +4,8 @@ function HotelSidebarSkeleton() {
   return (
     <Box
       sx={{
-        position: { lg: 'sticky' },
-        top: { lg: 24 },
+        width: '100%',
+        maxWidth: { lg: '400px' },
       }}
     >
       {/* Hotel Info Banner Skeleton */}
