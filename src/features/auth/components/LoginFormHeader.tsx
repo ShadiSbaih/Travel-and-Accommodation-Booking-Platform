@@ -1,7 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Plane from '@/assets/plane.svg';
 
 const LoginFormHeader = () => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+
   return (
     <>
       {/* Plane Icon */}
@@ -20,6 +23,7 @@ const LoginFormHeader = () => {
           sx={{
             height: { xs: '8rem', sm: '10rem' },
             width: { xs: '16rem', sm: '20rem' },
+            filter: isDark ? 'none' : 'brightness(0.7)',
           }}
         />
       </Box>
@@ -41,7 +45,7 @@ const LoginFormHeader = () => {
           sx={{
             mt: 1,
             fontSize: '0.875rem',
-            color: 'rgb(209, 213, 219)',
+            color: isDark ? 'rgb(209, 213, 219)' : 'rgb(100, 116, 139)',
           }}
         >
           Login with Username

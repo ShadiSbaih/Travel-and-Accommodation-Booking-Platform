@@ -1,9 +1,12 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Mosque from '@/assets/mosque.svg';
 import Italy from '@/assets/italy.svg';
 import RoadsImage from '@/assets/roads.jpg';
 
 const HeroSection = () => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+
   return (
     <Box
       sx={{
@@ -31,7 +34,7 @@ const HeroSection = () => {
         sx={{
           position: 'absolute',
           inset: 0,
-          bgcolor: 'rgba(6, 19, 42, 0.7)',
+          bgcolor: isDark ? 'rgba(6, 19, 42, 0.7)' : 'rgba(6, 19, 42, 0.85)',
         }}
       />
 
