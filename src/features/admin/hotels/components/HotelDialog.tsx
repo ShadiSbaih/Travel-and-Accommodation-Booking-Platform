@@ -42,6 +42,9 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
     queryFn: () => citiesApi.getCities(),
   });
 
+  // Get current city name for display
+  const currentCity = cities?.find((city) => city.id === Number(cityId));
+
   useEffect(() => {
     if (hotel) {
       setName(hotel.name || hotel.hotelName);
@@ -106,36 +109,40 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
     onClose();
   };
 
-  const getTextFieldStyles = () => ({
+  const textFieldSx = {
     '& .MuiOutlinedInput-root': {
       borderRadius: 1.5,
-      bgcolor: (theme: any) =>
+      bgcolor: (theme) =>
         theme.palette.mode === 'dark' ? 'rgba(51, 65, 85, 0.3)' : 'white',
       '& fieldset': {
-        borderColor: (theme: any) =>
+        borderColor: (theme) =>
           theme.palette.mode === 'dark'
             ? 'rgba(148, 163, 184, 0.2)'
             : 'rgba(0, 0, 0, 0.12)',
       },
       '&:hover fieldset': {
-        borderColor: (theme: any) =>
+        borderColor: (theme) =>
           theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
       },
       '&.Mui-focused fieldset': {
         borderWidth: 2,
-        borderColor: (theme: any) =>
+        borderColor: (theme) =>
           theme.palette.mode === 'dark' ? '#06b6d4' : '#0d9488',
       },
       '& input, & textarea, & .MuiSelect-select': {
-        color: (theme: any) =>
+        color: (theme) =>
           theme.palette.mode === 'dark' ? '#e2e8f0' : 'inherit',
       },
     },
     '& .MuiInputLabel-root': {
-      color: (theme: any) =>
+      color: (theme) =>
         theme.palette.mode === 'dark' ? '#94a3b8' : 'inherit',
     },
-  });
+    '& .MuiFormHelperText-root': {
+      color: (theme) =>
+        theme.palette.mode === 'dark' ? '#94a3b8' : 'inherit',
+    },
+  };
 
   return (
     <Dialog
@@ -227,7 +234,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
             onChange={(e) => setName(e.target.value)}
             fullWidth
             required
-            sx={getTextFieldStyles()}
+            sx={textFieldSx}
             placeholder="Enter hotel name..."
           />
 
@@ -246,7 +253,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setHotelType(e.target.value)}
               fullWidth
               required
-              sx={getTextFieldStyles()}
+              sx={textFieldSx}
             >
               {hotelTypes.map((type) => (
                 <MenuItem key={type} value={type}>
@@ -263,19 +270,20 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               fullWidth
               required
               slotProps={{ htmlInput: { min: 1, max: 5 } }}
-              sx={getTextFieldStyles()}
+              sx={textFieldSx}
             />
           </Box>
 
-          {/* City */}
+          {/* Location (City) */}
           <TextField
             select
-            label="City"
+            label="Location"
             value={cityId}
             onChange={(e) => setCityId(e.target.value)}
             fullWidth
             required
-            sx={getTextFieldStyles()}
+            sx={textFieldSx}
+            helperText={currentCity ? `Current: ${currentCity.name}` : 'Select a city/location'}
           >
             {cities?.map((city) => (
               <MenuItem key={city.id} value={city.id.toString()}>
@@ -299,7 +307,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setLatitude(e.target.value)}
               fullWidth
               slotProps={{ htmlInput: { step: 'any' } }}
-              sx={getTextFieldStyles()}
+              sx={textFieldSx}
               placeholder="e.g., -8.3405"
             />
 
@@ -310,7 +318,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setLongitude(e.target.value)}
               fullWidth
               slotProps={{ htmlInput: { step: 'any' } }}
-              sx={getTextFieldStyles()}
+              sx={textFieldSx}
               placeholder="e.g., 115.0915"
             />
           </Box>
@@ -322,8 +330,8 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
             onChange={(e) => setDescription(e.target.value)}
             fullWidth
             multiline
-            rows={5}
-            sx={getTextFieldStyles()}
+            rows={4}
+            sx={textFieldSx}
             placeholder="Describe the hotel..."
           />
 

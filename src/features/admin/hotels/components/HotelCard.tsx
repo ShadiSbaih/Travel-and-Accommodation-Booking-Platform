@@ -13,8 +13,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HotelIcon from '@mui/icons-material/Hotel';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import WifiIcon from '@mui/icons-material/Wifi';
+import PoolIcon from '@mui/icons-material/Pool';
+import SpaIcon from '@mui/icons-material/Spa';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { MuiMap } from '@/shared/components/MuiMap';
 import { useHotels } from '../hooks/useHotels';
+import { useCity } from '@/features/admin/cities/hooks/useCities';
 import type { Hotel } from '../types';
 
 interface HotelCardProps {
@@ -22,8 +29,21 @@ interface HotelCardProps {
   onEdit: (hotel: Hotel) => void;
 }
 
+// Helper function to get amenity icon
+const getAmenityIcon = (amenityName: string) => {
+  const name = amenityName.toLowerCase();
+  if (name.includes('wifi') || name.includes('internet')) return <WifiIcon fontSize="small" />;
+  if (name.includes('pool') || name.includes('swimming')) return <PoolIcon fontSize="small" />;
+  if (name.includes('spa') || name.includes('massage')) return <SpaIcon fontSize="small" />;
+  if (name.includes('restaurant') || name.includes('food')) return <RestaurantIcon fontSize="small" />;
+  if (name.includes('gym') || name.includes('fitness')) return <FitnessCenterIcon fontSize="small" />;
+  if (name.includes('parking')) return <LocalParkingIcon fontSize="small" />;
+  return null;
+};
+
 function HotelCard({ hotel, onEdit }: HotelCardProps) {
   const { deleteHotel, isDeleting } = useHotels();
+  const { data: city } = useCity(hotel.cityId);
 
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete ${hotel.name || hotel.hotelName}?`)) {
@@ -32,6 +52,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
   };
 
   const displayName = hotel.name || hotel.hotelName;
+  const displayLocation = city?.name || hotel.location;
 
   return (
     <Card
@@ -66,7 +87,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
           latitude={hotel.latitude}
           longitude={hotel.longitude}
           hotelName={displayName}
-          location={hotel.location}
+          location={displayLocation}
           zoom={13}
           height={200}
         />
@@ -86,7 +107,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
         />
       </Box>
 
-      <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column' }}>
         {/* Hotel Icon & Name */}
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flex: 1, minWidth: 0 }}>
@@ -159,7 +180,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
                 theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
             }}
           >
-            {hotel.location}
+            {displayLocation}
           </Typography>
         </Box>
 
@@ -180,6 +201,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
             }}
           >
             {hotel.availableRooms} rooms available
+            {hotel.rooms && hotel.rooms.length > 0 && ` • ${hotel.rooms.length} room types`}
           </Typography>
         </Box>
 
@@ -189,18 +211,84 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
           sx={{
             color: (theme) =>
               theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-            mb: 3,
+            mb: 2,
             minHeight: 60,
             display: '-webkit-box',
             WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
             lineHeight: 1.6,
-            flex: 1,
           }}
         >
           {hotel.description || 'No description available'}
         </Typography>
+
+        {/* Amenities */}
+        {hotel.amenities && hotel.amenities.length > 0 && (
+          <Box sx={{ mb: 3 }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+                fontWeight: 600,
+                mb: 1,
+                display: 'block',
+              }}
+            >
+              Amenities
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 0.75,
+              }}
+            >
+              {hotel.amenities.slice(0, 5).map((amenity) => (
+                <Tooltip key={amenity.id} title={amenity.description} arrow>
+                  <Chip
+                    icon={getAmenityIcon(amenity.name) || undefined}
+                    label={amenity.name}
+                    size="small"
+                    sx={{
+                      bgcolor: (theme) =>
+                        theme.palette.mode === 'dark'
+                          ? 'rgba(6, 182, 212, 0.15)'
+                          : 'rgba(20, 184, 166, 0.1)',
+                      color: (theme) =>
+                        theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                      fontWeight: 500,
+                      fontSize: '0.7rem',
+                      height: 24,
+                      '& .MuiChip-icon': {
+                        color: (theme) =>
+                          theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                      },
+                    }}
+                  />
+                </Tooltip>
+              ))}
+              {hotel.amenities.length > 5 && (
+                <Chip
+                  label={`+${hotel.amenities.length - 5}`}
+                  size="small"
+                  sx={{
+                    bgcolor: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? 'rgba(100, 116, 139, 0.3)'
+                        : 'grey.200',
+                    color: (theme) =>
+                      theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+                    fontWeight: 500,
+                    fontSize: '0.7rem',
+                    height: 24,
+                  }}
+                />
+              )}
+            </Box>
+          </Box>
+        )}
 
         {/* Action Buttons */}
         <Box

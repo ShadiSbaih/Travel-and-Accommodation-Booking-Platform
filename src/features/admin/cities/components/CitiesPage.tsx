@@ -17,6 +17,7 @@ const ITEMS_PER_PAGE = 12;
 function CitiesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -59,10 +60,12 @@ function CitiesPage() {
 
   const handleOpenDialog = (city?: City) => {
     setSelectedCity(city || null);
+    setIsDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setSelectedCity(null);
+    setIsDialogOpen(false);
   };
 
   const handleReset = () => {
@@ -142,7 +145,7 @@ function CitiesPage() {
         )}
       </Box>
 
-      <CityDialog open={!!selectedCity} onClose={handleCloseDialog} city={selectedCity} />
+      <CityDialog open={isDialogOpen} onClose={handleCloseDialog} city={selectedCity} />
     </Box>
   );
 }
