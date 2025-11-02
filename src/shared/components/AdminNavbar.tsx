@@ -16,7 +16,6 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useLogout } from '@/features/auth/hooks/useAuth';
 import { ThemeToggle } from './ThemeToggle';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
-import FTSLogo from '@/assets/FTS.png';
 import { getInitials } from '@/shared/utils/string.utils';
 
 // Admin navigation pages
@@ -139,7 +138,6 @@ function AdminNavbar() {
                         sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer', alignItems: 'center' }}
                         onClick={() => navigate('/admin/hotels')}
                     >
-                        <img src={FTSLogo} alt="FTS Logo" width={32} height={32} style={{ width: 'auto', height: 32 }} />
                         <AdminPanelSettingsIcon sx={{ ml: 1, fontSize: 20 }} />
                     </Box>
                     <Typography
