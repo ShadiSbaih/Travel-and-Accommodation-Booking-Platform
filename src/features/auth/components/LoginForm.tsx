@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Alert, useTheme } from '@mui/material';
+import { Box, Alert } from '@mui/material';
 import { useFormik } from 'formik';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -9,12 +9,12 @@ import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';
 import { useLogin } from '@/features/auth/hooks/useAuth';
 import { loginValidationSchema } from '@/features/auth/utils/validation.utils';
+import { useLoginFormStyles } from '@/features/auth/hooks/useLoginFormStyles';
 
 const LoginForm = () => {
   const loginMutation = useLogin();
   const [showPassword, setShowPassword] = useState(false);
-  const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
+  const { inputClassName, buttonClassName } = useLoginFormStyles();
 
   const formik = useFormik({
     initialValues: {
@@ -75,19 +75,7 @@ const LoginForm = () => {
               sx={{ color: '#14b8a6' }}
             />
           }
-          className={`${
-            isDark 
-              ? '[&_label]:text-primary-400' 
-              : '[&_label]:text-gray-700'
-          } [&_label]:font-semibold [&_input]:border-primary-400 [&_input]:border-2 ${
-            isDark 
-              ? '[&_input]:bg-transparent [&_input]:text-white [&_input]:placeholder-gray-400' 
-              : '[&_input]:bg-white [&_input]:text-gray-900 [&_input]:placeholder-gray-500'
-          } [&_input]:rounded-xl [&_input]:focus:ring-primary-400/40 [&_input]:focus:ring-4 [&_input]:focus:ring-offset-2 ${
-            isDark 
-              ? '[&_input]:focus:ring-offset-gray-900' 
-              : '[&_input]:focus:ring-offset-gray-100'
-          } [&_input]:focus:border-primary-300 [&_input]:focus:outline-none [&_input]:transition-all`}
+          className={inputClassName}
         />
 
         <Input
@@ -127,19 +115,7 @@ const LoginForm = () => {
               )}
             </button>
           }
-          className={`${
-            isDark 
-              ? '[&_label]:text-primary-400' 
-              : '[&_label]:text-gray-700'
-          } [&_label]:font-semibold [&_input]:border-primary-400 [&_input]:border-2 ${
-            isDark 
-              ? '[&_input]:bg-transparent [&_input]:text-white [&_input]:placeholder-gray-400' 
-              : '[&_input]:bg-white [&_input]:text-gray-900 [&_input]:placeholder-gray-500'
-          } [&_input]:rounded-xl [&_input]:focus:ring-primary-400/40 [&_input]:focus:ring-4 [&_input]:focus:ring-offset-2 ${
-            isDark 
-              ? '[&_input]:focus:ring-offset-gray-900' 
-              : '[&_input]:focus:ring-offset-gray-100'
-          } [&_input]:focus:border-primary-300 [&_input]:focus:outline-none [&_input]:transition-all`}
+          className={inputClassName}
         />
 
         <Button
@@ -147,11 +123,7 @@ const LoginForm = () => {
           variant="solid"
           size="lg"
           disabled={loginMutation.isPending}
-          className={`mt-6 w-full rounded-xl bg-primary-500 hover:bg-primary-600 py-3 text-sm font-semibold uppercase tracking-widest focus:outline-none focus:ring-4 focus:ring-primary-400/40 focus:ring-offset-2 ${
-            isDark 
-              ? 'focus:ring-offset-gray-900' 
-              : 'focus:ring-offset-gray-100'
-          } focus:scale-[1.02] transition-all`}
+          className={buttonClassName}
         >
           {loginMutation.isPending ? 'Logging in…' : 'Login'}
         </Button>
