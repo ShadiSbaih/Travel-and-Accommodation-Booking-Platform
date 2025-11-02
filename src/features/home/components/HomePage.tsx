@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import Navbar from '@/shared/components/Navbar';
 import { useUserInfo } from '@/shared/hooks/useUserInfo';
 import HeroSection from './HeroSection';
 import LazySection from './LazySection';
@@ -21,7 +20,6 @@ function HomePage() {
         bgcolor: 'background.default',
       }}
     >
-      <Navbar />
       <HeroSection userName={fullName} />
       
       <LazySection fallback={<FeaturedDealsSkeleton />}>

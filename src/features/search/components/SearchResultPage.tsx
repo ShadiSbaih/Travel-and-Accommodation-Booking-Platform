@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import Navbar from '@/shared/components/Navbar';
 import SearchBar from './SearchBar';
 import SearchResultsSection from './SearchResultsSection';
 import AmenitiesFilter from '@/features/filters/components/AmenitiesFilter';
@@ -39,7 +38,6 @@ const SearchResultPage: React.FC = () => {
 
   return (
     <>
-      <Navbar />
       <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
         <Box sx={{ py: 2 }}>
           <Typography

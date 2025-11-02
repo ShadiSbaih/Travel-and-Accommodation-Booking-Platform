@@ -1,4 +1,3 @@
-import Navbar from '@/shared/components/Navbar';
 import { Container, Box } from '@mui/material';
 import EmptyCartState from './EmptyCartState';
 import CartHeader from './CartHeader';
@@ -36,7 +35,6 @@ function CheckoutPage() {
   if (items.length === 0) {
     return (
       <>
-        <Navbar />
         <EmptyCartState onBrowseHotels={handleBrowseHotels} />
       </>
     );
@@ -44,7 +42,6 @@ function CheckoutPage() {
 
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           minHeight: '100vh',

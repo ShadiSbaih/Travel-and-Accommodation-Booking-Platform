@@ -1,5 +1,4 @@
 import { Container, Box, Skeleton } from '@mui/material';
-import Navbar from '@/shared/components/Navbar';
 import HotelGallerySkeleton from './HotelGallerySkeleton';
 import HotelSidebarSkeleton from './HotelSidebarSkeleton';
 import RoomCardSkeleton from './RoomCardSkeleton';
@@ -11,7 +10,6 @@ interface HotelDetailsPageSkeletonProps {
 function HotelDetailsPageSkeleton({ roomCount = 4 }: HotelDetailsPageSkeletonProps) {
   return (
     <>
-      <Navbar />
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', pb: 6 }}>
         <Container maxWidth="xl" sx={{ mt: 3, px: { xs: 2, md: 3 } }}>
           <Box sx={{ display: 'flex', gap: 4, flexDirection: { xs: 'column', lg: 'row' } }}>

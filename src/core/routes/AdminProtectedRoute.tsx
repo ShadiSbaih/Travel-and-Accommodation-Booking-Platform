@@ -1,4 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { MainLayout } from "@/shared/components/Layout";
 
 const AdminProtectedRoute = () => {
     // Check if user is authenticated
@@ -14,7 +15,7 @@ const AdminProtectedRoute = () => {
         return <Navigate to="/home" replace />;
     }
 
-    return <Outlet />;
+    return <MainLayout />;
 };
 
 export default AdminProtectedRoute;

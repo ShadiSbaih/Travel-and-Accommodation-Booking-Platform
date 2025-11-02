@@ -1,4 +1,3 @@
-import Navbar from '@/shared/components/Navbar';
 import { Box, Container, Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingReceipt from './BookingReceipt';
@@ -27,7 +26,6 @@ function ConfirmationPage() {
 
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           minHeight: '100vh',
