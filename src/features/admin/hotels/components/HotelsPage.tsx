@@ -17,6 +17,7 @@ const ITEMS_PER_PAGE = 12;
 function HotelsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -26,8 +27,16 @@ function HotelsPage() {
     searchQuery: debouncedSearchQuery,
   });
 
-  const displayedHotels = hotels.slice(0, displayCount);
-  const hasMore = displayCount < hotels.length;
+  // Remove duplicate hotels by ID (defensive programming)
+  const uniqueHotels = hotels.reduce((acc: Hotel[], hotel) => {
+    if (!acc.find(h => h.id === hotel.id)) {
+      acc.push(hotel);
+    }
+    return acc;
+  }, []);
+
+  const displayedHotels = uniqueHotels.slice(0, displayCount);
+  const hasMore = displayCount < uniqueHotels.length;
 
   const handleLoadMore = useCallback(() => {
     setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
@@ -47,10 +56,12 @@ function HotelsPage() {
 
   const handleOpenDialog = (hotel?: Hotel) => {
     setSelectedHotel(hotel || null);
+    setIsDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setSelectedHotel(null);
+    setIsDialogOpen(false);
   };
 
   const handleSearchChange = useCallback((value: string) => {
@@ -93,7 +104,7 @@ function HotelsPage() {
           }}
         >
           <HotelsPageHeader
-            hotelsCount={hotels.length}
+            hotelsCount={uniqueHotels.length}
             hasSearchQuery={!!searchQuery}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
@@ -117,7 +128,7 @@ function HotelsPage() {
             loadMoreRef={loadMoreRef}
             onEdit={handleOpenDialog}
           />
-        ) : hotels.length > 0 ? (
+        ) : uniqueHotels.length > 0 ? (
           <HotelsContent
             hotels={displayedHotels}
             viewMode={viewMode}
@@ -134,7 +145,7 @@ function HotelsPage() {
         )}
       </Box>
 
-      <HotelDialog open={!!selectedHotel} onClose={handleCloseDialog} hotel={selectedHotel} />
+      <HotelDialog open={isDialogOpen} onClose={handleCloseDialog} hotel={selectedHotel} />
     </Box>
   );
 }

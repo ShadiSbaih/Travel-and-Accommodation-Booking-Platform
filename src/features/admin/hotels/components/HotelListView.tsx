@@ -85,11 +85,11 @@ function HotelListView({ hotels, onEdit }: HotelListViewProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {hotels.map((hotel) => {
+          {hotels.map((hotel, index) => {
             const displayName = hotel.name || hotel.hotelName;
             return (
               <TableRow
-                key={hotel.id}
+                key={`hotel-list-${hotel.id}-${index}`}
                 sx={{
                   '&:nth-of-type(odd)': {
                     bgcolor: (theme) =>

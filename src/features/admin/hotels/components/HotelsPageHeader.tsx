@@ -133,9 +133,11 @@ function HotelsPageHeader({
           sx={{
             textTransform: 'none',
             borderRadius: 1.5,
-            px: 3,
-            py: 1.2,
+            px: { xs: 2, sm: 3 },
+            py: { xs: 1, sm: 1.2 },
+            fontSize: { xs: '0.875rem', sm: '1rem' },
             fontWeight: 600,
+            minWidth: { xs: 'auto', sm: 'auto' },
             background: (theme) =>
               theme.palette.mode === 'dark'
                 ? 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)'
@@ -146,9 +148,17 @@ function HotelsPageHeader({
                   ? 'linear-gradient(135deg, #0e7490 0%, #0891b2 100%)'
                   : 'linear-gradient(135deg, #0d9488 0%, #0891b2 100%)',
             },
+            '& .MuiButton-startIcon': {
+              marginRight: { xs: 0.5, sm: 1 },
+            },
           }}
         >
-          Add Hotel
+          <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+            Add Hotel
+          </Box>
+          <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>
+            Add
+          </Box>
         </Button>
       </Box>
     </Box>

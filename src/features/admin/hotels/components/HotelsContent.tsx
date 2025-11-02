@@ -49,8 +49,12 @@ function HotelsContent({
             gap: 3,
           }}
         >
-          {hotels.map((hotel) => (
-            <HotelCard key={hotel.id} hotel={hotel} onEdit={onEdit} />
+          {hotels.map((hotel, index) => (
+            <HotelCard 
+              key={`hotel-${hotel.id}-${index}`} 
+              hotel={hotel} 
+              onEdit={onEdit} 
+            />
           ))}
         </Box>
       ) : (
