@@ -156,7 +156,7 @@ function SearchBar() {
               fullWidth
               size="medium"
               label="Destination"
-              placeholder="Wehere are you going?"
+              placeholder="Where to go?"
               value={searchData.query}
               onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
               onKeyDown={handleKeyDown}
