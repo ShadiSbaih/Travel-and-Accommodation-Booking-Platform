@@ -106,7 +106,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
     onClose();
   };
 
-  const textFieldStyles = {
+  const getTextFieldStyles = () => ({
     '& .MuiOutlinedInput-root': {
       borderRadius: 1.5,
       bgcolor: (theme: any) =>
@@ -135,7 +135,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
       color: (theme: any) =>
         theme.palette.mode === 'dark' ? '#94a3b8' : 'inherit',
     },
-  };
+  });
 
   return (
     <Dialog
@@ -227,7 +227,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
             onChange={(e) => setName(e.target.value)}
             fullWidth
             required
-            sx={textFieldStyles}
+            sx={getTextFieldStyles()}
             placeholder="Enter hotel name..."
           />
 
@@ -246,7 +246,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setHotelType(e.target.value)}
               fullWidth
               required
-              sx={textFieldStyles}
+              sx={getTextFieldStyles()}
             >
               {hotelTypes.map((type) => (
                 <MenuItem key={type} value={type}>
@@ -263,7 +263,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               fullWidth
               required
               inputProps={{ min: 1, max: 5 }}
-              sx={textFieldStyles}
+              sx={getTextFieldStyles()}
             />
           </Box>
 
@@ -275,7 +275,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
             onChange={(e) => setCityId(e.target.value)}
             fullWidth
             required
-            sx={textFieldStyles}
+            sx={getTextFieldStyles()}
           >
             {cities?.map((city) => (
               <MenuItem key={city.id} value={city.id.toString()}>
@@ -299,7 +299,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setLatitude(e.target.value)}
               fullWidth
               inputProps={{ step: 'any' }}
-              sx={textFieldStyles}
+              sx={getTextFieldStyles()}
               placeholder="e.g., -8.3405"
             />
 
@@ -310,7 +310,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setLongitude(e.target.value)}
               fullWidth
               inputProps={{ step: 'any' }}
-              sx={textFieldStyles}
+              sx={getTextFieldStyles()}
               placeholder="e.g., 115.0915"
             />
           </Box>
@@ -323,7 +323,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
             fullWidth
             multiline
             rows={5}
-            sx={textFieldStyles}
+            sx={getTextFieldStyles()}
             placeholder="Describe the hotel..."
           />
 
