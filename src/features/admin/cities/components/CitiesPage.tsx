@@ -1,7 +1,8 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Box, Paper } from '@mui/material';
 import { useCities } from '../hooks/useCities';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import CityDialog from './CityDialog';
 import CityErrorState from './CityErrorState';
 import CitiesPageHeader from './CitiesPageHeader';
@@ -15,29 +16,23 @@ const ITEMS_PER_PAGE = 12;
 
 function CitiesPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // Debounce search query for smoother UX
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
-
-  // Fetch all cities without filters (backend returns all)
-  const { cities: allCities, isLoading, error, refetch } = useCities();
+  const { cities = [], isLoading, error, refetch } = useCities();
 
   // Local search filtering
   const filteredCities = useMemo(() => {
-    if (!allCities) return [];
-    
-    if (!debouncedSearchQuery.trim()) return allCities;
+    if (!debouncedSearchQuery.trim()) return cities;
 
     const query = debouncedSearchQuery.toLowerCase().trim();
-    return allCities.filter((city) =>
+    return cities.filter((city) =>
       city.name.toLowerCase().includes(query)
     );
-  }, [allCities, debouncedSearchQuery]);
+  }, [cities, debouncedSearchQuery]);
 
   // Paginated cities for display
   const displayedCities = useMemo(() => {
@@ -46,23 +41,16 @@ function CitiesPage() {
 
   const hasMore = displayCount < filteredCities.length;
 
-  // Infinite scroll observer
-  useEffect(() => {
-    if (!loadMoreRef.current || !hasMore || isLoading) return;
+  const handleLoadMore = useCallback(() => {
+    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
+  }, []);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(loadMoreRef.current);
-
-    return () => observer.disconnect();
-  }, [hasMore, isLoading]);
+  useInfiniteScroll({
+    ref: loadMoreRef,
+    hasMore,
+    isLoading,
+    onLoadMore: handleLoadMore,
+  });
 
   // Reset display count when search query changes
   useEffect(() => {
@@ -71,21 +59,14 @@ function CitiesPage() {
 
   const handleOpenDialog = (city?: City) => {
     setSelectedCity(city || null);
-    setDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setSelectedCity(null);
-    setDialogOpen(false);
   };
 
   const handleReset = () => {
     setSearchQuery('');
-    setDisplayCount(ITEMS_PER_PAGE);
-  };
-
-  const handleRetry = () => {
-    refetch();
   };
 
   return (
@@ -134,7 +115,7 @@ function CitiesPage() {
         </Paper>
 
         {error ? (
-          <CityErrorState onRetry={handleRetry} />
+          <CityErrorState onRetry={refetch} />
         ) : isLoading ? (
           <CitiesContent
             cities={[]}
@@ -161,7 +142,7 @@ function CitiesPage() {
         )}
       </Box>
 
-      <CityDialog open={dialogOpen} onClose={handleCloseDialog} city={selectedCity} />
+      <CityDialog open={!!selectedCity} onClose={handleCloseDialog} city={selectedCity} />
     </Box>
   );
 }

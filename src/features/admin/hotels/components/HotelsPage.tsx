@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Box, Paper } from '@mui/material';
 import { useHotels } from '../hooks/useHotels';
 import { useDebounce } from '@/shared/hooks/useDebounce';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import HotelDialog from './HotelDialog';
 import HotelErrorState from './HotelErrorState';
 import HotelsPageHeader from './HotelsPageHeader';
@@ -28,22 +29,16 @@ function HotelsPage() {
   const displayedHotels = hotels.slice(0, displayCount);
   const hasMore = displayCount < hotels.length;
 
-  // Infinite scroll observer
-  useEffect(() => {
-    if (!loadMoreRef.current || !hasMore || isLoading) return;
+  const handleLoadMore = useCallback(() => {
+    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
+  }, []);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(loadMoreRef.current);
-    return () => observer.disconnect();
-  }, [hasMore, isLoading]);
+  useInfiniteScroll({
+    ref: loadMoreRef,
+    hasMore,
+    isLoading,
+    onLoadMore: handleLoadMore,
+  });
 
   // Reset display count when search changes
   useEffect(() => {
