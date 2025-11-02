@@ -25,7 +25,7 @@ export const useHotelForm = (hotel: Hotel | null, isOpen: boolean) => {
     useEffect(() => {
         if (hotel) {
             setFormState({
-                name: hotel.name || hotel.hotelName,
+                name: hotel.hotelName || '',
                 description: hotel.description || '',
                 hotelType: hotel.hotelType || 'Hotel',
                 starRating: hotel.starRating || 3,

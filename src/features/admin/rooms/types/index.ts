@@ -1,11 +1,17 @@
-export interface Room {
+export interface Amenity {
   id: number;
-  roomNumber: string;
+  name: string;
+  description: string;
+}
+
+export interface Room {
+  roomId: number;
+  roomNumber: number;
   roomPhotoUrl?: string;
   roomType: string;
   capacityOfAdults: number;
   capacityOfChildren: number;
-  roomAmenities?: string[];
+  amenities?: Amenity[];
   price: number;
   availability: boolean;
   hotelId?: number;
@@ -18,8 +24,30 @@ export interface RoomFilters {
   roomType?: string;
   minPrice?: number;
   maxPrice?: number;
-  available?: boolean;
+  availability?: boolean;
   hotelId?: number;
   pageNumber?: number;
   pageSize?: number;
+}
+
+export interface CreateRoomDto {
+  roomNumber: number;
+  roomPhotoUrl?: string;
+  roomType: string;
+  capacityOfAdults: number;
+  capacityOfChildren: number;
+  price: number;
+  availability: boolean;
+  hotelId?: number;
+}
+
+export interface UpdateRoomDto {
+  roomNumber?: number;
+  roomPhotoUrl?: string;
+  roomType?: string;
+  capacityOfAdults?: number;
+  capacityOfChildren?: number;
+  price?: number;
+  availability?: boolean;
+  hotelId?: number;
 }

@@ -11,8 +11,7 @@ function HotelsContent({
   isLoading,
   hasMore,
   loadMoreRef,
-  onEdit,
-}: HotelsContentProps) {
+}: Omit<HotelsContentProps, 'onEdit'>) {
   if (isLoading) {
     return viewMode === 'grid' ? (
       <Box
@@ -53,12 +52,11 @@ function HotelsContent({
             <HotelCard 
               key={`hotel-${hotel.id}-${index}`} 
               hotel={hotel} 
-              onEdit={onEdit} 
             />
           ))}
         </Box>
       ) : (
-        <HotelListView hotels={hotels} onEdit={onEdit} />
+        <HotelListView hotels={hotels} />
       )}
 
       {/* Load More Trigger */}

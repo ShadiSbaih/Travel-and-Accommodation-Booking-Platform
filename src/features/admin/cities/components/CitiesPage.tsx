@@ -1,27 +1,32 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { useMemo, useEffect, useRef, useCallback } from 'react';
 import { Box, Paper } from '@mui/material';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { useCities } from '../hooks/useCities';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import { useAppDispatch, useAppSelector } from '@/core/store/hooks';
+import {
+  setCitiesViewMode,
+  openCityDialog,
+  closeCityDialog,
+  setCitiesSearchQuery,
+  incrementCitiesDisplayCount,
+  resetCitiesDisplayCount,
+} from '@/core/store/slices/adminUiSlice';
 import AdminPageHeader from '@/features/admin/shared/components/AdminPageHeader';
 import CityDialog from './CityDialog';
 import CityErrorState from './CityErrorState';
 import CitiesSearchBar from './CitiesSearchBar';
 import CitiesContent from './CitiesContent';
 import EmptyCitiesState from './EmptyCitiesState';
-import type { City } from '../types';
-import type { ViewMode } from '../types/component.types';
-
-const ITEMS_PER_PAGE = 12;
 
 function CitiesPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+  const dispatch = useAppDispatch();
   const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  // Get state from Redux
+  const { searchQuery, viewMode, isDialogOpen, selectedCity, displayCount } =
+    useAppSelector((state) => state.adminUi.cities);
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const { cities = [], isLoading, error, refetch } = useCities();
@@ -44,8 +49,8 @@ function CitiesPage() {
   const hasMore = displayCount < filteredCities.length;
 
   const handleLoadMore = useCallback(() => {
-    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
-  }, []);
+    dispatch(incrementCitiesDisplayCount());
+  }, [dispatch]);
 
   useInfiniteScroll({
     ref: loadMoreRef,
@@ -56,22 +61,28 @@ function CitiesPage() {
 
   // Reset display count when search query changes
   useEffect(() => {
-    setDisplayCount(ITEMS_PER_PAGE);
-  }, [debouncedSearchQuery]);
+    dispatch(resetCitiesDisplayCount());
+  }, [debouncedSearchQuery, dispatch]);
 
-  const handleOpenDialog = (city?: City) => {
-    setSelectedCity(city || null);
-    setIsDialogOpen(true);
-  };
+  const handleOpenDialog = useCallback(() => {
+    dispatch(openCityDialog(null));
+  }, [dispatch]);
 
-  const handleCloseDialog = () => {
-    setSelectedCity(null);
-    setIsDialogOpen(false);
-  };
+  const handleCloseDialog = useCallback(() => {
+    dispatch(closeCityDialog());
+  }, [dispatch]);
 
-  const handleReset = () => {
-    setSearchQuery('');
-  };
+  const handleReset = useCallback(() => {
+    dispatch(setCitiesSearchQuery(''));
+  }, [dispatch]);
+
+  const handleSearchChange = useCallback((value: string) => {
+    dispatch(setCitiesSearchQuery(value));
+  }, [dispatch]);
+
+  const handleViewModeChange = useCallback((mode: typeof viewMode) => {
+    dispatch(setCitiesViewMode(mode));
+  }, [dispatch]);
 
   return (
     <Box
@@ -108,14 +119,14 @@ function CitiesPage() {
             pluralLabel="cities"
             hasSearchQuery={!!searchQuery}
             viewMode={viewMode}
-            onViewModeChange={setViewMode}
-            onAdd={() => handleOpenDialog()}
+            onViewModeChange={handleViewModeChange}
+            onAdd={handleOpenDialog}
             addButtonLabel="Add City"
             icon={LocationCityIcon}
           />
           <CitiesSearchBar
             value={searchQuery}
-            onChange={setSearchQuery}
+            onChange={handleSearchChange}
             onReset={handleReset}
           />
         </Paper>
@@ -129,7 +140,6 @@ function CitiesPage() {
             isLoading={true}
             hasMore={false}
             loadMoreRef={loadMoreRef}
-            onEdit={handleOpenDialog}
           />
         ) : filteredCities && filteredCities.length > 0 ? (
           <CitiesContent
@@ -138,12 +148,11 @@ function CitiesPage() {
             isLoading={false}
             hasMore={hasMore}
             loadMoreRef={loadMoreRef}
-            onEdit={handleOpenDialog}
           />
         ) : (
           <EmptyCitiesState
             hasSearchQuery={!!searchQuery}
-            onAddCity={() => handleOpenDialog()}
+            onAddCity={handleOpenDialog}
           />
         )}
       </Box>

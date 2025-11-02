@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { roomsApi } from '../api/rooms.api';
-import type { Room, RoomFilters } from '../types';
+import type { RoomFilters, CreateRoomDto, UpdateRoomDto } from '../types';
 import { useNotification } from '@/shared/hooks/useNotification';
 
 export const useRooms = (filters?: RoomFilters) => {
@@ -8,15 +8,16 @@ export const useRooms = (filters?: RoomFilters) => {
   const notify = useNotification();
 
   // Get all rooms
-  const { data: rooms, isLoading, error } = useQuery({
+  const { data: rooms, isLoading, error, refetch } = useQuery({
     queryKey: ['rooms', filters],
     queryFn: () => roomsApi.getRooms(filters),
   });
 
   // Create room mutation
   const createRoomMutation = useMutation({
-    mutationFn: (roomData: Omit<Room, 'id'>) => roomsApi.createRoom(roomData),
+    mutationFn: (roomData: CreateRoomDto) => roomsApi.createRoom(roomData),
     onSuccess: () => {
+      // Invalidate all room queries to force refetch from server
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
       notify('Room created successfully', 'success');
     },
@@ -27,10 +28,12 @@ export const useRooms = (filters?: RoomFilters) => {
 
   // Update room mutation
   const updateRoomMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<Room> }) =>
-      roomsApi.updateRoom(id, data),
+    mutationFn: ({ roomId, data }: { roomId: number; data: UpdateRoomDto }) =>
+      roomsApi.updateRoom(roomId, data),
     onSuccess: () => {
+      // Invalidate all room queries to force refetch from server
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
+      queryClient.invalidateQueries({ queryKey: ['room'] });
       notify('Room updated successfully', 'success');
     },
     onError: () => {
@@ -40,9 +43,11 @@ export const useRooms = (filters?: RoomFilters) => {
 
   // Delete room mutation
   const deleteRoomMutation = useMutation({
-    mutationFn: (id: number) => roomsApi.deleteRoom(id),
+    mutationFn: (roomId: number) => roomsApi.deleteRoom(roomId),
     onSuccess: () => {
+      // Invalidate all room queries to force refetch from server
       queryClient.invalidateQueries({ queryKey: ['rooms'] });
+      queryClient.invalidateQueries({ queryKey: ['room'] });
       notify('Room deleted successfully', 'success');
     },
     onError: () => {
@@ -54,6 +59,7 @@ export const useRooms = (filters?: RoomFilters) => {
     rooms,
     isLoading,
     error,
+    refetch,
     createRoom: createRoomMutation.mutate,
     updateRoom: updateRoomMutation.mutate,
     deleteRoom: deleteRoomMutation.mutate,
@@ -63,10 +69,10 @@ export const useRooms = (filters?: RoomFilters) => {
   };
 };
 
-export const useRoom = (id: number) => {
+export const useRoom = (roomId: number) => {
   return useQuery({
-    queryKey: ['room', id],
-    queryFn: () => roomsApi.getRoomById(id),
-    enabled: !!id,
+    queryKey: ['room', roomId],
+    queryFn: () => roomsApi.getRoomById(roomId),
+    enabled: !!roomId,
   });
 };

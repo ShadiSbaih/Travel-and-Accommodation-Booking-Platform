@@ -11,8 +11,7 @@ function CitiesContent({
   isLoading,
   hasMore,
   loadMoreRef,
-  onEdit,
-}: CitiesContentProps) {
+}: Omit<CitiesContentProps, 'onEdit'>) {
   if (isLoading) {
     return viewMode === 'grid' ? (
       <Box
@@ -50,11 +49,11 @@ function CitiesContent({
           }}
         >
           {cities.map((city) => (
-            <CityCard key={city.id} city={city} onEdit={onEdit} />
+            <CityCard key={city.id} city={city} />
           ))}
         </Box>
       ) : (
-        <CityListView cities={cities} onEdit={onEdit} />
+        <CityListView cities={cities} />
       )}
 
       {/* Load More Trigger for Infinite Scroll */}

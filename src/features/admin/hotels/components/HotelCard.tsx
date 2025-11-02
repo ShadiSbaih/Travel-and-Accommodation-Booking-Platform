@@ -22,11 +22,12 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import { MuiMap } from '@/shared/components/MuiMap';
 import { useHotels } from '../hooks/useHotels';
 import { useCity } from '@/features/admin/cities/hooks/useCities';
+import { useAppDispatch } from '@/core/store/hooks';
+import { openHotelDialog } from '@/core/store/slices/adminUiSlice';
 import type { Hotel } from '../types';
 
 interface HotelCardProps {
   hotel: Hotel;
-  onEdit: (hotel: Hotel) => void;
 }
 
 // Helper function to get amenity icon
@@ -41,17 +42,22 @@ const getAmenityIcon = (amenityName: string) => {
   return null;
 };
 
-function HotelCard({ hotel, onEdit }: HotelCardProps) {
+function HotelCard({ hotel }: HotelCardProps) {
+  const dispatch = useAppDispatch();
   const { deleteHotel, isDeleting } = useHotels();
   const { data: city } = useCity(hotel.cityId);
 
+  const handleEdit = () => {
+    dispatch(openHotelDialog(hotel));
+  };
+
   const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${hotel.name || hotel.hotelName}?`)) {
+    if (window.confirm(`Are you sure you want to delete ${hotel.hotelName || hotel.name}?`)) {
       deleteHotel(hotel.id);
     }
   };
 
-  const displayName = hotel.name || hotel.hotelName;
+  const displayName = hotel.hotelName || hotel.name;
   const displayLocation = city?.name || hotel.location;
 
   return (
@@ -314,7 +320,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
               variant="outlined"
               size="small"
               startIcon={<EditIcon />}
-              onClick={() => onEdit(hotel)}
+              onClick={handleEdit}
               sx={{
                 flex: 1,
                 textTransform: 'none',

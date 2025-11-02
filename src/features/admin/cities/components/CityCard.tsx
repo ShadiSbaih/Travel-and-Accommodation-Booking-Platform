@@ -11,15 +11,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useCities } from '../hooks/useCities';
+import { useAppDispatch } from '@/core/store/hooks';
+import { openCityDialog } from '@/core/store/slices/adminUiSlice';
 import type { City } from '../types';
 
 interface CityCardProps {
   city: City;
-  onEdit: (city: City) => void;
 }
 
-function CityCard({ city, onEdit }: CityCardProps) {
+function CityCard({ city }: CityCardProps) {
+  const dispatch = useAppDispatch();
   const { deleteCity, isDeleting } = useCities();
+
+  const handleEdit = () => {
+    dispatch(openCityDialog(city));
+  };
 
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete ${city.name}?`)) {
@@ -61,6 +67,7 @@ function CityCard({ city, onEdit }: CityCardProps) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                flexShrink: 0,
               }}
             >
               <LocationOnIcon
@@ -74,7 +81,6 @@ function CityCard({ city, onEdit }: CityCardProps) {
             <Box sx={{ flex: 1, minWidth: 0 }}>
               <Typography
                 variant="h6"
-                component="h3"
                 fontWeight="700"
                 sx={{
                   color: (theme) =>
@@ -90,12 +96,12 @@ function CityCard({ city, onEdit }: CityCardProps) {
                 label={`ID: ${city.id}`}
                 size="small"
                 sx={{
-                  height: 20,
-                  fontSize: '0.7rem',
+                  height: 18,
+                  fontSize: '0.65rem',
                   bgcolor: (theme) =>
                     theme.palette.mode === 'dark'
                       ? 'rgba(100, 116, 139, 0.3)'
-                      : 'grey.100',
+                      : 'grey.200',
                   color: (theme) =>
                     theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
                   mt: 0.5,
@@ -106,42 +112,32 @@ function CityCard({ city, onEdit }: CityCardProps) {
         </Box>
 
         {/* Description */}
-        <Typography
-          variant="body2"
-          sx={{
-            color: (theme) =>
-              theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-            mb: 3,
-            minHeight: 60,
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            lineHeight: 1.6,
-          }}
-        >
-          {city.description || 'No description available'}
-        </Typography>
+        <Box sx={{ mb: 3 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? '#cbd5e1' : 'text.secondary',
+              lineHeight: 1.6,
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {city.description || 'No description available'}
+          </Typography>
+        </Box>
 
         {/* Action Buttons */}
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 1,
-            pt: 2,
-            borderTop: '1px solid',
-            borderColor: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(148, 163, 184, 0.1)'
-                : 'grey.200',
-          }}
-        >
+        <Box sx={{ display: 'flex', gap: 1 }}>
           <Tooltip title="Edit City" arrow>
             <Button
               variant="outlined"
               size="small"
               startIcon={<EditIcon />}
-              onClick={() => onEdit(city)}
+              onClick={handleEdit}
               sx={{
                 flex: 1,
                 textTransform: 'none',

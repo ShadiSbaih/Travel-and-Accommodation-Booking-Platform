@@ -5,15 +5,21 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AdminEntityTable from '@/shared/components/AdminEntityTable';
 import type { AdminEntityTableColumn } from '@/shared/components/AdminEntityTable';
 import { useCities } from '../hooks/useCities';
+import { useAppDispatch } from '@/core/store/hooks';
+import { openCityDialog } from '@/core/store/slices/adminUiSlice';
 import type { City } from '../types';
 
 interface CityListViewProps {
   cities: City[];
-  onEdit: (city: City) => void;
 }
 
-function CityListView({ cities, onEdit }: CityListViewProps) {
+function CityListView({ cities }: CityListViewProps) {
+  const dispatch = useAppDispatch();
   const { deleteCity, isDeleting } = useCities();
+
+  const handleEdit = (city: City) => {
+    dispatch(openCityDialog(city));
+  };
 
   const handleDelete = (city: City) => {
     if (window.confirm(`Are you sure you want to delete ${city.name}?`)) {
@@ -112,7 +118,7 @@ function CityListView({ cities, onEdit }: CityListViewProps) {
           <Tooltip title="Edit City" arrow>
             <IconButton
               size="small"
-              onClick={() => onEdit(city)}
+              onClick={() => handleEdit(city)}
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',

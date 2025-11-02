@@ -7,15 +7,16 @@ import AdminEntityTable from '@/shared/components/AdminEntityTable';
 import type { AdminEntityTableColumn } from '@/shared/components/AdminEntityTable';
 import { useHotels } from '../hooks/useHotels';
 import { useCity } from '@/features/admin/cities/hooks/useCities';
+import { useAppDispatch } from '@/core/store/hooks';
+import { openHotelDialog } from '@/core/store/slices/adminUiSlice';
 import type { Hotel } from '../types';
 
 interface HotelListViewProps {
   hotels: Hotel[];
-  onEdit: (hotel: Hotel) => void;
 }
 
 function HotelNameCell({ hotel }: { hotel: Hotel }) {
-  const displayName = hotel.name || hotel.hotelName;
+  const displayName = hotel.hotelName || hotel.name;
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -99,11 +100,16 @@ function HotelLocationCell({ hotel }: { hotel: Hotel }) {
   );
 }
 
-function HotelListView({ hotels, onEdit }: HotelListViewProps) {
+function HotelListView({ hotels }: HotelListViewProps) {
+  const dispatch = useAppDispatch();
   const { deleteHotel, isDeleting } = useHotels();
 
+  const handleEdit = (hotel: Hotel) => {
+    dispatch(openHotelDialog(hotel));
+  };
+
   const handleDelete = (hotel: Hotel) => {
-    if (window.confirm(`Are you sure you want to delete ${hotel.name || hotel.hotelName}?`)) {
+    if (window.confirm(`Are you sure you want to delete ${hotel.hotelName || hotel.name}?`)) {
       deleteHotel(hotel.id);
     }
   };
@@ -192,7 +198,7 @@ function HotelListView({ hotels, onEdit }: HotelListViewProps) {
           <Tooltip title="Edit Hotel" arrow>
             <IconButton
               size="small"
-              onClick={() => onEdit(hotel)}
+              onClick={() => handleEdit(hotel)}
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',

@@ -34,13 +34,17 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
     if (!formState.name.trim() || !formState.cityId) return;
 
     const hotelData = {
+      hotelName: formState.name,
       name: formState.name,
       description: formState.description,
       hotelType: formState.hotelType,
       starRating: Number(formState.starRating),
       latitude: parseFloat(formState.latitude) || 0,
       longitude: parseFloat(formState.longitude) || 0,
+      location: currentCity?.name || '',
       cityId: Number(formState.cityId),
+      imageUrl: '',
+      availableRooms: 0,
     };
 
     if (hotel) {

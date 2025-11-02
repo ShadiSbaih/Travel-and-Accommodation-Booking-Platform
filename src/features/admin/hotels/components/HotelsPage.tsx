@@ -1,27 +1,32 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Box, Paper } from '@mui/material';
 import HotelIcon from '@mui/icons-material/Hotel';
 import { useHotels } from '../hooks/useHotels';
 import { useDebounce } from '@/shared/hooks/useDebounce';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import { useAppDispatch, useAppSelector } from '@/core/store/hooks';
+import {
+  setHotelsViewMode,
+  openHotelDialog,
+  closeHotelDialog,
+  setHotelsSearchQuery,
+  incrementHotelsDisplayCount,
+  resetHotelsDisplayCount,
+} from '@/core/store/slices/adminUiSlice';
 import AdminPageHeader from '@/features/admin/shared/components/AdminPageHeader';
 import HotelDialog from './HotelDialog';
 import HotelErrorState from './HotelErrorState';
 import HotelsSearchBar from './HotelsSearchBar';
 import HotelsContent from './HotelsContent';
 import EmptyHotelsState from './EmptyHotelsState';
-import type { Hotel } from '../types';
-import type { ViewMode } from '../types/component.types';
-
-const ITEMS_PER_PAGE = 12;
 
 function HotelsPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+  const dispatch = useAppDispatch();
   const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  // Get state from Redux
+  const { searchQuery, viewMode, isDialogOpen, selectedHotel, displayCount } =
+    useAppSelector((state) => state.adminUi.hotels);
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const { hotels = [], isLoading, error, refetch } = useHotels({
@@ -29,7 +34,7 @@ function HotelsPage() {
   });
 
   // Remove duplicate hotels by ID (defensive programming)
-  const uniqueHotels = hotels.reduce((acc: Hotel[], hotel) => {
+  const uniqueHotels = hotels.reduce((acc: typeof hotels, hotel) => {
     if (!acc.find(h => h.id === hotel.id)) {
       acc.push(hotel);
     }
@@ -40,8 +45,8 @@ function HotelsPage() {
   const hasMore = displayCount < uniqueHotels.length;
 
   const handleLoadMore = useCallback(() => {
-    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
-  }, []);
+    dispatch(incrementHotelsDisplayCount());
+  }, [dispatch]);
 
   useInfiniteScroll({
     ref: loadMoreRef,
@@ -52,26 +57,28 @@ function HotelsPage() {
 
   // Reset display count when search changes
   useEffect(() => {
-    setDisplayCount(ITEMS_PER_PAGE);
-  }, [debouncedSearchQuery]);
+    dispatch(resetHotelsDisplayCount());
+  }, [debouncedSearchQuery, dispatch]);
 
-  const handleOpenDialog = (hotel?: Hotel) => {
-    setSelectedHotel(hotel || null);
-    setIsDialogOpen(true);
-  };
+  const handleOpenDialog = useCallback(() => {
+    dispatch(openHotelDialog(null));
+  }, [dispatch]);
 
-  const handleCloseDialog = () => {
-    setSelectedHotel(null);
-    setIsDialogOpen(false);
-  };
+  const handleCloseDialog = useCallback(() => {
+    dispatch(closeHotelDialog());
+  }, [dispatch]);
 
   const handleSearchChange = useCallback((value: string) => {
-    setSearchQuery(value);
-  }, []);
+    dispatch(setHotelsSearchQuery(value));
+  }, [dispatch]);
 
   const handleReset = useCallback(() => {
-    setSearchQuery('');
-  }, []);
+    dispatch(setHotelsSearchQuery(''));
+  }, [dispatch]);
+
+  const handleViewModeChange = useCallback((mode: typeof viewMode) => {
+    dispatch(setHotelsViewMode(mode));
+  }, [dispatch]);
 
   return (
     <Box
@@ -108,8 +115,8 @@ function HotelsPage() {
             pluralLabel="hotels"
             hasSearchQuery={!!searchQuery}
             viewMode={viewMode}
-            onViewModeChange={setViewMode}
-            onAdd={() => handleOpenDialog()}
+            onViewModeChange={handleViewModeChange}
+            onAdd={handleOpenDialog}
             addButtonLabel="Add Hotel"
             icon={HotelIcon}
           />
@@ -129,7 +136,6 @@ function HotelsPage() {
             isLoading={true}
             hasMore={false}
             loadMoreRef={loadMoreRef}
-            onEdit={handleOpenDialog}
           />
         ) : uniqueHotels.length > 0 ? (
           <HotelsContent
@@ -138,12 +144,11 @@ function HotelsPage() {
             isLoading={false}
             hasMore={hasMore}
             loadMoreRef={loadMoreRef}
-            onEdit={handleOpenDialog}
           />
         ) : (
           <EmptyHotelsState
             hasSearchQuery={!!searchQuery}
-            onAddHotel={() => handleOpenDialog()}
+            onAddHotel={handleOpenDialog}
           />
         )}
       </Box>

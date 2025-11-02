@@ -43,23 +43,31 @@ export interface HotelFilters {
 }
 
 export interface CreateHotelDto {
+  hotelName?: string;
   name: string;
   description: string;
   hotelType: string;
   starRating: number;
   latitude: number;
   longitude: number;
+  location?: string;
   cityId: number;
+  imageUrl?: string;
+  availableRooms?: number;
 }
 
 export interface UpdateHotelDto {
+  hotelName?: string;
   name?: string;
   description?: string;
   hotelType?: string;
   starRating?: number;
   latitude?: number;
   longitude?: number;
+  location?: string;
   cityId?: number;
+  imageUrl?: string;
+  availableRooms?: number;
 }
 
 // Export component types

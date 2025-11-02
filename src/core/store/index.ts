@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import filterReducer from '@/features/filters/store/filterSlice';
 import cartReducer from '@/features/cart/store/cartSlice';
 import notificationReducer from './slices/notificationSlice';
+import adminUiReducer from './slices/adminUiSlice';
 
 /**
  * Configure and export the Redux store
@@ -16,6 +17,7 @@ export const store = configureStore({
     filters: filterReducer,
     cart: cartReducer,
     notification: notificationReducer,
+    adminUi: adminUiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
