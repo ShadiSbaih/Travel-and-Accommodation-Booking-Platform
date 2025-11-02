@@ -20,7 +20,7 @@ export const useCheckout = () => {
 
   const handleClearCart = () => {
     dispatch(clearCart());
-    notify('Cart cleared', 'info');
+    notify('Cart has been cleared successfully', 'success');
   };
 
   const handleProceedToCheckout = async (customerName: string, paymentMethod: string) => {

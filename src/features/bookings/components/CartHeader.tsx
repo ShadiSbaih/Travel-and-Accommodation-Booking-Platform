@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 import { useState } from 'react';
-import ClearCartDialog from './ClearCartDialog';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 
 interface CartHeaderProps {
   totalItems: number;
@@ -15,6 +15,11 @@ function CartHeader({ totalItems, onClearCart }: CartHeaderProps) {
   };
 
   const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirm = () => {
+    onClearCart();
     setDialogOpen(false);
   };
 
@@ -44,11 +49,14 @@ function CartHeader({ totalItems, onClearCart }: CartHeaderProps) {
         </Button>
       </Box>
 
-      <ClearCartDialog
+      <ConfirmDialog
         open={dialogOpen}
-        onClose={handleCloseDialog}
-        onConfirm={onClearCart}
-        itemCount={totalItems}
+        title="Clear Cart?"
+        message={`Are you sure you want to clear all items from your cart? This action cannot be undone. ${totalItems} ${totalItems === 1 ? 'item' : 'items'} will be removed.`}
+        confirmText="Clear Cart"
+        cancelText="Cancel"
+        onConfirm={handleConfirm}
+        onCancel={handleCloseDialog}
       />
     </>
   );
