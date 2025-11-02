@@ -96,10 +96,11 @@ function CitiesPageHeader({
         >
           <Tooltip title="Grid View">
             <IconButton
-              size="small"
+              size="medium"
               onClick={() => onViewModeChange('grid')}
               sx={{
                 borderRadius: 0.75,
+                px: 1.5,
                 bgcolor: (theme) =>
                   viewMode === 'grid'
                     ? theme.palette.mode === 'dark'
@@ -131,10 +132,11 @@ function CitiesPageHeader({
           </Tooltip>
           <Tooltip title="List View">
             <IconButton
-              size="small"
+              size="medium"
               onClick={() => onViewModeChange('list')}
               sx={{
                 borderRadius: 0.75,
+                px: 1.5,
                 bgcolor: (theme) =>
                   viewMode === 'list'
                     ? theme.palette.mode === 'dark'
