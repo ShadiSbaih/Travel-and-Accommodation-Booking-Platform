@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -24,6 +25,8 @@ import { useHotels } from '../hooks/useHotels';
 import { useCity } from '@/features/admin/cities/hooks/useCities';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openHotelDialog } from '@/core/store/slices/adminUiSlice';
+import { useNotification } from '@/shared/hooks/useNotification';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 import type { Hotel } from '../types';
 
 interface HotelCardProps {
@@ -44,17 +47,32 @@ const getAmenityIcon = (amenityName: string) => {
 
 function HotelCard({ hotel }: HotelCardProps) {
   const dispatch = useAppDispatch();
+  const notify = useNotification();
   const { deleteHotel, isDeleting } = useHotels();
   const { data: city } = useCity(hotel.cityId);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleEdit = () => {
     dispatch(openHotelDialog(hotel));
   };
 
-  const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${hotel.hotelName || hotel.name}?`)) {
-      deleteHotel(hotel.id);
+  const handleDeleteClick = () => {
+    setConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteHotel(hotel.id);
+      setConfirmOpen(false);
+      notify(`${displayName} has been deleted successfully`, 'success');
+    } catch (error) {
+      console.error(error);
+      notify('Failed to delete hotel. Please try again.', 'error');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setConfirmOpen(false);
   };
 
   const displayName = hotel.hotelName || hotel.name;
@@ -348,7 +366,7 @@ function HotelCard({ hotel }: HotelCardProps) {
               variant="outlined"
               size="small"
               startIcon={<DeleteIcon />}
-              onClick={handleDelete}
+              onClick={handleDeleteClick}
               disabled={isDeleting}
               sx={{
                 flex: 1,
@@ -374,6 +392,17 @@ function HotelCard({ hotel }: HotelCardProps) {
           </Tooltip>
         </Box>
       </CardContent>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete Hotel"
+        message={`Are you sure you want to delete "${displayName}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
     </Card>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -15,6 +16,8 @@ import BedIcon from '@mui/icons-material/Bed';
 import { useRooms } from '../hooks/useRooms';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openRoomDialog } from '@/core/store/slices/adminUiSlice';
+import { useNotification } from '@/shared/hooks/useNotification';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 import OptimizedImage from '@/shared/components/OptimizedImage';
 import type { Room } from '../types';
 
@@ -24,16 +27,31 @@ interface RoomCardProps {
 
 function RoomCard({ room }: RoomCardProps) {
   const dispatch = useAppDispatch();
+  const notify = useNotification();
   const { deleteRoom, isDeleting } = useRooms();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleEdit = () => {
     dispatch(openRoomDialog(room));
   };
 
-  const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete Room #${room.roomNumber}?`)) {
-      deleteRoom(room.roomId);
+  const handleDeleteClick = () => {
+    setConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteRoom(room.roomId);
+      setConfirmOpen(false);
+      notify(`Room #${room.roomNumber} has been deleted successfully`, 'success');
+    } catch (error) {
+      console.error(error);
+      notify('Failed to delete room. Please try again.', 'error');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setConfirmOpen(false);
   };
 
   return (
@@ -279,7 +297,7 @@ function RoomCard({ room }: RoomCardProps) {
           <Button
             variant="outlined"
             startIcon={<DeleteIcon />}
-            onClick={handleDelete}
+            onClick={handleDeleteClick}
             disabled={isDeleting}
             fullWidth
             size="medium"
@@ -308,6 +326,17 @@ function RoomCard({ room }: RoomCardProps) {
           </Button>
         </Stack>
       </CardContent>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete Room"
+        message={`Are you sure you want to delete Room #${room.roomNumber}? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
     </Card>
   );
 }

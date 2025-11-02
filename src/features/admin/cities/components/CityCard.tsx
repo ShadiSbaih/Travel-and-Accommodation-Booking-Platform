@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -13,6 +14,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useCities } from '../hooks/useCities';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openCityDialog } from '@/core/store/slices/adminUiSlice';
+import { useNotification } from '@/shared/hooks/useNotification';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 import type { City } from '../types';
 
 interface CityCardProps {
@@ -21,16 +24,31 @@ interface CityCardProps {
 
 function CityCard({ city }: CityCardProps) {
   const dispatch = useAppDispatch();
+  const notify = useNotification();
   const { deleteCity, isDeleting } = useCities();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleEdit = () => {
     dispatch(openCityDialog(city));
   };
 
-  const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${city.name}?`)) {
-      deleteCity(city.id);
+  const handleDeleteClick = () => {
+    setConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteCity(city.id);
+      setConfirmOpen(false);
+      notify(`${city.name} has been deleted successfully`, 'success');
+    } catch (error) {
+      console.error(error);
+      notify('Failed to delete city. Please try again.', 'error');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setConfirmOpen(false);
   };
 
   return (
@@ -168,7 +186,7 @@ function CityCard({ city }: CityCardProps) {
               variant="outlined"
               size="medium"
               startIcon={<DeleteIcon />}
-              onClick={handleDelete}
+              onClick={handleDeleteClick}
               disabled={isDeleting}
               sx={{
                 flex: 1,
@@ -197,6 +215,17 @@ function CityCard({ city }: CityCardProps) {
           </Tooltip>
         </Box>
       </CardContent>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete City"
+        message={`Are you sure you want to delete "${city.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
     </Card>
   );
 }
