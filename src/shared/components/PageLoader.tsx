@@ -1,72 +1,52 @@
-import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const PageLoader = () => {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
-
   return (
     <Box
       sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "#e5e7eb",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
-        background: isDark 
-          ? "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)"
-          : "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
-        color: isDark ? "#e2e8f0" : "#1e293b",
-        gap: 3,
+        zIndex: 9999,
       }}
     >
-      {/* Outer glow ring */}
+      {/* Spinner matching index.html */}
       <Box
         sx={{
-          position: "relative",
-          width: 100,
-          height: 100,
+          width: 70,
+          height: 70,
+          border: "5px solid transparent",
+          borderTop: "5px solid #3b82f6",
+          borderRight: "5px solid #3b82f6",
           borderRadius: "50%",
-          background: isDark
-            ? "radial-gradient(circle at center, rgba(59,130,246,0.3), transparent 70%)"
-            : "radial-gradient(circle at center, rgba(59,130,246,0.2), transparent 70%)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          animation: "pulse 2s ease-in-out infinite",
-          "@keyframes pulse": {
-            "0%, 100%": { transform: "scale(1)", opacity: 0.7 },
-            "50%": { transform: "scale(1.15)", opacity: 1 },
+          animation: "spin 1s linear infinite",
+          "@keyframes spin": {
+            "0%": { transform: "rotate(0deg)" },
+            "100%": { transform: "rotate(360deg)" },
           },
         }}
-      >
-        <CircularProgress
-          size={70}
-          thickness={4}
-          sx={{
-            color: "#3b82f6",
-            filter: isDark 
-              ? "drop-shadow(0 0 12px rgba(59,130,246,0.7))"
-              : "drop-shadow(0 0 8px rgba(59,130,246,0.4))",
-          }}
-        />
-      </Box>
+      />
 
       <Typography
-        variant="h6"
         sx={{
-          letterSpacing: 1.2,
-          mt: 2,
-          opacity: 0.85,
-        animation: "fade 2s ease-in-out infinite",
-        "@keyframes fade": {
-          "0%, 100%": { opacity: 0.4 },
-          "50%": { opacity: 1 },
-        },
-      }}
-    >
-      Loading your content...
-    </Typography>
-  </Box>
+          color: "#6b7280",
+          fontFamily: "'Poppins', sans-serif",
+          fontSize: "1rem",
+          fontWeight: 400,
+          marginTop: "1.5rem",
+          letterSpacing: "0.3px",
+        }}
+      >
+        Loading your content...
+      </Typography>
+    </Box>
   );
 };
 
