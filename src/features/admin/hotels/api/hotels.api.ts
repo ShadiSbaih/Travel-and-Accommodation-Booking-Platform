@@ -4,8 +4,14 @@ import type { Hotel, HotelFilters, CreateHotelDto, UpdateHotelDto } from '../typ
 export const hotelsApi = {
   // GET /hotels - Get all hotels with optional filters
   getHotels: async (filters?: HotelFilters): Promise<Hotel[]> => {
-    const { data } = await api.get('/hotels', { params: filters });
-    return data;
+    const { data } = await api.get('/hotels', { 
+      params: { 
+        ...filters,
+        pageSize: 1000, // Fetch all hotels (adjust based on backend limits)
+      } 
+    });
+    // If backend returns paginated response like { data: [], total: 50 }
+    return Array.isArray(data) ? data : data.data || [];
   },
 
   // Get hotel by ID
