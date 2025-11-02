@@ -3,16 +3,7 @@ import CityCard from './CityCard';
 import CityListView from './CityListView';
 import CityCardSkeleton from './CityCardSkeleton';
 import CityListSkeleton from './CityListSkeleton';
-import type { City } from '../types';
-
-interface CitiesContentProps {
-  cities: City[];
-  viewMode: 'grid' | 'list';
-  isLoading: boolean;
-  hasMore: boolean;
-  loadMoreRef: React.RefObject<HTMLDivElement | null>;
-  onEdit: (city: City) => void;
-}
+import type { CitiesContentProps } from '../types/component.types';
 
 function CitiesContent({
   cities,

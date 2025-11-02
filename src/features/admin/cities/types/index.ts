@@ -23,3 +23,6 @@ export interface UpdateCityDto {
   name?: string;
   description?: string;
 }
+
+// Export component types
+export * from './component.types';

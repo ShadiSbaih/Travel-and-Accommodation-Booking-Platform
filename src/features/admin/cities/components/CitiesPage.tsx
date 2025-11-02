@@ -9,6 +9,7 @@ import CitiesSearchBar from './CitiesSearchBar';
 import CitiesContent from './CitiesContent';
 import EmptyCitiesState from './EmptyCitiesState';
 import type { City } from '../types';
+import type { ViewMode } from '../types/component.types';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -16,7 +17,7 @@ function CitiesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -108,7 +109,7 @@ function CitiesPage() {
                 : 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(20px)',
             borderRadius: 2,
-            p: 3,
+            p: { xs: 2, sm: 3 },
             mb: 3,
             boxShadow: (theme) =>
               theme.palette.mode === 'dark'

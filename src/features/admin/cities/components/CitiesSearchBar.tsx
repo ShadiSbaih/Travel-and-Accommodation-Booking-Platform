@@ -1,22 +1,18 @@
 import { Box, TextField, InputAdornment, IconButton, Tooltip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
-
-interface CitiesSearchBarProps {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-  onReset: () => void;
-}
+import type { CitiesSearchBarProps } from '../types/component.types';
 
 function CitiesSearchBar({ searchQuery, onSearchChange, onReset }: CitiesSearchBarProps) {
   return (
-    <Box sx={{ mt: 3 }}>
+    <Box sx={{ mt: { xs: 2, sm: 3 } }}>
       <TextField
         fullWidth
         placeholder="Search cities by name..."
         value={searchQuery}
         onChange={(e) => onSearchChange(e.target.value)}
         variant="outlined"
+        size="medium"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -24,7 +20,7 @@ function CitiesSearchBar({ searchQuery, onSearchChange, onReset }: CitiesSearchB
                 sx={{
                   color: (theme) =>
                     theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
-                  fontSize: 22,
+                  fontSize: { xs: 20, sm: 22 },
                 }}
               />
             </InputAdornment>
@@ -57,6 +53,7 @@ function CitiesSearchBar({ searchQuery, onSearchChange, onReset }: CitiesSearchB
             borderRadius: 1,
             bgcolor: (theme) =>
               theme.palette.mode === 'dark' ? 'rgba(30, 41, 59, 0.6)' : 'white',
+            fontSize: { xs: '0.875rem', sm: '1rem' },
             '& fieldset': {
               borderColor: (theme) =>
                 theme.palette.mode === 'dark'
@@ -76,6 +73,7 @@ function CitiesSearchBar({ searchQuery, onSearchChange, onReset }: CitiesSearchB
             '& input': {
               color: (theme) =>
                 theme.palette.mode === 'dark' ? '#e2e8f0' : 'inherit',
+              py: { xs: 1.5, sm: 1.75 },
             },
             '& input::placeholder': {
               color: (theme) =>

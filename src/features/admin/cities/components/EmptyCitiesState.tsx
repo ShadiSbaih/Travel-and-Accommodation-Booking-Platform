@@ -1,11 +1,7 @@
 import { Paper, Typography, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-
-interface EmptyCitiesStateProps {
-  hasSearchQuery: boolean;
-  onAddCity: () => void;
-}
+import type { EmptyCitiesStateProps } from '../types/component.types';
 
 function EmptyCitiesState({ hasSearchQuery, onAddCity }: EmptyCitiesStateProps) {
   return (
