@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Box, Paper } from '@mui/material';
 import { useHotels } from '../hooks/useHotels';
 import { useDebounce } from '@/shared/hooks/useDebounce';
@@ -15,29 +15,18 @@ const ITEMS_PER_PAGE = 12;
 
 function HotelsPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // Debounce search query with longer delay to reduce API calls (600ms)
   const debouncedSearchQuery = useDebounce(searchQuery, 600);
-
-  // Fetch hotels with search query (backend handles filtering)
-  const { hotels: allHotels, isLoading, error, refetch } = useHotels({
+  const { hotels = [], isLoading, error, refetch } = useHotels({
     searchQuery: debouncedSearchQuery,
   });
 
-  // Backend handles filtering, just ensure we have an array
-  const filteredHotels = useMemo(() => allHotels || [], [allHotels]);
-
-  // Paginated hotels for display
-  const displayedHotels = useMemo(() => {
-    return filteredHotels.slice(0, displayCount);
-  }, [filteredHotels, displayCount]);
-
-  const hasMore = displayCount < filteredHotels.length;
+  const displayedHotels = hotels.slice(0, displayCount);
+  const hasMore = displayCount < hotels.length;
 
   // Infinite scroll observer
   useEffect(() => {
@@ -53,32 +42,24 @@ function HotelsPage() {
     );
 
     observer.observe(loadMoreRef.current);
-
     return () => observer.disconnect();
   }, [hasMore, isLoading]);
 
-  // Reset display count when search query changes
+  // Reset display count when search changes
   useEffect(() => {
     setDisplayCount(ITEMS_PER_PAGE);
   }, [debouncedSearchQuery]);
 
   const handleOpenDialog = (hotel?: Hotel) => {
     setSelectedHotel(hotel || null);
-    setDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setSelectedHotel(null);
-    setDialogOpen(false);
   };
 
   const handleReset = () => {
     setSearchQuery('');
-    setDisplayCount(ITEMS_PER_PAGE);
-  };
-
-  const handleRetry = () => {
-    refetch();
   };
 
   return (
@@ -113,7 +94,7 @@ function HotelsPage() {
           }}
         >
           <HotelsPageHeader
-            hotelsCount={filteredHotels?.length || 0}
+            hotelsCount={hotels.length}
             hasSearchQuery={!!searchQuery}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
@@ -127,7 +108,7 @@ function HotelsPage() {
         </Paper>
 
         {error ? (
-          <HotelErrorState onRetry={handleRetry} />
+          <HotelErrorState onRetry={refetch} />
         ) : isLoading ? (
           <HotelsContent
             hotels={[]}
@@ -137,7 +118,7 @@ function HotelsPage() {
             loadMoreRef={loadMoreRef}
             onEdit={handleOpenDialog}
           />
-        ) : filteredHotels && filteredHotels.length > 0 ? (
+        ) : hotels.length > 0 ? (
           <HotelsContent
             hotels={displayedHotels}
             viewMode={viewMode}
@@ -154,7 +135,7 @@ function HotelsPage() {
         )}
       </Box>
 
-      <HotelDialog open={dialogOpen} onClose={handleCloseDialog} hotel={selectedHotel} />
+      <HotelDialog open={!!selectedHotel} onClose={handleCloseDialog} hotel={selectedHotel} />
     </Box>
   );
 }
