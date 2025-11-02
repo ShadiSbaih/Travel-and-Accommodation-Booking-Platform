@@ -1,5 +1,5 @@
 import type { FormHTMLAttributes, ReactNode } from 'react';
-import { cn } from '@/shared/utils/cn';
+import { Box, Paper, Typography, Alert, Stack } from '@mui/material';
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
     children: ReactNode;
@@ -15,44 +15,52 @@ function Form({
     subtitle,
     error,
     footer,
-    className,
     ...props
 }: FormProps) {
     return (
-        <div className="w-full max-w-md">
-            <form
-                className={cn(
-                    'bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md',
-                    className
-                )}
+        <Box sx={{ width: '100%', maxWidth: 448 }}>
+            <Paper
+                component="form"
+                elevation={3}
+                sx={{ p: 4, borderRadius: 2 }}
                 {...props}
             >
                 {(title || subtitle) && (
-                    <div className="mb-6">
+                    <Box sx={{ mb: 3 }}>
                         {title && (
-                            <h1 className="text-2xl font-bold text-center dark:text-white mb-2">
+                            <Typography
+                                variant="h4"
+                                component="h1"
+                                align="center"
+                                fontWeight="bold"
+                                sx={{ mb: 1 }}
+                            >
                                 {title}
-                            </h1>
+                            </Typography>
                         )}
                         {subtitle && (
-                            <p className="text-gray-600 dark:text-gray-400 text-center text-sm">
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                align="center"
+                            >
                                 {subtitle}
-                            </p>
+                            </Typography>
                         )}
-                    </div>
+                    </Box>
                 )}
 
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <Alert severity="error" sx={{ mb: 2 }}>
                         {error}
-                    </div>
+                    </Alert>
                 )}
 
-                <div className="space-y-4">{children}</div>
+                <Stack spacing={2}>{children}</Stack>
 
-                {footer && <div className="mt-6">{footer}</div>}
-            </form>
-        </div>
+                {footer && <Box sx={{ mt: 3 }}>{footer}</Box>}
+            </Paper>
+        </Box>
     );
 }
 
