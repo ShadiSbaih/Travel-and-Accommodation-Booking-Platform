@@ -42,8 +42,8 @@ export const createAppTheme = (isDark: boolean) => {
         paper: isDark ? '#1e293b' : '#ffffff', // Lighter paper for cards
       },
       text: {
-        primary: isDark ? '#f0fdfa' : '#134e4a',
-        secondary: isDark ? '#99f6e4' : '#0f766e', // Brighter teal for better readability
+        primary: isDark ? '#f1f5f9' : '#0f172a',
+        secondary: isDark ? '#cbd5e1' : '#475569',
       },
       divider: isDark ? 'rgba(20, 184, 166, 0.12)' : 'rgba(0, 0, 0, 0.12)',
     },

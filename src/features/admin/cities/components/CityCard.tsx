@@ -156,6 +156,7 @@ function CityCard({ city }: CityCardProps) {
               size="medium"
               startIcon={<EditIcon />}
               onClick={handleEdit}
+              aria-label="Edit City"
               sx={{
                 flex: 1,
                 textTransform: 'none',
@@ -188,6 +189,7 @@ function CityCard({ city }: CityCardProps) {
               startIcon={<DeleteIcon />}
               onClick={handleDeleteClick}
               disabled={isDeleting}
+              aria-label="Delete City"
               sx={{
                 flex: 1,
                 textTransform: 'none',

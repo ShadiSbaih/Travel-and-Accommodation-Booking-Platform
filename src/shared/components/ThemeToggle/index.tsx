@@ -15,6 +15,9 @@ export const ThemeToggle = () => {
   return (
     <Box 
       onClick={handleToggle}
+      role="button"
+      tabIndex={0}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
       sx={{ 
         display: 'flex', 
         alignItems: 'center', 
@@ -60,6 +63,9 @@ export const ThemeToggle = () => {
         checked={isDark}
         onChange={handleToggle}
         onClick={(e) => e.stopPropagation()}
+        slotProps={{
+          input: { 'aria-label': `Toggle ${isDark ? 'light' : 'dark'} mode` }
+        }}
         sx={{
           pointerEvents: 'none',
           '& .MuiSwitch-switchBase.Mui-checked': {

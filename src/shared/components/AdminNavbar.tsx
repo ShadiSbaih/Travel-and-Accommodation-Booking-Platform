@@ -72,13 +72,15 @@ function AdminNavbar() {
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', mr: 3 }}>
                         <AdminPanelSettingsIcon sx={{ mr: 1 }} />
                         <Typography
-                            variant="h6"
-                            noWrap
+                            component="div"
+                            role="heading"
+                            aria-level={1}
                             sx={{
                                 fontFamily: 'monospace',
                                 fontWeight: 700,
                                 letterSpacing: '.2rem',
                                 color: 'inherit',
+                                fontSize: '1.25rem',
                             }}
                         >
                             ADMIN
@@ -137,12 +139,22 @@ function AdminNavbar() {
                     <Box
                         sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, cursor: 'pointer', alignItems: 'center' }}
                         onClick={() => navigate('/admin/hotels')}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Navigate to admin hotels"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                navigate('/admin/hotels');
+                            }
+                        }}
                     >
                         <AdminPanelSettingsIcon sx={{ ml: 1, fontSize: 20 }} />
                     </Box>
                     <Typography
-                        variant="h6"
-                        noWrap
+                        component="div"
+                        role="heading"
+                        aria-level={1}
                         onClick={() => navigate('/admin/hotels')}
                         sx={{
                             mr: 2,
@@ -168,6 +180,7 @@ function AdminNavbar() {
                                 key={page.name}
                                 component={NavLink}
                                 to={page.path}
+                                aria-label={`Navigate to ${page.name}`}
                                 sx={{
                                     my: 2,
                                     px: 2,

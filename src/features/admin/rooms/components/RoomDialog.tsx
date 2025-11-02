@@ -196,6 +196,7 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
         <IconButton
           onClick={handleCancel}
           size="small"
+          aria-label="Close dialog"
           sx={{
             color: (theme) =>
               theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
@@ -235,7 +236,9 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
               onChange={(e) => setCapacityOfAdults(e.target.value)}
               fullWidth
               required
-              inputProps={{ min: 1 }}
+              slotProps={{
+                htmlInput: { min: 1 }
+              }}
             />
             <TextField
               label="Children Capacity"
@@ -244,7 +247,9 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
               onChange={(e) => setCapacityOfChildren(e.target.value)}
               fullWidth
               required
-              inputProps={{ min: 0 }}
+              slotProps={{
+                htmlInput: { min: 0 }
+              }}
             />
           </Box>
           <Box sx={{ display: 'flex', gap: 2.5, alignItems: 'center' }}>
@@ -256,7 +261,9 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
               fullWidth
               required
               placeholder="0.00"
-              inputProps={{ min: 0, step: 0.01 }}
+              slotProps={{
+                htmlInput: { min: 0, step: 0.01 }
+              }}
             />
             <FormControlLabel
               control={

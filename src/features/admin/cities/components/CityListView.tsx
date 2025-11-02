@@ -119,6 +119,7 @@ function CityListView({ cities }: CityListViewProps) {
             <IconButton
               size="small"
               onClick={() => handleEdit(city)}
+              aria-label="Edit City"
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
@@ -138,6 +139,7 @@ function CityListView({ cities }: CityListViewProps) {
               size="small"
               onClick={() => handleDelete(city)}
               disabled={isDeleting}
+              aria-label="Delete City"
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#f87171' : 'error.main',

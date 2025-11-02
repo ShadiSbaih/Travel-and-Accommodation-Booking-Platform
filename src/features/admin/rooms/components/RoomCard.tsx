@@ -271,6 +271,7 @@ function RoomCard({ room }: RoomCardProps) {
             onClick={handleEdit}
             fullWidth
             size="medium"
+            aria-label="Edit Room"
             sx={{
               textTransform: 'none',
               fontWeight: 600,
@@ -301,6 +302,7 @@ function RoomCard({ room }: RoomCardProps) {
             disabled={isDeleting}
             fullWidth
             size="medium"
+            aria-label="Delete Room"
             sx={{
               textTransform: 'none',
               fontWeight: 600,

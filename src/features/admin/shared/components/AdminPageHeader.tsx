@@ -98,6 +98,7 @@ function AdminPageHeader({
                 >
                     <Button
                         onClick={() => onViewModeChange('grid')}
+                        aria-label="Switch to grid view"
                         sx={{
                             minWidth: 44,
                             height: 44,
@@ -133,6 +134,7 @@ function AdminPageHeader({
                     </Button>
                     <Button
                         onClick={() => onViewModeChange('list')}
+                        aria-label="Switch to list view"
                         sx={{
                             minWidth: 44,
                             height: 44,
@@ -173,6 +175,7 @@ function AdminPageHeader({
                     variant="contained"
                     startIcon={addButtonIcon ?? <AddIcon />}
                     onClick={onAdd}
+                    aria-label={addButtonLabel}
                     sx={{
                         textTransform: 'none',
                         borderRadius: 1.5,

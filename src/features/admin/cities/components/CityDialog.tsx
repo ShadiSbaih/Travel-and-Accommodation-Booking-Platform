@@ -107,6 +107,7 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
       >
         <IconButton
           onClick={handleCancel}
+          aria-label="Close dialog"
           sx={{
             position: 'absolute',
             right: 16,

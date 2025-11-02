@@ -199,6 +199,7 @@ function HotelListView({ hotels }: HotelListViewProps) {
             <IconButton
               size="small"
               onClick={() => handleEdit(hotel)}
+              aria-label="Edit Hotel"
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
@@ -218,6 +219,7 @@ function HotelListView({ hotels }: HotelListViewProps) {
               size="small"
               onClick={() => handleDelete(hotel)}
               disabled={isDeleting}
+              aria-label="Delete Hotel"
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#f87171' : 'error.main',

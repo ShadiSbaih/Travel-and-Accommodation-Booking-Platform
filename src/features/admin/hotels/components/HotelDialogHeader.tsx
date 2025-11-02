@@ -21,6 +21,7 @@ function HotelDialogHeader({ isEditMode, onClose }: HotelDialogHeaderProps) {
         >
             <IconButton
                 onClick={onClose}
+                aria-label="Close dialog"
                 sx={{
                     position: 'absolute',
                     right: 16,

@@ -93,6 +93,7 @@ function RoomListView({ rooms }: RoomListViewProps) {
             <IconButton
               onClick={() => handleEdit(room)}
               size="small"
+              aria-label="Edit Room"
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
@@ -112,6 +113,7 @@ function RoomListView({ rooms }: RoomListViewProps) {
               size="small"
               onClick={() => handleDelete(room)}
               disabled={isDeleting}
+              aria-label="Delete Room"
               sx={{
                 color: (theme) =>
                   theme.palette.mode === 'dark' ? '#f87171' : 'error.main',

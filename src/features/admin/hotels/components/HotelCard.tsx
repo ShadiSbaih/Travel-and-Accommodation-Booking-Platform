@@ -339,6 +339,7 @@ function HotelCard({ hotel }: HotelCardProps) {
               size="small"
               startIcon={<EditIcon />}
               onClick={handleEdit}
+              aria-label="Edit Hotel"
               sx={{
                 flex: 1,
                 textTransform: 'none',
@@ -368,6 +369,7 @@ function HotelCard({ hotel }: HotelCardProps) {
               startIcon={<DeleteIcon />}
               onClick={handleDeleteClick}
               disabled={isDeleting}
+              aria-label="Delete Hotel"
               sx={{
                 flex: 1,
                 textTransform: 'none',
