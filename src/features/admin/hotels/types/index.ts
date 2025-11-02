@@ -33,6 +33,7 @@ export interface Hotel {
 }
 
 export interface HotelFilters {
+  searchQuery?: string;
   name?: string;
   cityId?: number;
   hotelType?: string;

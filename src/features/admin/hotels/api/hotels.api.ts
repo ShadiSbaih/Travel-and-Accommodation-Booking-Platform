@@ -6,12 +6,12 @@ export const hotelsApi = {
   getHotels: async (filters?: HotelFilters): Promise<Hotel[]> => {
     const { data } = await api.get('/hotels', { 
       params: { 
-        ...filters,
-        pageSize: 1000, // Fetch all hotels (adjust based on backend limits)
+        searchQuery: filters?.searchQuery || '',
+        pageNumber: 1,
+        pageSize: 1000, // Fetch all hotels at once
       } 
     });
-    // If backend returns paginated response like { data: [], total: 50 }
-    return Array.isArray(data) ? data : data.data || [];
+    return data;
   },
 
   // Get hotel by ID

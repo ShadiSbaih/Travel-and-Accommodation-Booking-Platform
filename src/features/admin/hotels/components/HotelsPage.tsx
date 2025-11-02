@@ -24,23 +24,13 @@ function HotelsPage() {
   // Debounce search query for smoother UX
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Fetch all hotels without filters (backend returns all)
-  const { hotels: allHotels, isLoading, error, refetch } = useHotels();
+  // Fetch hotels with search query (backend handles filtering)
+  const { hotels: allHotels, isLoading, error, refetch } = useHotels({
+    searchQuery: debouncedSearchQuery,
+  });
 
-  // Local search filtering
-  const filteredHotels = useMemo(() => {
-    if (!allHotels) return [];
-    
-    if (!debouncedSearchQuery.trim()) return allHotels;
-
-    const query = debouncedSearchQuery.toLowerCase().trim();
-    return allHotels.filter((hotel) =>
-      hotel.name.toLowerCase().includes(query) || 
-      hotel.hotelName.toLowerCase().includes(query) ||
-      hotel.location.toLowerCase().includes(query) ||
-      hotel.hotelType.toLowerCase().includes(query)
-    );
-  }, [allHotels, debouncedSearchQuery]);
+  // Backend handles filtering, just ensure we have an array
+  const filteredHotels = useMemo(() => allHotels || [], [allHotels]);
 
   // Paginated hotels for display
   const displayedHotels = useMemo(() => {
