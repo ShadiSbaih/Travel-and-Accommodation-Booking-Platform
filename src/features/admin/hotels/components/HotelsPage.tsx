@@ -19,7 +19,7 @@ function HotelsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
