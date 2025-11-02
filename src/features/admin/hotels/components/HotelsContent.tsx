@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import HotelCard from './HotelCard';
 import HotelListView from './HotelListView';
 import HotelCardSkeleton from './HotelCardSkeleton';
@@ -12,7 +12,8 @@ function HotelsContent({
   hasMore,
   loadMoreRef,
 }: Omit<HotelsContentProps, 'onEdit'>) {
-  if (isLoading) {
+  
+  if (isLoading && hotels.length === 0) {
     return viewMode === 'grid' ? (
       <Box
         sx={{
@@ -23,6 +24,7 @@ function HotelsContent({
             lg: 'repeat(3, 1fr)',
           },
           gap: 3,
+          mt: 3,
         }}
       >
         {Array.from({ length: 6 }).map((_, index) => (
@@ -30,12 +32,14 @@ function HotelsContent({
         ))}
       </Box>
     ) : (
-      <HotelListSkeleton />
+      <Box sx={{ mt: 3 }}>
+        <HotelListSkeleton />
+      </Box>
     );
   }
 
   return (
-    <Box>
+    <Box sx={{ mt: 3 }}>
       {viewMode === 'grid' ? (
         <Box
           sx={{
@@ -59,35 +63,26 @@ function HotelsContent({
         <HotelListView hotels={hotels} />
       )}
 
-      {/* Load More Trigger */}
+      {/* Infinite scroll trigger */}
       {hasMore && (
-        <Box
-          ref={loadMoreRef}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            py: 4,
-            mt: 3,
-          }}
-        >
-          <CircularProgress
-            size={32}
-            sx={{
-              color: (theme) =>
-                theme.palette.mode === 'dark' ? '#22d3ee' : '#14b8a6',
-            }}
-          />
-          <Typography
-            variant="body2"
-            sx={{
-              ml: 2,
-              color: (theme) =>
-                theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
-            }}
-          >
-            Loading more hotels...
-          </Typography>
+        <Box ref={loadMoreRef} sx={{ py: 2, mt: 3 }}>
+          {isLoading && viewMode === 'grid' ? (
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: '1fr',
+                  sm: 'repeat(2, 1fr)',
+                  lg: 'repeat(3, 1fr)',
+                },
+                gap: 3,
+              }}
+            >
+              {Array.from({ length: 3 }).map((_, index) => (
+                <HotelCardSkeleton key={`skeleton-${index}`} />
+              ))}
+            </Box>
+          ) : null}
         </Box>
       )}
     </Box>

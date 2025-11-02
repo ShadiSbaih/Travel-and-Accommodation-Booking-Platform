@@ -17,14 +17,10 @@ const defaultContainerSx: SxProps<Theme> = {
       ? 'rgba(30, 41, 59, 0.95)'
       : 'rgba(255, 255, 255, 0.95)',
   backdropFilter: 'blur(20px)',
-  borderRadius: 2,
-  overflow: 'hidden',
-  boxShadow: (theme) =>
-    theme.palette.mode === 'dark'
-      ? '0 6px 24px rgba(0, 0, 0, 0.35)'
-      : '0 6px 24px rgba(15, 23, 42, 0.08)',
-  border: (theme) =>
-    theme.palette.mode === 'dark' ? '1px solid rgba(148, 163, 184, 0.12)' : 'none',
+  borderRadius: 0,
+  overflow: 'auto',
+  boxShadow: 'none',
+  border: 'none',
 };
 
 const defaultHeadRowSx: SxProps<Theme> = {

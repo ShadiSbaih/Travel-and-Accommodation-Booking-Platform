@@ -84,32 +84,24 @@ function CitiesPage() {
     dispatch(setCitiesViewMode(mode));
   }, [dispatch]);
 
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-
-        p: { xs: 2, sm: 3, md: 4 },
-      }}
-    >
-      <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
+  // Error state - don't show search bar
+  if (error && cities.length === 0) {
+    return (
+      <Box sx={{ p: 3 }}>
         <Paper
           elevation={0}
           sx={{
-            background: (theme) =>
+            p: 3,
+            bgcolor: (theme) =>
               theme.palette.mode === 'dark'
                 ? 'rgba(30, 41, 59, 0.95)'
                 : 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(20px)',
             borderRadius: 2,
-            p: { xs: 2, sm: 3 },
-            mb: 3,
-            boxShadow: (theme) =>
-              theme.palette.mode === 'dark'
-                ? '0 8px 32px rgba(0, 0, 0, 0.5)'
-                : '0 8px 32px rgba(0, 0, 0, 0.1)',
             border: (theme) =>
-              theme.palette.mode === 'dark' ? '1px solid rgba(148, 163, 184, 0.1)' : 'none',
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(148, 163, 184, 0.1)'
+                : 'none',
           }}
         >
           <AdminPageHeader
@@ -124,16 +116,90 @@ function CitiesPage() {
             addButtonLabel="Add City"
             icon={LocationCityIcon}
           />
-          <CitiesSearchBar
-            value={searchQuery}
-            onChange={handleSearchChange}
-            onReset={handleReset}
+        </Paper>
+        <CityErrorState onRetry={refetch} />
+      </Box>
+    );
+  }
+
+  // Empty state - show when no cities exist and not loading
+  if (!isLoading && cities.length === 0 && !debouncedSearchQuery) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 3,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(30, 41, 59, 0.95)'
+                : 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: 2,
+            border: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(148, 163, 184, 0.1)'
+                : 'none',
+          }}
+        >
+          <AdminPageHeader
+            title="Cities Management"
+            count={filteredCities.length}
+            singularLabel="city"
+            pluralLabel="cities"
+            hasSearchQuery={!!searchQuery}
+            viewMode={viewMode}
+            onViewModeChange={handleViewModeChange}
+            onAdd={handleOpenDialog}
+            addButtonLabel="Add City"
+            icon={LocationCityIcon}
           />
         </Paper>
+        <EmptyCitiesState
+          hasSearchQuery={false}
+          onAddCity={handleOpenDialog}
+        />
+      </Box>
+    );
+  }
 
-        {error ? (
-          <CityErrorState onRetry={refetch} />
-        ) : isLoading ? (
+  return (
+    <Box sx={{ p: 3 }}>
+      <Paper
+        elevation={0}
+        sx={{
+          p: 3,
+          bgcolor: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'rgba(30, 41, 59, 0.95)'
+              : 'rgba(255, 255, 255, 0.95)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: 2,
+          border: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(148, 163, 184, 0.1)'
+              : 'none',
+        }}
+      >
+        <AdminPageHeader
+          title="Cities Management"
+          count={filteredCities.length}
+          singularLabel="city"
+          pluralLabel="cities"
+          hasSearchQuery={!!searchQuery}
+          viewMode={viewMode}
+          onViewModeChange={handleViewModeChange}
+          onAdd={handleOpenDialog}
+          addButtonLabel="Add City"
+          icon={LocationCityIcon}
+        />
+        <CitiesSearchBar
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onReset={handleReset}
+        />
+
+        {isLoading ? (
           <CitiesContent
             cities={[]}
             viewMode={viewMode}
@@ -155,7 +221,7 @@ function CitiesPage() {
             onAddCity={handleOpenDialog}
           />
         )}
-      </Box>
+      </Paper>
 
       <CityDialog open={isDialogOpen} onClose={handleCloseDialog} city={selectedCity} />
     </Box>

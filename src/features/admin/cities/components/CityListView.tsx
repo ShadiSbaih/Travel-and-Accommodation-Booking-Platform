@@ -163,7 +163,6 @@ function CityListView({ cities }: CityListViewProps) {
       columns={columns}
       getRowKey={(city) => city.id}
       emptyMessage="No cities found"
-      containerSx={{ borderRadius: 0.5 }}
     />
   );
 }

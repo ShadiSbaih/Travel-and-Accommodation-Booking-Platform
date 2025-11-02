@@ -80,32 +80,24 @@ function HotelsPage() {
     dispatch(setHotelsViewMode(mode));
   }, [dispatch]);
 
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-
-        p: { xs: 2, sm: 3, md: 4 },
-      }}
-    >
-      <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
+  // Error state - don't show search bar
+  if (error && hotels.length === 0) {
+    return (
+      <Box sx={{ p: 3 }}>
         <Paper
           elevation={0}
           sx={{
-            background: (theme) =>
+            p: 3,
+            bgcolor: (theme) =>
               theme.palette.mode === 'dark'
                 ? 'rgba(30, 41, 59, 0.95)'
                 : 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(20px)',
             borderRadius: 2,
-            p: { xs: 2, sm: 3 },
-            mb: 3,
-            boxShadow: (theme) =>
-              theme.palette.mode === 'dark'
-                ? '0 8px 32px rgba(0, 0, 0, 0.5)'
-                : '0 8px 32px rgba(0, 0, 0, 0.1)',
             border: (theme) =>
-              theme.palette.mode === 'dark' ? '1px solid rgba(148, 163, 184, 0.1)' : 'none',
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(148, 163, 184, 0.1)'
+                : 'none',
           }}
         >
           <AdminPageHeader
@@ -120,16 +112,90 @@ function HotelsPage() {
             addButtonLabel="Add Hotel"
             icon={HotelIcon}
           />
-          <HotelsSearchBar
-            value={searchQuery}
-            onChange={handleSearchChange}
-            onReset={handleReset}
+        </Paper>
+        <HotelErrorState onRetry={refetch} />
+      </Box>
+    );
+  }
+
+  // Empty state - show when no hotels exist and not loading
+  if (!isLoading && hotels.length === 0 && !debouncedSearchQuery) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: 3,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(30, 41, 59, 0.95)'
+                : 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: 2,
+            border: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(148, 163, 184, 0.1)'
+                : 'none',
+          }}
+        >
+          <AdminPageHeader
+            title="Hotels Management"
+            count={uniqueHotels.length}
+            singularLabel="hotel"
+            pluralLabel="hotels"
+            hasSearchQuery={!!searchQuery}
+            viewMode={viewMode}
+            onViewModeChange={handleViewModeChange}
+            onAdd={handleOpenDialog}
+            addButtonLabel="Add Hotel"
+            icon={HotelIcon}
           />
         </Paper>
+        <EmptyHotelsState
+          hasSearchQuery={false}
+          onAddHotel={handleOpenDialog}
+        />
+      </Box>
+    );
+  }
 
-        {error ? (
-          <HotelErrorState onRetry={refetch} />
-        ) : isLoading ? (
+  return (
+    <Box sx={{ p: 3 }}>
+      <Paper
+        elevation={0}
+        sx={{
+          p: 3,
+          bgcolor: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'rgba(30, 41, 59, 0.95)'
+              : 'rgba(255, 255, 255, 0.95)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: 2,
+          border: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(148, 163, 184, 0.1)'
+              : 'none',
+        }}
+      >
+        <AdminPageHeader
+          title="Hotels Management"
+          count={uniqueHotels.length}
+          singularLabel="hotel"
+          pluralLabel="hotels"
+          hasSearchQuery={!!searchQuery}
+          viewMode={viewMode}
+          onViewModeChange={handleViewModeChange}
+          onAdd={handleOpenDialog}
+          addButtonLabel="Add Hotel"
+          icon={HotelIcon}
+        />
+        <HotelsSearchBar
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onReset={handleReset}
+        />
+
+        {isLoading ? (
           <HotelsContent
             hotels={[]}
             viewMode={viewMode}
@@ -151,7 +217,7 @@ function HotelsPage() {
             onAddHotel={handleOpenDialog}
           />
         )}
-      </Box>
+      </Paper>
 
       <HotelDialog open={isDialogOpen} onClose={handleCloseDialog} hotel={selectedHotel} />
     </Box>

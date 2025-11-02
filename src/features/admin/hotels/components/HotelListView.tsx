@@ -243,7 +243,6 @@ function HotelListView({ hotels }: HotelListViewProps) {
       columns={columns}
       getRowKey={(hotel) => hotel.id}
       emptyMessage="No hotels found"
-      containerSx={{ borderRadius: 0.5 }}
     />
   );
 }
