@@ -12,7 +12,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HotelIcon from '@mui/icons-material/Hotel';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import RoomIcon from '@mui/icons-material/Room';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import { MuiMap } from '@/shared/components/MuiMap';
 import { useHotels } from '../hooks/useHotels';
 import type { Hotel } from '../types';
 
@@ -52,34 +53,38 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
         flexDirection: 'column',
       }}
     >
-      {/* Hotel Image */}
-      {hotel.imageUrl && (
-        <Box
+      {/* Hotel Map */}
+      <Box
+        sx={{
+          width: '100%',
+          height: 200,
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <MuiMap
+          latitude={hotel.latitude}
+          longitude={hotel.longitude}
+          hotelName={displayName}
+          location={hotel.location}
+          zoom={13}
+          height={200}
+        />
+        <Chip
+          label={hotel.hotelType}
+          size="small"
           sx={{
-            width: '100%',
-            height: 200,
-            bgcolor: (theme) =>
-              theme.palette.mode === 'dark' ? 'rgba(51, 65, 85, 0.5)' : 'grey.200',
-            backgroundImage: `url(${hotel.imageUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            position: 'relative',
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            bgcolor: 'rgba(0, 0, 0, 0.7)',
+            color: 'white',
+            fontWeight: 600,
+            backdropFilter: 'blur(8px)',
+            zIndex: 10,
           }}
-        >
-          <Chip
-            label={hotel.hotelType}
-            size="small"
-            sx={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              bgcolor: 'rgba(0, 0, 0, 0.7)',
-              color: 'white',
-              fontWeight: 600,
-            }}
-          />
-        </Box>
-      )}
+        />
+      </Box>
 
       <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Hotel Icon & Name */}
@@ -160,7 +165,7 @@ function HotelCard({ hotel, onEdit }: HotelCardProps) {
 
         {/* Available Rooms */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-          <RoomIcon
+          <MeetingRoomIcon
             sx={{
               fontSize: 18,
               color: (theme) =>

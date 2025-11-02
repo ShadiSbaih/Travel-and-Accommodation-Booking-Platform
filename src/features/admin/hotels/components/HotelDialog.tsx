@@ -262,7 +262,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               onChange={(e) => setStarRating(Number(e.target.value))}
               fullWidth
               required
-              inputProps={{ min: 1, max: 5 }}
+              slotProps={{ htmlInput: { min: 1, max: 5 } }}
               sx={getTextFieldStyles()}
             />
           </Box>
@@ -298,7 +298,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
               fullWidth
-              inputProps={{ step: 'any' }}
+              slotProps={{ htmlInput: { step: 'any' } }}
               sx={getTextFieldStyles()}
               placeholder="e.g., -8.3405"
             />
@@ -309,7 +309,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
               value={longitude}
               onChange={(e) => setLongitude(e.target.value)}
               fullWidth
-              inputProps={{ step: 'any' }}
+              slotProps={{ htmlInput: { step: 'any' } }}
               sx={getTextFieldStyles()}
               placeholder="e.g., 115.0915"
             />
