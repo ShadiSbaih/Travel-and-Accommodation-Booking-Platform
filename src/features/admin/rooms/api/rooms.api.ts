@@ -9,7 +9,7 @@ export const roomsApi = {
     // Use hotels/1/rooms endpoint (backend returns all rooms regardless of hotel ID)
     const { data } = await api.get('/hotels/1/rooms', { params: filters });
     console.log('✅ [Rooms API] Fetched rooms:', data.length, 'rooms');
-    
+
     // Apply client-side search filtering if searchQuery provided
     if (filters?.searchQuery) {
       const query = filters.searchQuery.toLowerCase();
@@ -20,7 +20,7 @@ export const roomsApi = {
       console.log('🔍 [Rooms API] Filtered rooms by search query:', filtered.length, 'results');
       return filtered;
     }
-    
+
     return data;
   },
 
@@ -35,7 +35,6 @@ export const roomsApi = {
   // POST /rooms - Create new room
   // Backend returns the entire array, but we just need to signal success
   createRoom: async (roomData: CreateRoomDto): Promise<Room[]> => {
-    console.log('➕ [Rooms API] Creating room with data:', roomData);
     const { data } = await api.post('/rooms', roomData);
     console.log('✅ [Rooms API] Room created successfully. Response:', data);
     return data; // Backend returns full array
@@ -44,18 +43,14 @@ export const roomsApi = {
   // PUT /rooms/{roomId} - Update room
   // Backend returns the entire array, but we just need to signal success
   updateRoom: async (id: number, roomData: UpdateRoomDto): Promise<Room[]> => {
-    console.log('✏️ [Rooms API] Updating room ID:', id, 'with data:', roomData);
     const { data } = await api.put(`/rooms/${id}`, roomData);
-    console.log('✅ [Rooms API] Room updated successfully. Response:', data);
     return data; // Backend returns full array
   },
 
   // DELETE /rooms/{roomId} - Delete room
   // Backend returns the entire array after deletion
   deleteRoom: async (id: number): Promise<Room[]> => {
-    console.log('🗑️ [Rooms API] Deleting room ID:', id);
     const { data } = await api.delete(`/rooms/${id}`);
-    console.log('✅ [Rooms API] Room deleted successfully. Response:', data);
     return data; // Backend returns full array
   },
 };

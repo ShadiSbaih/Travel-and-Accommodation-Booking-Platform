@@ -36,6 +36,7 @@ export interface CreateRoomDto {
   roomType: string;
   capacityOfAdults: number;
   capacityOfChildren: number;
+  amenities?: Amenity[];
   price: number;
   availability: boolean;
   hotelId?: number;
@@ -47,6 +48,7 @@ export interface UpdateRoomDto {
   roomType?: string;
   capacityOfAdults?: number;
   capacityOfChildren?: number;
+  amenities?: Amenity[];
   price?: number;
   availability?: boolean;
   hotelId?: number;

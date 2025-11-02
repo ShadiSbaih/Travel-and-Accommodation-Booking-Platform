@@ -10,12 +10,16 @@ import {
   FormControlLabel,
   Switch,
   Stack,
+  Autocomplete,
+  Chip,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import { useQuery } from '@tanstack/react-query';
+import amenitiesApi from '@/core/api/amenities.api';
 import { useRooms } from '../hooks/useRooms';
-import type { Room } from '../types';
+import type { Room, Amenity } from '../types';
 
 interface RoomDialogProps {
   open: boolean;
@@ -32,12 +36,18 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
   const [price, setPrice] = useState('');
   const [availability, setAvailability] = useState(true);
   const [roomPhotoUrl, setRoomPhotoUrl] = useState('');
+  const [selectedAmenities, setSelectedAmenities] = useState<Amenity[]>([]);
 
   const { createRoom, updateRoom, isCreating, isUpdating } = useRooms();
 
+  // Fetch available amenities
+  const { data: availableAmenities = [] } = useQuery({
+    queryKey: ['amenities'],
+    queryFn: amenitiesApi.getAmenities,
+  });
+
   useEffect(() => {
     if (room) {
-      console.log('📝 [RoomDialog] Editing existing room:', room);
       setRoomNumber(room.roomNumber.toString());
       setRoomType(room.roomType);
       setCapacityOfAdults(room.capacityOfAdults.toString());
@@ -45,8 +55,8 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
       setPrice(room.price.toString());
       setAvailability(room.availability);
       setRoomPhotoUrl(room.roomPhotoUrl || '');
+      setSelectedAmenities(room.amenities || []);
     } else {
-      console.log('➕ [RoomDialog] Creating new room');
       setRoomNumber('');
       setRoomType('');
       setCapacityOfAdults('2');
@@ -54,23 +64,12 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
       setPrice('');
       setAvailability(true);
       setRoomPhotoUrl('');
+      setSelectedAmenities([]);
     }
   }, [room, open]);
 
   const handleSubmit = () => {
-    console.log('📤 [RoomDialog] Form submission started');
-    console.log('📋 [RoomDialog] Form values:', {
-      roomNumber,
-      roomType,
-      capacityOfAdults,
-      capacityOfChildren,
-      price,
-      availability,
-      roomPhotoUrl,
-    });
-
     if (!roomNumber.trim() || !roomType.trim() || !price.trim()) {
-      console.warn('⚠️ [RoomDialog] Form validation failed - missing required fields');
       return;
     }
 
@@ -82,28 +81,21 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
       price: parseFloat(price),
       availability,
       roomPhotoUrl: roomPhotoUrl || undefined,
-      // Preserve amenities when updating
-      ...(room?.amenities && { amenities: room.amenities }),
+      amenities: selectedAmenities.length > 0 ? selectedAmenities : undefined,
     };
 
-    console.log('✅ [RoomDialog] Parsed room data:', roomData);
-
     if (room) {
-      console.log('✏️ [RoomDialog] Calling updateRoom for room ID:', room.roomId);
       updateRoom(
         { roomId: room.roomId, data: roomData },
         {
           onSuccess: () => {
-            console.log('✅ [RoomDialog] Update successful, closing dialog');
             onSuccess();
           },
         }
       );
     } else {
-      console.log('➕ [RoomDialog] Calling createRoom');
       createRoom(roomData, {
         onSuccess: () => {
-          console.log('✅ [RoomDialog] Create successful, closing dialog');
           onSuccess();
         },
       });
@@ -111,7 +103,6 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
   };
 
   const handleCancel = () => {
-    console.log('❌ [RoomDialog] Dialog cancelled, resetting form');
     setRoomNumber('');
     setRoomType('');
     setCapacityOfAdults('2');
@@ -119,6 +110,7 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
     setPrice('');
     setAvailability(true);
     setRoomPhotoUrl('');
+    setSelectedAmenities([]);
     onClose();
   };
 
@@ -283,6 +275,44 @@ function RoomDialog({ open, onClose, onSuccess, room }: RoomDialogProps) {
             onChange={(e) => setRoomPhotoUrl(e.target.value)}
             fullWidth
             placeholder="https://example.com/room-photo.jpg"
+          />
+          <Autocomplete
+            multiple
+            options={availableAmenities}
+            value={selectedAmenities}
+            onChange={(_, newValue) => setSelectedAmenities(newValue)}
+            getOptionLabel={(option) => option.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Amenities (optional)"
+                placeholder="Select amenities"
+              />
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  label={option.name}
+                  {...getTagProps({ index })}
+                  key={option.id}
+                  size="small"
+                  sx={{
+                    bgcolor: (theme) =>
+                      theme.palette.mode === 'dark'
+                        ? 'rgba(6, 182, 212, 0.2)'
+                        : 'rgba(20, 184, 166, 0.15)',
+                    color: (theme) =>
+                      theme.palette.mode === 'dark' ? '#22d3ee' : '#0d9488',
+                  }}
+                />
+              ))
+            }
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                padding: '8px',
+              },
+            }}
           />
         </Stack>
       </DialogContent>
