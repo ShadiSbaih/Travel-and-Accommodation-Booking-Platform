@@ -19,6 +19,7 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useCities } from '../hooks/useCities';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 import CityCard from './CityCard';
 import CityDialog from './CityDialog';
 import CityListView from './CityListView';
@@ -37,6 +38,9 @@ function CitiesPage() {
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
+  // Debounce search query for smoother UX
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   // Fetch all cities without filters (backend returns all)
   const { cities: allCities, isLoading, error, refetch } = useCities();
 
@@ -44,13 +48,13 @@ function CitiesPage() {
   const filteredCities = useMemo(() => {
     if (!allCities) return [];
     
-    if (!searchQuery.trim()) return allCities;
+    if (!debouncedSearchQuery.trim()) return allCities;
 
-    const query = searchQuery.toLowerCase().trim();
+    const query = debouncedSearchQuery.toLowerCase().trim();
     return allCities.filter((city) =>
       city.name.toLowerCase().includes(query)
     );
-  }, [allCities, searchQuery]);
+  }, [allCities, debouncedSearchQuery]);
 
   // Paginated cities for display
   const displayedCities = useMemo(() => {
@@ -80,7 +84,7 @@ function CitiesPage() {
   // Reset display count when search query changes
   useEffect(() => {
     setDisplayCount(ITEMS_PER_PAGE);
-  }, [searchQuery]);
+  }, [debouncedSearchQuery]);
 
   const handleOpenDialog = (city?: City) => {
     setSelectedCity(city || null);
