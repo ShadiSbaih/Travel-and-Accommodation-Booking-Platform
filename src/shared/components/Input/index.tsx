@@ -1,59 +1,100 @@
-import { forwardRef } from 'react';
-import { TextField, type TextFieldProps, InputAdornment } from '@mui/material';
+import { type InputHTMLAttributes, forwardRef } from 'react';
+import { cva } from 'class-variance-authority';
+import { cn } from '@/shared/utils/cn';
 
-export interface InputProps extends Omit<TextFieldProps, 'variant' | 'size'> {
+const inputVariants = cva(
+    'w-full px-3 py-2 rounded-lg transition-colors duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed',
+    {
+        variants: {
+            variant: {
+                outline: 'border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500',
+                filled: 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white border-0 focus:ring-2 focus:ring-primary-500',
+                flushed: 'bg-transparent border-b-2 border-gray-300 dark:border-gray-600 rounded-none focus:border-primary-500 px-0',
+            },
+            size: {
+                sm: 'text-sm py-1.5 px-2',
+                md: 'text-base py-2 px-3',
+                lg: 'text-lg py-3 px-4',
+            },
+            error: {
+                true: 'border-red-500 focus:ring-red-500',
+            },
+        },
+        defaultVariants: {
+            variant: 'outline',
+            size: 'md',
+        },
+    }
+);
+
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+    label?: string;
+    error?: string;
+    helperText?: string;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     variant?: 'outline' | 'filled' | 'flushed';
     size?: 'sm' | 'md' | 'lg';
 }
 
-const sizeMap = {
-    sm: 'small',
-    md: 'medium',
-    lg: 'medium',
-} as const;
-
 const Input = forwardRef<HTMLInputElement, InputProps>(
     (
         {
-            variant = 'outline',
-            size = 'md',
+            className,
+            variant,
+            size,
+            label,
+            error,
+            helperText,
             leftIcon,
             rightIcon,
+            id,
             ...props
         },
         ref
     ) => {
-        const muiVariant = variant === 'outline' ? 'outlined' : variant === 'flushed' ? 'standard' : 'filled';
-        const muiSize = sizeMap[size];
+        const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
         return (
-            <TextField
-                inputRef={ref}
-                variant={muiVariant}
-                size={muiSize}
-                fullWidth
-                slotProps={{
-                    input: {
-                        startAdornment: leftIcon ? (
-                            <InputAdornment position="start">{leftIcon}</InputAdornment>
-                        ) : undefined,
-                        endAdornment: rightIcon ? (
-                            <InputAdornment position="end">{rightIcon}</InputAdornment>
-                        ) : undefined,
-                    },
-                }}
-                sx={{
-                    ...(size === 'lg' && {
-                        '& .MuiInputBase-input': {
-                            fontSize: '1.125rem',
-                            py: 1.5,
-                        },
-                    }),
-                }}
-                {...props}
-            />
+            <div className="w-full">
+                {label && (
+                    <label
+                        htmlFor={inputId}
+                        className="block text-white mb-2 font-medium"
+                    >
+                        {label}
+                    </label>
+                )}
+                <div className="relative">
+                    {leftIcon && (
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                            {leftIcon}
+                        </div>
+                    )}
+                    <input
+                        id={inputId}
+                        ref={ref}
+                        className={cn(
+                            inputVariants({ variant, size, error: !!error }),
+                            leftIcon && 'pl-10',
+                            rightIcon && 'pr-10',
+                            className
+                        )}
+                        {...props}
+                    />
+                    {rightIcon && (
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                            {rightIcon}
+                        </div>
+                    )}
+                </div>
+                {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+                {helperText && !error && (
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                        {helperText}
+                    </p>
+                )}
+            </div>
         );
     }
 );
