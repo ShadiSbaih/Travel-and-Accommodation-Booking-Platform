@@ -11,7 +11,7 @@ import {
 import {
   LocationOn as LocationIcon,
   Schedule as ScheduleIcon,
-  AttachMoney as MoneyIcon,
+ 
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 import type { RecentlyVisitedCardProps } from '../types';
@@ -201,7 +201,6 @@ const RecentlyVisitedCard = React.memo(({ hotel }: RecentlyVisitedCardProps) => 
               Price Range
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <MoneyIcon sx={{ fontSize: '1.125rem', color: 'success.main' }} />
               <Typography
                 variant="body1"
                 sx={{
