@@ -94,12 +94,15 @@ export const Sizes: Story = {
  */
 export const Variants: Story = {
   render: () => (
-    <div className="flex gap-4 items-center p-8 bg-gray-50 dark:bg-gray-900 rounded-lg">
+    <div className="flex gap-4 items-center p-8 bg-gray-50 dark:bg-gray-800 rounded-lg">
       <Button variant="solid" colorScheme="primary">Solid</Button>
       <Button variant="outline" colorScheme="primary">Outline</Button>
       <Button variant="ghost" colorScheme="primary">Ghost</Button>
     </div>
   ),
+  parameters: {
+    backgrounds: { disable: true },
+  },
 };
 
 /**
@@ -129,7 +132,7 @@ export const ColorSchemes: Story = {
  */
 export const OutlineColorSchemes: Story = {
   render: () => (
-    <div className="flex flex-col gap-4 p-8 bg-white dark:bg-gray-800 rounded-lg">
+    <div className="flex flex-col gap-4 p-8 bg-white dark:bg-gray-900 rounded-lg">
       <div className="flex gap-4 items-center flex-wrap">
         <Button variant="outline" colorScheme="primary">Primary</Button>
         <Button variant="outline" colorScheme="secondary">Secondary</Button>
@@ -144,6 +147,9 @@ export const OutlineColorSchemes: Story = {
       </div>
     </div>
   ),
+  parameters: {
+    backgrounds: { disable: true },
+  },
 };
 
 /**
