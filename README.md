@@ -2,7 +2,7 @@
 
 A modern, full-featured travel and accommodation booking platform built with React, TypeScript, and a comprehensive tech stack. This application provides seamless hotel search, booking management, and administrative capabilities with a focus on user experience and code quality.
 
-![Application Banner](./docs/images/banner-placeholder.png)
+
 
 ## 📋 Table of Contents
 
@@ -37,14 +37,19 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 ### User Features
 
 #### 1. **Authentication**
-![Login Page](./docs/images/login-page-placeholder.png)
+<img width="1919" height="922" alt="image" src="https://github.com/user-attachments/assets/065be7d4-42fb-4625-aa48-75273dab62a7" />
+
 
 - Secure login with JWT authentication
 - User and Admin role-based access control
 - Password validation and error handling
 
 #### 2. **Home Page**
-![Home Page](./docs/images/home-page-placeholder.png)
+<img width="1915" height="928" alt="image" src="https://github.com/user-attachments/assets/329442ef-e045-48d5-a842-551dfe4d9639" />
+<img width="1903" height="935" alt="image" src="https://github.com/user-attachments/assets/75d5027c-3a1b-4bfb-9c9c-7cbabe8ea44d" />
+<img width="1911" height="921" alt="image" src="https://github.com/user-attachments/assets/235d2e09-cd5c-4737-bea2-3501bb2c1a1d" />
+
+
 
 - **Robust Search Functionality**: Central search bar with advanced filters
   - Date range picker (check-in/check-out)
@@ -55,19 +60,25 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Trending Destinations**: Popular city highlights
 
 #### 3. **Search Results**
-![Search Results](./docs/images/search-results-placeholder.png)
+
+<img width="1908" height="924" alt="image" src="https://github.com/user-attachments/assets/66f0d4ea-93ea-40eb-86ee-280489c8afd9" />
+<img width="1903" height="927" alt="image" src="https://github.com/user-attachments/assets/45c5fb6d-7153-4a3b-9d3a-e765851dc7df" />
+
+
 
 - Comprehensive filtering system:
-  - Price range slider
-  - Star rating filter
   - Amenities selection
-  - Room type categories
 - Infinite scroll pagination
 - Real-time search results
 - Sort by price, rating, or popularity
 
 #### 4. **Hotel Details**
-![Hotel Details](./docs/images/hotel-details-placeholder.png)
+<img width="1903" height="929" alt="image" src="https://github.com/user-attachments/assets/60799027-6ad2-47d0-86fe-f66131a7f0fc" />
+<img width="1907" height="926" alt="image" src="https://github.com/user-attachments/assets/41419306-3900-4c01-a748-b98999cb5e61" />
+<img width="1909" height="858" alt="image" src="https://github.com/user-attachments/assets/52aa8fe5-3693-42c1-bbb6-962fbb439443" />
+
+
+
 
 - **Visual Gallery**: High-quality images with fullscreen view
 - **Detailed Information**: 
@@ -81,7 +92,14 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
   - Price comparison
 
 #### 5. **Checkout & Booking**
-![Checkout Page](./docs/images/checkout-page-placeholder.png)
+<img width="1904" height="929" alt="image" src="https://github.com/user-attachments/assets/3e3ad2d8-311f-4ead-a6cc-0dd78cdfa009" />
+<img width="1918" height="915" alt="image" src="https://github.com/user-attachments/assets/4e7f6a97-ba6c-4935-915d-e3e7a38463bd" />
+<img width="1919" height="918" alt="image" src="https://github.com/user-attachments/assets/f73bc0b0-23fb-4099-8c42-075d65497259" />
+<img width="1913" height="912" alt="image" src="https://github.com/user-attachments/assets/3ef927b0-1d9d-4835-a9c1-5da4afe243d3" />
+<img width="1905" height="935" alt="image" src="https://github.com/user-attachments/assets/c3fb8871-962f-4b81-ac5a-3292eb15696b" />
+<img width="1906" height="921" alt="image" src="https://github.com/user-attachments/assets/a0683377-0e8a-4bf4-ba97-f16571002deb" />
+
+
 
 - **Secure Payment Processing**:
   - Personal information form
@@ -95,7 +113,13 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 ### Admin Features
 
 #### 6. **Admin Dashboard**
-![Admin Dashboard](./docs/images/admin-dashboard-placeholder.png)
+<img width="1909" height="930" alt="image" src="https://github.com/user-attachments/assets/b5041c67-cb27-41bf-ba05-ca5f41d9e45a" />
+<img width="1905" height="925" alt="image" src="https://github.com/user-attachments/assets/43beb6bc-5310-47ea-aae3-f82c4dc2e5ab" />
+<img width="1902" height="932" alt="image" src="https://github.com/user-attachments/assets/f207758c-449d-4600-8858-86231c3879ad" />
+<img width="1919" height="929" alt="image" src="https://github.com/user-attachments/assets/5edc9532-de23-4a31-b792-f7a93720be4a" />
+<img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/00b07fdb-8854-42d3-a9a4-20be92c5dbaa" />
+<img width="1919" height="928" alt="image" src="https://github.com/user-attachments/assets/2baa6b03-2a65-4a46-903e-c3b33bd193ce" />
+
 
 - **Navigation**: Collapsible sidebar for Cities, Hotels, and Rooms management
 - **Search & Filter**: Advanced search functionality for all entities
@@ -272,20 +296,12 @@ travel-app-fts/
    npm install
    ```
 
-3. **Environment Setup**
-   
-   Create a `.env` file in the root directory:
-   ```env
-   VITE_API_BASE_URL=http://localhost:3000/api
-   VITE_JWT_SECRET=your-secret-key
-   ```
-
-4. **Start the development server**
+3. **Start the development server**
    ```bash
    npm run dev
    ```
 
-5. **Start the backend server** (in a separate terminal)
+4. **Start the backend server** (in a separate terminal)
    ```bash
    cd backend
    node server.js
@@ -293,7 +309,7 @@ travel-app-fts/
 
 The application will be available at `http://localhost:5173`
 
-## 📜 Available Scripts
+##  Available Scripts
 
 ### Development
 ```bash
@@ -321,7 +337,7 @@ npm run storybook           # Start Storybook dev server (port 6006)
 npm run build-storybook     # Build Storybook for deployment
 ```
 
-## 🧪 Testing
+##  Testing
 
 ### Testing Strategy
 
@@ -421,57 +437,7 @@ PUT /rooms/{roomId}
 
 For complete API documentation, visit the Swagger UI (when available).
 
-## 📸 Screenshots
 
-### User Interface
-
-#### Login Page
-![Login Page](./docs/images/login-page-placeholder.png)
-*Secure authentication with form validation*
-
-#### Home Page
-![Home Page](./docs/images/home-page-placeholder.png)
-*Featured deals, trending destinations, and search functionality*
-
-#### Search Results
-![Search Results](./docs/images/search-results-placeholder.png)
-*Comprehensive filtering and sorting options*
-
-#### Hotel Details
-![Hotel Details](./docs/images/hotel-details-placeholder.png)
-*Image gallery, amenities, and room selection*
-
-#### Checkout
-![Checkout](./docs/images/checkout-placeholder.png)
-*Secure payment and booking confirmation*
-
-### Admin Panel
-
-#### Admin Dashboard
-![Admin Dashboard](./docs/images/admin-dashboard-placeholder.png)
-*Comprehensive management interface*
-
-#### City Management
-![City Management](./docs/images/admin-cities-placeholder.png)
-*CRUD operations for cities*
-
-#### Hotel Management
-![Hotel Management](./docs/images/admin-hotels-placeholder.png)
-*Hotel inventory management*
-
-#### Room Management
-![Room Management](./docs/images/admin-rooms-placeholder.png)
-*Room availability and configuration*
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these guidelines:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ### Code Standards
 
@@ -481,20 +447,18 @@ Contributions are welcome! Please follow these guidelines:
 - Update documentation as needed
 - Ensure all tests pass before submitting
 
-## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
-## 👥 Team
+##  Developer
 
 **Developer**: Shadi Sbaih  
 **Repository**: [Travel-and-Accommodation-Booking-Platform](https://github.com/ShadiSbaih/Travel-and-Accommodation-Booking-Platform)
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Material-UI for the excellent component library
 - React Query team for the powerful data fetching solution
@@ -503,4 +467,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**Built with ❤️ using React, TypeScript, and modern web technologies**
+
