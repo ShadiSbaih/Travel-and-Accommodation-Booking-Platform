@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import RoomCardSkeleton from './RoomCardSkeleton';
 
-const meta = {
+const meta: Meta<typeof RoomCardSkeleton> = {
   title: 'Features/Hotels/Skeletons/RoomCardSkeleton',
   component: RoomCardSkeleton,
   parameters: {
@@ -20,7 +20,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof RoomCardSkeleton>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
