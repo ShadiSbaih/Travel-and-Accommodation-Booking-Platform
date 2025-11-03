@@ -3,10 +3,13 @@ import HotelInfoBanner from './HotelInfoBanner';
 import HotelLocationMap from './HotelLocationMap';
 import AmenitiesList from './AmenitiesList';
 import type { HotelSidebarProps } from '../../types';
+import type { Review } from '@/shared/components/MuiReviewsSlider';
 
+interface HotelSidebarWithReviewsProps extends HotelSidebarProps {
+  reviews?: Review[];
+}
 
-
-function HotelSidebar({ hotel }: HotelSidebarProps) {
+function HotelSidebar({ hotel, reviews }: HotelSidebarWithReviewsProps) {
   return (
     <Box
       sx={{
@@ -23,14 +26,15 @@ function HotelSidebar({ hotel }: HotelSidebarProps) {
       />
 
       {/* Amenities & Services - Shown first on mobile/tablet */}
-      <Box sx={{ display: { xs: 'block', lg: 'none' } }}>
+      <Box sx={{ display: { xs: 'block', lg: 'none' }, mb: { xs: 4, sm: 3 } }}>
         {hotel.amenities && hotel.amenities.length > 0 && (
-          <AmenitiesList amenities={hotel.amenities} layout="vertical" />
+          <AmenitiesList amenities={hotel.amenities} layout="vertical" reviews={reviews} />
         )}
       </Box>
 
       {/* Location on Map - Shown second on mobile/tablet */}
       <HotelLocationMap
+      
         latitude={hotel.latitude}
         longitude={hotel.longitude}
         hotelName={hotel.name}
@@ -42,7 +46,7 @@ function HotelSidebar({ hotel }: HotelSidebarProps) {
       {/* Amenities & Services - Shown after map on desktop */}
       <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
         {hotel.amenities && hotel.amenities.length > 0 && (
-          <AmenitiesList amenities={hotel.amenities} layout="vertical" />
+          <AmenitiesList amenities={hotel.amenities} layout="vertical" reviews={reviews} />
         )}
       </Box>
     </Box>

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAvailableRooms, useHotel, useHotelGallery } from '../hooks/useHotels';
+import { useAvailableRooms, useHotel, useHotelGallery, useHotelReviews } from '../hooks/useHotels';
 import ErrorState from '@/shared/components/ErrorState';
 import { Container, Box } from '@mui/material';
 import { HotelGallery, HotelSidebar } from './HotelCard';
@@ -20,8 +20,9 @@ function HotelDetailsPage() {
   const { data: hotel, isLoading: isLoadingHotel, error: hotelError, refetch: refetchHotel } = useHotel(hotelId);
   const { data: gallery, isLoading: isLoadingGallery, error: galleryError } = useHotelGallery(hotelId);
   const { data: rooms, isLoading: isLoadingRooms } = useAvailableRooms(hotelId);
+  const { data: reviews, isLoading: isLoadingReviews } = useHotelReviews(hotelId);
 
-  const isLoading = isLoadingHotel || isLoadingGallery || isLoadingRooms;
+  const isLoading = isLoadingHotel || isLoadingGallery || isLoadingRooms || isLoadingReviews;
   const hasError = hotelError || galleryError || !hotel;
 
   if (isLoading) {
@@ -55,6 +56,14 @@ function HotelDetailsPage() {
       src: img.url,
       alt: `${hotel.name} - Image ${index + 1}`,
     })) || [];
+
+  // Map hotel reviews to the format expected by MuiReviewsSlider
+  const mappedReviews = reviews?.map((review) => ({
+    reviewId: review.id,
+    customerName: review.customerName,
+    rating: review.rating,
+    description: review.description,
+  })) || [];
 
   const cartItems = rooms?.filter((room) => isInCart(hotel.id, room.roomId)).map((r) => r.roomId) || [];
 
@@ -99,7 +108,7 @@ function HotelDetailsPage() {
             </Box>
 
             <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 calc(35% - 32px)' } }}>
-              <HotelSidebar hotel={hotel} />
+              <HotelSidebar hotel={hotel} reviews={mappedReviews} />
             </Box>
           </Box>
         </Container>

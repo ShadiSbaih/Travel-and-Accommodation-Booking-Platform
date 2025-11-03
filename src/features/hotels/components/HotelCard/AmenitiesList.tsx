@@ -1,10 +1,14 @@
 import { Paper, Box, Typography, Chip, Tooltip } from '@mui/material';
 import { CheckCircle, Spa } from '@mui/icons-material';
 import type { AmenitiesListProps } from '../../types';
+import type { Review } from '@/shared/components/MuiReviewsSlider';
+import { CompactReviewsSlider } from '@/shared/components/MuiReviewsSlider';
 
+interface AmenitiesListWithReviewsProps extends AmenitiesListProps {
+  reviews?: Review[];
+}
 
-
-function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
+function AmenitiesList({ amenities, showTitle = true, reviews }: AmenitiesListWithReviewsProps) {
   if (!amenities || amenities.length === 0) return null;
 
   return (
@@ -101,6 +105,13 @@ function AmenitiesList({ amenities, showTitle = true }: AmenitiesListProps) {
           </Tooltip>
         ))}
       </Box>
+
+      {/* Reviews Section */}
+      {reviews && reviews.length > 0 && (
+        <Box sx={{ mt: 3, pt: 3, borderTop: 1, borderColor: 'divider' }}>
+          <CompactReviewsSlider reviews={reviews} autoPlay={true} autoPlayInterval={6000} reviewsPerSlide={2} />
+        </Box>
+      )}
     </Paper>
   );
 }
