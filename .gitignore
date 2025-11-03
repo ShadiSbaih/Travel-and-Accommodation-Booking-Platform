@@ -29,3 +29,8 @@ dist-ssr
 /swgger.md
 *storybook.log
 storybook-static
+
+# Testing
+coverage
+*.lcov
+.nyc_output
