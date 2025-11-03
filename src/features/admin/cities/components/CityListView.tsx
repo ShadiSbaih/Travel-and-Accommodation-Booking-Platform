@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, IconButton, Tooltip, Chip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,6 +8,8 @@ import type { AdminEntityTableColumn } from '@/shared/components/AdminEntityTabl
 import { useCities } from '../hooks/useCities';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openCityDialog } from '@/core/store/slices/adminUiSlice';
+import { useNotification } from '@/shared/hooks/useNotification';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 import type { City } from '../types';
 
 interface CityListViewProps {
@@ -15,16 +18,37 @@ interface CityListViewProps {
 
 function CityListView({ cities }: CityListViewProps) {
   const dispatch = useAppDispatch();
+  const notify = useNotification();
   const { deleteCity, isDeleting } = useCities();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [cityToDelete, setCityToDelete] = useState<City | null>(null);
 
   const handleEdit = (city: City) => {
     dispatch(openCityDialog(city));
   };
 
-  const handleDelete = (city: City) => {
-    if (window.confirm(`Are you sure you want to delete ${city.name}?`)) {
-      deleteCity(city.id);
+  const handleDeleteClick = (city: City) => {
+    setCityToDelete(city);
+    setConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!cityToDelete) return;
+    
+    try {
+      await deleteCity(cityToDelete.id);
+      setConfirmOpen(false);
+      setCityToDelete(null);
+      notify(`${cityToDelete.name} has been deleted successfully`, 'success');
+    } catch (error) {
+      console.error(error);
+      notify('Failed to delete city. Please try again.', 'error');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setConfirmOpen(false);
+    setCityToDelete(null);
   };
 
   const columns: AdminEntityTableColumn<City>[] = [
@@ -137,7 +161,7 @@ function CityListView({ cities }: CityListViewProps) {
           <Tooltip title="Delete City" arrow>
             <IconButton
               size="small"
-              onClick={() => handleDelete(city)}
+              onClick={() => handleDeleteClick(city)}
               disabled={isDeleting}
               aria-label="Delete City"
               sx={{
@@ -160,12 +184,25 @@ function CityListView({ cities }: CityListViewProps) {
   ];
 
   return (
-    <AdminEntityTable
-      rows={cities}
-      columns={columns}
-      getRowKey={(city) => city.id}
-      emptyMessage="No cities found"
-    />
+    <>
+      <AdminEntityTable
+        rows={cities}
+        columns={columns}
+        getRowKey={(city) => city.id}
+        emptyMessage="No cities found"
+      />
+      
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete City"
+        message={`Are you sure you want to delete "${cityToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
+    </>
   );
 }
 

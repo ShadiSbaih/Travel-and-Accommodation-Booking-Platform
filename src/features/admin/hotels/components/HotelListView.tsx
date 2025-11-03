@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, IconButton, Tooltip, Chip, Typography, Rating } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,6 +10,8 @@ import { useHotels } from '../hooks/useHotels';
 import { useCity } from '@/features/admin/cities/hooks/useCities';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openHotelDialog } from '@/core/store/slices/adminUiSlice';
+import { useNotification } from '@/shared/hooks/useNotification';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 import type { Hotel } from '../types';
 
 interface HotelListViewProps {
@@ -102,16 +105,37 @@ function HotelLocationCell({ hotel }: { hotel: Hotel }) {
 
 function HotelListView({ hotels }: HotelListViewProps) {
   const dispatch = useAppDispatch();
+  const notify = useNotification();
   const { deleteHotel, isDeleting } = useHotels();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [hotelToDelete, setHotelToDelete] = useState<Hotel | null>(null);
 
   const handleEdit = (hotel: Hotel) => {
     dispatch(openHotelDialog(hotel));
   };
 
-  const handleDelete = (hotel: Hotel) => {
-    if (window.confirm(`Are you sure you want to delete ${hotel.hotelName || hotel.name}?`)) {
-      deleteHotel(hotel.id);
+  const handleDeleteClick = (hotel: Hotel) => {
+    setHotelToDelete(hotel);
+    setConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!hotelToDelete) return;
+    
+    try {
+      await deleteHotel(hotelToDelete.id);
+      setConfirmOpen(false);
+      setHotelToDelete(null);
+      notify(`${hotelToDelete.hotelName || hotelToDelete.name} has been deleted successfully`, 'success');
+    } catch (error) {
+      console.error(error);
+      notify('Failed to delete hotel. Please try again.', 'error');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setConfirmOpen(false);
+    setHotelToDelete(null);
   };
 
   const columns: AdminEntityTableColumn<Hotel>[] = [
@@ -217,7 +241,7 @@ function HotelListView({ hotels }: HotelListViewProps) {
           <Tooltip title="Delete Hotel" arrow>
             <IconButton
               size="small"
-              onClick={() => handleDelete(hotel)}
+              onClick={() => handleDeleteClick(hotel)}
               disabled={isDeleting}
               aria-label="Delete Hotel"
               sx={{
@@ -240,12 +264,25 @@ function HotelListView({ hotels }: HotelListViewProps) {
   ];
 
   return (
-    <AdminEntityTable
-      rows={hotels}
-      columns={columns}
-      getRowKey={(hotel) => hotel.id}
-      emptyMessage="No hotels found"
-    />
+    <>
+      <AdminEntityTable
+        rows={hotels}
+        columns={columns}
+        getRowKey={(hotel) => hotel.id}
+        emptyMessage="No hotels found"
+      />
+      
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete Hotel"
+        message={`Are you sure you want to delete "${hotelToDelete?.hotelName || hotelToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
+    </>
   );
 }
 

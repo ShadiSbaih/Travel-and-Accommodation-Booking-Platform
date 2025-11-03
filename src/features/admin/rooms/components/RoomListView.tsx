@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Chip, IconButton, Tooltip, Avatar, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,6 +8,8 @@ import AdminEntityTable from '@/shared/components/AdminEntityTable';
 import { useAppDispatch } from '@/core/store/hooks';
 import { openRoomDialog } from '@/core/store/slices/adminUiSlice';
 import { useRooms } from '../hooks/useRooms';
+import { useNotification } from '@/shared/hooks/useNotification';
+import ConfirmDialog from '@/shared/components/ConfirmDialog';
 import type { AdminEntityTableColumn } from '@/shared/components/AdminEntityTable/types';
 import type { Room } from '../types';
 
@@ -16,16 +19,37 @@ interface RoomListViewProps {
 
 function RoomListView({ rooms }: RoomListViewProps) {
   const dispatch = useAppDispatch();
+  const notify = useNotification();
   const { deleteRoom, isDeleting } = useRooms();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [roomToDelete, setRoomToDelete] = useState<Room | null>(null);
 
   const handleEdit = (room: Room) => {
     dispatch(openRoomDialog(room));
   };
 
-  const handleDelete = (room: Room) => {
-    if (window.confirm(`Are you sure you want to delete Room #${room.roomNumber}?`)) {
-      deleteRoom(room.roomId);
+  const handleDeleteClick = (room: Room) => {
+    setRoomToDelete(room);
+    setConfirmOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!roomToDelete) return;
+    
+    try {
+      await deleteRoom(roomToDelete.roomId);
+      setConfirmOpen(false);
+      setRoomToDelete(null);
+      notify(`Room #${roomToDelete.roomNumber} has been deleted successfully`, 'success');
+    } catch (error) {
+      console.error(error);
+      notify('Failed to delete room. Please try again.', 'error');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setConfirmOpen(false);
+    setRoomToDelete(null);
   };
 
   const columns: AdminEntityTableColumn<Room>[] = [
@@ -111,7 +135,7 @@ function RoomListView({ rooms }: RoomListViewProps) {
           <Tooltip title="Delete Room" arrow>
             <IconButton
               size="small"
-              onClick={() => handleDelete(room)}
+              onClick={() => handleDeleteClick(room)}
               disabled={isDeleting}
               aria-label="Delete Room"
               sx={{
@@ -134,13 +158,26 @@ function RoomListView({ rooms }: RoomListViewProps) {
   ];
 
   return (
-    <AdminEntityTable
-      rows={rooms}
-      columns={columns}
-      getRowKey={(room) => room.roomId?.toString() || `room-${room.roomNumber}`}
-      emptyMessage="No rooms found"
-      size="medium"
-    />
+    <>
+      <AdminEntityTable
+        rows={rooms}
+        columns={columns}
+        getRowKey={(room) => room.roomId?.toString() || `room-${room.roomNumber}`}
+        emptyMessage="No rooms found"
+        size="medium"
+      />
+      
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete Room"
+        message={`Are you sure you want to delete Room #${roomToDelete?.roomNumber}? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isDeleting}
+      />
+    </>
   );
 }
 
