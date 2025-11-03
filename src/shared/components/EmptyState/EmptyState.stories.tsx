@@ -2,11 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 import EmptyState from './index';
 import {
   ErrorOutline as ErrorIcon,
-  FilterListOff as FilterIcon,
+  FilterAlt as FilterIcon,
   ShoppingCartOutlined,
-  HistoryOutlined as HistoryIcon,
-  LocalOfferOutlined as OfferIcon,
-  TrendingUpOutlined as TrendingIcon,
+  History as HistoryIcon,
+  LocalOffer as OfferIcon,
+  TrendingUp as TrendingIcon,
+  MeetingRoom as MeetingRoomIcon,
 } from '@mui/icons-material';
 
 /**
@@ -100,22 +101,38 @@ export const NoFilterMatches: Story = {
 
 /**
  * Empty cart (from EmptyCartState)
+ * Includes a "Browse Hotels" action button
  */
 export const EmptyCart: Story = {
   args: {
     title: 'Your cart is empty',
     subtitle: 'Browse hotels and add rooms to get started',
-    icon: <ShoppingCartOutlined sx={{ fontSize: 80 }} />,
+    icon: <ShoppingCartOutlined sx={{ fontSize: '3rem', color: 'text.secondary' }} />,
+    action: {
+      label: 'Browse Hotels',
+      onClick: () => alert('Browse Hotels clicked!'),
+    },
   },
 };
 
 /**
- * Sign in to see history (from RecentlyVisitedHotels)
+ * Sign in to see history (from RecentlyVisitedHotels - not logged in)
  */
 export const SignInForHistory: Story = {
   args: {
     title: 'Sign in to see your hotel history',
     subtitle: 'Log in to view hotels you\'ve recently explored',
+    icon: <HistoryIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />,
+  },
+};
+
+/**
+ * No recently visited hotels (from RecentlyVisitedHotels - logged in but empty)
+ */
+export const NoRecentlyVisited: Story = {
+  args: {
+    title: 'No recently visited hotels',
+    subtitle: 'Start exploring and your visited hotels will appear here',
     icon: <HistoryIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />,
   },
 };
@@ -139,5 +156,21 @@ export const NoTrendingDestinations: Story = {
     title: 'No trending destinations available',
     subtitle: 'Explore our search to find your perfect destination',
     icon: <TrendingIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />,
+  },
+};
+
+/**
+ * No rooms yet (from EmptyRoomsState - Admin panel)
+ * This variant includes an action button
+ */
+export const NoRooms: Story = {
+  args: {
+    title: 'No Rooms Yet',
+    subtitle: 'Start by creating your first room to manage accommodations.',
+    icon: <MeetingRoomIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />,
+    action: {
+      label: 'Create Room',
+      onClick: () => alert('Create Room clicked!'),
+    },
   },
 };

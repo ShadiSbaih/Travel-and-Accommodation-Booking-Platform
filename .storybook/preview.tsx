@@ -18,11 +18,11 @@ const preview: Preview = {
       values: [
         {
           name: 'light',
-          value: '#fafaf9',
+          value: '#fafaf9', // Match theme background.default light
         },
         {
           name: 'dark',
-          value: '#0f172a',
+          value: '#0f172a', // Match theme background.default dark
         },
       ],
     },
@@ -41,14 +41,16 @@ const preview: Preview = {
           htmlElement.classList.remove('dark');
         }
         
-        // Set background color
-        document.body.style.backgroundColor = isDark ? '#0f172a' : '#fafaf9';
+        // Set background color to match theme
+        document.body.style.backgroundColor = theme.palette.background.default;
+        document.body.style.color = theme.palette.text.primary;
         
         return () => {
           htmlElement.classList.remove('dark');
           document.body.style.backgroundColor = '';
+          document.body.style.color = '';
         };
-      }, [isDark]);
+      }, [isDark, theme]);
 
       return (
         <BrowserRouter>
