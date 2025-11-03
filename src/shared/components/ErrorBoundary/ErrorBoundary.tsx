@@ -1,14 +1,17 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import type { ErrorInfo } from 'react';
 import { Box, Container, Paper, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import type { ErrorFallbackProps, AppErrorBoundaryProps } from '@/shared/types/common.types';
 import ErrorIcon from './ErrorIcon';
 import ErrorDetails from './ErrorDetails';
 import ErrorActions from './ErrorActions';
 
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+  const navigate = useNavigate();
+  
   const handleGoHome = () => {
-    window.location.href = '/';
+    navigate('/', { replace: true });
   };
 
   return (

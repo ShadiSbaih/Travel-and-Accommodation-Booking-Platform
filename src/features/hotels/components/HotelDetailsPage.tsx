@@ -79,14 +79,7 @@ function HotelDetailsPage() {
       notify('Room removed from cart', 'info');
     } else {
       addToCart({
-        room: {
-          id: room.roomId,
-          name: room.roomType,
-          type: room.roomType,
-          available: room.availability,
-          maxOccupancy: room.capacityOfAdults + room.capacityOfChildren,
-          price: room.price,
-        },
+        room: room, // Pass the complete room object as-is
         hotelId: hotel.id,
         hotelName: hotel.name,
         roomImage: room.roomPhotoUrl,

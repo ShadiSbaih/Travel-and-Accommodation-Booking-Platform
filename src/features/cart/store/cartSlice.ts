@@ -22,7 +22,7 @@ const cartSlice = createSlice({
       } = action.payload;
 
       // Generate unique ID based on room and hotel
-      const itemId = `${hotelId}-${room.id}`;
+      const itemId = `${hotelId}-${room.roomId}`;
 
       // Check if item already exists - if so, don't add again
       const existingItem = state.items.find((item) => item.id === itemId);
