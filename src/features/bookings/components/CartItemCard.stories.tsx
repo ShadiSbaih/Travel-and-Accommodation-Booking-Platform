@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import CartItemCard from './CartItemCard';
 import type { CartItem } from '@/features/cart/types';
 
-const meta = {
+const meta: Meta<typeof CartItemCard> = {
   title: 'Features/Bookings/CartItemCard',
   component: CartItemCard,
   parameters: {
@@ -34,7 +34,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof CartItemCard>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import RecentlyVisitedCard from './RecentlyVisitedCard';
 import type { RecentlyVisitedHotelDto } from '../types';
 
-const meta = {
+const meta: Meta<typeof RecentlyVisitedCard> = {
   title: 'Features/Home/RecentlyVisitedCard',
   component: RecentlyVisitedCard,
   parameters: {
@@ -27,7 +27,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof RecentlyVisitedCard>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

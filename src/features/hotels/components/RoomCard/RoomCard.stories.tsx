@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import RoomCard from './RoomCard';
 import type { AvailableRoom } from '../../types';
 
-const meta = {
+const meta: Meta<typeof RoomCard> = {
   title: 'Features/Hotels/RoomCard',
   component: RoomCard,
   parameters: {
@@ -35,7 +35,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof RoomCard>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
