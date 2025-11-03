@@ -26,17 +26,4 @@ export const Default: Story = {};
 /**
  * Shows 3 hotel cards loading
  */
-export const ThreeResults: Story = {
-  args: {
-    count: 3,
-  },
-};
 
-/**
- * Shows 9 hotel cards loading
- */
-export const NineResults: Story = {
-  args: {
-    count: 9,
-  },
-};

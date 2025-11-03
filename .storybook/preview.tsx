@@ -1,9 +1,27 @@
 import type { Preview } from '@storybook/react-vite';
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import React, { useEffect } from 'react';
 import '../src/index.css';
 import { createAppTheme } from '../src/core/theme/muiTheme';
+import { queryClient } from '../src/core/api/queryClient';
+import filterReducer from '../src/features/filters/store/filterSlice';
+import cartReducer from '../src/features/cart/store/cartSlice';
+import notificationReducer from '../src/core/store/slices/notificationSlice';
+import adminUiReducer from '../src/core/store/slices/adminUiSlice';
+
+// Create a mock store for Storybook
+const mockStore = configureStore({
+  reducer: {
+    filters: filterReducer,
+    cart: cartReducer,
+    notification: notificationReducer,
+    adminUi: adminUiReducer,
+  },
+});
 
 const preview: Preview = {
   parameters: {
@@ -53,12 +71,16 @@ const preview: Preview = {
       }, [isDark, theme]);
 
       return (
-        <BrowserRouter>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Story />
-          </ThemeProvider>
-        </BrowserRouter>
+        <Provider store={mockStore}>
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Story />
+              </ThemeProvider>
+            </MemoryRouter>
+          </QueryClientProvider>
+        </Provider>
       );
     },
   ],

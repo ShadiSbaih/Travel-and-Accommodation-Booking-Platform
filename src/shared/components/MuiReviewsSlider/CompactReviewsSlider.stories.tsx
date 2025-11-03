@@ -88,40 +88,6 @@ export const Default: Story = {
   },
 };
 
-export const WithoutAutoplay: Story = {
-  args: {
-    reviews: mockReviews,
-    autoPlay: false,
-    reviewsPerSlide: 2,
-  },
-};
-
-export const SingleReviewPerSlide: Story = {
-  args: {
-    reviews: mockReviews,
-    autoPlay: true,
-    autoPlayInterval: 5000,
-    reviewsPerSlide: 1,
-  },
-};
-
-export const FourReviews: Story = {
-  args: {
-    reviews: mockReviews.slice(0, 4),
-    autoPlay: true,
-    autoPlayInterval: 6000,
-    reviewsPerSlide: 2,
-  },
-};
-
-export const TwoReviews: Story = {
-  args: {
-    reviews: mockReviews.slice(0, 2),
-    autoPlay: false,
-    reviewsPerSlide: 2,
-  },
-};
-
 export const EmptyState: Story = {
   args: {
     reviews: [],
