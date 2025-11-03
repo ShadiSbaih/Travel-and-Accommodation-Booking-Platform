@@ -21,8 +21,8 @@ const buttonStyles = cva(
         variants: {
             variant: {
                 solid: "",
-                outline: "border-2 bg-transparent",
-                ghost: "bg-transparent border-transparent",
+                outline: "border-2 border-solid bg-transparent",
+                ghost: "bg-transparent",
             },
             size: {
                 sm: "px-3 py-1.5 text-sm",
@@ -226,7 +226,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <button
                 ref={ref}
-                className={cn(buttonStyles({ variant, size, colorScheme, className }))}
+                className={cn(buttonStyles({ variant, size, colorScheme }), className)}
                 {...props}
             />
         );

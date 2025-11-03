@@ -27,3 +27,5 @@ dist-ssr
 
 /project.md
 /swgger.md
+*storybook.log
+storybook-static
