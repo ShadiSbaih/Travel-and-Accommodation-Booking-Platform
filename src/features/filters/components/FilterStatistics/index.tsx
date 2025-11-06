@@ -40,27 +40,13 @@ const FilterStatistics: React.FC<FilterStatisticsProps> = ({
         }}
       >
         <Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Hotel sx={{ fontSize: 18, color: 'white' }} />
-            <Typography variant="body2" component="span" fontWeight={600}>
-              Found <Box component="span" fontWeight="bold">{filteredCount}</Box> hotel
-              {filteredCount !== 1 ? 's' : ''} out of{' '}
-              <Box component="span" fontWeight="bold">{totalCount}</Box> total
+            <Typography variant="body2" fontWeight={600} color="white">
+              Found {filteredCount} hotel{filteredCount !== 1 ? 's' : ''} out of {totalCount} total
+              {selectedAmenities.length > 1 && ` with ${filterMode === 'any' ? 'any' : 'all'} of the selected amenities`}
+              {selectedAmenities.length === 1 && ' with the selected amenity'}
             </Typography>
-            
-            {selectedAmenities.length > 1 && (
-              <Typography variant="body2" component="span">
-                with <Box component="span" fontWeight="bold" color="white">
-                  {filterMode === 'any' ? 'any' : 'all'}
-                </Box > of the selected amenities
-              </Typography>
-            )}
-            
-            {selectedAmenities.length === 1 && (
-              <Typography variant="body2" component="span">
-                with the selected amenity
-              </Typography>
-            )}
           </Box>
 
           {/* Selected amenities chips */}
