@@ -51,7 +51,6 @@ describe('cartSlice', () => {
     hotelAmenities: [],
     checkInDate: '2024-01-01',
     checkOutDate: '2024-01-02',
-    numberOfNights: 1,
   };
 
   it('should return initial state', () => {
@@ -104,13 +103,11 @@ describe('cartSlice', () => {
         itemId,
         checkInDate: '2024-02-01',
         checkOutDate: '2024-02-05',
-        numberOfNights: 4,
       })
     );
 
     expect(state.items[0].checkInDate).toBe('2024-02-01');
     expect(state.items[0].checkOutDate).toBe('2024-02-05');
-    expect(state.items[0].numberOfNights).toBe(4);
   });
 
   it('should calculate totals correctly with multiple items', () => {

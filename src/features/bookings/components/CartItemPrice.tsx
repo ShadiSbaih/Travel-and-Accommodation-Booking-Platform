@@ -3,8 +3,6 @@ import type { CartItemPriceProps } from '@/features/bookings/types';
 
 function CartItemPrice({
   pricePerNight,
-  numberOfNights,
-  totalPrice,
 }: CartItemPriceProps) {
   return (
     <Box
@@ -21,14 +19,13 @@ function CartItemPrice({
           color="text.secondary"
           sx={{ display: 'block' }}
         >
-          ${pricePerNight}/night × {numberOfNights}{' '}
-          {numberOfNights === 1 ? 'night' : 'nights'}
+          ${pricePerNight}/night
         </Typography>
         <Typography
           variant="h6"
           sx={{ fontWeight: 700, color: 'primary.main' }}
         >
-          ${totalPrice.toFixed(2)}
+          ${pricePerNight.toFixed(2)}
         </Typography>
       </Box>
     </Box>

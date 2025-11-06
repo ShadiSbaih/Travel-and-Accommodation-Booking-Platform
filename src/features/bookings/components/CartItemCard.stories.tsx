@@ -60,7 +60,6 @@ const mockCartItem: CartItem = {
   ],
   checkInDate: '2025-11-15',
   checkOutDate: '2025-11-18',
-  numberOfNights: 3,
 };
 
 /**

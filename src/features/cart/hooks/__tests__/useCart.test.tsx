@@ -41,7 +41,6 @@ describe('useCart', () => {
     roomImage: 'photo.jpg',
     checkInDate: '2024-01-15',
     checkOutDate: '2024-01-20',
-    numberOfNights: 5,
   };
 
   it('should return initial cart state', () => {
@@ -118,12 +117,11 @@ describe('useCart', () => {
     const itemId = result.current.items[0].id;
 
     act(() => {
-      result.current.updateCartItemDates(itemId, '2024-02-01', '2024-02-10', 9);
+      result.current.updateCartItemDates(itemId, '2024-02-01', '2024-02-10');
     });
 
     expect(result.current.items[0].checkInDate).toBe('2024-02-01');
     expect(result.current.items[0].checkOutDate).toBe('2024-02-10');
-    expect(result.current.items[0].numberOfNights).toBe(9);
   });
 
   it('should check if item is in cart', () => {
@@ -154,16 +152,15 @@ describe('useCart', () => {
     };
 
     act(() => {
-      result.current.addToCart(mockCartPayload); // 200 * 5 = 1000
+      result.current.addToCart(mockCartPayload); // 200
       result.current.addToCart({
         ...mockCartPayload,
         room: mockRoom2,
         hotelId: 2,
-        numberOfNights: 3, // 150 * 3 = 450
-      });
+      }); // 150
     });
 
-    expect(result.current.totalPrice).toBe(1450); // 1000 + 450
+    expect(result.current.totalPrice).toBe(350); // 200 + 150
   });
 
   it('should not add duplicate items', () => {

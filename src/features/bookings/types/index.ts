@@ -49,7 +49,6 @@ export interface CartItemHeaderProps {
 
 export interface CartItemInfoProps {
   maxOccupancy: number;
-  numberOfNights: number;
   checkInDate?: string;
   checkOutDate?: string;
 }
@@ -61,8 +60,6 @@ export interface CartItemAmenitiesProps {
 
 export interface CartItemPriceProps {
   pricePerNight: number;
-  numberOfNights: number;
-  totalPrice: number;
 }
 
 // Order Summary Component Props

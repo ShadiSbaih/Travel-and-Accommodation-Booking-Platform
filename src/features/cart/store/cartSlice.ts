@@ -18,7 +18,6 @@ const cartSlice = createSlice({
         hotelAmenities,
         checkInDate,
         checkOutDate,
-        numberOfNights = 1,
       } = action.payload;
 
       // Generate unique ID based on room and hotel
@@ -38,7 +37,6 @@ const cartSlice = createSlice({
           hotelAmenities,
           checkInDate,
           checkOutDate,
-          numberOfNights,
         };
         state.items.push(newItem);
 
@@ -80,16 +78,14 @@ const cartSlice = createSlice({
         itemId: string;
         checkInDate: string;
         checkOutDate: string;
-        numberOfNights: number;
       }>
     ) => {
-      const { itemId, checkInDate, checkOutDate, numberOfNights } = action.payload;
+      const { itemId, checkInDate, checkOutDate } = action.payload;
       const item = state.items.find((item) => item.id === itemId);
 
       if (item) {
         item.checkInDate = checkInDate;
         item.checkOutDate = checkOutDate;
-        item.numberOfNights = numberOfNights;
 
         // Recalculate totals
         const totals = calculateTotals(state.items);

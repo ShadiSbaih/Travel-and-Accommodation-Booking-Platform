@@ -84,7 +84,6 @@ function HotelDetailsPage() {
         hotelName: hotel.name,
         roomImage: room.roomPhotoUrl,
         hotelAmenities: room.roomAmenities,
-        numberOfNights: 1,
       });
       notify('Room added to cart successfully!', 'success');
     }

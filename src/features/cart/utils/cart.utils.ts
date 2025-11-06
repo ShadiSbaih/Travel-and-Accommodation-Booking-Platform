@@ -44,7 +44,7 @@ export const saveCartToStorage = (state: CartState): void => {
 export const calculateTotals = (items: CartItem[]): { totalItems: number; totalPrice: number } => {
   const totalItems = items.length;
   const totalPrice = items.reduce(
-    (sum, item) => sum + item.room.price * item.numberOfNights,
+    (sum, item) => sum + item.room.price,
     0
   );
   return { totalItems, totalPrice };

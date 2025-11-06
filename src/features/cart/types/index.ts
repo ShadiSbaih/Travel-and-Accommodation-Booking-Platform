@@ -10,7 +10,6 @@ export interface CartItem {
   hotelAmenities?: Amenity[];
   checkInDate?: string;
   checkOutDate?: string;
-  numberOfNights: number;
 }
 
 export interface CartState {
@@ -26,5 +25,4 @@ export interface AddToCartPayload {
   hotelAmenities?: Amenity[];
   checkInDate?: string;
   checkOutDate?: string;
-  numberOfNights?: number;
 }

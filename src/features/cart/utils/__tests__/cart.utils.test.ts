@@ -90,7 +90,6 @@ describe('cart utils', () => {
           hotelAmenities: [],
           checkInDate: '2024-01-01',
           checkOutDate: '2024-01-02',
-          numberOfNights: 2,
         },
         {
           id: '1-2',
@@ -101,13 +100,12 @@ describe('cart utils', () => {
           hotelAmenities: [],
           checkInDate: '2024-01-01',
           checkOutDate: '2024-01-03',
-          numberOfNights: 3,
         },
       ];
 
       const totals = calculateTotals(mockItems);
       expect(totals.totalItems).toBe(2);
-      expect(totals.totalPrice).toBe(100 * 2 + 150 * 3); // 650
+      expect(totals.totalPrice).toBe(250); // 100 + 150
     });
   });
 });

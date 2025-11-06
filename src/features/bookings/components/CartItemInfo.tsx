@@ -4,7 +4,6 @@ import type { CartItemInfoProps } from '@/features/bookings/types';
 
 function CartItemInfo({
   maxOccupancy,
-  numberOfNights,
   checkInDate,
   checkOutDate,
 }: CartItemInfoProps) {
@@ -12,11 +11,6 @@ function CartItemInfo({
     <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
       <Chip
         label={`Max: ${maxOccupancy} guests`}
-        size="small"
-        variant="outlined"
-      />
-      <Chip
-        label={`${numberOfNights} ${numberOfNights === 1 ? 'night' : 'nights'}`}
         size="small"
         variant="outlined"
       />

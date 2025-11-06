@@ -26,15 +26,13 @@ export const useCart = () => {
   const updateCartItemDates = (
     itemId: string,
     checkInDate: string,
-    checkOutDate: string,
-    numberOfNights: number
+    checkOutDate: string
   ) => {
     dispatch(
       updateCartItemDatesAction({
         itemId,
         checkInDate,
         checkOutDate,
-        numberOfNights,
       })
     );
   };
