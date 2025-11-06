@@ -1,41 +1,46 @@
-import type { SearchResultDTO } from '@/features/hotels/types';
+import type { SearchResultDTO, Amenity } from '@/features/hotels/types';
+import type { BookingDetails, Discount, HotelRating } from '@/shared/types/base.types';
 
+/**
+ * Hotel card props
+ */
 export interface HotelCardProps {
   hotel: SearchResultDTO;
 }
 
-export interface BookingDetailsBadgesProps {
-  numberOfAdults: number;
-  numberOfChildren: number;
-  numberOfRooms: number;
-  checkInDate: string;
-  checkOutDate: string;
-}
+/**
+ * Booking details badges props
+ */
+export type BookingDetailsBadgesProps = BookingDetails;
 
-export interface HotelCardImageProps {
+/**
+ * Hotel card image props
+ */
+export interface HotelCardImageProps extends Discount, HotelRating {
   imageUrl: string;
   hotelName: string;
-  discount: number;
-  starRating: number;
 }
 
+/**
+ * Hotel card header props
+ */
 export interface HotelCardHeaderProps {
   hotelName: string;
   cityName: string;
   roomType: string;
 }
 
-export interface Amenity {
-  id: number;
-  name: string;
-}
-
+/**
+ * Amenities section props
+ */
 export interface AmenitiesSectionProps {
   amenities: Amenity[];
   maxDisplay?: number;
 }
 
-export interface PriceDisplayProps {
+/**
+ * Price display props
+ */
+export interface PriceDisplayProps extends Discount {
   originalPrice: number;
-  discount: number;
 }

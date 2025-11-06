@@ -1,133 +1,148 @@
 import type { SliderImage } from "@/shared/components/MuiImageSlider";
+import type {
+  Amenity,
+  Hotel as BaseHotel,
+  Room as BaseRoom,
+  SimpleRoom,
+  BaseEntity,
+  NamedLocation,
+  BookingDetails,
+  SimplePricing,
+  Discount,
+  PaginatedFilter,
+} from '@/shared/types/base.types';
 
-export interface Amenity {
-    id: number;
-    name: string;
-    description: string;
+// Re-export base types for convenience
+export type { Amenity, SimpleRoom as Room };
+
+/**
+ * Hotel type - extends base hotel
+ */
+export type Hotel = BaseHotel;
+
+/**
+ * Hotel filters
+ */
+export interface HotelFilters
+  extends Pick<PaginatedFilter, 'searchQuery'>,
+    Partial<Pick<Hotel, 'name' | 'starRating' | 'hotelType'>> {
+  city?: string;
 }
 
-export interface Room {
-    id: number;
-    name: string;
-    type: string;
-    price: number;
-    available: boolean;
-    maxOccupancy: number;
+/**
+ * Hotel gallery image
+ */
+export interface HotelGallery extends BaseEntity {
+  hotelId: number;
+  url: string;
 }
 
-export interface Hotel {
-    id: number;
-    hotelName?: string; // Some hotels use hotelName
-    name: string;
-    location?: string;
-    description: string;
-    hotelType: string; // Changed from number to string (e.g., "Resort", "Hotel", "Lodge", "Boutique", "Inn")
-    starRating: number;
-    latitude: number;
-    longitude: number;
-    rooms?: Room[];
-    imageUrl?: string;
-    availableRooms?: number;
-    cityId?: number;
-    amenities?: Amenity[];
+/**
+ * Hotel review
+ */
+export interface HotelReview extends BaseEntity {
+  hotelId: number;
+  customerName: string;
+  rating: number;
+  description: string;
 }
 
-export interface HotelFilters {
-    name?: string;
-    city?: string;
-    starRating?: number;
-    hotelType?: string; // Changed from number to string to match Hotel interface
+/**
+ * Search result DTO with booking details
+ */
+export interface SearchResultDTO
+  extends Pick<
+      Hotel,
+      'hotelId' | 'hotelName' | 'starRating' | 'latitude' | 'longitude'
+    >,
+    BookingDetails,
+    SimplePricing,
+    Discount {
+  roomType: string;
+  cityName: string;
+  roomPhotoUrl: string;
+  amenities: Amenity[];
 }
 
-export interface HotelGallery {
-    id: number;
-    hotelId: number;
-    url: string;
+/**
+ * Available room for booking
+ */
+export interface AvailableRoom
+  extends Pick<
+      BaseRoom,
+      'roomId' | 'roomType' | 'capacityOfAdults' | 'capacityOfChildren' | 'price' | 'availability'
+    > {
+  roomNumber: string;
+  roomPhotoUrl: string;
+  roomAmenities: Amenity[];
 }
 
-export interface HotelReview {
-    id: number;
-    hotelId: number;
-    customerName: string;
-    rating: number;
-    description: string;
-}
+// ==================== Component Props ====================
 
-export interface SearchResultDTO {
-    hotelId: number;
-    hotelName: string;
-    starRating: number;
-    latitude: number;
-    longitude: number;
-    roomPrice: number;
-    roomType: string;
-    cityName: string;
-    roomPhotoUrl: string;
-    discount: number;
-    amenities: Amenity[];
-    numberOfChildren: number;
-    numberOfAdults: number;
-    numberOfRooms: number;
-    checkInDate: string;
-    checkOutDate: string;
-}
-
-export interface AvailableRoom {
-    roomId: number;
-    roomNumber: string;
-    roomPhotoUrl: string;
-    roomType: string;
-    capacityOfAdults: number;
-    capacityOfChildren: number;
-    roomAmenities: Amenity[];
-    price: number;
-    availability: boolean;
-}
-
+/**
+ * Rooms list component props
+ */
 export interface RoomsListProps {
-    rooms: AvailableRoom[];
-    onRoomSelect: (roomId: number) => void;
-    cartItems: number[];
+  rooms: AvailableRoom[];
+  onRoomSelect: (roomId: number) => void;
+  cartItems: number[];
 }
 
+/**
+ * Room card component props
+ */
 export interface RoomCardProps {
-    room: AvailableRoom;
-    onBookNow?: (roomId: number) => void;
-    isInCart?: boolean;
+  room: AvailableRoom;
+  onBookNow?: (roomId: number) => void;
+  isInCart?: boolean;
 }
+
+/**
+ * Amenities layout options
+ */
+export type AmenitiesLayout = 'vertical' | 'grid';
+
+/**
+ * Amenities list component props
+ */
 export interface AmenitiesListProps {
-    amenities: Amenity[];
-    layout?: 'vertical' | 'grid';
-    showTitle?: boolean;
+  amenities: Amenity[];
+  layout?: AmenitiesLayout;
+  showTitle?: boolean;
 }
 
+/**
+ * Hotel gallery component props
+ */
 export interface HotelGalleryProps {
-    images: SliderImage[];
+  images: SliderImage[];
 }
 
-export interface HotelHeaderProps {
-    hotelName: string;
-    location?: string;
-    starRating?: number;
-    hotelType?: string;
-}
+/**
+ * Hotel header component props
+ */
+export interface HotelHeaderProps
+  extends Pick<Hotel, 'hotelName'>,
+    Partial<Pick<Hotel, 'location' | 'starRating' | 'hotelType'>> {}
 
-export interface HotelInfoBannerProps {
-    location: string;
-    starRating?: number;
-    hotelType?: string;
-    description: string;
-}
+/**
+ * Hotel info banner component props
+ */
+export interface HotelInfoBannerProps
+  extends Required<Pick<Hotel, 'location' | 'description'>>,
+    Partial<Pick<Hotel, 'starRating' | 'hotelType'>> {}
 
-export interface HotelLocationMapProps {
-  latitude: number;
-  longitude: number;
-  hotelName: string;
-  location: string;
+/**
+ * Hotel location map component props
+ */
+export interface HotelLocationMapProps extends NamedLocation, Pick<Hotel, 'hotelName'> {
   height?: number;
   zoom?: number;
 }
 
+/**
+ * Hotel sidebar component props
+ */
 export interface HotelSidebarProps {
   hotel: Hotel;
 }

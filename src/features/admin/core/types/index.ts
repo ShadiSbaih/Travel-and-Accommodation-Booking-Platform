@@ -3,152 +3,139 @@
  * All admin types are exported from here for consistency
  */
 
-// City Types
-export interface City {
-  id: number;
-  name: string;
-  description: string;
-  thumbnailUrl?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import type {
+  BaseCity,
+  Hotel as BaseHotel,
+  Room as BaseRoom,
+  Amenity,
+  PaginatedFilter,
+} from '@/shared/types/base.types';
 
-export interface CityFilters {
+// ==================== City Types ====================
+
+/**
+ * Admin City - extends base city
+ */
+export type City = BaseCity & {
+  country?: string;
+};
+
+/**
+ * City filters for admin panel
+ */
+export interface CityFilters extends PaginatedFilter {
   name?: string;
   country?: string;
-  pageNumber?: number;
-  pageSize?: number;
 }
 
-export interface CreateCityDto {
-  name: string;
-  description: string;
-}
+/**
+ * Create city DTO
+ */
+export type CreateCityDto = Pick<City, 'name' | 'description'>;
 
-export interface UpdateCityDto {
-  name?: string;
-  description?: string;
-}
+/**
+ * Update city DTO - all fields optional
+ */
+export type UpdateCityDto = Partial<CreateCityDto>;
 
-// Hotel Types
-export interface Hotel {
-  id: number;
-  hotelName: string;
-  name: string;
-  location: string;
-  description: string;
-  hotelType: string;
-  starRating: number;
-  latitude: number;
-  longitude: number;
-  imageUrl?: string;
-  availableRooms: number;
-  cityId: number;
+// ==================== Hotel Types ====================
+
+/**
+ * Admin Hotel - extends base hotel
+ */
+export type Hotel = BaseHotel & {
   rooms?: Room[];
   amenities?: Amenity[];
-  createdAt?: string;
-  updatedAt?: string;
-}
+};
 
-export interface HotelFilters {
-  searchQuery?: string;
+/**
+ * Hotel filters for admin panel
+ */
+export interface HotelFilters extends PaginatedFilter {
   name?: string;
   cityId?: number;
   hotelType?: string;
   starRating?: number;
-  pageNumber?: number;
-  pageSize?: number;
 }
 
-export interface CreateHotelDto {
-  hotelName?: string;
-  name: string;
-  description: string;
-  hotelType: string;
-  starRating: number;
-  latitude: number;
-  longitude: number;
-  location?: string;
-  cityId: number;
-  imageUrl?: string;
-  availableRooms?: number;
-}
+/**
+ * Create hotel DTO
+ */
+export type CreateHotelDto = Pick<
+  Hotel,
+  | 'name'
+  | 'description'
+  | 'hotelType'
+  | 'starRating'
+  | 'latitude'
+  | 'longitude'
+  | 'cityId'
+> &
+  Partial<Pick<Hotel, 'hotelName' | 'location' | 'imageUrl' | 'availableRooms'>>;
 
-export interface UpdateHotelDto {
-  hotelName?: string;
-  name?: string;
-  description?: string;
-  hotelType?: string;
-  starRating?: number;
-  latitude?: number;
-  longitude?: number;
-  location?: string;
-  cityId?: number;
-  imageUrl?: string;
-  availableRooms?: number;
-}
+/**
+ * Update hotel DTO - all fields optional
+ */
+export type UpdateHotelDto = Partial<CreateHotelDto>;
 
-// Room Types
-export interface Room {
-  roomId: number;
-  roomNumber: number;
-  roomPhotoUrl?: string;
-  roomType: string;
-  capacityOfAdults: number;
-  capacityOfChildren: number;
-  amenities?: Amenity[];
-  price: number;
-  availability: boolean;
+// ==================== Room Types ====================
+
+/**
+ * Admin Room - extends base room with hotel reference
+ */
+export type Room = BaseRoom & {
   hotelId?: number;
   createdAt?: string;
   updatedAt?: string;
-}
+};
 
-export interface RoomFilters {
-  searchQuery?: string;
+/**
+ * Room filters for admin panel
+ */
+export interface RoomFilters extends PaginatedFilter {
   roomType?: string;
   minPrice?: number;
   maxPrice?: number;
   availability?: boolean;
   hotelId?: number;
-  pageNumber?: number;
-  pageSize?: number;
 }
 
-export interface CreateRoomDto {
-  roomNumber: number;
-  roomPhotoUrl?: string;
-  roomType: string;
-  capacityOfAdults: number;
-  capacityOfChildren: number;
-  amenities?: Amenity[];
-  price: number;
-  availability: boolean;
-  hotelId?: number;
-}
+/**
+ * Create room DTO
+ */
+export type CreateRoomDto = Pick<
+  Room,
+  | 'roomNumber'
+  | 'roomType'
+  | 'capacityOfAdults'
+  | 'capacityOfChildren'
+  | 'price'
+  | 'availability'
+> &
+  Partial<Pick<Room, 'roomPhotoUrl' | 'amenities' | 'hotelId'>>;
 
-export interface UpdateRoomDto {
-  roomNumber?: number;
-  roomPhotoUrl?: string;
-  roomType?: string;
-  capacityOfAdults?: number;
-  capacityOfChildren?: number;
-  amenities?: Amenity[];
-  price?: number;
-  availability?: boolean;
-  hotelId?: number;
-}
+/**
+ * Update room DTO - all fields optional
+ */
+export type UpdateRoomDto = Partial<CreateRoomDto>;
 
-// Shared Types
-export interface Amenity {
-  id: number;
-  name: string;
-  description: string;
-}
+// ==================== Shared Types ====================
 
-// Component Types
+/**
+ * Re-export Amenity from base types
+ */
+export type { Amenity };
+
+// ==================== Component Types ====================
+
+/**
+ * Admin view mode
+ */
 export type AdminViewMode = 'grid' | 'list';
 
+/**
+ * Admin page header props
+ */
 export interface AdminPageHeaderProps {
   title: string;
   count: number;

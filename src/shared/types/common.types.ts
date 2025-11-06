@@ -1,40 +1,56 @@
 // Component Props Types
+import type {
+  SectionHeaderBase,
+  StateComponentProps,
+  StyledProps,
+} from './base.types';
 
-export interface EmptyStateProps {
-  title: string;
-  subtitle?: string;
-  icon?: React.ReactNode;
-  className?: string;
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
-}
+/**
+ * Empty state component props
+ */
+export interface EmptyStateProps extends StateComponentProps, SectionHeaderBase {}
 
-export interface ErrorStateProps {
-  title?: string;
-  message?: string;
-  className?: string;
-  variant?: 'error' | 'warning' | 'info';
-  icon?: React.ReactNode;
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
+/**
+ * Error severity variants
+ */
+export type ErrorVariant = 'error' | 'warning' | 'info';
+
+/**
+ * Retry action
+ */
+export interface RetryAction {
   showRetry?: boolean;
   onRetry?: () => void;
 }
 
-export interface LoadingStateProps {
+/**
+ * Error state component props
+ */
+export interface ErrorStateProps extends StateComponentProps, RetryAction {
+  title?: string;
   message?: string;
-  className?: string;
+  variant?: ErrorVariant;
+  icon?: React.ReactNode;
 }
 
+/**
+ * Loading state component props
+ */
+export interface LoadingStateProps extends StyledProps {
+  message?: string;
+}
+
+/**
+ * Error fallback props for error boundaries
+ */
 export interface ErrorFallbackProps {
   error: Error;
   resetErrorBoundary: () => void;
 }
 
+/**
+ * App error boundary props
+ */
 export interface AppErrorBoundaryProps {
   children: React.ReactNode;
 }

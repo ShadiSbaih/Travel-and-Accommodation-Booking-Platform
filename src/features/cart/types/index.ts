@@ -1,29 +1,34 @@
-
-
 import type { AvailableRoom, Amenity } from '@/features/hotels/types';
+import type { DateRange } from '@/shared/types/base.types';
 
-export interface CartItem {
-  id: string; // Unique identifier for cart item (roomId-hotelId)
-  room: AvailableRoom;
+/**
+ * Hotel reference info
+ */
+export interface HotelReference {
   hotelId: number;
   hotelName: string;
-  roomImage?: string;
-  hotelAmenities?: Amenity[];
-  checkInDate?: string;
-  checkOutDate?: string;
 }
 
+/**
+ * Cart item
+ */
+export interface CartItem extends HotelReference, Partial<DateRange> {
+  id: string; // Unique identifier for cart item (roomId-hotelId)
+  room: AvailableRoom;
+  roomImage?: string;
+  hotelAmenities?: Amenity[];
+}
+
+/**
+ * Cart state
+ */
 export interface CartState {
   items: CartItem[];
   totalItems: number;
   totalPrice: number;
 }
-export interface AddToCartPayload {
-  room: AvailableRoom;
-  hotelId: number;
-  hotelName: string;
-  roomImage?: string;
-  hotelAmenities?: Amenity[];
-  checkInDate?: string;
-  checkOutDate?: string;
-}
+
+/**
+ * Add to cart payload
+ */
+export type AddToCartPayload = Omit<CartItem, 'id'>;
