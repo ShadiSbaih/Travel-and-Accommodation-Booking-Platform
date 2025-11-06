@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import type { ErrorInfo } from 'react';
+// import type { ErrorInfo } from 'react';
 import { Box, Container, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import type { ErrorFallbackProps, AppErrorBoundaryProps } from '@/shared/types/common.types';
@@ -105,24 +105,15 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
  * Wraps the entire application to catch and handle React errors gracefully
  */
 export function AppErrorBoundary({ children }: AppErrorBoundaryProps) {
-  const handleError = (error: Error, errorInfo: ErrorInfo) => {
-    // Log error to console in development
-    console.error('Error caught by ErrorBoundary:', {
-      error,
-      errorInfo,
-      timestamp: new Date().toISOString(),
-    });
+  // const handleError = (error: Error, errorInfo: ErrorInfo) => {
+  //   // Log error to console in development
+  //   console.error('Error caught by ErrorBoundary:', {
+  //     error,
+  //     errorInfo,
+  //     timestamp: new Date().toISOString(),
+  //   });
 
-    // TODO: Send error to monitoring service (e.g., Sentry, LogRocket)
-    // Example:
-    // Sentry.captureException(error, {
-    //   contexts: {
-    //     react: {
-    //       componentStack: errorInfo.componentStack,
-    //     },
-    //   },
-    // });
-  };
+  // };
 
   const handleReset = () => {
     // Clear any potentially corrupted state
@@ -141,7 +132,7 @@ export function AppErrorBoundary({ children }: AppErrorBoundaryProps) {
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onReset={handleReset}
-      onError={handleError}
+      // onError={handleError}
       resetKeys={['user', 'location']} // Reset when these change
     >
       {children}
