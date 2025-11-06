@@ -1,9 +1,10 @@
-import type { Room } from '@/features/admin/rooms/room.types';
-import type { Amenity } from '@/features/hotels/types';
+
+
+import type { AvailableRoom, Amenity } from '@/features/hotels/types';
 
 export interface CartItem {
   id: string; // Unique identifier for cart item (roomId-hotelId)
-  room: Room;
+  room: AvailableRoom;
   hotelId: number;
   hotelName: string;
   roomImage?: string;
@@ -18,7 +19,7 @@ export interface CartState {
   totalPrice: number;
 }
 export interface AddToCartPayload {
-  room: Room;
+  room: AvailableRoom;
   hotelId: number;
   hotelName: string;
   roomImage?: string;

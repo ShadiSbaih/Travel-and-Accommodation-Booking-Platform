@@ -36,11 +36,15 @@ describe('cartSlice', () => {
   };
 
   const mockRoom = {
-    id: 1,
-    name: 'Deluxe Room',
-    price: 100,
+    roomId: 1,
+    roomNumber: '101',
+    roomPhotoUrl: 'photo.jpg',
+    roomType: 'Deluxe',
     capacityOfAdults: 2,
     capacityOfChildren: 1,
+    roomAmenities: [],
+    price: 100,
+    availability: true,
   };
 
   const mockCartPayload = {
@@ -115,7 +119,7 @@ describe('cartSlice', () => {
 
     const secondPayload = {
       ...mockCartPayload,
-      room: { ...mockRoom, id: 2, price: 150 },
+      room: { ...mockRoom, roomId: 2, price: 150 },
       hotelId: 2,
     };
 

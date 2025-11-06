@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { useCart } from '../useCart';
 import cartReducer from '../../store/cartSlice';
-import type { Room } from '@/features/admin/rooms/types';
+import type { AvailableRoom } from '@/features/hotels/types';
 import type { AddToCartPayload } from '../../types';
 
 const createMockStore = () => {
@@ -23,13 +23,14 @@ const wrapper = ({ children }: WrapperProps) => (
 );
 
 describe('useCart', () => {
-  const mockRoom: Room = {
+  const mockRoom: AvailableRoom = {
     roomId: 101,
-    roomNumber: 101,
+    roomNumber: '101',
     roomType: 'Deluxe',
     roomPhotoUrl: 'photo.jpg',
     capacityOfAdults: 2,
     capacityOfChildren: 1,
+    roomAmenities: [],
     price: 200,
     availability: true,
   };
@@ -85,10 +86,10 @@ describe('useCart', () => {
   it('should clear entire cart', () => {
     const { result } = renderHook(() => useCart(), { wrapper });
 
-    const mockRoom2: Room = {
+    const mockRoom2: AvailableRoom = {
       ...mockRoom,
       roomId: 102,
-      roomNumber: 102,
+      roomNumber: '102',
     };
 
     act(() => {
@@ -144,10 +145,10 @@ describe('useCart', () => {
   it('should calculate total price correctly', () => {
     const { result } = renderHook(() => useCart(), { wrapper });
 
-    const mockRoom2: Room = {
+    const mockRoom2: AvailableRoom = {
       ...mockRoom,
       roomId: 102,
-      roomNumber: 102,
+      roomNumber: '102',
       price: 150,
     };
 

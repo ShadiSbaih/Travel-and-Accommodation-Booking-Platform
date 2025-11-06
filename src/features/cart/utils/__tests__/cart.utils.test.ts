@@ -83,7 +83,17 @@ describe('cart utils', () => {
       const mockItems: CartItem[] = [
         {
           id: '1-1',
-          room: { id: 1, name: 'Room 1', price: 100, capacityOfAdults: 2, capacityOfChildren: 0 },
+          room: {
+            roomId: 1,
+            roomNumber: '101',
+            roomPhotoUrl: 'photo1.jpg',
+            roomType: 'Deluxe',
+            capacityOfAdults: 2,
+            capacityOfChildren: 0,
+            roomAmenities: [],
+            price: 100,
+            availability: true,
+          },
           hotelId: 1,
           hotelName: 'Hotel 1',
           roomImage: 'img1.jpg',
@@ -93,7 +103,17 @@ describe('cart utils', () => {
         },
         {
           id: '1-2',
-          room: { id: 2, name: 'Room 2', price: 150, capacityOfAdults: 2, capacityOfChildren: 1 },
+          room: {
+            roomId: 2,
+            roomNumber: '102',
+            roomPhotoUrl: 'photo2.jpg',
+            roomType: 'Suite',
+            capacityOfAdults: 2,
+            capacityOfChildren: 1,
+            roomAmenities: [],
+            price: 150,
+            availability: true,
+          },
           hotelId: 1,
           hotelName: 'Hotel 1',
           roomImage: 'img2.jpg',

@@ -34,7 +34,7 @@ function CartItemCard({ item, onRemove }: CartItemCardProps) {
             <CardMedia
               component="img"
               image={item.roomImage || 'https://via.placeholder.com/300x200'}
-              alt={item.room.name}
+              alt={item.room.roomType}
               sx={{
                 borderRadius: 2,
                 height: { xs: 200, sm: '100%' },
@@ -53,7 +53,7 @@ function CartItemCard({ item, onRemove }: CartItemCardProps) {
               }}
             >
               <CartItemHeader
-                roomName={item.room.name}
+                roomName={item.room.roomType}
                 hotelName={item.hotelName}
                 onRemove={() => onRemove(item.id)}
               />
