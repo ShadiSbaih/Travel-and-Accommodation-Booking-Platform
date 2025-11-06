@@ -1,10 +1,12 @@
 import { Paper, Box, Typography, TextField, Button, MenuItem } from '@mui/material';
 import { useState } from 'react';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 interface PaymentFormProps {
   total: number;
   onSubmit: (customerName: string, paymentMethod: string) => void;
   isLoading: boolean;
+  onBackToCart?: () => void;
 }
 
 const paymentMethods = [
@@ -14,7 +16,7 @@ const paymentMethods = [
   { value: 'Bank Transfer', label: 'Bank Transfer' },
 ];
 
-function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
+function PaymentForm({ total, onSubmit, isLoading, onBackToCart }: PaymentFormProps) {
   const [customerName, setCustomerName] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
 
@@ -35,13 +37,13 @@ function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
       }}
     >
       <Box sx={{ p: 3 }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>
+        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2.5 }}>
           Complete Your Booking
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-          autoComplete='off'
+            autoComplete='off'
             label="Customer Name"
             placeholder="Enter your full name"
             fullWidth
@@ -58,7 +60,7 @@ function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
             required
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
-            sx={{ mb: 3 }}
+            sx={{ mb: 2.5 }}
           >
             {paymentMethods.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -72,7 +74,7 @@ function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              mb: 3,
+              mb: 2.5,
               p: 2,
               bgcolor: 'primary.main',
               color: 'white',
@@ -87,23 +89,49 @@ function PaymentForm({ total, onSubmit, isLoading }: PaymentFormProps) {
             </Typography>
           </Box>
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="success"
-            fullWidth
-            size="large"
-            disabled={isLoading || !customerName.trim()}
+          <Box
             sx={{
-              py: 1.5,
-              borderRadius: 2,
-              textTransform: 'none',
-              fontSize: '1rem',
-              fontWeight: 700,
+              display: 'flex',
+              gap: 2,
+              flexDirection: { xs: 'column-reverse', sm: 'row' },
             }}
           >
-            {isLoading ? 'Processing...' : 'Complete Booking & Pay'}
-          </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              fullWidth
+              disabled={isLoading || !customerName.trim()}
+              sx={{
+                py: 0.875,
+                borderRadius: 2,
+                textTransform: 'none',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: 'white',
+              }}
+            >
+              {isLoading ? 'Processing...' : 'Complete Booking '}
+            </Button>
+
+            {onBackToCart && (
+              <Button
+                variant="outlined"
+                fullWidth
+                onClick={onBackToCart}
+                startIcon={<ArrowBackIcon />}
+                sx={{
+                  py: 0.875,
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                }}
+              >
+                Back to Cart
+              </Button>
+            )}
+          </Box>
         </Box>
       </Box>
     </Paper>

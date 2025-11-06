@@ -28,6 +28,10 @@ function CheckoutPage() {
     setShowPaymentForm(true);
   };
 
+  const handleBackToCart = () => {
+    setShowPaymentForm(false);
+  };
+
   const handlePaymentSubmit = (customerName: string, paymentMethod: string) => {
     handleProceedToCheckout(customerName, paymentMethod);
   };
@@ -80,6 +84,7 @@ function CheckoutPage() {
                   total={total}
                   onSubmit={handlePaymentSubmit}
                   isLoading={isBookingLoading}
+                  onBackToCart={handleBackToCart}
                 />
               )}
             </Box>
