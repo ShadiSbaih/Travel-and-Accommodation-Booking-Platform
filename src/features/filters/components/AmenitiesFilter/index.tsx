@@ -59,8 +59,7 @@ const AmenitiesFilter: React.FC = () => {
       sx={{
         overflow: 'hidden',
         position: 'sticky',
-        top: 24,
-        borderRadius: 3,
+        top: 34,
         border: '1px solid',
         borderColor: 'divider',
         transition: 'all 0.3s ease',
@@ -71,17 +70,16 @@ const AmenitiesFilter: React.FC = () => {
         },
       }}
     >
-      <CardContent sx={{ p: 0 }}>
+      <CardContent sx={{ p: 0, mt: 2 }}>
         {/* Header with clear button */}
-        <Box 
-          sx={{ 
-            p: 2, 
+        <Box
+          sx={{
+            p: 2,
             pb: 2,
-            background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.02) 100%)',
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', pt: 2.5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', }}>
               <Box
                 sx={{
                   display: 'flex',

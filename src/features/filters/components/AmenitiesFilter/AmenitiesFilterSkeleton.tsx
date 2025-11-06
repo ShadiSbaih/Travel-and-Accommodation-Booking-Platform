@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Card, CardContent, Box, Skeleton } from '@mui/material';
+import { Card, CardContent, Box, Skeleton, Divider } from '@mui/material';
 
 const AmenitiesFilterSkeleton = memo(() => {
   return (
@@ -7,29 +7,29 @@ const AmenitiesFilterSkeleton = memo(() => {
       elevation={0}
       sx={{
         overflow: 'hidden',
-        borderRadius: 3,
+        position: 'sticky',
+        top: 34,
         border: '1px solid',
         borderColor: 'divider',
+        transition: 'all 0.3s ease',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
       }}
     >
-      <CardContent sx={{ p: 0 }}>
+      <CardContent sx={{ p: 0, mt: 2 }}>
         {/* Header Skeleton */}
-        <Box 
-          sx={{ 
-            p: 2, 
-            pb: 2,
-            background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.02) 100%)',
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <Skeleton variant="rectangular" width={36} height={36} sx={{ borderRadius: 2, mr: 1.5 }} />
-            <Skeleton variant="text" width={120} height={32} />
+        <Box sx={{ p: 2, pb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Skeleton variant="rectangular" width={36} height={36} sx={{ borderRadius: 2, mr: 1.5 }} />
+              <Skeleton variant="text" width={120} height={32} />
+            </Box>
           </Box>
         </Box>
 
-        {/* Filter Mode Switch Skeleton */}
+        <Divider />
+
         <Box sx={{ p: 3, pt: 2.5 }}>
+          {/* Filter Mode Switch Skeleton */}
           <Box sx={{ 
             display: 'flex', 
             gap: 1, 
@@ -43,7 +43,7 @@ const AmenitiesFilterSkeleton = memo(() => {
           </Box>
 
           {/* Amenities List Skeleton */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
             {[1, 2, 3, 4, 5, 6].map((item) => (
               <Box key={item} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                 <Skeleton variant="rectangular" width={20} height={20} sx={{ borderRadius: 0.5 }} />
