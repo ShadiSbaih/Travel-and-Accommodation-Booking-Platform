@@ -291,23 +291,60 @@ travel-app-fts/
    cd Travel-and-Accommodation-Booking-Platform
    ```
 
-2. **Install dependencies**
+2. **Install frontend dependencies**
    ```bash
    npm install
    ```
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Start the backend server** (in a separate terminal)
+3. **Install backend dependencies**
    ```bash
    cd backend
-   node server.js
+   npm install
+   cd ..
    ```
 
-The application will be available at `http://localhost:5173`
+### Running the Application
+
+⚠️ **IMPORTANT**: You must start the backend server BEFORE starting the frontend application.
+
+#### Step 1: Start the Backend Server (Required First!)
+
+Open a terminal and run:
+
+```bash
+cd backend
+node server.js
+```
+
+The backend server will start on `http://localhost:5000`
+
+**Wait for the server to display a success message** before proceeding to the next step.
+
+#### Step 2: Start the Frontend Application
+
+Open a **NEW/SEPARATE terminal** and run:
+
+```bash
+npm run dev
+```
+
+The frontend application will be available at `http://localhost:5173`
+
+### Quick Start Summary
+
+```bash
+# Terminal 1 - Backend (Start this FIRST)
+cd backend
+node server.js
+
+# Terminal 2 - Frontend (Start this AFTER backend is running)
+npm run dev
+```
+
+### API Documentation
+
+Once the backend server is running, you can access the Swagger API documentation at:
+`http://localhost:5000/api-docs/`
 
 ##  Available Scripts
 
