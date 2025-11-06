@@ -360,7 +360,7 @@ function Navbar() {
                                         fontSize: '0.75rem',
                                     }}
                                 >
-                                    Account Settings
+                                    User Account 
                                 </Typography>
                             </Box>
 
