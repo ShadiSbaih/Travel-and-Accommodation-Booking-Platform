@@ -74,23 +74,25 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
       onClose={handleCancel}
       maxWidth="md"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 2,
-          background: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(30, 41, 59, 0.98)'
-              : 'rgba(255, 255, 255, 0.98)',
-          backdropFilter: 'blur(20px)',
-          boxShadow: (theme) =>
-            theme.palette.mode === 'dark'
-              ? '0 20px 60px rgba(0, 0, 0, 0.6)'
-              : '0 20px 60px rgba(0, 0, 0, 0.3)',
-          overflow: 'hidden',
-          border: (theme) =>
-            theme.palette.mode === 'dark'
-              ? '1px solid rgba(148, 163, 184, 0.1)'
-              : 'none',
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 2,
+            background: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(30, 41, 59, 0.98)'
+                : 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '0 20px 60px rgba(0, 0, 0, 0.6)'
+                : '0 20px 60px rgba(0, 0, 0, 0.3)',
+            overflow: 'hidden',
+            border: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(148, 163, 184, 0.1)'
+                : 'none',
+          },
         },
       }}
     >

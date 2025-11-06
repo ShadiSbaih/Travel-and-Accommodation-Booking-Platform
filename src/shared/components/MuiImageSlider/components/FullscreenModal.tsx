@@ -34,11 +34,13 @@ export function FullscreenModal({
       onClose={onClose}
       maxWidth={false}
       fullScreen
-      PaperProps={{
-        sx: {
-          bgcolor: 'rgba(0, 0, 0, 0.95)',
-          margin: 0,
-          borderRadius: 0,
+      slotProps={{
+        paper: {
+          sx: {
+            bgcolor: 'rgba(0, 0, 0, 0.95)',
+            margin: 0,
+            borderRadius: 0,
+          },
         },
       }}
     >

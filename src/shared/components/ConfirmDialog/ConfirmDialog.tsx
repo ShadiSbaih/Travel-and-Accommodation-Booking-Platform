@@ -36,14 +36,16 @@ function ConfirmDialog({
       onClose={onCancel}
       maxWidth="xs"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 2,
-          bgcolor: (theme) =>
-            theme.palette.mode === 'dark'
-              ? 'rgba(30, 41, 59, 0.98)'
-              : 'rgba(255, 255, 255, 0.98)',
-          backdropFilter: 'blur(20px)',
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 2,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(30, 41, 59, 0.98)'
+                : 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(20px)',
+          },
         },
       }}
     >

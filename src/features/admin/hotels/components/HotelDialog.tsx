@@ -76,7 +76,7 @@ function HotelDialog({ open, onClose, hotel }: HotelDialogProps) {
       onClose={handleCancel}
       maxWidth="md"
       fullWidth
-      PaperProps={{ sx: dialogPaperStyles }}
+      slotProps={{ paper: { sx: dialogPaperStyles } }}
     >
       <HotelDialogHeader isEditMode={!!hotel} onClose={handleCancel} />
 
