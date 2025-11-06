@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
+  DialogActions,
   TextField,
   Button,
   Box,
@@ -11,7 +13,10 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { useFormik } from 'formik';
 import { useCities } from '../hooks/useCities';
+import { cityValidationSchema } from '../utils/validation.utils';
 import type { City } from '../types';
 
 interface CityDialogProps {
@@ -21,59 +26,64 @@ interface CityDialogProps {
 }
 
 function CityDialog({ open, onClose, city }: CityDialogProps) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const { createCity, updateCity, isCreating, isUpdating } = useCities();
 
-  useEffect(() => {
-    if (city) {
-      setName(city.name);
-      setDescription(city.description || '');
-    } else {
-      setName('');
-      setDescription('');
-    }
-  }, [city, open]);
-
-  const handleSubmit = () => {
-    if (!name.trim()) return;
-
-    if (city) {
-      // PUT /cities/{cityId} - Update city
-      updateCity(
-        { cityId: city.id, data: { name, description } },
-        {
+  const formik = useFormik({
+    initialValues: {
+      name: city?.name || '',
+      description: city?.description || '',
+    },
+    validationSchema: cityValidationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      if (city) {
+        updateCity(
+          { cityId: city.id, data: values },
+          {
+            onSuccess: () => {
+              formik.resetForm();
+              onClose();
+            },
+          }
+        );
+      } else {
+        createCity(values, {
           onSuccess: () => {
+            formik.resetForm();
             onClose();
           },
-        }
-      );
+        });
+      }
+    },
+  });
+
+  const handleClose = () => {
+    if (formik.dirty) {
+      setShowConfirmDialog(true);
     } else {
-      // POST /cities - Create city
-      createCity(
-        { name, description },
-        {
-          onSuccess: () => {
-            onClose();
-          },
-        }
-      );
+      formik.resetForm();
+      onClose();
     }
   };
 
-  const handleCancel = () => {
-    setName('');
-    setDescription('');
+  const handleConfirmClose = () => {
+    setShowConfirmDialog(false);
+    formik.resetForm();
     onClose();
   };
 
+  const handleCancelClose = () => {
+    setShowConfirmDialog(false);
+  };
+
   return (
-    <Dialog
-      open={open}
-      onClose={handleCancel}
-      maxWidth="md"
-      fullWidth
+    <>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="md"
+        fullWidth
       slotProps={{
         paper: {
           sx: {
@@ -108,7 +118,7 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
         }}
       >
         <IconButton
-          onClick={handleCancel}
+          onClick={handleClose}
           aria-label="Close dialog"
           sx={{
             position: 'absolute',
@@ -183,11 +193,15 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
 
       {/* Content */}
       <DialogContent sx={{ p: 4 }}>
-        <Box sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
           <TextField
             label="City Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
             fullWidth
             required
             variant="outlined"
@@ -227,8 +241,12 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
 
           <TextField
             label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.description && Boolean(formik.errors.description)}
+            helperText={formik.touched.description && formik.errors.description}
             fullWidth
             multiline
             rows={5}
@@ -271,7 +289,7 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
             <Button
               variant="outlined"
-              onClick={handleCancel}
+              onClick={handleClose}
               disabled={isCreating || isUpdating}
               sx={{
                 textTransform: 'none',
@@ -299,8 +317,8 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
             </Button>
             <Button
               variant="contained"
-              onClick={handleSubmit}
-              disabled={isCreating || isUpdating || !name.trim()}
+              onClick={() => formik.handleSubmit()}
+              disabled={isCreating || isUpdating || !formik.isValid}
               startIcon={<SaveIcon />}
               sx={{
                 textTransform: 'none',
@@ -334,6 +352,138 @@ function CityDialog({ open, onClose, city }: CityDialogProps) {
         </Box>
       </DialogContent>
     </Dialog>
+
+    {/* Confirmation Dialog */}
+    <Dialog
+      open={showConfirmDialog}
+      onClose={handleCancelClose}
+      maxWidth="xs"
+      fullWidth
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 2,
+            background: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(30, 41, 59, 0.98)'
+                : 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '0 20px 60px rgba(0, 0, 0, 0.6)'
+                : '0 20px 60px rgba(0, 0, 0, 0.3)',
+            border: (theme) =>
+              theme.palette.mode === 'dark'
+                ? '1px solid rgba(148, 163, 184, 0.1)'
+                : 'none',
+          },
+        },
+      }}
+    >
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          pb: 2,
+          borderBottom: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(148, 163, 184, 0.1)'
+              : '1px solid rgba(0, 0, 0, 0.08)',
+        }}
+      >
+        <Box
+          sx={{
+            width: 40,
+            height: 40,
+            borderRadius: 1.5,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark'
+                ? 'rgba(251, 191, 36, 0.2)'
+                : 'rgba(251, 191, 36, 0.15)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <WarningAmberIcon
+            sx={{
+              color: (theme) =>
+                theme.palette.mode === 'dark' ? '#fbbf24' : '#f59e0b',
+              fontSize: 24,
+            }}
+          />
+        </Box>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 700,
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#e2e8f0' : 'text.primary',
+          }}
+        >
+          Unsaved Changes
+        </Typography>
+      </DialogTitle>
+      <DialogContent sx={{ pt: 3, pb: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#cbd5e1' : 'text.secondary',
+          }}
+        >
+          You have unsaved changes. Are you sure you want to close this form? All changes will be lost.
+        </Typography>
+      </DialogContent>
+      <DialogActions
+        sx={{
+          p: 2.5,
+          gap: 1,
+          borderTop: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '1px solid rgba(148, 163, 184, 0.1)'
+              : '1px solid rgba(0, 0, 0, 0.08)',
+        }}
+      >
+        <Button
+          onClick={handleCancelClose}
+          variant="outlined"
+          sx={{
+            textTransform: 'none',
+            fontWeight: 600,
+            borderColor: (theme) =>
+              theme.palette.mode === 'dark' ? 'rgba(148, 163, 184, 0.3)' : 'grey.300',
+            color: (theme) =>
+              theme.palette.mode === 'dark' ? '#94a3b8' : 'text.secondary',
+            '&:hover': {
+              borderColor: (theme) =>
+                theme.palette.mode === 'dark' ? '#94a3b8' : 'grey.400',
+            },
+          }}
+        >
+          Keep Editing
+        </Button>
+        <Button
+          onClick={handleConfirmClose}
+          variant="contained"
+          color="warning"
+          sx={{
+            textTransform: 'none',
+            fontWeight: 600,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'dark' ? '#f59e0b' : '#f97316',
+            '&:hover': {
+              bgcolor: (theme) =>
+                theme.palette.mode === 'dark' ? '#d97706' : '#ea580c',
+            },
+          }}
+        >
+          Discard Changes
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </>
   );
 }
 
