@@ -7,6 +7,7 @@ import CartItemPrice from './CartItemPrice';
 
 function CartItemCard({ item, onRemove }: CartItemCardProps) {
   const itemTotal = item.room.price * item.numberOfNights;
+  const maxOccupancy = (item.room.capacityOfAdults || 0) + (item.room.capacityOfChildren || 0);
 
   return (
     <Card
@@ -60,7 +61,7 @@ function CartItemCard({ item, onRemove }: CartItemCardProps) {
 
               <Box sx={{ mb: 2 }}>
                 <CartItemInfo
-                  maxOccupancy={item.room.maxOccupancy}
+                  maxOccupancy={maxOccupancy}
                   numberOfNights={item.numberOfNights}
                   checkInDate={item.checkInDate}
                   checkOutDate={item.checkOutDate}
