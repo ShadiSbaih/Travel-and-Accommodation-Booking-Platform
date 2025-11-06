@@ -160,7 +160,6 @@ function SearchBar() {
               value={searchData.query}
               onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
               onKeyDown={handleKeyDown}
-              required
               slotProps={{
                 htmlInput: {
                   'aria-label': 'Enter destination',
