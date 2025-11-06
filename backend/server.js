@@ -160,7 +160,22 @@ app.get("/api/home/search", async (req, res) => {
     req.query;
   const rooms = getJsonData("searchResults.json");
   let filteredResults = rooms;
-  if (city) {
+  
+  // If no city is provided, return a diverse set of popular hotels
+  if (!city) {
+    // Get unique cities and select varied results
+    const uniqueCities = [...new Set(rooms.map(r => r.cityName))];
+    const defaultResults = [];
+    
+    // Get at least one hotel from each city, up to 10 total
+    for (const cityName of uniqueCities) {
+      if (defaultResults.length >= 10) break;
+      const cityHotels = rooms.filter(r => r.cityName === cityName);
+      defaultResults.push(cityHotels[0]); // Take first hotel from each city
+    }
+    
+    filteredResults = defaultResults;
+  } else {
     filteredResults = filteredResults.filter((room) =>
       room.cityName.toLowerCase().includes(city.toLowerCase())
     );

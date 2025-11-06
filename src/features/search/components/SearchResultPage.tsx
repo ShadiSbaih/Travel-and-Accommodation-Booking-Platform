@@ -51,7 +51,9 @@ const SearchResultPage: React.FC = () => {
               mb: 2
             }}
           >
-            Discover Your Perfect Stay
+            {searchConfig.query 
+              ? `Search Results for "${searchConfig.query}"` 
+              : ' Discover Your Perfect Stay'}
           </Typography>
           <SearchBar />
         </Box>
@@ -84,6 +86,7 @@ const SearchResultPage: React.FC = () => {
                 isLoading={isLoadingResults}
                 error={error}
                 hasActiveFilters={!!selectedAmenities.length}
+                hasSearchQuery={!!searchConfig.query}
               />
             </Box>
           </Box>

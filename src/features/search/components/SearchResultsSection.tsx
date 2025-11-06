@@ -13,7 +13,8 @@ const SearchResultsSection = memo(function SearchResultsSection({
   isLoading, 
   error,
   refetch,
-  hasActiveFilters 
+  hasActiveFilters,
+  hasSearchQuery 
 }: SearchResultsSectionProps) {
   if (isLoading) {
     return <SearchResultsSkeleton count={6} />;
@@ -59,7 +60,7 @@ const SearchResultsSection = memo(function SearchResultsSection({
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4" component="h2" fontWeight="bold">
-          Search Results
+          {hasSearchQuery ? 'Search Results' : 'Popular Hotels'}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Chip 

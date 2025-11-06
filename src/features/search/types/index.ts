@@ -14,4 +14,5 @@ export interface SearchResultsSectionProps {
   error: unknown;
   hasActiveFilters: boolean;
   refetch?: () => void;
+  hasSearchQuery?: boolean;
 }

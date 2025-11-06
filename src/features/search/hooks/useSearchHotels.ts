@@ -19,7 +19,8 @@ export const useSearchHotels = ({ query, adults, children, rooms }: SearchConfig
         children,
         numberOfRooms: rooms,
       }),
-    enabled: !!query,
+    // Always enabled to show default results when no query is provided
+    enabled: true,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 };
