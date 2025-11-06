@@ -1,9 +1,11 @@
 /**
- * Admin Hotels Feature Exports
+ * Hotels Feature Exports
  */
 
+// Components
 export { default as HotelsPage } from './components/HotelsPage';
-export * from './types';
 export * from './components';
-export * from './hooks/useHotels';
-export { hotelsApi } from './api/hotels.api';
+
+// Re-export from core (for backward compatibility)
+export { hotelsApi, useHotels, useHotel } from '../core';
+export * from './types';

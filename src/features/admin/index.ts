@@ -1,11 +1,19 @@
 /**
  * Admin Feature Exports
+ * Centralized exports for all admin functionality
  */
 
-export { CitiesPage, citiesApi, useCities, useCity } from './cities';
-export type { City, CityFilters } from './cities';
+// Core exports (API, Types, Constants, Hooks)
+export * from './core';
 
+// Cities
+export { CitiesPage } from './cities';
+
+// Hotels
 export { HotelsPage } from './hotels';
 
-export { RoomsPage, roomsApi, useRooms, useRoom } from './rooms';
-export type { Room, RoomFilters } from './rooms';
+// Rooms
+export { RoomsPage } from './rooms';
+
+// Shared Components
+export { default as AdminPageHeader } from './shared/components/AdminPageHeader';

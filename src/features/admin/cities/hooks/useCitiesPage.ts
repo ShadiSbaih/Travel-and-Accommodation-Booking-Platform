@@ -11,8 +11,7 @@ import {
   resetCitiesDisplayCount,
 } from '@/core/store/slices/adminUiSlice';
 import { useCities } from './useCities';
-import { filterCitiesByQuery } from '../utils/city.utils';
-import { SEARCH_DEBOUNCE_DELAY, INFINITE_SCROLL_DELAY } from '../constants';
+import { SEARCH_DEBOUNCE_DELAY, INFINITE_SCROLL_DELAY } from '../../core/constants';
 import type { AdminViewMode } from '@/features/admin/shared/types';
 
 /**
@@ -30,14 +29,17 @@ export const useCitiesPage = () => {
   // Debounced search
   const debouncedSearchQuery = useDebounce(searchQuery, SEARCH_DEBOUNCE_DELAY);
 
-  // Fetch cities
-  const { cities = [], isLoading, error, refetch } = useCities();
-
-  // Filtered cities by search
-  const filteredCities = useMemo(
-    () => filterCitiesByQuery(cities, debouncedSearchQuery),
-    [cities, debouncedSearchQuery]
+  // Fetch cities with search query
+  const { cities = [], isLoading, error, refetch } = useCities(
+    debouncedSearchQuery ? { name: debouncedSearchQuery } : undefined
   );
+
+  // Client-side filtering (in case API doesn't filter)
+  const filteredCities = useMemo(() => {
+    if (!debouncedSearchQuery.trim()) return cities;
+    const lowerQuery = debouncedSearchQuery.toLowerCase().trim();
+    return cities.filter((city) => city.name.toLowerCase().includes(lowerQuery));
+  }, [cities, debouncedSearchQuery]);
 
   // Displayed cities with pagination
   const displayedCities = useMemo(

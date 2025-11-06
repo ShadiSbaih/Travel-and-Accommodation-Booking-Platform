@@ -10,8 +10,7 @@ import {
   incrementRoomsDisplayCount,
 } from '@/core/store/slices/adminUiSlice';
 import { useRooms } from './useRooms';
-import { removeDuplicateRooms } from '../utils/room.utils';
-import { SEARCH_DEBOUNCE_DELAY, INFINITE_SCROLL_DELAY } from '../constants';
+import { SEARCH_DEBOUNCE_DELAY, INFINITE_SCROLL_DELAY } from '../../core/constants';
 import type { AdminViewMode } from '@/features/admin/shared/types';
 
 /**
@@ -34,8 +33,15 @@ export const useRoomsPage = () => {
     debouncedSearchQuery ? { searchQuery: debouncedSearchQuery } : undefined
   );
 
-  // Memoized unique rooms
-  const uniqueRooms = useMemo(() => removeDuplicateRooms(rooms), [rooms]);
+  // Remove duplicates by roomId (in case API returns duplicates)
+  const uniqueRooms = useMemo(() => {
+    const seen = new Set<number>();
+    return rooms.filter((room) => {
+      if (seen.has(room.roomId)) return false;
+      seen.add(room.roomId);
+      return true;
+    });
+  }, [rooms]);
 
   // Memoized displayed rooms
   const displayedRooms = useMemo(
