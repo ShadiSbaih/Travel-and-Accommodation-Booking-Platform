@@ -74,7 +74,13 @@ const SearchResultPage: React.FC = () => {
 
           <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 3, mt: 3 }}>
             <Box sx={{ width: { xs: '100%', lg: 300 }, flexShrink: 0 }}>
-              <Box sx={{ position: { lg: 'sticky' }, top: { lg: 24 } }}>
+              <Box
+                sx={{
+                  position: { lg: 'sticky' },
+                  top: { lg: 112 },
+                  zIndex: { lg: 2 }
+                }}
+              >
                 <AmenitiesFilter />
               </Box>
             </Box>

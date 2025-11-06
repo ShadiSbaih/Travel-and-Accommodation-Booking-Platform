@@ -7,8 +7,6 @@ const AmenitiesFilterSkeleton = memo(() => {
       elevation={0}
       sx={{
         overflow: 'hidden',
-        position: 'sticky',
-        top: 34,
         border: '1px solid',
         borderColor: 'divider',
         transition: 'all 0.3s ease',
