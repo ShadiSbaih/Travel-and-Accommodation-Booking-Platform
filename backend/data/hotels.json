@@ -1813,55 +1813,6 @@
     "name": "Coral Reef Resort"
   },
   {
-    "id": 42,
-    "hotelName": "Emerald Valley Retreat",
-    "location": "Wellington, New Zealand",
-    "description": "Eco-friendly resort nestled in lush green valleys.",
-    "hotelType": "Resort",
-    "starRating": 4,
-    "latitude": -41.2865,
-    "longitude": 174.7762,
-    "rooms": [
-      {
-        "id": 4201,
-        "name": "Standard Room",
-        "type": "Standard",
-        "price": 340,
-        "available": true,
-        "maxOccupancy": 2
-      },
-      {
-        "id": 4202,
-        "name": "Deluxe Suite",
-        "type": "Suite",
-        "price": 490,
-        "available": true,
-        "maxOccupancy": 4
-      }
-    ],
-    "imageUrl": "https://example.com/hotels/42.jpg",
-    "availableRooms": 12,
-    "cityId": 142,
-    "amenities": [
-      {
-        "id": 1,
-        "name": "Free Wi-Fi",
-        "description": "High-speed wireless internet available in all rooms."
-      },
-      {
-        "id": 2,
-        "name": "Swimming Pool",
-        "description": "Outdoor pool accessible to all guests."
-      },
-      {
-        "id": 3,
-        "name": "Restaurant",
-        "description": "On-site restaurant serving local and international cuisine."
-      }
-    ],
-    "name": "Emerald Valley Retreat"
-  },
-  {
     "id": 43,
     "hotelName": "Blue Horizon Hotel",
     "location": "Buenos Aires, Argentina",

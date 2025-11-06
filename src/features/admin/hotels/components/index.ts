@@ -6,9 +6,6 @@ export { default as HotelListView } from './HotelListView';
 export { default as HotelCardSkeleton } from './HotelCardSkeleton';
 export { default as HotelListSkeleton } from './HotelListSkeleton';
 export { default as HotelDialog } from './HotelDialog';
-export { default as HotelDialogHeader } from './HotelDialogHeader';
-export { default as HotelDialogForm } from './HotelDialogForm';
-export { default as HotelDialogActions } from './HotelDialogActions';
 export { default as EmptyHotelsState } from './EmptyHotelsState';
 export { default as HotelErrorState } from './HotelErrorState';
-export * from './hotelDialog.styles';
+
