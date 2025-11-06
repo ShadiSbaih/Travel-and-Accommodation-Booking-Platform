@@ -1,0 +1,3775 @@
+[
+  {
+    "id": 4,
+    "hotelName": "Tropical Paradise",
+    "location": "Maldives",
+    "description": "An exclusive resort located on a private island, offering overwater bungalows and a perfect tropical getaway.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": -2.9737,
+    "longitude": 73.5367,
+    "rooms": [
+      {
+        "id": 401,
+        "name": "Overwater Bungalow",
+        "type": "Deluxe",
+        "price": 800,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 402,
+        "name": "Beachfront Villa",
+        "type": "Villa",
+        "price": 1000,
+        "available": false,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/max1280x900/457524211.jpg?k=8c680e7009b3fcdec99ae79d91decd52bcb7bb9ac0de30d1a5925f27834fe6bb&o=&hp=4",
+    "availableRooms": 3,
+    "cityId": 10,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Private Beach",
+        "description": "Exclusive access to the resort's private beach."
+      },
+      {
+        "id": 2,
+        "name": "Water Sports",
+        "description": "Enjoy a variety of water sports including jet skiing, snorkeling, and diving."
+      },
+      {
+        "id": 3,
+        "name": "Sunset Dining",
+        "description": "Experience fine dining with a breathtaking sunset view."
+      }
+    ],
+    "name": "Tropical Paradise"
+  },
+  {
+    "id": 5,
+    "hotelName": "Urban Suites",
+    "location": "Tokyo, Japan",
+    "description": "A modern suite-style hotel offering luxury accommodations in the heart of Tokyo's vibrant city life.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 35.6762,
+    "longitude": 139.6503,
+    "rooms": [
+      {
+        "id": 501,
+        "name": "Tokyo Tower View Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 502,
+        "name": "Shibuya Suite",
+        "type": "Suite",
+        "price": 600,
+        "available": true,
+        "maxOccupancy": 3
+      }
+    ],
+    "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/max1280x900/457524212.jpg?k=9d680e7009b3fcdec99ae79d91decd52bcb7bb9ac0de30d1a5925f27834fe6bb&o=&hp=5",
+    "availableRooms": 12,
+    "cityId": 105,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "On-Site Restaurant",
+        "description": "Enjoy a variety of Japanese and international dishes at our restaurant."
+      },
+      {
+        "id": 2,
+        "name": "Room Service",
+        "description": "24/7 room service available for your convenience."
+      },
+      {
+        "id": 3,
+        "name": "Rooftop Bar",
+        "description": "Sip cocktails while enjoying the stunning view of Tokyo's skyline."
+      }
+    ],
+    "name": "Urban Suites"
+  },
+  {
+    "id": 6,
+    "hotelName": "Desert Oasis Resort22",
+    "location": "",
+    "description": "A luxurious desert resort offering tranquility, premium service, and spectacular views of the sand dunes.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 25.276987,
+    "longitude": 55.296249,
+    "rooms": [
+      {
+        "id": 601,
+        "name": "Dune View Suite",
+        "type": "Suite",
+        "price": 700,
+        "available": true,
+        "maxOccupancy": 4
+      },
+      {
+        "id": 602,
+        "name": "Desert Pool Villa",
+        "type": "Villa",
+        "price": 1000,
+        "available": false,
+        "maxOccupancy": 5
+      }
+    ],
+    "imageUrl": "",
+    "availableRooms": 0,
+    "cityId": 106,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Private Pool",
+        "description": "Each villa has a private pool with a view of the desert."
+      },
+      {
+        "id": 2,
+        "name": "Camel Ride",
+        "description": "Take a camel ride through the stunning dunes."
+      },
+      {
+        "id": 3,
+        "name": "Luxury Spa",
+        "description": "Indulge in a desert-themed spa experience."
+      }
+    ],
+    "name": "Desert Oasis Resort22"
+  },
+  {
+    "id": 7,
+    "hotelName": "Coastal Breeze",
+    "location": "San Diego, USA",
+    "description": "A charming coastal hotel just a stone's throw away from the beach, offering a relaxing getaway with modern amenities.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 32.7157,
+    "longitude": -117.1611,
+    "rooms": [
+      {
+        "id": 701,
+        "name": "Ocean Breeze Room",
+        "type": "Standard",
+        "price": 350,
+        "available": true,
+        "maxOccupancy": 3
+      },
+      {
+        "id": 702,
+        "name": "Penthouse Suite",
+        "type": "Suite",
+        "price": 800,
+        "available": true,
+        "maxOccupancy": 5
+      }
+    ],
+    "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/max1280x900/457524214.jpg?k=bd680e7009b3fcdec99ae79d91decd52bcb7bb9ac0de30d1a5925f27834fe6bb&o=&hp=7",
+    "availableRooms": 10,
+    "cityId": 107,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Beach Access",
+        "description": "Enjoy private access to the beach just steps away from your room."
+      },
+      {
+        "id": 2,
+        "name": "Beach Bar",
+        "description": "Relax at our beach bar with stunning sunset views."
+      },
+      {
+        "id": 3,
+        "name": "Outdoor Jacuzzi",
+        "description": "Soak in our outdoor jacuzzi with a view of the ocean."
+      }
+    ],
+    "name": "Coastal Breeze"
+  },
+  {
+    "id": 9,
+    "hotelName": "Grand Plaza Hotel",
+    "location": "Paris, France",
+    "description": "A luxurious city-center hotel offering five-star accommodations and breathtaking views of the Eiffel Tower.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 48.8566,
+    "longitude": 2.3522,
+    "rooms": [
+      {
+        "id": 901,
+        "name": "Eiffel Tower View Room",
+        "type": "Standard",
+        "price": 600,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 902,
+        "name": "Presidential Suite",
+        "type": "Suite",
+        "price": 1500,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/max1280x900/457524216.jpg?k=dd680e7009b3fcdec99ae79d91decd52bcb7bb9ac0de30d1a5925f27834fe6bb&o=&hp=9",
+    "availableRooms": 10,
+    "cityId": 109,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Eiffel Tower Views",
+        "description": "Enjoy a direct view of the Eiffel Tower from your room."
+      },
+      {
+        "id": 2,
+        "name": "Gourmet Restaurant",
+        "description": "Experience world-class French cuisine at our gourmet restaurant."
+      },
+      {
+        "id": 3,
+        "name": "Helicopter Tours",
+        "description": "Take a helicopter tour of Paris for a unique view of the city."
+      }
+    ],
+    "name": "Grand Plaza Hotel"
+  },
+  {
+    "id": 10,
+    "hotelName": "Safari Lodge'",
+    "location": "Amsterdam",
+    "description": "An exclusive lodge located within the Kruger National Park offering luxury safari experiences and wildlife sightings.",
+    "hotelType": "Motel",
+    "starRating": 5,
+    "latitude": -24.0127,
+    "longitude": 31.5604,
+    "rooms": [
+      {
+        "id": 1001,
+        "name": "Safari View Room",
+        "type": "Standard",
+        "price": 700,
+        "available": true,
+        "maxOccupancy": 3
+      },
+      {
+        "id": 1002,
+        "name": "Luxury Safari Tent",
+        "type": "Tent",
+        "price": 1000,
+        "available": false,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "",
+    "availableRooms": 0,
+    "cityId": 16,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Safari Drives",
+        "description": "Join our expert guides for daily safari drives to view wildlife."
+      },
+      {
+        "id": 2,
+        "name": "Outdoor Dining",
+        "description": "Enjoy outdoor dining with a view of the African savannah."
+      },
+      {
+        "id": 3,
+        "name": "Game Walks",
+        "description": "Take part in guided walking safaris for a more intimate experience."
+      }
+    ],
+    "name": "Safari Lodge'"
+  },
+  {
+    "id": 11,
+    "hotelName": "Ocean View Hotel",
+    "location": "Los Angeles, USA",
+    "description": "A luxurious beachfront hotel with breathtaking ocean views.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "rooms": [
+      {
+        "id": 1101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/11.jpg",
+    "availableRooms": 9,
+    "cityId": 111,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Ocean View Hotel"
+  },
+  {
+    "id": 12,
+    "hotelName": "Mountain Retreat",
+    "location": "Denver, USA",
+    "description": "A peaceful getaway nestled in the mountains, perfect for relaxation.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 39.7392,
+    "longitude": -104.9903,
+    "rooms": [
+      {
+        "id": 1201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/12.jpg",
+    "availableRooms": 10,
+    "cityId": 112,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Mountain Retreat"
+  },
+  {
+    "id": 13,
+    "hotelName": "City Plaza Hotel",
+    "location": "New York, USA",
+    "description": "A modern hotel located in the heart of the city with easy access to all attractions.",
+    "hotelType": "Hotel",
+    "starRating": 3,
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "rooms": [
+      {
+        "id": 1301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/13.jpg",
+    "availableRooms": 11,
+    "cityId": 113,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "City Plaza Hotel"
+  },
+  {
+    "id": 14,
+    "hotelName": "Forest Sanctuary",
+    "location": "San Francisco, USA",
+    "description": "A retreat surrounded by lush forests offering a tranquil escape.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "rooms": [
+      {
+        "id": 1401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/14.jpg",
+    "availableRooms": 12,
+    "cityId": 114,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Forest Sanctuary"
+  },
+  {
+    "id": 15,
+    "hotelName": "Desert Oasis",
+    "location": "Las Vegas, USA",
+    "description": "A beautiful resort in the desert with luxurious amenities.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 36.1699,
+    "longitude": -115.1398,
+    "rooms": [
+      {
+        "id": 1501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 380,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 530,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/15.jpg",
+    "availableRooms": 13,
+    "cityId": 115,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Desert Oasis"
+  },
+  {
+    "id": 16,
+    "hotelName": "Coastal Escape",
+    "location": "Palm Beach, USA",
+    "description": "A relaxing coastal retreat with scenic views and comfortable rooms.",
+    "hotelType": "Hotel",
+    "starRating": 3,
+    "latitude": 26.7153,
+    "longitude": -80.0534,
+    "rooms": [
+      {
+        "id": 1601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/16.jpg",
+    "availableRooms": 14,
+    "cityId": 116,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Coastal Escape"
+  },
+  {
+    "id": 17,
+    "hotelName": "Luxury Skyline Hotel",
+    "location": "London, England",
+    "description": "A high-rise hotel offering stunning views of the city skyline.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "rooms": [
+      {
+        "id": 1701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/17.jpg",
+    "availableRooms": 8,
+    "cityId": 117,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Luxury Skyline Hotel"
+  },
+  {
+    "id": 18,
+    "hotelName": "Riverside Resort",
+    "location": "Paris, France",
+    "description": "A resort situated along a scenic river offering a peaceful retreat.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": 48.8566,
+    "longitude": 2.3522,
+    "rooms": [
+      {
+        "id": 1801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/18.jpg",
+    "availableRooms": 9,
+    "cityId": 118,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Riverside Resort"
+  },
+  {
+    "id": 19,
+    "hotelName": "Skyview Heights",
+    "location": "New York, USA",
+    "description": "A modern high-rise offering panoramic views of the city below.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 40.7306,
+    "longitude": -73.9352,
+    "rooms": [
+      {
+        "id": 1901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 1902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/19.jpg",
+    "availableRooms": 10,
+    "cityId": 119,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Skyview Heights"
+  },
+  {
+    "id": 20,
+    "hotelName": "Island Paradise",
+    "location": "Honolulu, Hawaii",
+    "description": "A tropical island resort with crystal-clear waters and white sandy beaches.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 21.3069,
+    "longitude": -157.8583,
+    "rooms": [
+      {
+        "id": 2001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/20.jpg",
+    "availableRooms": 11,
+    "cityId": 120,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Island Paradise"
+  },
+  {
+    "id": 21,
+    "hotelName": "Historic Inn",
+    "location": "Boston, USA",
+    "description": "A charming inn with a rich history, offering a cozy atmosphere and antique decor.",
+    "hotelType": "Inn",
+    "starRating": 3,
+    "latitude": 42.3601,
+    "longitude": -71.0589,
+    "rooms": [
+      {
+        "id": 2101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/21.jpg",
+    "availableRooms": 12,
+    "cityId": 121,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Historic Inn"
+  },
+  {
+    "id": 22,
+    "hotelName": "Seaside View Lodge",
+    "location": "Fresno, California, USA",
+    "description": "A cozy lodge offering beautiful views of the ocean.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 36.7783,
+    "longitude": -119.4179,
+    "rooms": [
+      {
+        "id": 2201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/22.jpg",
+    "availableRooms": 13,
+    "cityId": 122,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Seaside View Lodge"
+  },
+  {
+    "id": 23,
+    "hotelName": "Alpine Adventure Hotel",
+    "location": "Yellowstone National Park, USA",
+    "description": "A perfect stay for adventure enthusiasts near the mountains and ski resorts.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 44.428,
+    "longitude": -110.5885,
+    "rooms": [
+      {
+        "id": 2301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/23.jpg",
+    "availableRooms": 14,
+    "cityId": 123,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Alpine Adventure Hotel"
+  },
+  {
+    "id": 24,
+    "hotelName": "Garden View Resort",
+    "location": "Atlanta, USA",
+    "description": "A peaceful resort surrounded by beautifully manicured gardens.",
+    "hotelType": "Resort",
+    "starRating": 3,
+    "latitude": 33.749,
+    "longitude": -84.388,
+    "rooms": [
+      {
+        "id": 2401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/24.jpg",
+    "availableRooms": 8,
+    "cityId": 124,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Garden View Resort"
+  },
+  {
+    "id": 25,
+    "hotelName": "City Lights Hotel",
+    "location": "Los Angeles, USA",
+    "description": "A hotel located in the downtown area, ideal for business and leisure stays.",
+    "hotelType": "Hotel",
+    "starRating": 3,
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "rooms": [
+      {
+        "id": 2501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/25.jpg",
+    "availableRooms": 9,
+    "cityId": 125,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "City Lights Hotel"
+  },
+  {
+    "id": 26,
+    "hotelName": "Lakeside Retreat",
+    "location": "Chicago, USA",
+    "description": "A serene lakeside retreat offering outdoor activities and a peaceful atmosphere.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": 41.8781,
+    "longitude": -87.6298,
+    "rooms": [
+      {
+        "id": 2601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 380,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 530,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/26.jpg",
+    "availableRooms": 10,
+    "cityId": 126,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Lakeside Retreat"
+  },
+  {
+    "id": 27,
+    "hotelName": "Palace Hotel",
+    "location": "Paris, France",
+    "description": "A luxurious palace offering world-class service and opulent accommodations.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 48.8566,
+    "longitude": 2.3522,
+    "rooms": [
+      {
+        "id": 2701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/27.jpg",
+    "availableRooms": 11,
+    "cityId": 127,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Palace Hotel"
+  },
+  {
+    "id": 28,
+    "hotelName": "City Garden Inn",
+    "location": "New Haven, USA",
+    "description": "A quaint inn with a beautiful garden, perfect for a relaxing getaway.",
+    "hotelType": "Inn",
+    "starRating": 3,
+    "latitude": 41.3037,
+    "longitude": -72.928,
+    "rooms": [
+      {
+        "id": 2801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/28.jpg",
+    "availableRooms": 12,
+    "cityId": 128,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "City Garden Inn"
+  },
+  {
+    "id": 29,
+    "hotelName": "Tropical Haven Resort",
+    "location": "Miami, USA",
+    "description": "A tropical resort surrounded by lush greenery and beautiful beaches.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 25.7617,
+    "longitude": -80.1918,
+    "rooms": [
+      {
+        "id": 2901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 2902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/29.jpg",
+    "availableRooms": 13,
+    "cityId": 129,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Tropical Haven Resort"
+  },
+  {
+    "id": 30,
+    "hotelName": "Desert Mirage",
+    "location": "Phoenix, USA",
+    "description": "A luxury resort with stunning views of the desert landscape.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": 33.4484,
+    "longitude": -112.074,
+    "rooms": [
+      {
+        "id": 3001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/30.jpg",
+    "availableRooms": 14,
+    "cityId": 130,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Desert Mirage"
+  },
+  {
+    "id": 31,
+    "hotelName": "Harbor View Suites",
+    "location": "Seattle, USA",
+    "description": "Elegant suites offering panoramic views of the harbor and nearby marina.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 47.6062,
+    "longitude": -122.3321,
+    "rooms": [
+      {
+        "id": 3101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/31.jpg",
+    "availableRooms": 8,
+    "cityId": 131,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Harbor View Suites"
+  },
+  {
+    "id": 32,
+    "hotelName": "Canyon Edge Resort",
+    "location": "Grand Canyon, Arizona, USA",
+    "description": "A scenic resort located near the Grand Canyon, ideal for adventurers.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 36.1069,
+    "longitude": -112.1129,
+    "rooms": [
+      {
+        "id": 3201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 380,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 530,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/32.jpg",
+    "availableRooms": 9,
+    "cityId": 132,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Canyon Edge Resort"
+  },
+  {
+    "id": 33,
+    "hotelName": "Royal Orchid Palace",
+    "location": "New Delhi, India",
+    "description": "Experience regal hospitality and traditional decor in a grand palace setting.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 28.6139,
+    "longitude": 77.209,
+    "rooms": [
+      {
+        "id": 3301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/33.jpg",
+    "availableRooms": 10,
+    "cityId": 133,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Royal Orchid Palace"
+  },
+  {
+    "id": 34,
+    "hotelName": "Beachfront Bliss",
+    "location": "Sydney, Australia",
+    "description": "A modern beachfront resort featuring infinity pools and fine dining.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "rooms": [
+      {
+        "id": 3401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/34.jpg",
+    "availableRooms": 11,
+    "cityId": 134,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Beachfront Bliss"
+  },
+  {
+    "id": 35,
+    "hotelName": "Snowpeak Chalet",
+    "location": "Mount Rainier, Washington, USA",
+    "description": "A cozy alpine chalet located in a popular ski destination.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 46.8523,
+    "longitude": -121.7603,
+    "rooms": [
+      {
+        "id": 3501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/35.jpg",
+    "availableRooms": 12,
+    "cityId": 135,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Snowpeak Chalet"
+  },
+  {
+    "id": 36,
+    "hotelName": "Urban Hive Hotel",
+    "location": "Berlin, Germany",
+    "description": "A vibrant downtown hotel catering to modern travelers and professionals.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 52.52,
+    "longitude": 13.405,
+    "rooms": [
+      {
+        "id": 3601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/36.jpg",
+    "availableRooms": 13,
+    "cityId": 136,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Urban Hive Hotel"
+  },
+  {
+    "id": 37,
+    "hotelName": "Serenity Lake Resort",
+    "location": "Zurich, Switzerland",
+    "description": "Peaceful lakeside villas with private decks and scenic mountain views.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 47.3769,
+    "longitude": 8.5417,
+    "rooms": [
+      {
+        "id": 3701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/37.jpg",
+    "availableRooms": 14,
+    "cityId": 137,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Serenity Lake Resort 1234"
+  },
+  {
+    "id": 38,
+    "hotelName": "Golden Dunes Inn",
+    "location": "Kuwait City, Kuwait",
+    "description": "A boutique inn surrounded by desert dunes and natural beauty.",
+    "hotelType": "Inn",
+    "starRating": 4,
+    "latitude": 29.3759,
+    "longitude": 47.9774,
+    "rooms": [
+      {
+        "id": 3801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/38.jpg",
+    "availableRooms": 8,
+    "cityId": 138,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Golden Dunes Inn"
+  },
+  {
+    "id": 39,
+    "hotelName": "Sky Tower Suites",
+    "location": "Singapore",
+    "description": "Luxury skyscraper suites offering panoramic skyline views.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 1.3521,
+    "longitude": 103.8198,
+    "rooms": [
+      {
+        "id": 3901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 3902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/39.jpg",
+    "availableRooms": 9,
+    "cityId": 139,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Sky Tower Suites"
+  },
+  {
+    "id": 40,
+    "hotelName": "Maple Leaf Lodge",
+    "location": "Ottawa, Canada",
+    "description": "A cozy Canadian lodge surrounded by maple forests and tranquil trails.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 45.4215,
+    "longitude": -75.6992,
+    "rooms": [
+      {
+        "id": 4001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/40.jpg",
+    "availableRooms": 10,
+    "cityId": 140,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Maple Leaf Lodge"
+  },
+  {
+    "id": 41,
+    "hotelName": "Coral Reef Resort",
+    "location": "Hagåtña, Guam",
+    "description": "A tropical resort ideal for snorkeling and underwater adventures.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 13.4443,
+    "longitude": 144.7937,
+    "rooms": [
+      {
+        "id": 4101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/41.jpg",
+    "availableRooms": 11,
+    "cityId": 141,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Coral Reef Resort"
+  },
+  {
+    "id": 42,
+    "hotelName": "Emerald Valley Retreat",
+    "location": "Wellington, New Zealand",
+    "description": "Eco-friendly resort nestled in lush green valleys.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": -41.2865,
+    "longitude": 174.7762,
+    "rooms": [
+      {
+        "id": 4201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/42.jpg",
+    "availableRooms": 12,
+    "cityId": 142,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Emerald Valley Retreat"
+  },
+  {
+    "id": 43,
+    "hotelName": "Blue Horizon Hotel",
+    "location": "Buenos Aires, Argentina",
+    "description": "A beachfront hotel offering modern design and spectacular ocean sunsets.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": -34.6037,
+    "longitude": -58.3816,
+    "rooms": [
+      {
+        "id": 4301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/43.jpg",
+    "availableRooms": 13,
+    "cityId": 143,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Blue Horizon Hotel"
+  },
+  {
+    "id": 44,
+    "hotelName": "Safari Sands Camp",
+    "location": "Nairobi, Kenya",
+    "description": "Luxury tents offering a wild yet comfortable African safari experience.",
+    "hotelType": "Lodge",
+    "starRating": 5,
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "rooms": [
+      {
+        "id": 4401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/44.jpg",
+    "availableRooms": 14,
+    "cityId": 144,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Safari Sands Camp"
+  },
+  {
+    "id": 45,
+    "hotelName": "Crystal Bay Hotel",
+    "location": "Cebu, Philippines",
+    "description": "Contemporary beachfront property with ocean-view suites and pools.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 10.3157,
+    "longitude": 123.8854,
+    "rooms": [
+      {
+        "id": 4501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/45.jpg",
+    "availableRooms": 8,
+    "cityId": 145,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Crystal Bay Hotel"
+  },
+  {
+    "id": 46,
+    "hotelName": "Sunflower Inn",
+    "location": "Brussels, Belgium",
+    "description": "A charming countryside inn known for its gardens and homemade breakfasts.",
+    "hotelType": "Inn",
+    "starRating": 3,
+    "latitude": 50.8503,
+    "longitude": 4.3517,
+    "rooms": [
+      {
+        "id": 4601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/46.jpg",
+    "availableRooms": 9,
+    "cityId": 146,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Sunflower Inn"
+  },
+  {
+    "id": 47,
+    "hotelName": "Pacific Pearl Resort",
+    "location": "Suva, Fiji",
+    "description": "An exclusive island retreat with private villas over turquoise waters.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": -17.7134,
+    "longitude": 178.065,
+    "rooms": [
+      {
+        "id": 4701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/47.jpg",
+    "availableRooms": 10,
+    "cityId": 147,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Pacific Pearl Resort"
+  },
+  {
+    "id": 48,
+    "hotelName": "Nordic Breeze Hotel",
+    "location": "Stockholm, Sweden",
+    "description": "A stylish Scandinavian hotel offering comfort with minimalistic elegance.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 59.3293,
+    "longitude": 18.0686,
+    "rooms": [
+      {
+        "id": 4801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/48.jpg",
+    "availableRooms": 11,
+    "cityId": 148,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Nordic Breeze Hotel"
+  },
+  {
+    "id": 49,
+    "hotelName": "Amber Sands Lodge",
+    "location": "Abu Dhabi, UAE",
+    "description": "A desert oasis offering luxury and adventure in equal measure.",
+    "hotelType": "Lodge",
+    "starRating": 5,
+    "latitude": 23.4241,
+    "longitude": 53.8478,
+    "rooms": [
+      {
+        "id": 4901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 4902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/49.jpg",
+    "availableRooms": 12,
+    "cityId": 149,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Amber Sands Lodge"
+  },
+  {
+    "id": 50,
+    "hotelName": "Mountain Crest Inn",
+    "location": "Tokyo, Japan",
+    "description": "A boutique inn located on a mountainside with scenic hiking trails nearby.",
+    "hotelType": "Inn",
+    "starRating": 4,
+    "latitude": 35.6895,
+    "longitude": 139.6917,
+    "rooms": [
+      {
+        "id": 5001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/50.jpg",
+    "availableRooms": 13,
+    "cityId": 150,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Mountain Crest Inn"
+  },
+  {
+    "id": 51,
+    "hotelName": "Lagoon Breeze Resort",
+    "location": "Rarotonga, Cook Islands",
+    "description": "An idyllic resort surrounded by blue lagoons and coral reefs.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": -21.2367,
+    "longitude": -159.7777,
+    "rooms": [
+      {
+        "id": 5101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/51.jpg",
+    "availableRooms": 14,
+    "cityId": 151,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Lagoon Breeze Resort"
+  },
+  {
+    "id": 52,
+    "hotelName": "Ivory Palace Hotel",
+    "location": "Mumbai, India",
+    "description": "A grand hotel featuring marble architecture and luxury suites.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 19.076,
+    "longitude": 72.8777,
+    "rooms": [
+      {
+        "id": 5201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/52.jpg",
+    "availableRooms": 8,
+    "cityId": 152,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Ivory Palace Hotel"
+  },
+  {
+    "id": 53,
+    "hotelName": "Wildflower Retreat",
+    "location": "Toronto, Canada",
+    "description": "Nature retreat surrounded by colorful wildflower fields and hills.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": 43.6532,
+    "longitude": -79.3832,
+    "rooms": [
+      {
+        "id": 5301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 380,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 530,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/53.jpg",
+    "availableRooms": 9,
+    "cityId": 153,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Wildflower Retreat"
+  },
+  {
+    "id": 54,
+    "hotelName": "Sky Harbor Hotel",
+    "location": "Phoenix, USA",
+    "description": "Convenient airport hotel with elegant design and modern amenities.",
+    "hotelType": "Hotel",
+    "starRating": 3,
+    "latitude": 33.4484,
+    "longitude": -112.074,
+    "rooms": [
+      {
+        "id": 5401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/54.jpg",
+    "availableRooms": 10,
+    "cityId": 154,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Sky Harbor Hotel"
+  },
+  {
+    "id": 55,
+    "hotelName": "Crystal Mountain Lodge",
+    "location": "Yosemite National Park, USA",
+    "description": "Cozy wooden lodge near ski slopes and mountain trails.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 37.8651,
+    "longitude": -119.5383,
+    "rooms": [
+      {
+        "id": 5501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/55.jpg",
+    "availableRooms": 11,
+    "cityId": 155,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Crystal Mountain Lodge"
+  },
+  {
+    "id": 56,
+    "hotelName": "Island Breeze Resort",
+    "location": "Pacific Harbour, Fiji",
+    "description": "A beachfront property offering island activities and sunset views.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": -18.1426,
+    "longitude": 178.4419,
+    "rooms": [
+      {
+        "id": 5601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/56.jpg",
+    "availableRooms": 12,
+    "cityId": 156,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Island Breeze Resort"
+  },
+  {
+    "id": 57,
+    "hotelName": "Downtown Comfort Inn",
+    "location": "Madrid, Spain",
+    "description": "A budget-friendly inn in the heart of the city with easy metro access.",
+    "hotelType": "Inn",
+    "starRating": 3,
+    "latitude": 40.4168,
+    "longitude": -3.7038,
+    "rooms": [
+      {
+        "id": 5701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/57.jpg",
+    "availableRooms": 13,
+    "cityId": 157,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Downtown Comfort Inn"
+  },
+  {
+    "id": 58,
+    "hotelName": "Ocean Pearl Hotel",
+    "location": "Dubai, UAE",
+    "description": "A modern coastal hotel with rooftop dining and ocean views.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 25.2048,
+    "longitude": 55.2708,
+    "rooms": [
+      {
+        "id": 5801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/58.jpg",
+    "availableRooms": 14,
+    "cityId": 158,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Ocean Pearl Hotel"
+  },
+  {
+    "id": 59,
+    "hotelName": "Rustic Woods Lodge",
+    "location": "Asheville, North Carolina, USA",
+    "description": "A rustic lodge offering campfires, forest hikes, and cozy cabins.",
+    "hotelType": "Lodge",
+    "starRating": 3,
+    "latitude": 35.5951,
+    "longitude": -82.5515,
+    "rooms": [
+      {
+        "id": 5901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 5902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/59.jpg",
+    "availableRooms": 8,
+    "cityId": 159,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Rustic Woods Lodge"
+  },
+  {
+    "id": 60,
+    "hotelName": "Garden Hill Resort",
+    "location": "Lagos, Nigeria",
+    "description": "A hilltop resort surrounded by lush tropical gardens.",
+    "hotelType": "Resort",
+    "starRating": 4,
+    "latitude": 6.5244,
+    "longitude": 3.3792,
+    "rooms": [
+      {
+        "id": 6001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/60.jpg",
+    "availableRooms": 9,
+    "cityId": 160,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Garden Hill Resort"
+  },
+  {
+    "id": 61,
+    "hotelName": "Capital Crown Hotel",
+    "location": "Tehran, Iran",
+    "description": "An urban business hotel offering premium rooms in the city center.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 35.6895,
+    "longitude": 51.389,
+    "rooms": [
+      {
+        "id": 6101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/61.jpg",
+    "availableRooms": 10,
+    "cityId": 161,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Capital Crown Hotel"
+  },
+  {
+    "id": 62,
+    "hotelName": "Silver Creek Lodge",
+    "location": "Aspen, Colorado, USA",
+    "description": "A riverside lodge surrounded by nature and flowing creeks.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 39.1911,
+    "longitude": -106.8175,
+    "rooms": [
+      {
+        "id": 6201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/62.jpg",
+    "availableRooms": 11,
+    "cityId": 162,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Silver Creek Lodge"
+  },
+  {
+    "id": 63,
+    "hotelName": "Royal Bay Resort",
+    "location": "San Juan, Puerto Rico",
+    "description": "An all-inclusive luxury resort on a private bay with crystal-clear waters.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 18.2208,
+    "longitude": -66.5901,
+    "rooms": [
+      {
+        "id": 6301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/63.jpg",
+    "availableRooms": 12,
+    "cityId": 163,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Royal Bay Resort"
+  },
+  {
+    "id": 64,
+    "hotelName": "Horizon Edge Hotel",
+    "location": "Manila, Philippines",
+    "description": "A stylish hotel offering skyline views and modern interiors.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 14.5995,
+    "longitude": 120.9842,
+    "rooms": [
+      {
+        "id": 6401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/64.jpg",
+    "availableRooms": 13,
+    "cityId": 164,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Horizon Edge Hotel"
+  },
+  {
+    "id": 65,
+    "hotelName": "Vintage Manor Inn",
+    "location": "Central Germany, Germany",
+    "description": "A restored 19th-century inn offering antique charm and comfort.",
+    "hotelType": "Inn",
+    "starRating": 3,
+    "latitude": 51.1657,
+    "longitude": 10.4515,
+    "rooms": [
+      {
+        "id": 6501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/65.jpg",
+    "availableRooms": 14,
+    "cityId": 165,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Vintage Manor Inn"
+  },
+  {
+    "id": 66,
+    "hotelName": "Amber Coast Resort",
+    "location": "Castries, Saint Lucia",
+    "description": "A luxurious coastal retreat perfect for honeymoons and relaxation.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 13.9094,
+    "longitude": -60.9789,
+    "rooms": [
+      {
+        "id": 6601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/66.jpg",
+    "availableRooms": 8,
+    "cityId": 166,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Amber Coast Resort"
+  },
+  {
+    "id": 67,
+    "hotelName": "Pearl Springs Hotel",
+    "location": "Osaka, Japan",
+    "description": "An elegant hotel located near natural hot springs and scenic parks.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 34.6937,
+    "longitude": 135.5023,
+    "rooms": [
+      {
+        "id": 6701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/67.jpg",
+    "availableRooms": 9,
+    "cityId": 167,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Pearl Springs Hotel"
+  },
+  {
+    "id": 68,
+    "hotelName": "Sunrise Cliff Lodge",
+    "location": "South Region, Iceland",
+    "description": "A cliffside lodge with panoramic views and luxury cabins.",
+    "hotelType": "Lodge",
+    "starRating": 5,
+    "latitude": 64.9631,
+    "longitude": -19.0208,
+    "rooms": [
+      {
+        "id": 6801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/68.jpg",
+    "availableRooms": 10,
+    "cityId": 168,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Sunrise Cliff Lodge"
+  },
+  {
+    "id": 69,
+    "hotelName": "Oceanic Breeze Resort",
+    "location": "Basse-Terre, Guadeloupe",
+    "description": "Beachfront villas offering private pools and world-class service.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 16.265,
+    "longitude": -61.551,
+    "rooms": [
+      {
+        "id": 6901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 6902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/69.jpg",
+    "availableRooms": 11,
+    "cityId": 169,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Oceanic Breeze Resort"
+  },
+  {
+    "id": 70,
+    "hotelName": "Rosewood Inn",
+    "location": "Edinburgh, Scotland",
+    "description": "A charming countryside inn with rose gardens and afternoon tea service.",
+    "hotelType": "Inn",
+    "starRating": 4,
+    "latitude": 55.9533,
+    "longitude": -3.1883,
+    "rooms": [
+      {
+        "id": 7001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/70.jpg",
+    "availableRooms": 12,
+    "cityId": 170,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Rosewood Inn"
+  },
+  {
+    "id": 71,
+    "hotelName": "Harbor Light Hotel",
+    "location": "San Francisco, USA",
+    "description": "A modern hotel with a waterfront promenade and gourmet dining.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "rooms": [
+      {
+        "id": 7101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/71.jpg",
+    "availableRooms": 13,
+    "cityId": 171,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Harbor Light Hotel"
+  },
+  {
+    "id": 72,
+    "hotelName": "Safari Plains Camp",
+    "location": "Limpopo, South Africa",
+    "description": "Luxury tented camp offering guided safaris and star-lit dinners.",
+    "hotelType": "Lodge",
+    "starRating": 5,
+    "latitude": -24.3456,
+    "longitude": 30.8976,
+    "rooms": [
+      {
+        "id": 7201,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7202,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/72.jpg",
+    "availableRooms": 14,
+    "cityId": 172,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Safari Plains Camp"
+  },
+  {
+    "id": 73,
+    "hotelName": "Coral Sunset Resort",
+    "location": "Port Louis, Mauritius",
+    "description": "A romantic tropical resort with coral snorkeling and spa services.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": -20.3484,
+    "longitude": 57.5522,
+    "rooms": [
+      {
+        "id": 7301,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7302,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/73.jpg",
+    "availableRooms": 8,
+    "cityId": 173,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Coral Sunset Resort"
+  },
+  {
+    "id": 74,
+    "hotelName": "City Horizon Hotel",
+    "location": "Rome, Italy",
+    "description": "A city hotel offering panoramic rooftop views and business facilities.",
+    "hotelType": "Hotel",
+    "starRating": 4,
+    "latitude": 41.9028,
+    "longitude": 12.4964,
+    "rooms": [
+      {
+        "id": 7401,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7402,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/74.jpg",
+    "availableRooms": 9,
+    "cityId": 174,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "City Horizon Hotel"
+  },
+  {
+    "id": 75,
+    "hotelName": "Jungle Whisper Lodge",
+    "location": "Amazon Rainforest, Brazil",
+    "description": "An eco-lodge located deep in the jungle offering nature trails and wildlife tours.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": -3.4653,
+    "longitude": -62.2159,
+    "rooms": [
+      {
+        "id": 7501,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7502,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/75.jpg",
+    "availableRooms": 10,
+    "cityId": 175,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Jungle Whisper Lodge"
+  },
+  {
+    "id": 76,
+    "hotelName": "White Lotus Retreat",
+    "location": "Central Province, Sri Lanka",
+    "description": "A wellness resort offering yoga, meditation, and holistic therapies.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 7.8731,
+    "longitude": 80.7718,
+    "rooms": [
+      {
+        "id": 7601,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7602,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/76.jpg",
+    "availableRooms": 11,
+    "cityId": 176,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "White Lotus Retreat"
+  },
+  {
+    "id": 77,
+    "hotelName": "Aurora Peak Lodge",
+    "location": "Tromsø, Norway",
+    "description": "A mountain lodge offering views of the Northern Lights.",
+    "hotelType": "Lodge",
+    "starRating": 5,
+    "latitude": 69.6492,
+    "longitude": 18.9553,
+    "rooms": [
+      {
+        "id": 7701,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 300,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7702,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 450,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/77.jpg",
+    "availableRooms": 12,
+    "cityId": 177,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Aurora Peak Lodge"
+  },
+  {
+    "id": 78,
+    "hotelName": "Desert Star Resort",
+    "location": "Riyadh, Saudi Arabia",
+    "description": "A luxury desert resort offering stargazing domes and spa services.",
+    "hotelType": "Resort",
+    "starRating": 5,
+    "latitude": 24.7136,
+    "longitude": 46.6753,
+    "rooms": [
+      {
+        "id": 7801,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 340,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7802,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 490,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/78.jpg",
+    "availableRooms": 13,
+    "cityId": 178,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Desert Star Resort"
+  },
+  {
+    "id": 79,
+    "hotelName": "Bayfront Elegance Hotel",
+    "location": "Toronto, Canada",
+    "description": "A luxury hotel located by the bay offering fine dining and marina access.",
+    "hotelType": "Hotel",
+    "starRating": 5,
+    "latitude": 43.6532,
+    "longitude": -79.3832,
+    "rooms": [
+      {
+        "id": 7901,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 180,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 7902,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 330,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/79.jpg",
+    "availableRooms": 14,
+    "cityId": 179,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Bayfront Elegance Hotel"
+  },
+  {
+    "id": 80,
+    "hotelName": "Silver Pine Lodge",
+    "location": "Montreal, Canada",
+    "description": "A cozy wooden lodge surrounded by pine forests and hiking trails.",
+    "hotelType": "Lodge",
+    "starRating": 4,
+    "latitude": 45.5017,
+    "longitude": -73.5673,
+    "rooms": [
+      {
+        "id": 8001,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 220,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 8002,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 370,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/80.jpg",
+    "availableRooms": 8,
+    "cityId": 180,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "Silver Pine Lodge"
+  },
+  {
+    "id": 81,
+    "hotelName": "nablus hotel",
+    "location": "Nablus, Palestine",
+    "description": "wow wow wow",
+    "hotelType": "Hotel",
+    "starRating": 3,
+    "latitude": 100,
+    "longitude": 2000,
+    "rooms": [
+      {
+        "id": 8101,
+        "name": "Standard Room",
+        "type": "Standard",
+        "price": 260,
+        "available": true,
+        "maxOccupancy": 2
+      },
+      {
+        "id": 8102,
+        "name": "Deluxe Suite",
+        "type": "Suite",
+        "price": 410,
+        "available": true,
+        "maxOccupancy": 4
+      }
+    ],
+    "imageUrl": "https://example.com/hotels/81.jpg",
+    "availableRooms": 9,
+    "cityId": 4,
+    "amenities": [
+      {
+        "id": 1,
+        "name": "Free Wi-Fi",
+        "description": "High-speed wireless internet available in all rooms."
+      },
+      {
+        "id": 2,
+        "name": "Swimming Pool",
+        "description": "Outdoor pool accessible to all guests."
+      },
+      {
+        "id": 3,
+        "name": "Restaurant",
+        "description": "On-site restaurant serving local and international cuisine."
+      }
+    ],
+    "name": "nablus hotel"
+  }
+]

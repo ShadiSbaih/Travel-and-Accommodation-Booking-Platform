@@ -1,0 +1,207 @@
+[
+  {
+    "id": 8,
+    "name": "Singapore",
+    "description": "A city-state in Southeast Asia known for cleanliness, gardens, and innovation."
+  },
+  {
+    "id": 9,
+    "name": "Sydney",
+    "description": "Australia’s largest city, famous for its Opera House and harbor views."
+  },
+  {
+    "id": 10,
+    "name": "Istanbul",
+    "description": "A transcontinental city in Turkey, rich in history and culture."
+  },
+  {
+    "id": 11,
+    "name": "Berlin",
+    "description": "Germany’s capital, known for its art scene, nightlife, and history."
+  },
+  {
+    "id": 13,
+    "name": "San Francisco",
+    "description": "A U.S. city famous for the Golden Gate Bridge and tech innovation."
+  },
+  {
+    "id": 14,
+    "name": "Seoul",
+    "description": "The capital of South Korea, blending tradition with cutting-edge technology."
+  },
+  {
+    "id": 15,
+    "name": "Bangkok",
+    "description": "Thailand’s capital, known for street food, temples, and nightlife."
+  },
+  {
+    "id": 16,
+    "name": "Amsterdam",
+    "description": "The Netherlands’ capital, known for canals, bikes, and liberal culture."
+  },
+  {
+    "id": 17,
+    "name": "Los Angeles",
+    "description": "The entertainment capital of the world, home to Hollywood and sunny beaches."
+  },
+  {
+    "id": 19,
+    "name": "Cairo",
+    "description": "Egypt’s capital, home to the Pyramids of Giza and ancient history."
+  },
+  {
+    "id": 20,
+    "name": "Athens",
+    "description": "The cradle of Western civilization, full of ancient ruins and history."
+  },
+  {
+    "id": 21,
+    "name": "Vienna",
+    "description": "Austria’s capital, famous for classical music and imperial architecture."
+  },
+  {
+    "id": 22,
+    "name": "Prague",
+    "description": "Czech Republic’s capital, known for its old town and Gothic charm."
+  },
+  {
+    "id": 23,
+    "name": "Lisbon",
+    "description": "Portugal’s capital, famous for its hills, trams, and ocean views."
+  },
+  {
+    "id": 24,
+    "name": "Budapest",
+    "description": "Hungary’s capital, known for thermal baths and historic bridges."
+  },
+  {
+    "id": 25,
+    "name": "Warsaw",
+    "description": "Poland’s capital, rebuilt after WWII, blending old and new."
+  },
+  {
+    "id": 26,
+    "name": "Hong Kong",
+    "description": "A bustling metropolis known for skyscrapers and harbor views."
+  },
+  {
+    "id": 27,
+    "name": "Kuala Lumpur",
+    "description": "Malaysia’s capital, home to the Petronas Twin Towers and diverse cuisine."
+  },
+  {
+    "id": 28,
+    "name": "Mexico City",
+    "description": "Mexico’s capital, known for its art, history, and street food."
+  },
+  {
+    "id": 29,
+    "name": "Buenos Aires",
+    "description": "Argentina’s capital, known for tango, steak, and European feel."
+  },
+  {
+    "id": 30,
+    "name": "Cape Town",
+    "description": "South Africa’s coastal city with Table Mountain and natural beauty."
+  },
+  {
+    "id": 31,
+    "name": "Mumbai",
+    "description": "India’s financial hub and home to Bollywood cinema."
+  },
+  {
+    "id": 32,
+    "name": "Beijing",
+    "description": "China’s capital, home to the Forbidden City and Great Wall."
+  },
+  {
+    "id": 33,
+    "name": "Riyadh",
+    "description": "Saudi Arabia’s capital, blending tradition with modern development."
+  },
+  {
+    "id": 34,
+    "name": "Doha",
+    "description": "Qatar’s capital, known for futuristic skyline and cultural heritage."
+  },
+  {
+    "id": 35,
+    "name": "Stockholm",
+    "description": "Sweden’s capital, built on islands and full of Scandinavian design."
+  },
+  {
+    "id": 36,
+    "name": "Oslo",
+    "description": "Norway’s capital, surrounded by nature and fjords."
+  },
+  {
+    "id": 37,
+    "name": "Copenhagen",
+    "description": "Denmark’s capital, known for design, bikes, and waterfront life."
+  },
+  {
+    "id": 38,
+    "name": "Zurich",
+    "description": "Switzerland’s financial center, known for lakes and clean streets."
+  },
+  {
+    "id": 39,
+    "name": "Reykjavik",
+    "description": "Iceland’s capital, surrounded by geothermal wonders and northern lights."
+  },
+  {
+    "id": 40,
+    "name": "Helsinki",
+    "description": "Finland’s capital, known for minimalist design and winter charm."
+  },
+  {
+    "id": 41,
+    "name": "Jakarta",
+    "description": "Indonesia’s capital, a lively city with diverse culture and traffic."
+  },
+  {
+    "id": 42,
+    "name": "Lima",
+    "description": "Peru’s coastal capital, known for cuisine and colonial history."
+  },
+  {
+    "id": 43,
+    "name": "Manila",
+    "description": "Philippines’ capital, full of energy, traffic, and history."
+  },
+  {
+    "id": 44,
+    "name": "Casablanca",
+    "description": "Morocco’s economic hub, known for modern life and ocean views."
+  },
+  {
+    "id": 45,
+    "name": "Hanoi",
+    "description": "Vietnam’s capital, with lakes, temples, and French architecture."
+  },
+  {
+    "id": 46,
+    "name": "Jerusalem",
+    "description": "A sacred city with deep historical and religious significance."
+  },
+  {
+    "id": 47,
+    "name": "Doha",
+    "description": "Modern capital of Qatar, rich in architecture and culture."
+  },
+  {
+    "id": 48,
+    "name": "Seville",
+    "description": "A southern Spanish city famous for flamenco and Moorish architecture."
+  },
+  {
+    "id": 50,
+    "name": "Jenin",
+    "description": "A Palestinian city with historical importance and growing development."
+  },
+  {
+    "id": 51,
+    "name": "jerusalem ",
+    "description": "..."
+  }
+]

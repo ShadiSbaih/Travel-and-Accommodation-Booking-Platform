@@ -1,0 +1,104 @@
+[
+  {
+    "roomId": 210,
+    "roomNumber": 201,
+    "roomPhotoUrl": "https://t4.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg",
+    "roomType": "Superior Room 1234",
+    "capacityOfAdults": 2,
+    "capacityOfChildren": 2,
+    "amenities": [
+      {
+        "id": 13,
+        "name": "Work Desk",
+        "description": "Ergonomic workspace with power outlets"
+      }
+    ],
+    "price": 200,
+    "availability": false
+  },
+  {
+    "roomId": 211,
+    "roomNumber": 202,
+    "roomPhotoUrl": "https://t4.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg",
+    "roomType": "Deluxe Suite",
+    "capacityOfAdults": 3,
+    "capacityOfChildren": 2,
+    "amenities": [
+      {
+        "id": 14,
+        "name": "Kitchenette",
+        "description": "Fully equipped with microwave and refrigerator"
+      }
+    ],
+    "price": 320,
+    "availability": true
+  },
+  {
+    "roomId": 212,
+    "roomNumber": 203,
+    "roomPhotoUrl": "https://t4.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg",
+    "roomType": "Family Suite",
+    "capacityOfAdults": 4,
+    "capacityOfChildren": 3,
+    "amenities": [
+      {
+        "id": 15,
+        "name": "Play Area",
+        "description": "Dedicated children's play space"
+      }
+    ],
+    "price": 380,
+    "availability": true
+  },
+  {
+    "roomId": 213,
+    "roomNumber": 204,
+    "roomPhotoUrl": "https://t4.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg",
+    "roomType": "Penthouse",
+    "capacityOfAdults": 4,
+    "capacityOfChildren": 2,
+    "amenities": [
+      {
+        "id": 16,
+        "name": "Private Terrace",
+        "description": "Spacious outdoor living area"
+      }
+    ],
+    "price": 650,
+    "availability": false
+  },
+  {
+    "roomId": 214,
+    "roomNumber": 205,
+    "roomPhotoUrl": "https://t4.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg",
+    "roomType": "Business Room",
+    "capacityOfAdults": 2,
+    "capacityOfChildren": 0,
+    "amenities": [
+      {
+        "id": 17,
+        "name": "High-speed Internet",
+        "description": "Fiber optic connection with VPN access"
+      }
+    ],
+    "price": 230,
+    "availability": true
+  },
+  {
+    "roomId": 215,
+    "roomNumber": 206,
+    "roomPhotoUrl": "https://t4.ftcdn.net/jpg/02/94/19/40/360_F_294194023_disE35GtlVLDQx4caNDaWewZI8LbxWFQ.jpg",
+    "roomType": "Honeymoon Suite",
+    "capacityOfAdults": 2,
+    "capacityOfChildren": 0,
+    "amenities": [
+      {
+        "id": 18,
+        "name": "Champagne on Arrival",
+        "description": "Complimentary bottle of champagne"
+      }
+    ],
+    "price": 420,
+    "availability": true
+  }
+]
