@@ -5,6 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from '@mui/material';
 import { ThemeProvider, useTheme } from '@/core/context/Theme';
 import { AppErrorBoundary } from '@/shared/components/ErrorBoundary';
+import { NetworkMonitor } from '@/shared/components/NetworkMonitor';
 import { store } from '@/core/store';
 import { queryClient } from '@/core/api/queryClient';
 import { createAppTheme } from '@/core/theme/muiTheme';
@@ -41,6 +42,7 @@ export function AppProviders({ children }: AppProvidersProps) {
           <ThemeProvider>
             <MuiThemeWrapper>
               <BrowserRouter>
+                <NetworkMonitor />
                 {children}
               </BrowserRouter>
             </MuiThemeWrapper>

@@ -12,13 +12,16 @@ interface SearchConfig {
 export const useSearchHotels = ({ query, adults, children, rooms }: SearchConfig) => {
   return useQuery<SearchResultDTO[]>({
     queryKey: ['searchResults', query, adults, children, rooms],
-    queryFn: () =>
-      searchApi.searchHotels({
-        city: query,
-        adults,
-        children,
-        numberOfRooms: rooms,
-      }),
+    queryFn: ({ signal }) =>
+      searchApi.searchHotels(
+        {
+          city: query,
+          adults,
+          children,
+          numberOfRooms: rooms,
+        },
+        signal
+      ),
     // Always enabled to show default results when no query is provided
     enabled: true,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
