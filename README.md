@@ -1,10 +1,10 @@
-# 🏨 Travel and Accommodation Booking Platform
+#  Travel and Accommodation Booking Platform
 
 A modern, full-featured travel and accommodation booking platform built with React, TypeScript, and a comprehensive tech stack. This application provides seamless hotel search, booking management, and administrative capabilities with a focus on user experience and code quality.
 
 
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -19,7 +19,7 @@ A modern, full-featured travel and accommodation booking platform built with Rea
 - [Contributing](#contributing)
 - [License](#license)
 
-## 🌟 Overview
+##  Overview
 
 This Travel and Accommodation Booking Platform is a comprehensive web application that enables users to search for hotels, view detailed information, make bookings, and manage reservations. The platform includes a robust admin panel for managing cities, hotels, and rooms, making it a complete solution for travel accommodation businesses.
 
@@ -32,7 +32,7 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Testing**: Comprehensive unit tests with Jest and React Testing Library
 - **Code Quality**: ESLint, Prettier, and Storybook for component development
 
-## ✨ Features
+##  Features
 
 ### User Features
 
@@ -506,7 +506,7 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Browser History**: Proper back/forward support
 - **Shareable URLs**: Search parameters in URL
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend Core
 - **React** `19.1.1` - Modern UI library with latest features
@@ -711,7 +711,7 @@ src/
 - **Local State**: Component-specific state with useState
 - **Context API**: Theme and shared UI preferences
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 travel-app-fts/
@@ -743,7 +743,7 @@ travel-app-fts/
 └── package.json            # Dependencies and scripts
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
