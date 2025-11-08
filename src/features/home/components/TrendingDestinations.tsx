@@ -5,51 +5,13 @@ import type { TrendingDestinationDto } from '../types';
 import { useTrendingDestinations } from '../hooks';
 import TrendingDestinationCard from './TrendingDestinationCard';
 import SectionHeader from './SectionHeader';
-import ErrorState from '@/shared/components/ErrorState';
-import EmptyState from '@/shared/components/EmptyState';
 import { TrendingDestinationsSkeleton } from './skeletons';
+import { withDataStates } from '@/shared/hocs';
 
-const TrendingDestinations = React.memo(() => {
-  const { data: trendingDestinations = [], isLoading, isError, refetch } = useTrendingDestinations();
-
-  if (isLoading) return <TrendingDestinationsSkeleton />;
-  if (isError)
-    return (
-      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.paper' }}>
-        <Container maxWidth="lg">
-          <ErrorState
-            title="Unable to Load Trending Destinations"
-            message="We're having trouble loading trending destinations right now. Please try again."
-            variant="error"
-            icon={<TrendingIcon sx={{ fontSize: '3rem', color: 'error.main' }} />}
-            showRetry
-            onRetry={() => refetch()}
-          />
-        </Container>
-      </Box>
-    );
-
-  if (trendingDestinations.length === 0) {
-    return (
-      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, bgcolor: 'background.paper' }}>
-        <Container maxWidth="lg">
-          <SectionHeader
-            title="Trending Destinations"
-            subtitle="Popular places travelers are exploring now"
-            icon={
-              <TrendingIcon sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, color: 'success.main' }} />
-            }
-          />
-          <EmptyState
-            title="No trending destinations available"
-            subtitle="Explore our search to find your perfect destination"
-            icon={<TrendingIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />}
-          />
-        </Container>
-      </Box>
-    );
-  }
-
+// Pure presentation component
+const TrendingDestinationsContent = React.memo(({ data }: { data?: TrendingDestinationDto[] }) => {
+  if (!data) return null;
+  
   return (
     <Box 
       sx={{ 
@@ -78,12 +40,39 @@ const TrendingDestinations = React.memo(() => {
             justifyItems: 'center',
           }}
         >
-          {trendingDestinations.map((destination: TrendingDestinationDto) => (
+          {data.map((destination: TrendingDestinationDto) => (
             <TrendingDestinationCard key={destination.cityId} destination={destination} />
           ))}
         </Box>
       </Container>
     </Box>
+  );
+});
+
+TrendingDestinationsContent.displayName = 'TrendingDestinationsContent';
+
+// Apply HOC to handle loading, error, and empty states
+const TrendingDestinationsWithStates = withDataStates<TrendingDestinationDto[]>(TrendingDestinationsContent, {
+  LoadingSkeleton: TrendingDestinationsSkeleton,
+  errorTitle: 'Unable to Load Trending Destinations',
+  errorMessage: "We're having trouble loading trending destinations right now. Please try again.",
+  errorIcon: <TrendingIcon sx={{ fontSize: '3rem', color: 'error.main' }} />,
+  emptyTitle: 'No trending destinations available',
+  emptySubtitle: 'Explore our search to find your perfect destination',
+  emptyIcon: <TrendingIcon sx={{ fontSize: '3rem', color: 'text.secondary' }} />,
+  isEmpty: (data) => !data || data.length === 0,
+});
+
+// Container component that connects to data
+const TrendingDestinations = React.memo(() => {
+  const { data, isLoading, isError, refetch } = useTrendingDestinations();
+  return (
+    <TrendingDestinationsWithStates 
+      data={data} 
+      isLoading={isLoading} 
+      isError={isError} 
+      refetch={refetch} 
+    />
   );
 });
 
