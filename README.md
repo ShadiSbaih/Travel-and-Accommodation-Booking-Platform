@@ -1,10 +1,10 @@
-# 🏨 Travel and Accommodation Booking Platform
+#  Travel and Accommodation Booking Platform
 
 A modern, full-featured travel and accommodation booking platform built with React, TypeScript, and a comprehensive tech stack. This application provides seamless hotel search, booking management, and administrative capabilities with a focus on user experience and code quality.
 
 
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -19,7 +19,7 @@ A modern, full-featured travel and accommodation booking platform built with Rea
 - [Contributing](#contributing)
 - [License](#license)
 
-## 🌟 Overview
+##  Overview
 
 This Travel and Accommodation Booking Platform is a comprehensive web application that enables users to search for hotels, view detailed information, make bookings, and manage reservations. The platform includes a robust admin panel for managing cities, hotels, and rooms, making it a complete solution for travel accommodation businesses.
 
@@ -32,7 +32,7 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Testing**: Comprehensive unit tests with Jest and React Testing Library
 - **Code Quality**: ESLint, Prettier, and Storybook for component development
 
-## ✨ Features
+##  Features
 
 ### User Features
 
@@ -52,7 +52,9 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 #### 2. **Home Page**
 <img width="1915" height="928" alt="image" src="https://github.com/user-attachments/assets/329442ef-e045-48d5-a842-551dfe4d9639" />
 <img width="1903" height="935" alt="image" src="https://github.com/user-attachments/assets/75d5027c-3a1b-4bfb-9c9c-7cbabe8ea44d" />
-<img width="1911" height="921" alt="image" src="https://github.com/user-attachments/assets/235d2e09-cd5c-4737-bea2-3501bb2c1a1d" />
+<img width="1907" height="933" alt="image" src="https://github.com/user-attachments/assets/ea2b8bda-89ce-4568-9e86-cfac5f70d8b0" />
+<img width="1906" height="924" alt="image" src="https://github.com/user-attachments/assets/4e250df8-e9fb-493f-bb54-c32dcef3e300" />
+<img width="1902" height="926" alt="image" src="https://github.com/user-attachments/assets/03ff8c00-5bc8-4db1-a7c0-5f40be97a855" />
 
 ##### **Hero Section with Advanced Search**
 - **Intelligent Search Bar**:
@@ -94,8 +96,10 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 
 #### 3. **Search Results & Filtering**
 
-<img width="1908" height="924" alt="image" src="https://github.com/user-attachments/assets/66f0d4ea-93ea-40eb-86ee-280489c8afd9" />
-<img width="1903" height="927" alt="image" src="https://github.com/user-attachments/assets/45c5fb6d-7153-4a3b-9d3a-e765851dc7df" />
+<img width="1904" height="929" alt="image" src="https://github.com/user-attachments/assets/f25dc263-bd8f-4f6b-898a-720f321a5841" />
+<img width="1908" height="929" alt="image" src="https://github.com/user-attachments/assets/378c5e5a-b7f9-4ad2-81e6-7daac3ec7be5" />
+<img width="1907" height="926" alt="image" src="https://github.com/user-attachments/assets/6e347d58-e218-49fc-a238-84597ecb2a2e" />
+<img width="1903" height="927" alt="image" src="https://github.com/user-attachments/assets/a7517886-8d18-490a-bf3f-e4f5047ea0e6" />
 
 ##### **Smart Search System**
 - **Query Parameter Persistence**: Search criteria maintained in URL for sharing
@@ -135,9 +139,11 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Abort Controller**: Cancels outdated search requests when new search starts
 
 #### 4. **Hotel Details Page**
-<img width="1903" height="929" alt="image" src="https://github.com/user-attachments/assets/60799027-6ad2-47d0-86fe-f66131a7f0fc" />
-<img width="1907" height="926" alt="image" src="https://github.com/user-attachments/assets/41419306-3900-4c01-a748-b98999cb5e61" />
-<img width="1909" height="858" alt="image" src="https://github.com/user-attachments/assets/52aa8fe5-3693-42c1-bbb6-962fbb439443" />
+<img width="1906" height="928" alt="image" src="https://github.com/user-attachments/assets/ae47dce7-df0d-4e82-9e05-00b059f5642f" />
+<img width="1902" height="926" alt="image" src="https://github.com/user-attachments/assets/c90d41b4-1639-4942-bbd9-e157d8ecb999" />
+<img width="1907" height="926" alt="image" src="https://github.com/user-attachments/assets/d4a6288b-9add-44d7-aaed-30b661f3561c" />
+<img width="1903" height="924" alt="image" src="https://github.com/user-attachments/assets/4bdb208f-3f8d-4a13-8a6a-bd8593b356b8" />
+
 
 ##### **Hotel Information**
 - **Visual Gallery**:
@@ -195,12 +201,15 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Back to Search**: Quick return to search results with filters preserved
 
 #### 5. **Shopping Cart & Checkout**
-<img width="1904" height="929" alt="image" src="https://github.com/user-attachments/assets/3e3ad2d8-311f-4ead-a6cc-0dd78cdfa009" />
-<img width="1918" height="915" alt="image" src="https://github.com/user-attachments/assets/4e7f6a97-ba6c-4935-915d-e3e7a38463bd" />
-<img width="1919" height="918" alt="image" src="https://github.com/user-attachments/assets/f73bc0b0-23fb-4099-8c42-075d65497259" />
-<img width="1913" height="912" alt="image" src="https://github.com/user-attachments/assets/3ef927b0-1d9d-4835-a9c1-5da4afe243d3" />
-<img width="1905" height="935" alt="image" src="https://github.com/user-attachments/assets/c3fb8871-962f-4b81-ac5a-3292eb15696b" />
-<img width="1906" height="921" alt="image" src="https://github.com/user-attachments/assets/a0683377-0e8a-4bf4-ba97-f16571002deb" />
+<img width="1906" height="924" alt="image" src="https://github.com/user-attachments/assets/970d9d7e-6666-46a6-af5d-78f04d77e000" />
+<img width="1914" height="916" alt="image" src="https://github.com/user-attachments/assets/e462ea47-8280-4165-a7aa-599cdaad335b" />
+<img width="1917" height="919" alt="image" src="https://github.com/user-attachments/assets/976ddae7-cc30-41cc-9f19-32028026caa4" />
+<img width="1906" height="925" alt="image" src="https://github.com/user-attachments/assets/bede508f-cf15-4e8d-baf7-2ac4c3704e38" />
+<img width="1902" height="929" alt="image" src="https://github.com/user-attachments/assets/d3d137f8-c24d-47a6-ba13-684def43b584" />
+<img width="1904" height="928" alt="image" src="https://github.com/user-attachments/assets/306c3b5f-fbc4-406f-bcaa-bcd363d6aaf3" />
+<img width="1902" height="921" alt="image" src="https://github.com/user-attachments/assets/ba0bdd0b-19b0-4bd0-b348-2c74c149b8cb" />
+<img width="1859" height="936" alt="image" src="https://github.com/user-attachments/assets/0239f529-2ffd-41bb-abfd-fee3f99dcb65" />
+
 
 ##### **Shopping Cart System**
 - **Redux State Management**: Global cart state accessible throughout the app
@@ -268,12 +277,16 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 ### Admin Features
 
 #### 6. **Admin Dashboard**
-<img width="1909" height="930" alt="image" src="https://github.com/user-attachments/assets/b5041c67-cb27-41bf-ba05-ca5f41d9e45a" />
-<img width="1905" height="925" alt="image" src="https://github.com/user-attachments/assets/43beb6bc-5310-47ea-aae3-f82c4dc2e5ab" />
-<img width="1902" height="932" alt="image" src="https://github.com/user-attachments/assets/f207758c-449d-4600-8858-86231c3879ad" />
-<img width="1919" height="929" alt="image" src="https://github.com/user-attachments/assets/5edc9532-de23-4a31-b792-f7a93720be4a" />
-<img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/00b07fdb-8854-42d3-a9a4-20be92c5dbaa" />
-<img width="1919" height="928" alt="image" src="https://github.com/user-attachments/assets/2baa6b03-2a65-4a46-903e-c3b33bd193ce" />
+<img width="1908" height="925" alt="image" src="https://github.com/user-attachments/assets/3b951d5d-344b-41ab-85ca-ac46bfc6ad28" />
+<img width="1888" height="919" alt="image" src="https://github.com/user-attachments/assets/46bc9e82-858c-4fd7-ae87-2746ac8a2f34" />
+<img width="1907" height="935" alt="image" src="https://github.com/user-attachments/assets/536c58d2-55c2-44dc-ac20-2e1073c58377" />
+<img width="1919" height="936" alt="image" src="https://github.com/user-attachments/assets/e7b3d4e9-fd6c-4570-9d0b-87e7735aabb6" />
+<img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/82e2e283-5a43-4e7b-b456-49dae0e88a9a" />
+<img width="1916" height="917" alt="image" src="https://github.com/user-attachments/assets/14b0ef0e-1203-4e5a-9bd7-52a2240ee262" />
+<img width="1919" height="923" alt="image" src="https://github.com/user-attachments/assets/5952e774-9fc6-4e77-a17a-452a686cbe0e" />
+<img width="1900" height="922" alt="image" src="https://github.com/user-attachments/assets/ce2fe0d0-8ce0-4dd6-a583-7c4d51f59e5d" />
+<img width="1913" height="925" alt="image" src="https://github.com/user-attachments/assets/db8550f9-0655-45b4-a057-f74a815a0aeb" />
+
 
 ##### **Admin Layout & Navigation**
 - **Collapsible Sidebar**:
@@ -493,7 +506,7 @@ This Travel and Accommodation Booking Platform is a comprehensive web applicatio
 - **Browser History**: Proper back/forward support
 - **Shareable URLs**: Search parameters in URL
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend Core
 - **React** `19.1.1` - Modern UI library with latest features
@@ -698,7 +711,7 @@ src/
 - **Local State**: Component-specific state with useState
 - **Context API**: Theme and shared UI preferences
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 travel-app-fts/
@@ -730,7 +743,7 @@ travel-app-fts/
 └── package.json            # Dependencies and scripts
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
