@@ -74,6 +74,37 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
+// ============================================
+// CRON JOB - KEEP-ALIVE (every 14 minutes)
+// Sends a GET request to keep free hosting services awake.
+// Configure target URL via API_URL env var.
+// ============================================
+const cron = require("node-cron");
+const https = require("https");
+
+// Health check endpoint for the cron job
+app.get("/api/status", (req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+const API_URL = process.env.API_URL || `http://localhost:${PORT}`;
+
+const job = cron.schedule("*/14 * * * *", function () {
+  https
+    .get(API_URL + "/api/status", (res) => {
+      if (res.statusCode === 200) {
+        console.log("[CRON] GET request sent successfully at", new Date().toISOString());
+      } else {
+        console.log("[CRON] GET request failed", res.statusCode);
+      }
+    })
+    .on("error", (e) => {
+      console.error("[CRON] Error while sending request", e.message);
+    });
+});
+
+job.start();
+
 app.post("/api/auth/authenticate", (req, res) => {
   if (req.body.userName == "user" && req.body.password == "user") {
     res.json({
@@ -414,6 +445,7 @@ app.delete("/api/rooms/:id", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`[CRON] Keep-alive job scheduled every 14 minutes targeting ${API_URL}/api/status`);
 });
 
 /**
