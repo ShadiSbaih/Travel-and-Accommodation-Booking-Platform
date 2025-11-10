@@ -24,17 +24,17 @@ const HotelCard = memo(function HotelCard({ hotel }: HotelCardProps) {
       }}
     >
       <HotelCardImage
-        imageUrl={hotel.roomPhotoUrl}
-        hotelName={hotel.hotelName}
+        imageUrl={hotel.roomPhotoUrl ?? ''}
+        hotelName={hotel.hotelName ?? ''}
         discount={hotel.discount}
         starRating={hotel.starRating}
       />
       
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2, '&:last-child': { pb: 2 } }}>
         <HotelCardHeader
-          hotelName={hotel.hotelName}
-          cityName={hotel.cityName}
-          roomType={hotel.roomType}
+          hotelName={hotel.hotelName ?? ''}
+          cityName={hotel.cityName ?? ''}
+          roomType={hotel.roomType ?? ''}
         />
         
         <Divider sx={{ my: 1 }} />

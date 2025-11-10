@@ -22,6 +22,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockDestination: TrendingDestinationDto = {
+  id: 1,
   cityId: 1,
   cityName: 'Paris',
   countryName: 'France',

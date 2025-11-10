@@ -49,8 +49,8 @@ function HotelLocationMap({
         <MuiMap
           latitude={latitude}
           longitude={longitude}
-          hotelName={hotelName}
-          location={location}
+          hotelName={hotelName ?? ''}
+          location={location ?? ''}
           height={height}
           zoom={zoom}
         />

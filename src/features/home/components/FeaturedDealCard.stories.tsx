@@ -24,11 +24,13 @@ type Story = StoryObj<typeof meta>;
 const mockDeal: FeaturedDealDto = {
   hotelId: 1,
   originalRoomPrice: 300,
+  originalPrice: 300,
   discount: 30,
   finalPrice: 210,
   cityName: 'Paris',
   hotelName: 'Grand Plaza Hotel',
   hotelStarRating: 5,
+  starRating: 5,
   title: 'Luxury Suite with Eiffel Tower View',
   description: 'Enjoy breathtaking views of the Eiffel Tower from your spacious suite with premium amenities',
   roomPhotoUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',

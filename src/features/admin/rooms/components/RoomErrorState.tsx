@@ -4,6 +4,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 interface RoomErrorStateProps {
   onRetry: () => void;
+  error?: Error;
 }
 
 function RoomErrorState({ onRetry }: RoomErrorStateProps) {

@@ -49,7 +49,7 @@ function HotelCard({ hotel }: HotelCardProps) {
   const dispatch = useAppDispatch();
   const notify = useNotification();
   const { deleteHotel, isDeleting } = useHotels();
-  const { data: city } = useCity(hotel.cityId);
+  const { data: city } = useCity(hotel.cityId ?? 0);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleEdit = () => {

@@ -78,7 +78,7 @@ function HotelNameCell({ hotel }: { hotel: Hotel }) {
 }
 
 function HotelLocationCell({ hotel }: { hotel: Hotel }) {
-  const { data: city } = useCity(hotel.cityId);
+  const { data: city } = useCity(hotel.cityId ?? 0);
   const displayLocation = city?.name || hotel.location;
 
   return (

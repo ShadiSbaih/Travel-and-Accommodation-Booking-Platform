@@ -1,4 +1,4 @@
-import type { Amenity } from '@/features/hotels/types/amenities';
+import type { Amenity } from '@/shared/types/base.types';
 
 export interface AmenitiesListProps {
   amenities: Amenity[];
