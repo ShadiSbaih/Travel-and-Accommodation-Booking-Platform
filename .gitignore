@@ -33,3 +33,4 @@ storybook-static
 coverage
 *.lcov
 .nyc_output
+.env
