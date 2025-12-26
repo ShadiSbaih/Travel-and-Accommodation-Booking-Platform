@@ -5,6 +5,7 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // Avoid Windows file-lock issues when Vite updates optimized deps in node_modules/.vite
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
