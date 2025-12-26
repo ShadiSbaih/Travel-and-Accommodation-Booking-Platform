@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -9,27 +9,41 @@ import {
   Typography,
   InputAdornment,
   Divider,
-} from '@mui/material';
+} from "@mui/material";
 // Optimized icon imports - import directly from icon files
-import SearchIcon from '@mui/icons-material/Search';
-import CalendarIcon from '@mui/icons-material/CalendarToday';
-import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { format } from 'date-fns';
-import type { SearchFormData } from '../types';
-import { getDefaultDates, getInitialSearchState, DEFAULT_SEARCH_VALUES } from '../utils';
+import SearchIcon from "@mui/icons-material/Search";
+import CalendarIcon from "@mui/icons-material/CalendarToday";
+import PersonIcon from "@mui/icons-material/Person";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { format } from "date-fns";
+import type { SearchFormData } from "../types";
+import {
+  getDefaultDates,
+  getInitialSearchState,
+  DEFAULT_SEARCH_VALUES,
+} from "../utils";
+import { useAppDispatch } from "@/core/store/hooks";
+import {
+  clearFilters,
+  DEFAULT_FILTER_CONFIG,
+  setMode,
+} from "@/features/filters/store";
 
 function SearchBar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
 
-  const [searchData, setSearchData] = useState<SearchFormData>(() => getInitialSearchState(searchParams));
+  const [searchData, setSearchData] = useState<SearchFormData>(() =>
+    getInitialSearchState(searchParams)
+  );
   const [guestButton, setGuestButton] = useState<HTMLElement | null>(null);
 
   // Sync state with URL when searchParams change (e.g., browser back/forward)
@@ -46,10 +60,13 @@ function SearchBar() {
     setGuestButton(null);
   };
 
-  const updateGuestCount = (field: 'adults' | 'children' | 'rooms', delta: number) => {
-    setSearchData(prev => {
+  const updateGuestCount = (
+    field: "adults" | "children" | "rooms",
+    delta: number
+  ) => {
+    setSearchData((prev) => {
       const newValue = prev[field] + delta;
-      const min = field === 'children' ? 0 : 1;
+      const min = field === "children" ? 0 : 1;
       return { ...prev, [field]: Math.max(min, newValue) };
     });
   };
@@ -57,12 +74,11 @@ function SearchBar() {
   const handleSearch = () => {
     // Validation later
 
-
     // Build URL with all search parameters
     const params = new URLSearchParams({
       query: searchData.query,
-      checkIn: format(searchData.checkIn, 'yyyy-MM-dd'),
-      checkOut: format(searchData.checkOut, 'yyyy-MM-dd'),
+      checkIn: format(searchData.checkIn, "yyyy-MM-dd"),
+      checkOut: format(searchData.checkOut, "yyyy-MM-dd"),
       adults: searchData.adults.toString(),
       children: searchData.children.toString(),
       rooms: searchData.rooms.toString(),
@@ -72,7 +88,7 @@ function SearchBar() {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSearch();
     }
@@ -80,14 +96,26 @@ function SearchBar() {
 
   const handleClear = () => {
     const { today, tomorrow } = getDefaultDates();
+
+    // Reset the global filters so results match the default /search-results view.
+    dispatch(clearFilters());
+    dispatch(setMode(DEFAULT_FILTER_CONFIG.filterMode));
+
     setSearchData({
-      query: '',
+      query: "",
       checkIn: today,
       checkOut: tomorrow,
       adults: DEFAULT_SEARCH_VALUES.adults,
       children: DEFAULT_SEARCH_VALUES.children,
       rooms: DEFAULT_SEARCH_VALUES.rooms,
     });
+
+    closeGuestSelector();
+
+    // If we're currently on the results page, also clear URL query params.
+    if (location.pathname === "/search-results") {
+      navigate("/search-results", { replace: true });
+    }
   };
 
   const totalGuests = searchData.adults + searchData.children;
@@ -106,65 +134,69 @@ function SearchBar() {
         elevation={0}
         sx={{
           padding: { xs: 2, sm: 2.5, md: 3 },
-          borderRadius: '24px !important',
+          borderRadius: "24px !important",
           maxWidth: 1400,
-          margin: '0 auto',
-          background: (theme) => 
-            theme.palette.mode === 'dark'
-              ? 'rgba(30, 41, 59, 0.85) !important'
-              : 'rgba(255, 255, 255, 0.95) !important',
-          backdropFilter: 'blur(20px) saturate(180%) !important',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%) !important',
-          width: '100%',
-          border: (theme) => 
-            theme.palette.mode === 'dark'
-              ? '1px solid rgba(20, 184, 166, 0.3)'
-              : '1px solid rgba(20, 184, 166, 0.2)',
-          boxShadow: (theme) => 
-            theme.palette.mode === 'dark'
-              ? '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 2px rgba(20, 184, 166, 0.4) !important'
-              : '0 8px 32px rgba(20, 184, 166, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1) !important',
-          transition: 'all 0.3s ease-in-out',
-          '&:hover': {
-            boxShadow: (theme) => 
-              theme.palette.mode === 'dark'
-                ? '0 12px 48px rgba(20, 184, 166, 0.3), 0 0 4px rgba(20, 184, 166, 0.6) !important'
-                : '0 12px 48px rgba(20, 184, 166, 0.25), 0 8px 24px rgba(0, 0, 0, 0.15) !important',
-            transform: 'translateY(-2px)',
-            border: (theme) => 
-              theme.palette.mode === 'dark'
-                ? '1px solid rgba(20, 184, 166, 0.5)'
-                : '1px solid rgba(20, 184, 166, 0.4)',
+          margin: "0 auto",
+          background: (theme) =>
+            theme.palette.mode === "dark"
+              ? "rgba(30, 41, 59, 0.85) !important"
+              : "rgba(255, 255, 255, 0.95) !important",
+          backdropFilter: "blur(20px) saturate(180%) !important",
+          WebkitBackdropFilter: "blur(20px) saturate(180%) !important",
+          width: "100%",
+          border: (theme) =>
+            theme.palette.mode === "dark"
+              ? "1px solid rgba(20, 184, 166, 0.3)"
+              : "1px solid rgba(20, 184, 166, 0.2)",
+          boxShadow: (theme) =>
+            theme.palette.mode === "dark"
+              ? "0 8px 32px rgba(0, 0, 0, 0.5), 0 0 2px rgba(20, 184, 166, 0.4) !important"
+              : "0 8px 32px rgba(20, 184, 166, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1) !important",
+          transition: "all 0.3s ease-in-out",
+          "&:hover": {
+            boxShadow: (theme) =>
+              theme.palette.mode === "dark"
+                ? "0 12px 48px rgba(20, 184, 166, 0.3), 0 0 4px rgba(20, 184, 166, 0.6) !important"
+                : "0 12px 48px rgba(20, 184, 166, 0.25), 0 8px 24px rgba(0, 0, 0, 0.15) !important",
+            transform: "translateY(-2px)",
+            border: (theme) =>
+              theme.palette.mode === "dark"
+                ? "1px solid rgba(20, 184, 166, 0.5)"
+                : "1px solid rgba(20, 184, 166, 0.4)",
           },
         }}
       >
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', lg: 'row' },
-            alignItems: 'stretch',
+            display: "flex",
+            flexDirection: { xs: "column", lg: "row" },
+            alignItems: "stretch",
             gap: { xs: 2, md: 1.5 },
-            width: '100%'
+            width: "100%",
           }}
         >
           {/* Destination */}
-          <Box sx={{ 
-            flex: { lg: '1 1 20%' },
-            minWidth: { lg: 0 }
-          }}>
+          <Box
+            sx={{
+              flex: { lg: "1 1 20%" },
+              minWidth: { lg: 0 },
+            }}
+          >
             <TextField
               fullWidth
               size="medium"
               label="Destination"
               placeholder="Where to go?"
               value={searchData.query}
-              onChange={(e) => setSearchData(prev => ({ ...prev, query: e.target.value }))}
+              onChange={(e) =>
+                setSearchData((prev) => ({ ...prev, query: e.target.value }))
+              }
               onKeyDown={handleKeyDown}
               slotProps={{
                 htmlInput: {
-                  'aria-label': 'Enter destination',
-                  'aria-required': 'true',
-                  'autoComplete': 'off',
+                  "aria-label": "Enter destination",
+                  "aria-required": "true",
+                  autoComplete: "off",
                 },
                 input: {
                   startAdornment: (
@@ -175,10 +207,10 @@ function SearchBar() {
                 },
               }}
               sx={{
-                '& .MuiInputBase-root': {
+                "& .MuiInputBase-root": {
                   height: 56,
-                  borderRadius: '16px',
-                }
+                  borderRadius: "16px",
+                },
               }}
             />
           </Box>
@@ -186,40 +218,46 @@ function SearchBar() {
           {/* Dates */}
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', sm: 'row' },
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
               gap: { xs: 2, md: 1.5 },
-              flex: { lg: '1 1 38%' },
-              minWidth: { lg: 0 }
+              flex: { lg: "1 1 38%" },
+              minWidth: { lg: 0 },
             }}
           >
             <DatePicker
               label="Check-in"
               value={searchData.checkIn}
-              onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkIn: newValue }))}
+              onChange={(newValue) =>
+                newValue &&
+                setSearchData((prev) => ({ ...prev, checkIn: newValue }))
+              }
               minDate={new Date()}
               slotProps={{
                 textField: {
                   fullWidth: true,
-                  size: 'medium',
+                  size: "medium",
                   onKeyDown: handleKeyDown,
                   slotProps: {
                     htmlInput: {
-                      'aria-label': 'Select check-in date',
+                      "aria-label": "Select check-in date",
                     },
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
-                          <CalendarIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                          <CalendarIcon
+                            color="action"
+                            sx={{ fontSize: "1.25rem" }}
+                          />
                         </InputAdornment>
                       ),
                     },
                   },
                   sx: {
-                    '& .MuiInputBase-root': {
+                    "& .MuiInputBase-root": {
                       height: 56,
-                      borderRadius: '16px',
-                    }
+                      borderRadius: "16px",
+                    },
                   },
                 },
               }}
@@ -228,30 +266,36 @@ function SearchBar() {
             <DatePicker
               label="Check-out"
               value={searchData.checkOut}
-              onChange={(newValue) => newValue && setSearchData(prev => ({ ...prev, checkOut: newValue }))}
+              onChange={(newValue) =>
+                newValue &&
+                setSearchData((prev) => ({ ...prev, checkOut: newValue }))
+              }
               minDate={searchData.checkIn}
               slotProps={{
                 textField: {
                   fullWidth: true,
-                  size: 'medium',
+                  size: "medium",
                   onKeyDown: handleKeyDown,
                   slotProps: {
                     htmlInput: {
-                      'aria-label': 'Select check-out date',
+                      "aria-label": "Select check-out date",
                     },
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
-                          <CalendarIcon color="action" sx={{ fontSize: '1.25rem' }} />
+                          <CalendarIcon
+                            color="action"
+                            sx={{ fontSize: "1.25rem" }}
+                          />
                         </InputAdornment>
                       ),
                     },
                   },
                   sx: {
-                    '& .MuiInputBase-root': {
+                    "& .MuiInputBase-root": {
                       height: 56,
-                      borderRadius: '16px',
-                    }
+                      borderRadius: "16px",
+                    },
                   },
                 },
               }}
@@ -259,17 +303,21 @@ function SearchBar() {
           </Box>
 
           {/* Guests */}
-          <Box sx={{ 
-            flex: { lg: '1 1 20%' },
-            minWidth: { lg: 0 }
-          }}>
+          <Box
+            sx={{
+              flex: { lg: "1 1 20%" },
+              minWidth: { lg: 0 },
+            }}
+          >
             <Button
               fullWidth
               variant="outlined"
               onClick={openGuestSelector}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !isGuestOpen) {
-                  openGuestSelector(e as unknown as React.MouseEvent<HTMLElement>);
+                if (e.key === "Enter" && !isGuestOpen) {
+                  openGuestSelector(
+                    e as unknown as React.MouseEvent<HTMLElement>
+                  );
                 }
               }}
               startIcon={<PersonIcon />}
@@ -278,23 +326,27 @@ function SearchBar() {
               aria-expanded={isGuestOpen}
               sx={{
                 height: 56,
-                borderRadius: '16px',
-                justifyContent: 'flex-start',
-                textTransform: 'none',
-                fontSize: { xs: '0.875rem', md: '0.95rem' },
+                borderRadius: "16px",
+                justifyContent: "flex-start",
+                textTransform: "none",
+                fontSize: { xs: "0.875rem", md: "0.95rem" },
                 px: 2,
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                '& .MuiButton-startIcon': {
-                  marginRight: 1
-                }
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                "& .MuiButton-startIcon": {
+                  marginRight: 1,
+                },
               }}
             >
-              <Box component="span" sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis'
-              }}>
-                {totalGuests} Guest{totalGuests !== 1 ? 's' : ''}, {searchData.rooms} Room{searchData.rooms > 1 ? 's' : ''}
+              <Box
+                component="span"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {totalGuests} Guest{totalGuests !== 1 ? "s" : ""},{" "}
+                {searchData.rooms} Room{searchData.rooms > 1 ? "s" : ""}
               </Box>
             </Button>
           </Box>
@@ -302,12 +354,12 @@ function SearchBar() {
           {/* Buttons */}
           <Box
             sx={{
-              display: 'flex',
+              display: "flex",
               gap: 1.5,
-              flex: { lg: '0 0 auto' },
-              flexDirection: { xs: 'column', sm: 'row', lg: 'row' },
+              flex: { lg: "0 0 auto" },
+              flexDirection: { xs: "column", sm: "row", lg: "row" },
               minWidth: { lg: 0 },
-              width: { xs: '100%', sm: 'auto' }
+              width: { xs: "100%", sm: "auto" },
             }}
           >
             <Button
@@ -319,22 +371,22 @@ function SearchBar() {
               aria-label="Reset search form"
               sx={{
                 height: 56,
-                textTransform: 'none',
-                fontSize: { xs: '0.95rem', md: '0.95rem' },
-                flex: { xs: 1, sm: 1, lg: 'none' },
+                textTransform: "none",
+                fontSize: { xs: "0.95rem", md: "0.95rem" },
+                flex: { xs: 1, sm: 1, lg: "none" },
                 minWidth: { lg: 110 },
                 px: { xs: 2, sm: 2, md: 2.5 },
                 fontWeight: 600,
-                borderRadius: '16px',
-                boxShadow: 'none',
-                '&:hover': {
-                  boxShadow: '0 4px 12px rgba(211, 47, 47, 0.3)',
-                  transform: 'translateY(-1px)',
-                  transition: 'all 0.2s ease-in-out'
+                borderRadius: "16px",
+                boxShadow: "none",
+                "&:hover": {
+                  boxShadow: "0 4px 12px rgba(211, 47, 47, 0.3)",
+                  transform: "translateY(-1px)",
+                  transition: "all 0.2s ease-in-out",
                 },
-                '&:active': {
-                  transform: 'translateY(0)',
-                }
+                "&:active": {
+                  transform: "translateY(0)",
+                },
               }}
             >
               Reset
@@ -348,24 +400,25 @@ function SearchBar() {
               aria-label="Search hotels"
               sx={{
                 height: 56,
-                textTransform: 'none',
-                fontSize: { xs: '1rem', md: '1rem' },
-                flex: { xs: 1, sm: 1, lg: 'none' },
+                textTransform: "none",
+                fontSize: { xs: "1rem", md: "1rem" },
+                flex: { xs: 1, sm: 1, lg: "none" },
                 minWidth: { lg: 130 },
                 px: { xs: 2, sm: 2, md: 3 },
                 fontWeight: 600,
-                borderRadius: '16px',
-                boxShadow: 'none',
-                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
-                  boxShadow: '0 4px 20px rgba(249, 115, 22, 0.4)',
-                  transform: 'translateY(-1px)',
-                  transition: 'all 0.2s ease-in-out'
+                borderRadius: "16px",
+                boxShadow: "none",
+                background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                "&:hover": {
+                  background:
+                    "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                  boxShadow: "0 4px 20px rgba(249, 115, 22, 0.4)",
+                  transform: "translateY(-1px)",
+                  transition: "all 0.2s ease-in-out",
                 },
-                '&:active': {
-                  transform: 'translateY(0)',
-                }
+                "&:active": {
+                  transform: "translateY(0)",
+                },
               }}
             >
               Search
@@ -378,44 +431,55 @@ function SearchBar() {
           open={isGuestOpen}
           anchorEl={guestButton}
           onClose={closeGuestSelector}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          transformOrigin={{ vertical: "top", horizontal: "left" }}
           aria-labelledby="guest-selector-title"
           slotProps={{
             paper: {
               sx: {
                 mt: 1,
                 minWidth: { xs: 280, sm: 320 },
-                maxWidth: { xs: '90vw', sm: 400 },
-                borderRadius: '20px',
-                boxShadow: '0 8px 32px rgba(20, 184, 166, 0.15)',
-              }
-            }
+                maxWidth: { xs: "90vw", sm: 400 },
+                borderRadius: "20px",
+                boxShadow: "0 8px 32px rgba(20, 184, 166, 0.15)",
+              },
+            },
           }}
         >
           <Box sx={{ padding: 3, minWidth: 280 }}>
-            <Typography id="guest-selector-title" variant="h6" sx={{ marginBottom: 2 }}>
+            <Typography
+              id="guest-selector-title"
+              variant="h6"
+              sx={{ marginBottom: 2 }}
+            >
               Guests & Rooms
             </Typography>
 
             {/* Adults */}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 2,
+              }}
+            >
               <Typography variant="body1" id="adults-label">
                 Adults
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <IconButton
                   size="small"
-                  onClick={() => updateGuestCount('adults', -1)}
+                  onClick={() => updateGuestCount("adults", -1)}
                   disabled={searchData.adults <= 1}
                   aria-label="Decrease number of adults"
                   aria-describedby="adults-label"
-                  sx={{ border: '1px solid #e0e0e0' }}
+                  sx={{ border: "1px solid #e0e0e0" }}
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography 
-                  sx={{ minWidth: 40, textAlign: 'center', fontWeight: 'bold' }}
+                <Typography
+                  sx={{ minWidth: 40, textAlign: "center", fontWeight: "bold" }}
                   aria-live="polite"
                   aria-atomic="true"
                 >
@@ -423,10 +487,10 @@ function SearchBar() {
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={() => updateGuestCount('adults', 1)}
+                  onClick={() => updateGuestCount("adults", 1)}
                   aria-label="Increase number of adults"
                   aria-describedby="adults-label"
-                  sx={{ border: '1px solid #e0e0e0' }}
+                  sx={{ border: "1px solid #e0e0e0" }}
                 >
                   <AddIcon />
                 </IconButton>
@@ -436,23 +500,30 @@ function SearchBar() {
             <Divider sx={{ marginY: 1 }} />
 
             {/* Children */}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 2,
+              }}
+            >
               <Typography variant="body1" id="children-label">
                 Children
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <IconButton
                   size="small"
-                  onClick={() => updateGuestCount('children', -1)}
+                  onClick={() => updateGuestCount("children", -1)}
                   disabled={searchData.children <= 0}
                   aria-label="Decrease number of children"
                   aria-describedby="children-label"
-                  sx={{ border: '1px solid #e0e0e0' }}
+                  sx={{ border: "1px solid #e0e0e0" }}
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography 
-                  sx={{ minWidth: 40, textAlign: 'center', fontWeight: 'bold' }}
+                <Typography
+                  sx={{ minWidth: 40, textAlign: "center", fontWeight: "bold" }}
                   aria-live="polite"
                   aria-atomic="true"
                 >
@@ -460,10 +531,10 @@ function SearchBar() {
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={() => updateGuestCount('children', 1)}
+                  onClick={() => updateGuestCount("children", 1)}
                   aria-label="Increase number of children"
                   aria-describedby="children-label"
-                  sx={{ border: '1px solid #e0e0e0' }}
+                  sx={{ border: "1px solid #e0e0e0" }}
                 >
                   <AddIcon />
                 </IconButton>
@@ -473,23 +544,30 @@ function SearchBar() {
             <Divider sx={{ marginY: 1 }} />
 
             {/* Rooms */}
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 3,
+              }}
+            >
               <Typography variant="body1" id="rooms-label">
                 Rooms
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <IconButton
                   size="small"
-                  onClick={() => updateGuestCount('rooms', -1)}
+                  onClick={() => updateGuestCount("rooms", -1)}
                   disabled={searchData.rooms <= 1}
                   aria-label="Decrease number of rooms"
                   aria-describedby="rooms-label"
-                  sx={{ border: '1px solid #e0e0e0' }}
+                  sx={{ border: "1px solid #e0e0e0" }}
                 >
                   <RemoveIcon />
                 </IconButton>
-                <Typography 
-                  sx={{ minWidth: 40, textAlign: 'center', fontWeight: 'bold' }}
+                <Typography
+                  sx={{ minWidth: 40, textAlign: "center", fontWeight: "bold" }}
                   aria-live="polite"
                   aria-atomic="true"
                 >
@@ -497,10 +575,10 @@ function SearchBar() {
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={() => updateGuestCount('rooms', 1)}
+                  onClick={() => updateGuestCount("rooms", 1)}
                   aria-label="Increase number of rooms"
                   aria-describedby="rooms-label"
-                  sx={{ border: '1px solid #e0e0e0' }}
+                  sx={{ border: "1px solid #e0e0e0" }}
                 >
                   <AddIcon />
                 </IconButton>
@@ -512,7 +590,7 @@ function SearchBar() {
               variant="contained"
               onClick={closeGuestSelector}
               aria-label="Apply guest and room selection"
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: "none" }}
             >
               Apply Selection
             </Button>
