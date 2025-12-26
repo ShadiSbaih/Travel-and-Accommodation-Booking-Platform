@@ -1,14 +1,15 @@
-import type { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider as ReduxProvider } from 'react-redux';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider as MuiThemeProvider, CssBaseline } from '@mui/material';
-import { ThemeProvider, useTheme } from '@/core/context/Theme';
-import { AppErrorBoundary } from '@/shared/components/ErrorBoundary';
-import { NetworkMonitor } from '@/shared/components/NetworkMonitor';
-import { store } from '@/core/store';
-import { queryClient } from '@/core/api/queryClient';
-import { createAppTheme } from '@/core/theme/muiTheme';
+import type { ReactNode } from "react";
+import { useMemo } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { Provider as ReduxProvider } from "react-redux";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider, useTheme } from "@/core/context/Theme";
+import { AppErrorBoundary } from "@/shared/components/ErrorBoundary";
+import { NetworkMonitor } from "@/shared/components/NetworkMonitor";
+import { store } from "@/core/store";
+import { queryClient } from "@/core/api/queryClient";
+import { createAppTheme } from "@/core/theme/muiTheme";
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -20,7 +21,7 @@ interface AppProvidersProps {
  */
 function MuiThemeWrapper({ children }: AppProvidersProps) {
   const { isDark } = useTheme();
-  const muiTheme = createAppTheme(isDark);
+  const muiTheme = useMemo(() => createAppTheme(isDark), [isDark]);
 
   return (
     <MuiThemeProvider theme={muiTheme}>
